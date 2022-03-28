@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #112;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.registration.RegistrationController">
+   <children>
+      <Pane layoutX="101.0" layoutY="91.0" prefHeight="296.0" prefWidth="167.0">
+         <children>
+            <Text fill="WHITE" layoutX="30.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="30.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last name">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="30.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="31.0" layoutY="208.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="31.0" layoutY="258.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <Pane layoutX="293.0" layoutY="94.0" prefHeight="274.0" prefWidth="433.0">
+         <children>
+            <TextField layoutX="30.0" layoutY="23.0" text="name" />
+            <TextField layoutX="29.0" layoutY="81.0" text="last name" />
+            <TextField layoutX="30.0" layoutY="133.0" text="email" />
+            <TextField layoutX="33.0" layoutY="188.0" text="address" />
+            <TextField layoutX="29.0" layoutY="243.0" text="number" />
+         </children>
+      </Pane>
+      <ButtonBar layoutX="311.0" layoutY="407.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0">
+        <buttons>
+          <Button mnemonicParsing="false" text="Register" />
+            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="209.0" text="Cancel" />
+        </buttons>
+      </ButtonBar>
+   </children>
+</AnchorPane>
