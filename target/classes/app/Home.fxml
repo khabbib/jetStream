@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.SubScene?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #112;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.Controller">
@@ -20,5 +27,28 @@
          <image>
             <Image url="file:/C:/Users/habibullah.mohammad/Desktop/jetStream/jetStream/src/image/jetStream.png" />
          </image></ImageView>
+      <TextField layoutX="246.0" layoutY="546.0" prefHeight="65.0" prefWidth="233.0" style="-fx-background-color: #123;">
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+         <opaqueInsets>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </opaqueInsets>
+         <cursor>
+            <Cursor fx:constant="OPEN_HAND" />
+         </cursor>
+         <effect>
+            <Glow />
+         </effect>
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <SubScene fill="BLACK" height="200.0" layoutX="22.0" layoutY="228.0" width="200.0">
+        <root>
+          <Region />
+        </root>
+      </SubScene>
+      <ListView layoutX="896.0" layoutY="138.0" prefHeight="200.0" prefWidth="200.0" />
    </children>
 </AnchorPane>
