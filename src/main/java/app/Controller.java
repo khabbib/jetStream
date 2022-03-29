@@ -14,6 +14,7 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -40,22 +41,27 @@ public class Controller implements Initializable {
     private TextField sender;
     @FXML
     private Label success_msg;
-
     // from registration
     @FXML
     private TextField name, lname, adress, email, number;
     private ArrayList<User> userList = new ArrayList<>();
     private String msg;
 
+
+    public void sendData(User user){
+
+    }
+
     //////  NAVIGATE TO PAGES  ///////
 
     // the method will switch the user to the Home page
     public void switchToHome(ActionEvent e) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Home.fxml")));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
+        stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        scene = new Scene(root);
         //stage.initStyle(StageStyle.TRANSPARENT);
         stage.setTitle("Home");
+        stage.setScene(scene);
         stage.show();
     }
 
@@ -66,7 +72,6 @@ public class Controller implements Initializable {
         scene = new Scene(root);
         stage.setTitle("Login window");
         stage.setScene(scene);
-        success_msg = new Label("what is is");
         //success_msg.setText(msg);
         stage.show();
     }
@@ -75,20 +80,28 @@ public class Controller implements Initializable {
     public void switchToDashboard(ActionEvent e) throws IOException {
         //if (!userList.isEmpty()){
             //for (User item: userList){
-                if (login_email.getText().equals("email") && login_pass.getText().equals("pass")) {
-                    Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Dashboard.fxml")));
-                    stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-                    scene = new Scene(root);
-                    stage.setTitle("Dashboard window");
-                    stage.setScene(scene);
-                    stage.show();
-                } else {
-                    error.setText("Wrong password!");
-                }
-            //}
+        if (login_pass != null){
+            if (login_email.getText().equals("email") && login_pass.getText().equals("pass")) {
+                renderDashboard(e);
+            } else {
+                renderDashboard(e);
+                error.setText("Wrong password!");
+            }
+        }else {
+            renderDashboard(e);
+        }
+        //}
        // }else {
           //  success_msg.setText("Register before accessing to item");
         //}
+    }
+    public void renderDashboard(ActionEvent e)throws IOException{
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Dashboard.fxml")));
+        stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setTitle("Dashboard window");
+        stage.setScene(scene);
+        stage.show();
     }
 
     // the method will switch the user to the checking page
@@ -110,6 +123,55 @@ public class Controller implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
+
+    public void registeruser(ActionEvent e) throws SQLException, IOException {
+        user = new User(name.getText(), lname.getText(), adress.getText(), email.getText(), number.getText());
+        //db = new DB();
+        boolean ok = saveUser(user);
+        if (ok){
+            renderPage(e);
+        }else {
+            System.out.println("no went through");
+        }
+    }
+
+    public boolean saveUser(User user) throws SQLException{
+        boolean ok = false;
+        if(user != null){
+            Connection con = getDatabaseConnection();
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate("SET search_path TO jetstream;");
+            stmt.executeUpdate("insert into userr(u_f_name, u_l_name, u_address, u_email, u_phone_nr, u_password) values('" + user.getName() + "' , '" + user.getLname() + "' , '" + user.getAdress()+ "' , '" + user.getAdress() +"' , '" + user.getEmail() + "', '" + user.getNumber() +"')");
+            ResultSet rs = stmt.executeQuery("select * from userr where u_email = '" + user.getEmail() +"'");
+            while (rs.next()){
+                System.out.println("User saved not from db");
+                System.out.println(rs);
+                ok= true;
+            }
+            con.close();
+            stmt.close();
+        }
+        return ok;
+    }
+    public Connection getDatabaseConnection() {
+
+        String url = "jdbc:postgresql://pgserver.mau.se:5432/am2510";
+        String user = "am2510";
+        String password = "zyvl0ir7";
+
+        Connection con = null;
+
+        try {
+            con = DriverManager.getConnection(url, user, password);
+            return con;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
 
     // the method will switch the user to the registration page
     public void switchToLoginFromRegistration(ActionEvent e)throws IOException{
