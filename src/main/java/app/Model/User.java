@@ -1,11 +1,15 @@
 package app.Model;
 
 public class User {
-    private Object message;
+    private String name, lname, adress, email, number;
 
     // Constructor
-    public User(Object msg){
-        this.message = msg;
+    public User(String name, String lname, String adress, String email, String number){
+        this.name = name;
+        this.lname = lname;
+        this.adress = adress;
+        this.email = email;
+        this.number = number;
     }
 
 
@@ -13,16 +17,34 @@ public class User {
 
 
     // Getter and setter
-    public Object getMessage() {
-        return message;
+
+    public String getName() {
+        return name;
     }
-    public void setMessage(Object message) {
-        this.message = message;
+
+    public String getLname() {
+        return lname;
+    }
+
+    public String getAdress() {
+        return adress;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getNumber() {
+        return number;
     }
 
     // info
     public String getToString(){
-        return "info: " + message + " \n";
+        return "info: " + "name: "+name + " \n" +
+                  "last name: " +lname + " \n" +
+                  "address: "+adress + " \n" +
+                  "email: "+email + " \n"+
+                  "number: "+number ;
     }
 }
 

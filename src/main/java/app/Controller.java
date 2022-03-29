@@ -1,5 +1,4 @@
 package app;
-import app.HomeController;
 import app.Model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,6 +14,7 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -28,61 +28,67 @@ public class Controller implements Initializable {
     @FXML
     private ButtonBar logout; // btn bar
     @FXML
-    private TextField password;
+    private TextField login_pass;
+    @FXML
+    private TextField login_email;
     @FXML
     private Label error;
-    private User message;
+    @FXML
+    private Label registration_error;
+    private User user;
     @FXML
     private TextField sender;
+    @FXML
+    private Label success_msg;
 
+    // from registration
+    @FXML
+    private TextField name, lname, adress, email, number;
+    private ArrayList<User> userList = new ArrayList<>();
+    private String msg;
 
     //////  NAVIGATE TO PAGES  ///////
 
     // the method will switch the user to the Home page
-
+    public void switchToHome(ActionEvent e) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Home.fxml")));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        //stage.initStyle(StageStyle.TRANSPARENT);
+        stage.setTitle("Home");
+        stage.show();
+    }
 
     // the method will switch the user to the login page
     public void switchToLogin(ActionEvent e) throws IOException {
-
-        String name = sender.getText();
-        FXMLLoader loader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Login.fxml")));
-        Parent root = loader.load();
-
-        HomeController hc = loader.getController();
-        hc.showText(name);
-
-        stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Login.fxml")));
+        stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setTitle("Login window");
         stage.setScene(scene);
+        success_msg = new Label("what is is");
+        //success_msg.setText(msg);
         stage.show();
     }
 
     // the method will switch the user to the dashboard page
-    public void switchToDashboard(ActionEvent e)throws IOException{
-        if (password != null) {
-            message = new User(password.getText());
-        }
-        if (message != null){
-            if (message.getMessage().equals("hello")){
-                Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Dashboard.fxml")));
-                stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
-                scene = new Scene(root);
-                stage.setTitle("Dashboard window");
-                stage.setScene(scene);
-                stage.show();
-            } else {
-                error.setText("Wrong password!");
-            }
-        }else {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Dashboard.fxml")));
-            stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setTitle("Dashboard window");
-            stage.setScene(scene);
-            stage.show();
-        }
-
+    public void switchToDashboard(ActionEvent e) throws IOException {
+        //if (!userList.isEmpty()){
+            //for (User item: userList){
+                if (login_email.getText().equals("email") && login_pass.getText().equals("pass")) {
+                    Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Dashboard.fxml")));
+                    stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+                    scene = new Scene(root);
+                    stage.setTitle("Dashboard window");
+                    stage.setScene(scene);
+                    stage.show();
+                } else {
+                    error.setText("Wrong password!");
+                }
+            //}
+       // }else {
+          //  success_msg.setText("Register before accessing to item");
+        //}
     }
 
     // the method will switch the user to the checking page
@@ -91,6 +97,40 @@ public class Controller implements Initializable {
         stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setTitle("Checking window");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    // the method will switch the user to the registration page
+    public void switchToRegistration(ActionEvent e)throws IOException{
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Registration.fxml")));
+        stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setTitle("Registration window");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    // the method will switch the user to the registration page
+    public void switchToLoginFromRegistration(ActionEvent e)throws IOException{
+        if (!name.getText().isEmpty() && !lname.getText().isEmpty() && !adress.getText().isEmpty() && !email.getText().isEmpty() && !number.getText().isEmpty()){
+            System.out.println(name.getText());
+            user = new User(name.getText(), lname.getText(), adress.getText(), email.getText(), number.getText());
+            userList.add(user);
+            renderPage(e);
+            // send this message to the login page
+            System.out.println("user successfully registered!");
+            //success_msg.setText("User successfully registered! \n ");
+        }else {
+            registration_error.setText("Empty field!");
+        }
+    }
+
+    public void renderPage(ActionEvent e) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Login.fxml")));
+        stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setTitle("Login window");
         stage.setScene(scene);
         stage.show();
     }
