@@ -1,7 +1,8 @@
 package application;
+import application.Database.Db;
+import application.Model.CreateWorld;
 import application.Model.User;
 import eu.hansolo.fx.world.World;
-import eu.hansolo.fx.world.WorldBuilder;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -58,21 +59,7 @@ public class Controller implements Initializable {
 
     private World world;
 
-    public void init() {
 
-        world = WorldBuilder.create()
-                .resolution(World.Resolution.HI_RES)
-                //.backgroundColor(Color.web("#4aa9d7"))
-                //.fillColor(Color.web("#dcb36c"))
-                //.strokeColor(Color.web("#987028"))
-                //.hoverColor(Color.web("#fec47e"))
-                //.pressedColor(Color.web("#6cee85"))
-                //.locationColor(Color.web("#0000ff"))
-                //.selectedColor(Color.MAGENTA)
-                .zoomEnabled(true)
-                .selectionEnabled(true)
-                .build();
-    }
 
 
     public void openNewScene(ActionEvent e){
@@ -92,16 +79,7 @@ public class Controller implements Initializable {
         stage.show();
     }
 
-    // the method will switch the user to the login page
-    public void switchToLogin(ActionEvent e) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Login.fxml")));
-        stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setTitle("Login window");
-        stage.setScene(scene);
-        //success_msg.setText(msg);
-        stage.show();
-    }
+
 
     // the method will switch the user to the dashboard page
     public void switchToDashboard(ActionEvent e) throws IOException {
@@ -124,10 +102,8 @@ public class Controller implements Initializable {
     }
     public void renderDashboard(ActionEvent e)throws IOException{
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Dashboard.fxml")));
-
         anchorPane = (AnchorPane) root.lookup("#anchorPane");
-        init();
-
+        world = CreateWorld.init();
             try {
                 anchorPane.getChildren().add(world);
                 anchorPane.setBackground(new Background(new BackgroundFill(world.getBackgroundColor(), CornerRadii.EMPTY, Insets.EMPTY)));
@@ -135,7 +111,6 @@ public class Controller implements Initializable {
                 b.printStackTrace();
                 System.out.println("error");
             }
-
         stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setTitle("Dashboard window");
@@ -163,76 +138,30 @@ public class Controller implements Initializable {
         stage.show();
     }
 
-
+    // the method will register the user and return to the login page
     public void registeruser(ActionEvent e) throws SQLException, IOException {
         user = new User(name.getText(), lname.getText(), adress.getText(), email.getText(), number.getText());
-        //db = new DB();
-        boolean ok = saveUser(user);
+        boolean ok = Db.saveUser(user);
         if (ok){
-            renderPage(e);
+            renderLoginPage(e, "successfully registered the user!");
         }else {
-            System.out.println("no went through");
+            registration_error.setText("Couldn't register the information");
         }
     }
 
-    public boolean saveUser(User user) throws SQLException{
-        boolean ok = false;
-        if(user != null){
-            Connection con = getDatabaseConnection();
-            Statement stmt = con.createStatement();
-            stmt.executeUpdate("SET search_path TO jetstream;");
-            stmt.executeUpdate("insert into userr(u_f_name, u_l_name, u_address, u_email, u_phone_nr, u_password) values('" + user.getName() + "' , '" + user.getLname() + "' , '" + user.getAdress()+ "' , '" + user.getAdress() +"' , '" + user.getEmail() + "', '" + user.getNumber() +"')");
-            ResultSet rs = stmt.executeQuery("select * from userr where u_email = '" + user.getEmail() +"'");
-            while (rs.next()){
-                System.out.println("User saved not from db");
-                System.out.println(rs);
-            }
-            ok= true;
-            con.close();
-            stmt.close();
-        }
-        return ok;
+    // the method will switch the user to the login page
+    public void switchToLogin(ActionEvent e) throws IOException {
+        renderLoginPage(e, null);
     }
-    public Connection getDatabaseConnection() {
-
-        String url = "jdbc:postgresql://pgserver.mau.se:5432/am2510";
-        String user = "am2510";
-        String password = "zyvl0ir7";
-
-        Connection con = null;
-
-        try {
-            con = DriverManager.getConnection(url, user, password);
-            return con;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-
-
-    // the method will switch the user to the registration page
-    public void switchToLoginFromRegistration(ActionEvent e)throws IOException{
-        if (!name.getText().isEmpty() && !lname.getText().isEmpty() && !adress.getText().isEmpty() && !email.getText().isEmpty() && !number.getText().isEmpty()){
-            System.out.println(name.getText());
-            user = new User(name.getText(), lname.getText(), adress.getText(), email.getText(), number.getText());
-            userList.add(user);
-            renderPage(e);
-            // send this message to the login page
-            System.out.println("user successfully registered!");
-            //success_msg.setText("User successfully registered! \n ");
-        }else {
-            registration_error.setText("Empty field!");
-        }
-    }
-
-    public void renderPage(ActionEvent e) throws IOException {
+    // render pages
+    public void renderLoginPage(ActionEvent e, String msg) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Login.fxml")));
+        success_msg = (Label) root.lookup("#success_msg");
         stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setTitle("Login window");
         stage.setScene(scene);
+        success_msg.setText(msg);
         stage.show();
     }
 
@@ -258,6 +187,6 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("1231");
+
     }
 }
