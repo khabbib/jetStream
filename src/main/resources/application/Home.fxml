@@ -18,14 +18,9 @@
       </Button>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="538.0" layoutY="238.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="file:/Users/khabib/Documents/mau/Systemutveckling-project/jetStream/jetStream/src/image/jetStream.png" />
+            <Image url="@jetStream.png" />
          </image></ImageView>
       <Button layoutX="543.0" layoutY="481.0" mnemonicParsing="false" onAction="#switchToDashboard" style="-fx-background-color: #ff8000 #ff8000;" text="Explore" textFill="WHITE">
-         <padding>
-            <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
-         </padding>
-      </Button>
-      <Button fx:id="stacPane" layoutX="538.0" layoutY="526.0" mnemonicParsing="false" onAction="#openNewScene" style="-fx-background-color: #ff8000 #ff8000;" text="Ny scene" textFill="WHITE">
          <padding>
             <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
          </padding>
