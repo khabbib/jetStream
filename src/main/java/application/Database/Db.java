@@ -5,6 +5,23 @@ import application.Model.User;
 import java.sql.*;
 
 public class Db {
+    // get database connection
+    public static Connection getDatabaseConnection() {
+
+        String url = "jdbc:postgresql://pgserver.mau.se:5432/am2510";
+        String user = "am2510";
+        String password = "zyvl0ir7";
+
+        Connection con = null;
+
+        try {
+            con = DriverManager.getConnection(url, user, password);
+            return con;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     // register new user
     public static boolean saveUser(User user) throws SQLException {
@@ -68,23 +85,6 @@ public class Db {
         return user;
     }
 
-    // get database connection
-    public static Connection getDatabaseConnection() {
-
-        String url = "jdbc:postgresql://pgserver.mau.se:5432/am2510";
-        String user = "am2510";
-        String password = "zyvl0ir7";
-
-        Connection con = null;
-
-        try {
-            con = DriverManager.getConnection(url, user, password);
-            return con;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
 
 }

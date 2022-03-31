@@ -1,5 +1,8 @@
 package eu.hansolo.fx.world;
 
+import application.Controller;
+import application.Model.FlygResa;
+import application.NewScene;
 import javafx.application.Platform;
 import javafx.beans.DefaultProperty;
 import javafx.beans.property.BooleanProperty;
@@ -20,6 +23,7 @@ import javafx.css.StyleablePropertyFactory;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.event.WeakEventHandler;
+import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -27,6 +31,7 @@ import javafx.geometry.VPos;
 import javafx.scene.CacheHint;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
@@ -442,6 +447,7 @@ public class World extends Region {
         setTranslateY(getTranslateY() - Y);
     }
 
+    private static ArrayList<FlygResa> resor = new ArrayList<>();
     private void handleMouseEvent(final MouseEvent EVENT, final EventHandler<MouseEvent> HANDLER) {
         final CountryPath       COUNTRY_PATH = (CountryPath) EVENT.getSource();
         final String            COUNTRY_NAME = COUNTRY_PATH.getName();
@@ -481,6 +487,9 @@ public class World extends Region {
                     //game.checkAnswer(COUNTRY_NAME);
                     try {
                         getFlights(convert(COUNTRY_NAME));
+                        //Controller.setOutput_info(NewScene.showNewScene(COUNTRY_NAME, resor));
+                        Controller.fyllTable(NewScene.showNewScene(COUNTRY_NAME, resor));
+
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
@@ -593,24 +602,25 @@ public class World extends Region {
         }
     }
 
-    private void getFlights(String country) throws SQLException {
+    public static ArrayList<FlygResa> getFlights(String country) throws SQLException {
         Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
-
+        resor.clear();
         stmt.executeUpdate("SET search_path TO jetstream;");
         ResultSet flight = stmt.executeQuery("select * from flight where f_departure = '" + country + "';");
         while (flight.next()){
             String destination = flight.getString("f_destination");
             String date = flight.getString("f_date");
             System.out.println(destination + " | Date: " + date);
+            resor.add(new FlygResa(country, destination,date));
         }
-
 
         con.close();
         stmt.close();
+        return resor;
     }
 
-    public Connection getDatabaseConnection() {
+    public static Connection getDatabaseConnection() {
 
         String url = "jdbc:postgresql://pgserver.mau.se:5432/am2510";
         String user = "am2510";

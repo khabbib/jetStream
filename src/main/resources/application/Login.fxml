@@ -11,8 +11,8 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #112;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
-      <TextField fx:id="login_email" layoutX="525.0" layoutY="272.0" promptText="email" />
-      <TextField fx:id="login_pass" layoutX="526.0" layoutY="304.0" promptText="lösenord" />
+      <TextField fx:id="login_email" layoutX="525.0" layoutY="272.0" promptText="email" text="test@test.com" />
+      <TextField fx:id="login_pass" layoutX="526.0" layoutY="304.0" promptText="lösenord" text="123" />
       <Button layoutX="526.0" layoutY="342.0" mnemonicParsing="false" onAction="#switchToDashboard" prefHeight="25.0" prefWidth="149.0" style="-fx-background-color: #f87000;" text="Login" textFill="WHITE" />
       <Button fx:id="register" layoutX="526.0" layoutY="373.0" mnemonicParsing="false" onAction="#switchToRegistration" prefHeight="25.0" prefWidth="149.0" style="-fx-background-color: #347c9e;" text="Register" textFill="WHITE" />
       <ImageView fx:id="logo" fitHeight="44.0" fitWidth="36.0" layoutX="44.0" layoutY="20.0" onMouseClicked="#switchToHome" preserveRatio="true">

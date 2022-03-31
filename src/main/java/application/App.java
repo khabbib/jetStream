@@ -26,12 +26,8 @@ public class App extends Application {
     public void start(Stage stage) {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Home.fxml")));
-
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            //stage.getIcons().add(new Image("application/jetStream.png"));
-
-            //stage.initStyle(StageStyle.TRANSPARENT);
             stage.setTitle("Home");
             stage.show();
         }catch (Exception e){

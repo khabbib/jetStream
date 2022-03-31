@@ -1,8 +1,11 @@
 package application;
 import application.Database.Db;
 import application.Model.CreateWorld;
+import application.Model.FlygResa;
+import application.Model.SiteManager;
 import application.Model.User;
 import eu.hansolo.fx.world.World;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,9 +14,8 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -24,6 +26,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -103,13 +106,32 @@ public class Controller implements Initializable {
             error.setText("Full the field!");
         }
     }
+    @FXML
+    private static Label date_dash_flight;
 
+    @FXML
+    private static Label destination_dash_flight;
+
+    @FXML
+    private static Label from_dash_flight;
+
+    @FXML
+    private Label chosen_sit;
+
+
+
+    // the method will render dashboard page for user
     public void renderDashboard(ActionEvent e, User user)throws IOException{
         this.user = user;
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Dashboard.fxml")));
         anchorPane = (AnchorPane) root.lookup("#anchorPane");
         success_msg_dash = (Label) root.lookup("#success_msg_dash");
-        success_msg_dash.setText("User with the id: " + user.getId() + " & email: "+ user.getEmail() +" successfully logged in!");
+        //output_info = (Label) root.lookup("#output_info");
+        date_dash_flight = (Label) root.lookup("#date_dash_flight");
+        destination_dash_flight = (Label) root.lookup("#destination_dash_flight");
+        from_dash_flight = (Label) root.lookup("#from_dash_flight");
+        chosen_sit = (Label) root.lookup("#chosen_sit");
+        success_msg_dash.setText("Active");
         world = CreateWorld.init();
             try {
                 anchorPane.getChildren().add(world);
@@ -202,7 +224,15 @@ public class Controller implements Initializable {
     public void openProfile() {
         int user_id = Integer.parseInt(u_id.getText());
         User user = Db.getUserWithID(user_id);
-        NewScene.showNewScene(u_name.getText() + "'s Profile", user);
+        NewScene.showNewScene(user.getName() + "'s Profile", null);
+
+    }
+
+    public void choseSit(ActionEvent e){
+        int chosenSit = SiteManager.addSitePlace(40);
+        if (chosenSit != -1){
+            chosen_sit.setText(String.valueOf(chosenSit));
+        }
 
     }
 
@@ -211,6 +241,13 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
+
+    public static void fyllTable(ArrayList<FlygResa> resor){
+        date_dash_flight.setText(resor.get(0).getDate());
+        destination_dash_flight.setText(resor.get(0).getDistination());
+        from_dash_flight.setText(resor.get(0).getFrom());
 
     }
 }
