@@ -21,6 +21,8 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
@@ -239,7 +241,7 @@ public class Controller implements Initializable {
     }
 
     // the method will open the profile
-    public void openProfile() {
+    public void openProfile() throws FileNotFoundException {
         int user_id = Integer.parseInt(u_id.getText());
         User user = Db.getUserWithID(user_id);
         NewScene.showNewScene(user.getName() + "'s Profile", null);

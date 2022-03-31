@@ -49,6 +49,7 @@ import org.kordamp.ikonli.Ikon;
 import org.kordamp.ikonli.javafx.FontIcon;
 import org.kordamp.ikonli.materialdesign.MaterialDesign;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
@@ -491,6 +492,8 @@ public class World extends Region {
                         Controller.fyllTable(NewScene.showNewScene(COUNTRY_NAME, resor));
 
                     } catch (SQLException e) {
+                        e.printStackTrace();
+                    } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
                     color = getSelectedColor();
