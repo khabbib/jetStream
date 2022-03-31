@@ -1,10 +1,11 @@
 
+<img width="100" alt="Screenshot 2022-03-31 at 22 06 54" src="https://user-images.githubusercontent.com/51061202/161141094-c33fadd2-2135-41b8-b047-fdcdc209d465.png">
 
-A flight desktop application with an intractive world map and geolocation support.
+A desktop based flight application with an intractive world map and geolocation support.
+Application main goal is to serve individer with thier bookning flight in a very easy way.
 Java support javaFX as a tool that build desktop, mobile and other platform application. Therefore we used this powerful tool to build our gui as well as our front-end part.
 
 
-![Screenshot 2022-03-31 at 22 06 54](https://user-images.githubusercontent.com/51061202/161140691-dc0ef54f-d41b-4ac4-b153-f47e9c43e671.jpg)
 
 
 User dashboard window
