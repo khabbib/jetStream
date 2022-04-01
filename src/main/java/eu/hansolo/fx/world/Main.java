@@ -42,7 +42,7 @@ public class Main extends Application {
                             //.pressedColor(Color.web("#6cee85"))
                             //.locationColor(Color.web("#0000ff"))
                             //.selectedColor(Color.MAGENTA)
-                            .zoomEnabled(true)
+                            .zoomEnabled(false)
                             .selectionEnabled(true)
                             .build();
     }

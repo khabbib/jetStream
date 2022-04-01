@@ -15,10 +15,11 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
@@ -29,6 +30,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Controller implements Initializable {
     private Stage stage;
@@ -45,7 +48,7 @@ public class Controller implements Initializable {
     private User user;
     @FXML private TextField sender;
     @FXML private Label success_msg;
-    @FXML private Label success_msg_dash;
+    //@FXML private Label success_msg_dash;
     @FXML private Label u_name, u_id;
 
     // from registration
@@ -72,52 +75,40 @@ public class Controller implements Initializable {
     }
 
     // the method will switch the user to the dashboard page
-    public void switchToDashboard(ActionEvent e) {
+    public void switchToDashboard(ActionEvent e) throws IOException {
         if (!login_pass.getText().isEmpty() && !login_email.getText().isEmpty()) {
-            try {
-                User user = Db.authenticationUser(login_email.getText(), login_pass.getText());
-                if (user != null) {
-                    renderDashboard(e, user);
-                } else {
-                    error.setText("Wrong email or pass!");
-                }
-            } catch (IOException io) {
-                io.printStackTrace();
+            User user = Db.authenticationUser(login_email.getText(), login_pass.getText());
+            if (user != null) {
+                renderDashboard(e, user);
+            } else {
+                error.setText("Wrong email or pass!");
             }
         } else {
             error.setText("Fill the field!");
         }
     }
 
-    @FXML private static Label date_dash_flight;
-    @FXML private static Label destination_dash_flight;
-    @FXML private static Label from_dash_flight;
     @FXML private Label chosen_sit;
-
+    @FXML public static VBox display_filght;
+    //@FXML public static VBox valdeRese;
     // the method will render dashboard page for user
     public void renderDashboard(ActionEvent e, User user) throws IOException {
-        this.user = user;
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Dashboard.fxml")));
+        this.user = user;
+        display_filght = (VBox) root.lookup("#display_filght");
+        //valdeRese = (VBox) root.lookup("#valdeRese");
+        System.out.println("hhelelffljdsfljsd");
         anchorPane = (AnchorPane) root.lookup("#anchorPane");
-        success_msg_dash = (Label) root.lookup("#success_msg_dash");
-        //output_info = (Label) root.lookup("#output_info");
-        date_dash_flight = (Label) root.lookup("#date_dash_flight");
-        destination_dash_flight = (Label) root.lookup("#destination_dash_flight");
-        from_dash_flight = (Label) root.lookup("#from_dash_flight");
         chosen_sit = (Label) root.lookup("#chosen_sit");
-        success_msg_dash.setText("Active");
         world = CreateWorld.init();
-        try {
-            anchorPane.getChildren().add(world);
-            anchorPane.setBackground(new Background(new BackgroundFill(world.getBackgroundColor(), CornerRadii.EMPTY, Insets.EMPTY)));
-            System.out.println(user.getName() + " , " + user.getId());
-            u_name = (Label) root.lookup("#u_name");
-            u_id = (Label) root.lookup("#u_id");
-            u_name.setText(user.getName());
-            u_id.setText(user.getId());
-        } catch (Exception b) {
-            b.printStackTrace();
-        }
+
+        anchorPane.getChildren().add(world);
+        anchorPane.setBackground(new Background(new BackgroundFill(world.getBackgroundColor(), CornerRadii.EMPTY, Insets.EMPTY)));
+        System.out.println(user.getName() + ", " + user.getId());
+        u_name = (Label) root.lookup("#u_name");
+        u_id = (Label) root.lookup("#u_id");
+        u_name.setText(user.getName());
+        u_id.setText(user.getId());
         stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setTitle("Dashboard window");
@@ -249,9 +240,9 @@ public class Controller implements Initializable {
     }
 
     public void choseSit(ActionEvent e) {
-        int chosenSit = SiteManager.addSitePlace(40);
-        if (chosenSit != -1) {
-            chosen_sit.setText(String.valueOf(chosenSit));
+        String chosenSit = SiteManager.addSitePlace();
+        if (chosenSit != null) {
+            chosen_sit.setText(chosenSit);
         }
 
     }
@@ -289,9 +280,67 @@ public class Controller implements Initializable {
 
     }
 
+
     public static void fyllTable (ArrayList < FlygResa > resor) {
-        date_dash_flight.setText(resor.get(0).getDate());
+        display_filght.getChildren().clear();
+        ArrayList<FlygResa> compare = new ArrayList<>();
+        for (int i = 0; i < resor.size();i++){
+            ScrollPane sp = new ScrollPane();
+
+            HBox hbox = new HBox(1);
+            hbox.setPadding(new Insets(20));
+            //hbox.setBorder(new Border(new BorderStroke(Color.PINK,BorderStrokeStyle.DASHED,null,null)));
+            hbox.setEffect(new DropShadow(2.0, Color.BLACK));
+            hbox.setBackground(new Background(new BackgroundFill(Color.rgb(210,210,210),
+                    CornerRadii.EMPTY,
+                    Insets.EMPTY)));
+            //Label nr = new Label();
+            hbox.setSpacing(10);
+            //nr.setText(i + ". ");
+
+            Image img = new Image("/application/jetStream.png");
+
+            ImageView image = new ImageView(img);
+            image.setFitWidth(40);
+            image.setFitHeight(50);
+
+            Label titleF = new Label();
+            titleF.setText(resor.get(i).getFrom());
+
+            Label titleD = new Label();
+            titleD.setText(resor.get(i).getDistination());
+            Label date = new Label();
+            date.setText(resor.get(i).getDate());
+
+            Button btn = new Button("Välja");
+            btn.setStyle("-fx-background-color: #eee; -fx-text-fill: #333; -fx-padding: 20px 35");
+            int finalI1 = i;
+            btn.setOnAction(e -> {
+                //valdeRese.getChildren().clear();
+                //valdeRese.getChildren().add(display_filght.getChildren().get(finalI1));
+                display_filght.getChildren().get(finalI1).setOpacity(0.8);
+                for (int m = 0; m < display_filght.getChildren().size(); m++){
+                    if (display_filght.getChildren().get(m) != display_filght.getChildren().get(finalI1)) {
+                        display_filght.getChildren().get(m).setOpacity(1);
+                    }
+                }
+                compare.add(resor.get(finalI1));
+
+                /*HBox ls = new HBox();
+                ls.getChildren().add(display_filght.getChildren().get(finalI1));
+                hbox.setBackground(new Background(new BackgroundFill(Color.rgb(133, 200, 138),
+                        CornerRadii.EMPTY,
+                        Insets.EMPTY)));
+                hbox.setAlignment(Pos.TOP_CENTER);
+                display_filght.getChildren().clear();
+                display_filght.getChildren().add(ls);*/
+            });
+            hbox.getChildren().addAll(image, titleF, titleD, btn);
+            display_filght.getChildren().addAll(hbox);
+            sp.setContent(display_filght);
+        }
+        /*date_dash_flight.setText(resor.get(0).getDate());
         destination_dash_flight.setText(resor.get(0).getDistination());
-        from_dash_flight.setText(resor.get(0).getFrom());
+        from_dash_flight.setText(resor.get(0).getFrom());*/
     }
 }

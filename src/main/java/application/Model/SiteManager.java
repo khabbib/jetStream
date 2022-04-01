@@ -1,51 +1,106 @@
 package application.Model;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.geometry.Pos;
-import javafx.scene.ImageCursor;
+import javafx.geometry.Insets;
+import javafx.scene.LightBase;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import javax.swing.*;
-import java.util.ArrayList;
+import java.util.Objects;
 
 public class SiteManager {
-    public static int addSitePlace(int antalPlats) {
+    private static GridPane grid = new GridPane(); //Layout
+    private static AnchorPane pane = new AnchorPane();
+    private static VBox sitbox = new VBox();
+    private static Label label = new Label();      // Label
+    private static Label siteShow = new Label();
+    private static int height = 600;
+    private static int width = 600;
+    private static int pixel = 30;
+    private static String returnSite;
+    private static int plat;
+
+
+
+    public static String addSitePlace() {
         Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
+        grid.setGridLinesVisible(true);
+        stage.initModality(Modality.WINDOW_MODAL);
         stage.setTitle("Chose a site place");
-        stage.setMinWidth(1000);
-        stage.setMinHeight(400);
+        Scene scene = new Scene(sitbox, width, height);
+        grid.setGridLinesVisible(true);
+        FillingLayoutWithLabels(80);
+        setupWindow();
+        stage.setScene(scene);
+        stage.show();
 
-        int output = -1;
-        GridPane grid = new GridPane();
-        grid.addColumn(10);
-        grid.addRow(10);
-        for (int i = 0; i <= antalPlats; i++){
-            for (int r = 0; r <= antalPlats/10; r++){
-                Label sit = new Label("" + i);
-                grid.add(sit, i,r);
+        return returnSite;
+    }
+    private static HBox sitHbox;
+    private static Label newSit = new Label();
+    private static void setupWindow() {
+        Button btn = new Button("Add sit");
+        Label sitTxt = new Label("Chosen Sit: ");
+        sitHbox = new HBox();
+        sitHbox.getChildren().addAll(sitTxt, newSit, btn);
+        sitHbox.setPadding(new Insets(10));
 
+        pane.getChildren().addAll(btn);
+        SiteManager.sitbox.getChildren().addAll(grid, pane);
+    }
+
+
+    private static void FillingLayoutWithLabels(int plats) {
+        plat = plats;
+        for(int i = 0;i< plats ;i++){
+            for(int j = 0;j<plats/10 ; j++){
+                addLabel(i,j);
             }
-            // Image img = new Image("jetStream.png");
         }
 
-        VBox layout = new VBox(10);
-        layout.getChildren().addAll(grid);
-        layout.setAlignment(Pos.CENTER);
-        Scene scene = new Scene(layout);
-        stage.setScene(scene);
-        stage.showAndWait();
-        return 33;
-    };
+    }
+
+    public static void addLabel(int columnIndex, int rowIndex) {
+
+        Label label = new Label();
+        label.setMinWidth(pixel);
+        label.setText(label.getId());
+        label.setMinHeight(pixel);
+        label.setBackground(new Background(new BackgroundFill(Color.rgb(223, 223, 222),
+                new CornerRadii (5),
+                Insets.EMPTY)));
+        label.setBorder(new Border(new BorderStroke(Color.rgb(247, 245, 242), BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(1))));
+        GridPane.setColumnIndex(label, columnIndex);
+        GridPane.setRowIndex(label, rowIndex);
+        label.setId(rowIndex+ " " + columnIndex);
+        SiteManager.grid.getChildren().add(label);
+
+        label.setOnMouseClicked((MouseClick) ->{
+            System.out.println("hellooo");
+            clickedHandle(label.getId());
+
+            label.setBackground(new Background(new BackgroundFill(Color.rgb(255, 142, 0),
+                    new CornerRadii (5),
+                    Insets.EMPTY)));
+
+            for (int i = 0; i < grid.getChildren().size(); i++){
+                grid.getChildren().get(i).setOpacity(1);
+                if (!Objects.equals(grid.getChildren().get(i).getId(), label.getId())){
+                    grid.getChildren().get(i).setOpacity(0.2);
+                }
+                }
+
+        });
+    }
+
+    private static void clickedHandle(String id) {
+        returnSite = id;
+    }
+
 }
+
+

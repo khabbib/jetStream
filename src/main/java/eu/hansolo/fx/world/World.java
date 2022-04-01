@@ -67,9 +67,6 @@ import static javafx.scene.input.MouseEvent.MOUSE_PRESSED;
 import static javafx.scene.input.MouseEvent.MOUSE_RELEASED;
 
 
-/**
- * Created by hansolo on 22.11.16.
- */
 @DefaultProperty("children")
 public class World extends Region {
     public enum Resolution { HI_RES, LO_RES };
@@ -439,8 +436,8 @@ public class World extends Region {
         */
 
         setScaleFactor(sf);
-        group.setTranslateX(width * 0.5 - (areaCenterX));
-        group.setTranslateY(height * 0.5 - (areaCenterY));
+        group.setTranslateX(width * 0.8 - (areaCenterX));
+        group.setTranslateY(height * 0.8 - (areaCenterY));
     }
 
     private void setPivot(final double X, final double Y) {
@@ -489,11 +486,11 @@ public class World extends Region {
                     try {
                         getFlights(convert(COUNTRY_NAME));
                         //Controller.setOutput_info(NewScene.showNewScene(COUNTRY_NAME, resor));
-                        Controller.fyllTable(NewScene.showNewScene(COUNTRY_NAME, resor));
+                        //Controller.fyllTable(NewScene.showNewScene(COUNTRY_NAME, resor));
+                        Controller.fyllTable(resor);
+
 
                     } catch (SQLException e) {
-                        e.printStackTrace();
-                    } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
                     color = getSelectedColor();
