@@ -77,8 +77,8 @@ public class World extends Region {
     private static final double                          PREFERRED_HEIGHT = 665;
     private static final double                          MINIMUM_WIDTH    = 100;
     private static final double                          MINIMUM_HEIGHT    = 66;
-    private static final double                          MAXIMUM_WIDTH    = 2018/4;
-    private static final double                          MAXIMUM_HEIGHT   = 1330/4;
+    private static final double                          MAXIMUM_WIDTH    = 2018/3;
+    private static final double                          MAXIMUM_HEIGHT   = 1330/3;
     private static       double                          MAP_OFFSET_X     = -PREFERRED_WIDTH * 0.0285;
     private static       double                          MAP_OFFSET_Y     = PREFERRED_HEIGHT * 0.195;
     private static final double                          ASPECT_RATIO     = PREFERRED_HEIGHT / PREFERRED_WIDTH;
