@@ -33,23 +33,22 @@
             <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
          </padding>
       </Button>
-      <VBox fx:id="activitet_bg" layoutX="95.0" layoutY="111.0" prefHeight="474.0" prefWidth="738.0" style="-fx-background-color: #121212;">
-         <children>
-            <Accordion />
-            <AnchorPane fx:id="anchorPane" opacity="0.5" prefHeight="481.0" prefWidth="677.0" style="-fx-background-color: #121212;" />
-         </children>
-      </VBox>
       <Text fill="WHITE" layoutX="110.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kartan">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Text>
-      <VBox fx:id="display_filght" layoutX="843.0" layoutY="111.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="474.0" prefWidth="346.0" style="-fx-background-color: #191919;">
+      <VBox layoutX="95.0" layoutY="111.0" prefHeight="468.0" prefWidth="744.0">
+         <children>
+            <AnchorPane fx:id="anchorPane" prefHeight="472.0" prefWidth="744.0" />
+         </children>
+      </VBox>
+      <VBox fx:id="display_filght" layoutX="843.0" layoutY="111.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="592.0" prefWidth="346.0" style="-fx-background-color: #112;">
          <children>
             <Accordion />
          </children>
       </VBox>
-      <Text fill="WHITE" layoutX="848.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected flight">
+      <Text fill="WHITE" layoutX="848.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Avilable flights">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
@@ -59,13 +58,5 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Button graphicTextGap="6.0" layoutX="1064.0" layoutY="60.0" mnemonicParsing="false" onAction="#choseSit" style="-fx-background-color: #ff8000;" text="Chose sit" textFill="WHITE">
-         <padding>
-            <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
-         </padding>
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Button>
    </children>
 </AnchorPane>

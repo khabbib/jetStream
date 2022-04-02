@@ -70,7 +70,7 @@ public class NewScene {
                 btn.setStyle("-fx-background-color: #eee; -fx-text-fill: #333; -fx-padding: 20px 35");
                 int finalI = i;
                 btn.setOnAction(l -> {
-                    compare.add(new FlygResa(resor.get(finalI).getFrom(), resor.get(finalI).getDistination(), resor.get(finalI).getDate()));
+                    compare.add(new FlygResa(resor.get(finalI).getFrom(), resor.get(finalI).getDistination(), resor.get(finalI).getDate(), resor.get(finalI).getTime()));
                     stage.close();
                 });
                 hbox.setAlignment(Pos.CENTER_LEFT);

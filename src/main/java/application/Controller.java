@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -18,9 +19,11 @@ import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
@@ -31,7 +34,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Controller implements Initializable {
     private Stage stage;
@@ -84,11 +86,11 @@ public class Controller implements Initializable {
                 error.setText("Wrong email or pass!");
             }
         } else {
-            error.setText("Fill the field!");
+            renderDashboard(e, user);
         }
     }
 
-    @FXML private Label chosen_sit;
+    @FXML private static Label chosen_sit;
     @FXML public static VBox display_filght;
     //@FXML public static VBox valdeRese;
     // the method will render dashboard page for user
@@ -96,8 +98,6 @@ public class Controller implements Initializable {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Dashboard.fxml")));
         this.user = user;
         display_filght = (VBox) root.lookup("#display_filght");
-        //valdeRese = (VBox) root.lookup("#valdeRese");
-        System.out.println("hhelelffljdsfljsd");
         anchorPane = (AnchorPane) root.lookup("#anchorPane");
         chosen_sit = (Label) root.lookup("#chosen_sit");
         world = CreateWorld.init();
@@ -114,6 +114,33 @@ public class Controller implements Initializable {
         stage.setTitle("Dashboard window");
         stage.setScene(scene);
         stage.show();
+    }
+
+
+
+
+    /*************************************  short cut login EXPLORE  **************************************************/
+
+    public void noLoginRequired(ActionEvent e) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Dashboard.fxml")));
+        display_filght = (VBox) root.lookup("#display_filght");
+        anchorPane = (AnchorPane) root.lookup("#anchorPane");
+        chosen_sit = (Label) root.lookup("#chosen_sit");
+        world = CreateWorld.init();
+
+        anchorPane.getChildren().add(world);
+        anchorPane.setBackground(new Background(new BackgroundFill(world.getBackgroundColor(), CornerRadii.EMPTY, Insets.EMPTY)));
+
+        u_name = (Label) root.lookup("#u_name");
+        u_id = (Label) root.lookup("#u_id");
+        u_name.setText(null);
+        u_id.setText(null);
+        stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setTitle("Test dashboard window");
+        stage.setScene(scene);
+        stage.show();
+
     }
 
     // the method will switch the user to the checking page
@@ -239,7 +266,7 @@ public class Controller implements Initializable {
 
     }
 
-    public void choseSit(ActionEvent e) {
+    public static void choseSit() {
         String chosenSit = SiteManager.addSitePlace();
         if (chosenSit != null) {
             chosen_sit.setText(chosenSit);
@@ -281,41 +308,77 @@ public class Controller implements Initializable {
     }
 
 
+    // the method will show the flights list on the right side of the dashboard when a user choose a country
     public static void fyllTable (ArrayList < FlygResa > resor) {
         display_filght.getChildren().clear();
+        Stage infoStage = new Stage();
+        AtomicBoolean openedStage = new AtomicBoolean(false);
         ArrayList<FlygResa> compare = new ArrayList<>();
         for (int i = 0; i < resor.size();i++){
-            ScrollPane sp = new ScrollPane();
+            StackPane stackholer = new StackPane();
+
 
             HBox hbox = new HBox(1);
-            hbox.setPadding(new Insets(20));
-            //hbox.setBorder(new Border(new BorderStroke(Color.PINK,BorderStrokeStyle.DASHED,null,null)));
-            hbox.setEffect(new DropShadow(2.0, Color.BLACK));
-            hbox.setBackground(new Background(new BackgroundFill(Color.rgb(210,210,210),
-                    CornerRadii.EMPTY,
-                    Insets.EMPTY)));
-            //Label nr = new Label();
-            hbox.setSpacing(10);
-            //nr.setText(i + ". ");
+            HBox hboxChildCenter = new HBox(1);
+            HBox hboxChildRight = new HBox(1);
 
             Image img = new Image("/application/jetStream.png");
-
             ImageView image = new ImageView(img);
-            image.setFitWidth(40);
-            image.setFitHeight(50);
+            image.setFitWidth(30);
+            image.setFitHeight(40);
+
+            // flight icons
+            Image onboard = new Image("/application/image/onboard.png");
+            ImageView onboardIcon = new ImageView(onboard);
+            onboardIcon.setFitWidth(30);
+            onboardIcon.setOpacity(0.5);
+            onboardIcon.setFitHeight(30);
+
+            Image path = new Image("/application/image/path.png");
+            ImageView pathIcon = new ImageView(path);
+            pathIcon.setFitWidth(70);
+            pathIcon.setFitHeight(30);
+            pathIcon.setStyle("-fx-margin: 0 40 0 40");
+
+            Image landing = new Image("/application/image/landing.png");
+            ImageView landingIcon = new ImageView(landing);
+            landingIcon.setOpacity(0.5);
+            landingIcon.setFitWidth(25);
+            landingIcon.setFitHeight(25);
 
             Label titleF = new Label();
+            titleF.setMaxSize(50,40);
+
             titleF.setText(resor.get(i).getFrom());
 
+            Text depTime = new Text();
+            depTime.setText(resor.get(i).getTime());
+            depTime.setStyle("-fx-font-weight: bold");
+            Text desTime = new Text();
+            desTime.setText(resor.get(i).getTime()); // calculate arriving time
+            desTime.setStyle("-fx-font-weight: bold");
+
+
             Label titleD = new Label();
+            titleD.setMaxSize(50,40);
             titleD.setText(resor.get(i).getDistination());
+
             Label date = new Label();
             date.setText(resor.get(i).getDate());
+            // box holderx
+            VBox boardingBox = new VBox();
+            boardingBox.setAlignment(Pos.CENTER_LEFT);
+            boardingBox.getChildren().addAll(onboardIcon, depTime, titleF);
+            // box holder
+            VBox landingBox = new VBox();
+            landingBox.setAlignment(Pos.CENTER_LEFT);
+            landingBox.getChildren().addAll(landingIcon,desTime, titleD);
 
-            Button btn = new Button("Välja");
-            btn.setStyle("-fx-background-color: #eee; -fx-text-fill: #333; -fx-padding: 20px 35");
+            Button btn = new Button("Pick sit");
+            btn.setStyle("-fx-background-color:  #ff8000; -fx-text-fill: #333; -fx-padding: 10 35;");
             int finalI1 = i;
             btn.setOnAction(e -> {
+                choseSit();
                 //valdeRese.getChildren().clear();
                 //valdeRese.getChildren().add(display_filght.getChildren().get(finalI1));
                 display_filght.getChildren().get(finalI1).setOpacity(0.8);
@@ -335,9 +398,44 @@ public class Controller implements Initializable {
                 display_filght.getChildren().clear();
                 display_filght.getChildren().add(ls);*/
             });
-            hbox.getChildren().addAll(image, titleF, titleD, btn);
-            display_filght.getChildren().addAll(hbox);
-            sp.setContent(display_filght);
+
+            hboxChildCenter.getChildren().addAll(boardingBox, pathIcon, landingBox);
+            hboxChildCenter.setSpacing(15);
+            hboxChildCenter.setAlignment(Pos.CENTER_LEFT);
+
+            hboxChildRight.getChildren().add(btn);
+            hboxChildRight.setAlignment(Pos.CENTER_RIGHT);
+
+            /***************  main box to hold the list  *********************/
+            hbox.setBackground(new Background(new BackgroundFill(Color.rgb(247, 245, 242), CornerRadii.EMPTY, Insets.EMPTY)));
+            hbox.getChildren().addAll(hboxChildCenter, hboxChildRight);
+            hbox.setHgrow(hboxChildCenter, Priority.ALWAYS);
+            hbox.setPadding(new Insets(5));
+            hbox.setEffect(new DropShadow(2.0, Color.BLACK));
+            hbox.setAlignment(Pos.TOP_LEFT);
+            hbox.setSpacing(30);
+
+            stackholer.getChildren().add(hbox);
+            stackholer.setAlignment(Pos.TOP_LEFT);
+            display_filght.getChildren().addAll(stackholer); // the box
+            display_filght.setAlignment(Pos.TOP_LEFT);
+
+            hbox.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+                if (!openedStage.get()){
+                    infoStage.show();
+                    openedStage.set(true);
+                }else if(openedStage.get()){
+                    infoStage.close();
+                    openedStage.set(false);
+                }
+                hbox.setBackground(new Background(new BackgroundFill(Color.rgb(223, 223, 222), CornerRadii.EMPTY, Insets.EMPTY)));
+
+            });
+            hbox.addEventFilter(MouseEvent.MOUSE_EXITED, e -> {
+                hbox.setBackground(new Background(new BackgroundFill(Color.rgb(247, 245, 242), CornerRadii.EMPTY, Insets.EMPTY)));
+            });
+
+
         }
         /*date_dash_flight.setText(resor.get(0).getDate());
         destination_dash_flight.setText(resor.get(0).getDistination());

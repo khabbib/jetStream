@@ -1,5 +1,6 @@
 package application.Model;
 
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.LightBase;
 import javafx.scene.Scene;
@@ -23,15 +24,17 @@ public class SiteManager {
     private static int pixel = 30;
     private static String returnSite;
     private static int plat;
+    private static Stage stage;
+    private static Scene scene;
 
 
 
     public static String addSitePlace() {
-        Stage stage = new Stage();
+        stage = new Stage();
         grid.setGridLinesVisible(true);
         stage.initModality(Modality.WINDOW_MODAL);
         stage.setTitle("Chose a site place");
-        Scene scene = new Scene(sitbox, width, height);
+        scene = new Scene(sitbox, width, height);
         grid.setGridLinesVisible(true);
         FillingLayoutWithLabels(80);
         setupWindow();
@@ -48,7 +51,9 @@ public class SiteManager {
         sitHbox = new HBox();
         sitHbox.getChildren().addAll(sitTxt, newSit, btn);
         sitHbox.setPadding(new Insets(10));
-
+        btn.setOnAction(event -> {
+            stage.close();
+        });
         pane.getChildren().addAll(btn);
         SiteManager.sitbox.getChildren().addAll(grid, pane);
     }
@@ -92,8 +97,7 @@ public class SiteManager {
                 if (!Objects.equals(grid.getChildren().get(i).getId(), label.getId())){
                     grid.getChildren().get(i).setOpacity(0.2);
                 }
-                }
-
+            }
         });
     }
 
