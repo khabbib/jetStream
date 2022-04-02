@@ -39,8 +39,6 @@ public class Controller implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
-    // @FXML tar in en reference from javaFX element
-    @FXML private Circle avatar; // profile circle
     @FXML private ButtonBar logout; // btn bar
     @FXML private TextField login_pass;
     @FXML private AnchorPane anchorPane;
@@ -48,20 +46,14 @@ public class Controller implements Initializable {
     @FXML private Label error;
     @FXML private Label registration_error;
     private User user;
-    @FXML private TextField sender;
     @FXML private Label success_msg;
-    //@FXML private Label success_msg_dash;
     @FXML private Label u_name, u_id;
 
     // from registration
     @FXML
     private TextField name, lname, adress, email, number, password;
-    private ArrayList<User> userList = new ArrayList<>();
-    private String msg;
-
     private World world;
 
-    public void openNewScene(ActionEvent e) {}
 
     //////  NAVIGATE TO PAGES  ///////
 
