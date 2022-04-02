@@ -2,8 +2,8 @@ package application;
 
 import application.Database.Db;
 import application.Model.CreateWorld;
-import application.Model.FlygResa;
-import application.Model.SiteManager;
+import application.Model.Flight;
+import application.Model.SeatManager;
 import application.Model.User;
 import eu.hansolo.fx.world.World;
 import javafx.event.ActionEvent;
@@ -22,7 +22,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -39,6 +38,7 @@ public class Controller implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
+    private CreateWorld createWorld;
     @FXML private ButtonBar logout; // btn bar
     @FXML private TextField login_pass;
     @FXML private AnchorPane anchorPane;
@@ -48,6 +48,8 @@ public class Controller implements Initializable {
     private User user;
     @FXML private Label success_msg;
     @FXML private Label u_name, u_id;
+    @FXML private Label chosen_seat;
+    @FXML private VBox display_flight;
 
     // from registration
     @FXML
@@ -82,17 +84,16 @@ public class Controller implements Initializable {
         }
     }
 
-    @FXML private static Label chosen_sit;
-    @FXML public static VBox display_filght;
     //@FXML public static VBox valdeRese;
     // the method will render dashboard page for user
     public void renderDashboard(ActionEvent e, User user) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Dashboard.fxml")));
         this.user = user;
-        display_filght = (VBox) root.lookup("#display_filght");
+        display_flight = (VBox) root.lookup("#display_flight");
         anchorPane = (AnchorPane) root.lookup("#anchorPane");
-        chosen_sit = (Label) root.lookup("#chosen_sit");
-        world = CreateWorld.init();
+        chosen_seat = (Label) root.lookup("#chosen_seat");
+        createWorld = new CreateWorld();
+        world = createWorld.init(this);
 
         anchorPane.getChildren().add(world);
         anchorPane.setBackground(new Background(new BackgroundFill(world.getBackgroundColor(), CornerRadii.EMPTY, Insets.EMPTY)));
@@ -115,10 +116,11 @@ public class Controller implements Initializable {
 
     public void noLoginRequired(ActionEvent e) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Dashboard.fxml")));
-        display_filght = (VBox) root.lookup("#display_filght");
+        display_flight = (VBox) root.lookup("#display_flight");
         anchorPane = (AnchorPane) root.lookup("#anchorPane");
-        chosen_sit = (Label) root.lookup("#chosen_sit");
-        world = CreateWorld.init();
+        chosen_seat = (Label) root.lookup("#chosen_seat");
+        createWorld = new CreateWorld();
+        world = createWorld.init(this);
 
         anchorPane.getChildren().add(world);
         anchorPane.setBackground(new Background(new BackgroundFill(world.getBackgroundColor(), CornerRadii.EMPTY, Insets.EMPTY)));
@@ -255,15 +257,13 @@ public class Controller implements Initializable {
         int user_id = Integer.parseInt(u_id.getText());
         User user = Db.getUserWithID(user_id);
         NewScene.showNewScene(user.getName() + "'s Profile", null);
-
     }
 
-    public static void choseSit() {
-        String chosenSit = SiteManager.addSitePlace();
-        if (chosenSit != null) {
-            chosen_sit.setText(chosenSit);
+    public void chooseSeat() {
+        String chosenSeat = SeatManager.addSeatPlace();
+        if (chosenSeat != null) {
+            chosen_seat.setText(chosenSeat);
         }
-
     }
 
     public void exit(ActionEvent event) {
@@ -301,12 +301,13 @@ public class Controller implements Initializable {
 
 
     // the method will show the flights list on the right side of the dashboard when a user choose a country
-    public static void fyllTable (ArrayList < FlygResa > resor) {
-        display_filght.getChildren().clear();
+    public void fyllTable (ArrayList <Flight> flights) {
+
+        display_flight.getChildren().clear();
         Stage infoStage = new Stage();
         AtomicBoolean openedStage = new AtomicBoolean(false);
-        ArrayList<FlygResa> compare = new ArrayList<>();
-        for (int i = 0; i < resor.size();i++){
+        ArrayList<Flight> compare = new ArrayList<>();
+        for (int i = 0; i < flights.size();i++){
             StackPane stackholer = new StackPane();
 
 
@@ -341,22 +342,22 @@ public class Controller implements Initializable {
             Label titleF = new Label();
             titleF.setMaxSize(50,40);
 
-            titleF.setText(resor.get(i).getFrom());
+            titleF.setText(flights.get(i).getFrom());
 
             Text depTime = new Text();
-            depTime.setText(resor.get(i).getTime());
+            depTime.setText(flights.get(i).getTime());
             depTime.setStyle("-fx-font-weight: bold");
             Text desTime = new Text();
-            desTime.setText(resor.get(i).getTime()); // calculate arriving time
+            desTime.setText(flights.get(i).getTime()); // calculate arriving time
             desTime.setStyle("-fx-font-weight: bold");
 
 
             Label titleD = new Label();
             titleD.setMaxSize(50,40);
-            titleD.setText(resor.get(i).getDistination());
+            titleD.setText(flights.get(i).getDestination());
 
             Label date = new Label();
-            date.setText(resor.get(i).getDate());
+            date.setText(flights.get(i).getDate());
             // box holderx
             VBox boardingBox = new VBox();
             boardingBox.setAlignment(Pos.CENTER_LEFT);
@@ -366,20 +367,20 @@ public class Controller implements Initializable {
             landingBox.setAlignment(Pos.CENTER_LEFT);
             landingBox.getChildren().addAll(landingIcon,desTime, titleD);
 
-            Button btn = new Button("Pick sit");
-            btn.setStyle("-fx-background-color:  #ff8000; -fx-text-fill: #333; -fx-padding: 10 35;");
+            Button btn = new Button("Pick seat");
+            btn.setStyle("-fx-background-color:  #ff8000; -fx-text-fill: #333; -fx-padding: 10 25; ");
             int finalI1 = i;
             btn.setOnAction(e -> {
-                choseSit();
+                chooseSeat();
                 //valdeRese.getChildren().clear();
                 //valdeRese.getChildren().add(display_filght.getChildren().get(finalI1));
-                display_filght.getChildren().get(finalI1).setOpacity(0.8);
-                for (int m = 0; m < display_filght.getChildren().size(); m++){
-                    if (display_filght.getChildren().get(m) != display_filght.getChildren().get(finalI1)) {
-                        display_filght.getChildren().get(m).setOpacity(1);
+                display_flight.getChildren().get(finalI1).setOpacity(0.8);
+                for (int m = 0; m < display_flight.getChildren().size(); m++){
+                    if (display_flight.getChildren().get(m) != display_flight.getChildren().get(finalI1)) {
+                        display_flight.getChildren().get(m).setOpacity(1);
                     }
                 }
-                compare.add(resor.get(finalI1));
+                compare.add(flights.get(finalI1));
 
                 /*HBox ls = new HBox();
                 ls.getChildren().add(display_filght.getChildren().get(finalI1));
@@ -409,8 +410,8 @@ public class Controller implements Initializable {
 
             stackholer.getChildren().add(hbox);
             stackholer.setAlignment(Pos.TOP_LEFT);
-            display_filght.getChildren().addAll(stackholer); // the box
-            display_filght.setAlignment(Pos.TOP_LEFT);
+            display_flight.getChildren().addAll(stackholer); // the box
+            display_flight.setAlignment(Pos.TOP_LEFT);
 
             hbox.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
                 if (!openedStage.get()){
@@ -429,8 +430,8 @@ public class Controller implements Initializable {
 
 
         }
-        /*date_dash_flight.setText(resor.get(0).getDate());
-        destination_dash_flight.setText(resor.get(0).getDistination());
-        from_dash_flight.setText(resor.get(0).getFrom());*/
+        /*date_dash_flight.setText(flights.get(0).getDate());
+        destination_dash_flight.setText(flights.get(0).getDistination());
+        from_dash_flight.setText(flights.get(0).getFrom());*/
     }
 }

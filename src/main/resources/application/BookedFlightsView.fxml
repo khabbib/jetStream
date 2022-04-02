@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<AnchorPane prefHeight="601.0" prefWidth="927.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.Controller">
+<AnchorPane prefHeight="601.0" prefWidth="927.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
       <ListView layoutX="91.0" layoutY="91.0" prefHeight="454.0" prefWidth="630.0" />
       <Button layoutX="754.0" layoutY="334.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="136.0" text="Delete booking" />

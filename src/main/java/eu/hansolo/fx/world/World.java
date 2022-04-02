@@ -1,8 +1,7 @@
 package eu.hansolo.fx.world;
 
 import application.Controller;
-import application.Model.FlygResa;
-import application.NewScene;
+import application.Model.Flight;
 import javafx.application.Platform;
 import javafx.beans.DefaultProperty;
 import javafx.beans.property.BooleanProperty;
@@ -11,10 +10,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.DoublePropertyBase;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ObjectPropertyBase;
-import javafx.collections.FXCollections;
-import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
 import javafx.css.CssMetaData;
 import javafx.css.Styleable;
 import javafx.css.StyleableObjectProperty;
@@ -23,16 +19,12 @@ import javafx.css.StyleablePropertyFactory;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.event.WeakEventHandler;
-import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
-import javafx.geometry.VPos;
 import javafx.scene.CacheHint;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Background;
@@ -41,15 +33,11 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.Shape;
-import javafx.scene.text.Font;
 import org.kordamp.ikonli.Ikon;
-import org.kordamp.ikonli.javafx.FontIcon;
 import org.kordamp.ikonli.materialdesign.MaterialDesign;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
@@ -121,15 +109,17 @@ public class World extends Region {
     private              EventHandler<MouseEvent>        mousePressHandler;
     private              EventHandler<MouseEvent>        mouseReleaseHandler;
     private              EventHandler<MouseEvent>        mouseExitHandler;
+    private              Controller                      controller;
 
     //private              Game                            game;
 
 
     // ******************** Constructors **************************************
-    public World() {
-        this(Resolution.HI_RES);
-    }
-    public World(final Resolution RESOLUTION) {
+    public World(final Resolution RESOLUTION,Controller controller) {
+        this.controller = controller;
+        if (controller == null) {
+            System.out.println("this controller");
+        }
         //game = new Game(this);
         resolutionProperties = readProperties(Resolution.HI_RES == RESOLUTION ? World.HIRES_PROPERTIES : World.LORES_PROPERTIES);
         backgroundColor      = new StyleableObjectProperty<Color>(BACKGROUND_COLOR.getInitialValue(World.this)) {
@@ -445,7 +435,7 @@ public class World extends Region {
         setTranslateY(getTranslateY() - Y);
     }
 
-    private static ArrayList<FlygResa> resor = new ArrayList<>();
+    private static ArrayList<Flight> resor = new ArrayList<>();
     private void handleMouseEvent(final MouseEvent EVENT, final EventHandler<MouseEvent> HANDLER) {
         final CountryPath       COUNTRY_PATH = (CountryPath) EVENT.getSource();
         final String            COUNTRY_NAME = COUNTRY_PATH.getName();
@@ -487,7 +477,11 @@ public class World extends Region {
                         getFlights(convert(COUNTRY_NAME));
                         //Controller.setOutput_info(NewScene.showNewScene(COUNTRY_NAME, resor));
                         //Controller.fyllTable(NewScene.showNewScene(COUNTRY_NAME, resor));
-                        Controller.fyllTable(resor);
+                        System.out.println(resor.get(1));
+                        if (controller == null) {
+                            System.out.println("Null controller");
+                        }
+                        controller.fyllTable(resor);
 
 
                     } catch (SQLException e) {
@@ -602,7 +596,7 @@ public class World extends Region {
         }
     }
 
-    public static ArrayList<FlygResa> getFlights(String country) throws SQLException {
+    public static ArrayList<Flight> getFlights(String country) throws SQLException {
         Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
         resor.clear();
@@ -613,7 +607,7 @@ public class World extends Region {
             String date = flight.getString("f_date");
             String time = flight.getString("f_time");
             System.out.println(destination + " | Date: " + date);
-            resor.add(new FlygResa(country, destination,date, time));
+            resor.add(new Flight(country, destination,date, time));
         }
 
         con.close();
