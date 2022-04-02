@@ -1,8 +1,6 @@
 package application.Model;
 
-import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
-import javafx.scene.LightBase;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,49 +11,48 @@ import javafx.stage.Stage;
 
 import java.util.Objects;
 
-public class SiteManager {
+public class SeatManager {
     private static GridPane grid = new GridPane(); //Layout
     private static AnchorPane pane = new AnchorPane();
-    private static VBox sitbox = new VBox();
+    private static VBox seatBox = new VBox();
     private static Label label = new Label();      // Label
-    private static Label siteShow = new Label();
+    private static Label showSeat = new Label();
     private static int height = 600;
     private static int width = 600;
     private static int pixel = 30;
-    private static String returnSite;
+    private static String returnSeat;
     private static int plat;
     private static Stage stage;
     private static Scene scene;
 
-
-
-    public static String addSitePlace() {
+    public static String addSeatPlace() {
         stage = new Stage();
         grid.setGridLinesVisible(true);
         stage.initModality(Modality.WINDOW_MODAL);
-        stage.setTitle("Chose a site place");
-        scene = new Scene(sitbox, width, height);
+        stage.setTitle("Choose seat");
+        scene = new Scene(seatBox, width, height);
         grid.setGridLinesVisible(true);
         FillingLayoutWithLabels(80);
         setupWindow();
         stage.setScene(scene);
         stage.show();
 
-        return returnSite;
+        return returnSeat;
     }
-    private static HBox sitHbox;
-    private static Label newSit = new Label();
+
+    private static HBox seatHbox;
+    private static Label newSeat = new Label();
     private static void setupWindow() {
-        Button btn = new Button("Add sit");
-        Label sitTxt = new Label("Chosen Sit: ");
-        sitHbox = new HBox();
-        sitHbox.getChildren().addAll(sitTxt, newSit, btn);
-        sitHbox.setPadding(new Insets(10));
+        Button btn = new Button("Add seat");
+        Label seatTxt = new Label("Chosen seat: ");
+        seatHbox = new HBox();
+        seatHbox.getChildren().addAll(seatTxt, newSeat, btn);
+        seatHbox.setPadding(new Insets(10));
         btn.setOnAction(event -> {
             stage.close();
         });
         pane.getChildren().addAll(btn);
-        SiteManager.sitbox.getChildren().addAll(grid, pane);
+        SeatManager.seatBox.getChildren().addAll(grid, pane);
     }
 
 
@@ -82,7 +79,7 @@ public class SiteManager {
         GridPane.setColumnIndex(label, columnIndex);
         GridPane.setRowIndex(label, rowIndex);
         label.setId(rowIndex+ " " + columnIndex);
-        SiteManager.grid.getChildren().add(label);
+        SeatManager.grid.getChildren().add(label);
 
         label.setOnMouseClicked((MouseClick) ->{
             System.out.println("hellooo");
@@ -102,7 +99,7 @@ public class SiteManager {
     }
 
     private static void clickedHandle(String id) {
-        returnSite = id;
+        returnSeat = id;
     }
 
 }

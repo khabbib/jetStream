@@ -1,10 +1,10 @@
 package application.Model;
 
-public class FlygResa {
-    private String from, distination, date, time;
-    public FlygResa(String from, String distination, String date, String time){
+public class Flight {
+    private String from, destination, date, time;
+    public Flight(String from, String distination, String date, String time){
         this.from = from;
-        this.distination = distination;
+        this.destination = distination;
         this.date = date;
         this.time = time;
     }
@@ -18,8 +18,8 @@ public class FlygResa {
         return from;
     }
 
-    public String getDistination() {
-        return distination;
+    public String getDestination() {
+        return destination;
     }
 
     public String getDate() {

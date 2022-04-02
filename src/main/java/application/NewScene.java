@@ -1,15 +1,10 @@
 package application;
 
-import application.Model.Book;
-import application.Model.FlygResa;
-import application.Model.User;
+import application.Model.Flight;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.LightBase;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -27,20 +22,20 @@ import java.util.ArrayList;
 
 public class NewScene {
 
-    public static ArrayList<FlygResa> showNewScene(String title, ArrayList<FlygResa> resor) throws FileNotFoundException {
+    public static ArrayList<Flight> showNewScene(String title, ArrayList<Flight> flights) throws FileNotFoundException {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle(title);
         stage.setMinWidth(400);
 
-        ArrayList<FlygResa> output = new ArrayList<>();
-        ArrayList<FlygResa> compare = new ArrayList<>();
+        ArrayList<Flight> output = new ArrayList<>();
+        ArrayList<Flight> compare = new ArrayList<>();
         ListView<String> listv = new ListView<>();
         VBox vbox = new VBox(10);
 
-        if (resor != null) {
+        if (flights != null) {
             StringBuilder info = new StringBuilder();
-            for (int i = 0; i < resor.size(); i++){
+            for (int i = 0; i < flights.size(); i++){
                 HBox hbox = new HBox(1);
                 hbox.setPadding(new Insets(20));
                 //hbox.setBorder(new Border(new BorderStroke(Color.PINK,BorderStrokeStyle.DASHED,null,null)));
@@ -59,18 +54,18 @@ public class NewScene {
                 image.setFitHeight(50);
 
                 Label titleF = new Label();
-                titleF.setText(resor.get(i).getFrom());
+                titleF.setText(flights.get(i).getFrom());
 
                 Label titleD = new Label();
-                titleD.setText(resor.get(i).getDistination());
+                titleD.setText(flights.get(i).getDestination());
                 Label date = new Label();
-                date.setText(resor.get(i).getDate());
+                date.setText(flights.get(i).getDate());
 
-                Button btn = new Button("Välja");
+                Button btn = new Button("Select");
                 btn.setStyle("-fx-background-color: #eee; -fx-text-fill: #333; -fx-padding: 20px 35");
                 int finalI = i;
                 btn.setOnAction(l -> {
-                    compare.add(new FlygResa(resor.get(finalI).getFrom(), resor.get(finalI).getDistination(), resor.get(finalI).getDate(), resor.get(finalI).getTime()));
+                    compare.add(new Flight(flights.get(finalI).getFrom(), flights.get(finalI).getDestination(), flights.get(finalI).getDate(), flights.get(finalI).getTime()));
                     stage.close();
                 });
                 hbox.setAlignment(Pos.CENTER_LEFT);
@@ -87,7 +82,7 @@ public class NewScene {
             }
             Label list = new Label();
             list.setText(info.toString());
-            Button closeBtn = new Button("Chose Flight");
+            Button closeBtn = new Button("Choose Flight");
             closeBtn.setOnAction(e -> stage.close());
 
             listv.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {

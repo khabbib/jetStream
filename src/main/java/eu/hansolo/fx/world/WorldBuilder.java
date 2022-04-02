@@ -1,5 +1,6 @@
 package eu.hansolo.fx.world;
 
+import application.Controller;
 import eu.hansolo.fx.world.World.Resolution;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
@@ -24,6 +25,7 @@ import java.util.HashMap;
 public class WorldBuilder<B extends WorldBuilder<B>> {
     private HashMap<String, Property> properties = new HashMap<>();
     private Resolution                resolution = Resolution.HI_RES;
+    private Controller controller;
 
 
     // ******************** Constructors **************************************
@@ -190,8 +192,8 @@ public class WorldBuilder<B extends WorldBuilder<B>> {
         return (B)this;
     }
 
-    public final World build() {
-        final World CONTROL = new World(resolution);
+    public final World build(Controller controller) {
+        final World CONTROL = new World(resolution,controller);
 
         for (String key : properties.keySet()) {
             if ("prefSize".equals(key)) {
