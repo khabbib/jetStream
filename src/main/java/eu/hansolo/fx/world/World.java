@@ -611,8 +611,9 @@ public class World extends Region {
         while (flight.next()){
             String destination = flight.getString("f_destination");
             String date = flight.getString("f_date");
+            String time = flight.getString("f_time");
             System.out.println(destination + " | Date: " + date);
-            resor.add(new FlygResa(country, destination,date));
+            resor.add(new FlygResa(country, destination,date, time));
         }
 
         con.close();
