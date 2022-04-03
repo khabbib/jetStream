@@ -1,10 +1,7 @@
 package application;
 
 import application.Database.Db;
-import application.Model.CreateWorld;
-import application.Model.Flight;
-import application.Model.SeatManager;
-import application.Model.User;
+import application.Model.*;
 import eu.hansolo.fx.world.World;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,8 +20,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
@@ -41,7 +40,7 @@ public class Controller implements Initializable {
     private CreateWorld createWorld;
     @FXML private ButtonBar logout; // btn bar
     @FXML private TextField login_pass;
-    @FXML private AnchorPane anchorPane;
+    @FXML private ScrollPane scrollPane;
     @FXML private TextField login_email;
     @FXML private Label error;
     @FXML private Label registration_error;
@@ -50,6 +49,14 @@ public class Controller implements Initializable {
     @FXML private Label u_name, u_id;
     @FXML private Label chosen_seat;
     @FXML private VBox display_flight;
+    @FXML private Button menuButton1;
+    @FXML private Button menuButton2;
+
+
+    // from games
+    @FXML private StackPane game1;
+    @FXML private StackPane game2;
+    @FXML private Button quizButton;
 
     // from registration
     @FXML
@@ -90,13 +97,20 @@ public class Controller implements Initializable {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Dashboard.fxml")));
         this.user = user;
         display_flight = (VBox) root.lookup("#display_flight");
-        anchorPane = (AnchorPane) root.lookup("#anchorPane");
+        scrollPane = (ScrollPane) root.lookup("#scrollPane");
         chosen_seat = (Label) root.lookup("#chosen_seat");
+        menuButton2 = (Button) root.lookup("#menuButton2");
         createWorld = new CreateWorld();
         world = createWorld.init(this);
 
-        anchorPane.getChildren().add(world);
-        anchorPane.setBackground(new Background(new BackgroundFill(world.getBackgroundColor(), CornerRadii.EMPTY, Insets.EMPTY)));
+
+        scrollPane.setContent(new StackPane(world));
+        scrollPane.setBackground(new Background(new BackgroundFill(world.getBackgroundColor(), CornerRadii.EMPTY, Insets.EMPTY)));
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setFitToHeight(true);
+        scrollPane.setFitToWidth(true);
+
         System.out.println(user.getName() + ", " + user.getId());
         u_name = (Label) root.lookup("#u_name");
         u_id = (Label) root.lookup("#u_id");
@@ -104,12 +118,26 @@ public class Controller implements Initializable {
         u_id.setText(user.getId());
         stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         scene = new Scene(root);
-        stage.setTitle("Dashboard window");
+        stage.setTitle("JetStream | Dashboard");
         stage.setScene(scene);
         stage.show();
     }
 
 
+    /*************************************  Play games  **************************************************/
+
+    public void playPong(){}
+
+    public void playQuiz(){
+        MPlayer mPlayer = new MPlayer();
+        System.out.println("hiaefjie");
+        try {
+           Stage primary = new Stage();
+            mPlayer.start(primary);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
     /*************************************  short cut login EXPLORE  **************************************************/
@@ -117,13 +145,15 @@ public class Controller implements Initializable {
     public void noLoginRequired(ActionEvent e) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Dashboard.fxml")));
         display_flight = (VBox) root.lookup("#display_flight");
-        anchorPane = (AnchorPane) root.lookup("#anchorPane");
+        scrollPane = (ScrollPane) root.lookup("#scrollPane");
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         chosen_seat = (Label) root.lookup("#chosen_seat");
         createWorld = new CreateWorld();
         world = createWorld.init(this);
 
-        anchorPane.getChildren().add(world);
-        anchorPane.setBackground(new Background(new BackgroundFill(world.getBackgroundColor(), CornerRadii.EMPTY, Insets.EMPTY)));
+        scrollPane.setContent(new StackPane(world));
+        scrollPane.setBackground(new Background(new BackgroundFill(world.getBackgroundColor(), CornerRadii.EMPTY, Insets.EMPTY)));
 
         u_name = (Label) root.lookup("#u_name");
         u_id = (Label) root.lookup("#u_id");
@@ -195,6 +225,23 @@ public class Controller implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
+    public void switchToGames (ActionEvent e) throws IOException {
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Games.fxml")));
+        stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setTitle("JetStream | Games");
+        stage.setScene(scene);
+        stage.show();
+
+        menuButton1 = (Button) root.lookup("#menuButton1");
+        quizButton = (Button) root.lookup("#quizButton");
+        game1 = (StackPane) root.lookup("#game1");
+        game2 = (StackPane) root.lookup("#game2");
+        ImageView imageView = new ImageView(new Image("application/gamePosters/MusicQuiz.png"));
+        ImageView imageView2 = new ImageView(new Image("application/gamePosters/PONG.png"));
+        game1.getChildren().add(imageView);
+        game2.getChildren().add(imageView2);    }
 
     //This metod will switch to adminview
     public void switchToAdminView(ActionEvent e) {
@@ -273,7 +320,7 @@ public class Controller implements Initializable {
         alert.setContentText("Do you really want to Exit?");
 
         if (alert.showAndWait().get() == ButtonType.OK) {
-            stage = (Stage) anchorPane.getScene().getWindow();
+            stage = (Stage) scrollPane.getScene().getWindow();
             System.out.println("You have successfully exited!");
             stage.close();
         }
@@ -287,7 +334,7 @@ public class Controller implements Initializable {
         alert2.setContentText("Do you really want to logout?");
 
         if (alert2.showAndWait().get() == ButtonType.OK) {
-            stage = (Stage) anchorPane.getScene().getWindow();
+            stage = (Stage) scrollPane.getScene().getWindow();
             System.out.println("You have successfully logged out!");
             stage.close();
         }
@@ -299,9 +346,8 @@ public class Controller implements Initializable {
 
     }
 
-
     // the method will show the flights list on the right side of the dashboard when a user choose a country
-    public void fyllTable (ArrayList <Flight> flights) {
+    public void fillFlights (ArrayList <Flight> flights) {
 
         display_flight.getChildren().clear();
         Stage infoStage = new Stage();
@@ -433,5 +479,21 @@ public class Controller implements Initializable {
         /*date_dash_flight.setText(flights.get(0).getDate());
         destination_dash_flight.setText(flights.get(0).getDistination());
         from_dash_flight.setText(flights.get(0).getFrom());*/
+    }
+
+    public Stage getStage() {
+        return stage;
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+    public Scene getScene() {
+        return scene;
+    }
+
+    public void setScene(Scene scene) {
+        this.scene = scene;
     }
 }

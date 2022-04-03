@@ -61,7 +61,7 @@ public class World extends Region {
     private static final StyleablePropertyFactory<World> FACTORY          = new StyleablePropertyFactory<>(Region.getClassCssMetaData());
     private static final String                          HIRES_PROPERTIES = "eu/hansolo/fx/world/hires.properties";
     private static final String                          LORES_PROPERTIES = "eu/hansolo/fx/world/lores.properties";
-    private static final double                          PREFERRED_WIDTH  = 1009;
+    private static final double                          PREFERRED_WIDTH  = 980;
     private static final double                          PREFERRED_HEIGHT = 665;
     private static final double                          MINIMUM_WIDTH    = 100;
     private static final double                          MINIMUM_HEIGHT    = 66;
@@ -72,7 +72,7 @@ public class World extends Region {
     private static final double                          ASPECT_RATIO     = PREFERRED_HEIGHT / PREFERRED_WIDTH;
     private static final CssMetaData<World, Color>       BACKGROUND_COLOR = FACTORY.createColorCssMetaData("-background-color", s -> s.backgroundColor, Color.web("#3f3f4f"), false);
     private        final StyleableProperty<Color>        backgroundColor;
-    private static final CssMetaData<World, Color>       FILL_COLOR = FACTORY.createColorCssMetaData("-fill-color", s -> s.fillColor, Color.web("#d9d9dc"), false);
+    private static final CssMetaData<World, Color>       FILL_COLOR = FACTORY.createColorCssMetaData("-fill-color", s -> s.fillColor, Color.web("#222222"), false);
     private        final StyleableProperty<Color>        fillColor;
     private static final CssMetaData<World, Color>       STROKE_COLOR = FACTORY.createColorCssMetaData("-stroke-color", s -> s.strokeColor, Color.BLACK, false);
     private        final StyleableProperty<Color>        strokeColor;
@@ -435,7 +435,7 @@ public class World extends Region {
         setTranslateY(getTranslateY() - Y);
     }
 
-    private static ArrayList<Flight> resor = new ArrayList<>();
+    private static ArrayList<Flight> flights = new ArrayList<>();
     private void handleMouseEvent(final MouseEvent EVENT, final EventHandler<MouseEvent> HANDLER) {
         final CountryPath       COUNTRY_PATH = (CountryPath) EVENT.getSource();
         final String            COUNTRY_NAME = COUNTRY_PATH.getName();
@@ -477,11 +477,11 @@ public class World extends Region {
                         getFlights(convert(COUNTRY_NAME));
                         //Controller.setOutput_info(NewScene.showNewScene(COUNTRY_NAME, resor));
                         //Controller.fyllTable(NewScene.showNewScene(COUNTRY_NAME, resor));
-                        System.out.println(resor.get(1));
+                        System.out.println(flights.get(1));
                         if (controller == null) {
                             System.out.println("Null controller");
                         }
-                        controller.fyllTable(resor);
+                        controller.fillFlights(flights);
 
 
                     } catch (SQLException e) {
@@ -599,7 +599,7 @@ public class World extends Region {
     public static ArrayList<Flight> getFlights(String country) throws SQLException {
         Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
-        resor.clear();
+        flights.clear();
         stmt.executeUpdate("SET search_path TO jetstream;");
         ResultSet flight = stmt.executeQuery("select * from flight where f_departure = '" + country + "';");
         while (flight.next()){
@@ -607,12 +607,12 @@ public class World extends Region {
             String date = flight.getString("f_date");
             String time = flight.getString("f_time");
             System.out.println(destination + " | Date: " + date);
-            resor.add(new Flight(country, destination,date, time));
+            flights.add(new Flight(country, destination,date, time));
         }
 
         con.close();
         stmt.close();
-        return resor;
+        return flights;
     }
 
     public static Connection getDatabaseConnection() {

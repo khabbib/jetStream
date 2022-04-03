@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="1200.0" style="-fx-background-color: #112;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+    <Pane layoutX="-3.0" layoutY="-6.0" prefHeight="706.0" prefWidth="92.0" style="-fx-background-color: #222;">
+        <children>
+            <Circle fill="#ff8000" layoutX="46.0" layoutY="44.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
+            <Label fx:id="u_name" layoutX="7.0" layoutY="69.0" prefHeight="19.0" prefWidth="66.0" textFill="WHITE">
+                <font>
+                    <Font size="10.0" />
+                </font>
+            </Label>
+            <Label fx:id="u_id" layoutX="26.0" layoutY="30.0" textFill="WHITE">
+                <font>
+                    <Font size="18.0" />
+                </font>
+            </Label>
+            <Circle fill="#ff8000" layoutX="46.0" layoutY="383.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="#ff8000" layoutX="46.0" layoutY="331.0" onMouseClicked="#switchToGames" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="#ff8000" layoutX="46.0" layoutY="282.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
+         <Button fx:id="menuButton1" layoutX="27.0" layoutY="263.0" mnemonicParsing="false" opacity="0.0" prefHeight="38.0" prefWidth="38.0" />
+        </children>
+    </Pane>
+   <StackPane fx:id="game1" layoutX="156.0" layoutY="69.0" prefHeight="320.0" prefWidth="252.0" />
+   <StackPane fx:id="game2" layoutX="436.0" layoutY="69.0" prefHeight="320.0" prefWidth="252.0" />
+   <Button fx:id="quizButton" layoutX="256.0" layoutY="406.0" mnemonicParsing="false" onAction="#playQuiz" text="Play" />
+   <Button layoutX="536.0" layoutY="406.0" mnemonicParsing="false" onAction="#playQuiz" text="Play" />
+</AnchorPane>

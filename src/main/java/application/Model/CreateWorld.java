@@ -3,6 +3,7 @@ package application.Model;
 import application.Controller;
 import eu.hansolo.fx.world.World;
 import eu.hansolo.fx.world.WorldBuilder;
+import javafx.scene.paint.Color;
 
 public class CreateWorld {
     static World world;
@@ -11,7 +12,7 @@ public class CreateWorld {
     public World init(Controller controller) {
         world = WorldBuilder.create()
                 .resolution(World.Resolution.HI_RES)
-                //.backgroundColor(Color.web("#4aa9d7"))
+                .backgroundColor(Color.web("#0c0c1a"))
                 //.fillColor(Color.web("#dcb36c"))
                 //.strokeColor(Color.web("#987028"))
                 //.hoverColor(Color.web("#fec47e"))
