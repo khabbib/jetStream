@@ -345,10 +345,13 @@ public class Controller implements Initializable {
             titleF.setText(flights.get(i).getFrom());
 
             Text depTime = new Text();
-            depTime.setText(flights.get(i).getTime());
+            String tmp = flights.get(i).getTime();
+            String[] sorted = tmp.split(":");
+            String s = sorted[0] + ": " + sorted[1];
+            depTime.setText(s);
             depTime.setStyle("-fx-font-weight: bold");
             Text desTime = new Text();
-            desTime.setText(flights.get(i).getTime()); // calculate arriving time
+            desTime.setText(s); // calculate arriving time
             desTime.setStyle("-fx-font-weight: bold");
 
 
