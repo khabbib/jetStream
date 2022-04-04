@@ -8,14 +8,10 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #112;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
-      <VBox fx:id="display_flight" layoutX="843.0" layoutY="111.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="592.0" prefWidth="346.0" style="-fx-background-color: #112;">
+      <ScrollPane fx:id="scrollPane" layoutX="142.0" layoutY="119.0" prefHeight="420.0" prefWidth="657.0" style="-fx-background-color: #112;" />
+      <Pane layoutX="-3.0" layoutY="-6.0" prefHeight="706.0" prefWidth="92.0" style="-fx-background-color: #222;">
          <children>
-            <Accordion />
-         </children>
-      </VBox>
-      <Pane layoutX="-3.0" layoutY="-6.0" prefHeight="706.0" prefWidth="75.0" style="-fx-background-color: #222;">
-         <children>
-            <Circle fill="#ff8000" layoutX="38.0" layoutY="44.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="#ff8000" layoutX="46.0" layoutY="44.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
             <Label fx:id="u_name" layoutX="7.0" layoutY="69.0" prefHeight="19.0" prefWidth="66.0" textFill="WHITE">
                <font>
                   <Font size="10.0" />
@@ -26,32 +22,46 @@
                   <Font size="18.0" />
                </font>
             </Label>
+            <Circle fill="#ff8000" layoutX="46.0" layoutY="383.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="#ff8000" layoutX="46.0" layoutY="332.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="#ff8000" layoutX="46.0" layoutY="282.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
+            <Button fx:id="menuButton2" layoutX="27.0" layoutY="313.0" mnemonicParsing="false" onAction="#switchToGames" opacity="0.0" prefHeight="38.0" prefWidth="38.0" />
          </children>
       </Pane>
-      <Button graphicTextGap="6.0" layoutX="95.0" layoutY="595.0" mnemonicParsing="false" onAction="#switchToChecking" style="-fx-background-color: #222;" text="CHECK IN" textFill="WHITE" AnchorPane.bottomAnchor="68.0" AnchorPane.leftAnchor="95.0" AnchorPane.rightAnchor="978.0" AnchorPane.topAnchor="595.0">
+      <Button graphicTextGap="6.0" layoutX="140.0" layoutY="595.0" mnemonicParsing="false" onAction="#switchToGames" style="-fx-background-color: #222;" text="CHECK IN" textFill="WHITE" AnchorPane.bottomAnchor="68.0" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="933.0" AnchorPane.topAnchor="595.0">
          <padding>
             <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
          </padding>
       </Button>
-      <Text fill="WHITE" layoutX="110.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose your destination:">
+      <Text fill="WHITE" layoutX="387.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose your destination:" textAlignment="CENTER" wrappingWidth="170.953125">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Text>
-      <VBox layoutX="95.0" layoutY="111.0" prefHeight="468.0" prefWidth="744.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00000033" height="420.0" layoutX="840.0" layoutY="119.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="304.0" />
+      <VBox layoutX="837.0" layoutY="119.0" prefHeight="420.0" prefWidth="303.0">
          <children>
-            <AnchorPane fx:id="anchorPane" prefHeight="472.0" prefWidth="744.0" />
+            <VBox fx:id="display_flight" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="420.0" prefWidth="310.0">
+               <children>
+                  <Accordion />
+               </children>
+            </VBox>
          </children>
       </VBox>
-      <Text fill="WHITE" layoutX="848.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Available flights:">
+      <Text fill="WHITE" layoutX="933.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Available flights">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Text>
-      <Label fx:id="chosen_seat" layoutX="1138.0" layoutY="22.0" text="none" textFill="#26adfc">
+      <Label fx:id="chosen_seat" alignment="CENTER_RIGHT" layoutX="547.0" layoutY="34.0" prefHeight="27.0" prefWidth="149.0" text="User" textAlignment="RIGHT" textFill="WHITE">
          <font>
-            <Font size="18.0" />
+            <Font size="14.0" />
          </font>
       </Label>
+      <Circle fill="#ff8000" layoutX="727.0" layoutY="48.0" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fill="WHITE" layoutX="785.0" layoutY="48.0" radius="15.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+      <Circle fill="WHITE" layoutX="1126.0" layoutY="48.0" radius="15.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="782.0" layoutY="33.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="348.0" />
+      <TextField layoutX="815.0" layoutY="35.0" prefHeight="25.0" prefWidth="290.0" promptText="Search flight..." style="-fx-background-color: white;" />
    </children>
 </AnchorPane>
