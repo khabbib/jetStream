@@ -54,10 +54,9 @@ public class MPlayer extends Application implements ChangeListener {
     public void start(Stage primaryStage) throws Exception {
         try {
             primaryStage.initModality(Modality.WINDOW_MODAL);
-            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("mplayer.fxml")));
+            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/games/mplayer.fxml")));
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
-            primaryStage.initStyle(StageStyle.TRANSPARENT);
             primaryStage.setTitle("Music Quiz");
             primaryStage.show();
             progressBar = (ProgressBar) root.lookup("#progressBar");

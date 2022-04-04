@@ -25,5 +25,10 @@
             <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
          </padding>
       </Button>
+      <Button layoutX="541.0" layoutY="528.0" mnemonicParsing="false" style="-fx-background-color: #ff8000 #ff8000;" text="Dev test" textFill="WHITE">
+         <padding>
+            <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
+         </padding>
+      </Button>
    </children>
 </AnchorPane>

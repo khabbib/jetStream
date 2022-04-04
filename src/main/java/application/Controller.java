@@ -2,11 +2,11 @@ package application;
 
 import application.Database.Db;
 import application.Model.*;
+import application.MoveScreen.MoveScreen;
 import eu.hansolo.fx.world.World;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -24,11 +24,9 @@ import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Controller {
@@ -54,7 +52,8 @@ public class Controller {
     @FXML private VBox display_flight;
     @FXML private Button menuButton1;
     @FXML private Button menuButton2;
-
+    @FXML private TextField search_input;
+    @FXML private Label search_matching;
     // From game
     @FXML private StackPane game1;
     @FXML private StackPane game2;
@@ -67,10 +66,11 @@ public class Controller {
     //////////   Home   ///////////
     // the method will switch the user to the Home page
     public void switchToHome(ActionEvent e) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Home.fxml")));
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Home.fxml")));
         stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         scene = new Scene(root);
         //stage.initStyle(StageStyle.TRANSPARENT);
+        //MoveScreen.moveScreen(root,stage);
         stage.setTitle("Home");
         stage.setScene(scene);
         stage.show();
@@ -121,12 +121,14 @@ public class Controller {
         }
     } // the method will switch the user to the dashboard page
     public void renderDashboard(ActionEvent e, User user) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/Dashboard.fxml")));
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/Dashboard.fxml")));
         this.user = user;
         display_flight = (VBox) root.lookup("#display_flight");
         scrollPane = (ScrollPane) root.lookup("#scrollPane");
         chosen_seat = (Label) root.lookup("#chosen_seat");
         menuButton2 = (Button) root.lookup("#menuButton2");
+        search_input = (TextField) root.lookup("#search_input");
+        search_matching = (Label) root.lookup("#search_matching");
         createWorld = new CreateWorld();
         world = createWorld.init(this);
 
@@ -145,6 +147,7 @@ public class Controller {
         u_id.setText(user.getId());
         stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         scene = new Scene(root);
+        //MoveScreen.moveScreen(root,stage);
         stage.setTitle("JetStream | Dashboard");
         stage.setScene(scene);
         stage.show();
@@ -168,6 +171,7 @@ public class Controller {
         u_id.setText(null);
         stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         scene = new Scene(root);
+        MoveScreen.moveScreen(root,stage);
         stage.setTitle("Test dashboard window");
         stage.setScene(scene);
         stage.show();
@@ -434,6 +438,42 @@ public class Controller {
     }
 
 
+
+
+    //////  DEV TEST  ///////
+    @FXML private Button iconProfile, iconFlight, iconHistorik, iconGame, iconSuport;
+    @FXML private AnchorPane pnlProfile, pnlHistorik, pnlFlight, pnlGame, pnlSupport;
+    public void testDev(ActionEvent e){
+        System.out.println(e.getSource());
+        if (e.getSource() == iconProfile) {
+            pnlProfile.toFront();
+        }
+        else if (e.getSource() == iconFlight) {
+            pnlFlight.toFront();
+        }
+        else if (e.getSource() == iconHistorik) {
+            pnlHistorik.toFront();
+        }
+        else if (e.getSource() == iconGame) {
+            pnlGame.toFront();
+        }
+        else if(e.getSource() == iconSuport){
+            pnlSupport.toFront();
+        }
+
+    }
+
+
+    //////  SEARCH FIELD  ///////
+    public void searchHit(){
+        System.out.println("helllo");
+        search_input.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
+        search_matching.setText("Search for (" + search_input.getText() + ") not found :(");
+        System.out.println(" search clicked");
+    }
+
+
+
     //////  MENU  /////// none used methods
     public void openMenu() {
         logout.setLayoutX(0); // this will move in menu from outside the window
@@ -460,5 +500,9 @@ public class Controller {
         User user = Db.getUserWithID(user_id);
         NewScene.showNewScene(user.getName() + "'s Profile", null);
     } // the method will open the profile
+    public void exitProgram(){
+        System.exit(0);
+    } // to determinate the program
+
 
 }
