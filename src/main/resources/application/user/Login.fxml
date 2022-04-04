@@ -17,7 +17,7 @@
       <Button fx:id="register" layoutX="525.0" layoutY="418.0" mnemonicParsing="false" onAction="#switchToRegistration" prefHeight="25.0" prefWidth="149.0" style="-fx-background-color: #347c9e;" text="Register" textFill="WHITE" />
       <ImageView fx:id="logo" fitHeight="44.0" fitWidth="36.0" layoutX="44.0" layoutY="20.0" onMouseClicked="#switchToHome" preserveRatio="true">
          <image>
-            <Image url="@jetStream.png" />
+            <Image url="@../image/jetStream.png" />
          </image>
       </ImageView>
       <Text fill="WHITE" layoutX="87.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JetStream">

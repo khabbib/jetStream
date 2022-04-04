@@ -47,7 +47,7 @@ public class NewScene {
                 hbox.setSpacing(10);
                 //nr.setText(i + ". ");
 
-                Image img = new Image("/application/jetStream.png");
+                Image img = new Image("/application/image/jetStream.png");
 
                 ImageView image = new ImageView(img);
                 image.setFitWidth(40);

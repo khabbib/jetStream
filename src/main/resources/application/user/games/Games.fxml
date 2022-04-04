@@ -25,7 +25,7 @@
          <Button layoutX="18.0" layoutY="26.0" mnemonicParsing="false" onAction="#switchToLogin" opacity="0.0" prefHeight="38.0" prefWidth="38.0" text="Button" />
          <ImageView fitHeight="65.0" fitWidth="38.0" layoutX="17.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
             <image>
-               <Image url="@image/user.png" />
+               <Image url="@../../image/user.png" />
             </image>
          </ImageView>
          <Label fx:id="u_name1" layoutX="7.0" layoutY="69.0" prefHeight="19.0" prefWidth="66.0" textFill="WHITE">
@@ -37,7 +37,7 @@
          <Button layoutX="18.0" layoutY="310.0" mnemonicParsing="false" onAction="#noLoginRequired" opacity="0.0" prefHeight="45.0" prefWidth="44.0" />
          <ImageView fitHeight="65.0" fitWidth="38.0" layoutX="21.0" layoutY="315.0" pickOnBounds="true" preserveRatio="true">
             <image>
-               <Image url="@image/game_icon.png" />
+               <Image url="@../../image/game_icon.png" />
             </image>
          </ImageView>
          <Circle fill="#ff8000" layoutX="40.0" layoutY="282.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />

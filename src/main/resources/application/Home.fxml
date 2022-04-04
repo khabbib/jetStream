@@ -18,7 +18,7 @@
       </Button>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="538.0" layoutY="238.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@jetStream.png" />
+            <Image url="@image/jetStream.png" />
          </image></ImageView>
       <Button layoutX="543.0" layoutY="481.0" mnemonicParsing="false" onAction="#noLoginRequired" style="-fx-background-color: #ff8000 #ff8000;" text="Explore" textFill="WHITE">
          <padding>

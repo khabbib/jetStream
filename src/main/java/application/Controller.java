@@ -20,10 +20,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
@@ -33,18 +31,23 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class Controller implements Initializable {
+public class Controller {
+
+    // Default variables
+    private CreateWorld createWorld;
+    private World world;
     private Stage stage;
     private Scene scene;
     private Parent root;
-    private CreateWorld createWorld;
-    @FXML private ButtonBar logout; // btn bar
+    private User user;
+
+    // FXML variables
+    @FXML private ButtonBar logout;
     @FXML private TextField login_pass;
     @FXML private ScrollPane scrollPane;
     @FXML private TextField login_email;
     @FXML private Label error;
     @FXML private Label registration_error;
-    private User user;
     @FXML private Label success_msg;
     @FXML private Label u_name, u_id;
     @FXML private Label chosen_seat;
@@ -52,20 +55,16 @@ public class Controller implements Initializable {
     @FXML private Button menuButton1;
     @FXML private Button menuButton2;
 
-
-    // from games
+    // From game
     @FXML private StackPane game1;
     @FXML private StackPane game2;
     @FXML private Button quizButton;
 
-    // from registration
-    @FXML
-    private TextField name, lname, adress, email, number, password;
-    private World world;
+    // From registration page
+    @FXML private TextField name, lname, adress, email, number, password;
 
 
-    //////  NAVIGATE TO PAGES  ///////
-
+    //////////   Home   ///////////
     // the method will switch the user to the Home page
     public void switchToHome(ActionEvent e) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Home.fxml")));
@@ -77,7 +76,38 @@ public class Controller implements Initializable {
         stage.show();
     }
 
-    // the method will switch the user to the dashboard page
+    //////////   Play games   ///////////
+    public void switchToGames (ActionEvent e) throws IOException {
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/games/Games.fxml")));
+        stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setTitle("JetStream | Games");
+        stage.setScene(scene);
+        stage.show();
+
+        menuButton1 = (Button) root.lookup("#menuButton1");
+        quizButton = (Button) root.lookup("#quizButton");
+        game1 = (StackPane) root.lookup("#game1");
+        game2 = (StackPane) root.lookup("#game2");
+        ImageView imageView = new ImageView(new Image("application/gamePosters/MusicQuiz.png"));
+        ImageView imageView2 = new ImageView(new Image("application/gamePosters/PONG.png"));
+        game1.getChildren().add(imageView);
+        game2.getChildren().add(imageView2);    }
+    public void playPong(){}
+    public void playQuiz(){
+        MPlayer mPlayer = new MPlayer();
+        System.out.println("hiaefjie");
+        try {
+           Stage primary = new Stage();
+            mPlayer.start(primary);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    //////////   navigate to admin pages   ///////////
     public void switchToDashboard(ActionEvent e) throws IOException {
         if (!login_pass.getText().isEmpty() && !login_email.getText().isEmpty()) {
             User user = Db.authenticationUser(login_email.getText(), login_pass.getText());
@@ -89,12 +119,9 @@ public class Controller implements Initializable {
         } else {
             renderDashboard(e, user);
         }
-    }
-
-    //@FXML public static VBox valdeRese;
-    // the method will render dashboard page for user
+    } // the method will switch the user to the dashboard page
     public void renderDashboard(ActionEvent e, User user) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Dashboard.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/Dashboard.fxml")));
         this.user = user;
         display_flight = (VBox) root.lookup("#display_flight");
         scrollPane = (ScrollPane) root.lookup("#scrollPane");
@@ -121,29 +148,9 @@ public class Controller implements Initializable {
         stage.setTitle("JetStream | Dashboard");
         stage.setScene(scene);
         stage.show();
-    }
-
-
-    /*************************************  Play games  **************************************************/
-
-    public void playPong(){}
-
-    public void playQuiz(){
-        MPlayer mPlayer = new MPlayer();
-        System.out.println("hiaefjie");
-        try {
-           Stage primary = new Stage();
-            mPlayer.start(primary);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    /*************************************  short cut login EXPLORE  **************************************************/
-
+    } // the method will render dashboard page for user
     public void noLoginRequired(ActionEvent e) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Dashboard.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/Dashboard.fxml")));
         display_flight = (VBox) root.lookup("#display_flight");
         scrollPane = (ScrollPane) root.lookup("#scrollPane");
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -164,32 +171,24 @@ public class Controller implements Initializable {
         stage.setTitle("Test dashboard window");
         stage.setScene(scene);
         stage.show();
-
-    }
-
-    // the method will switch the user to the checking page
+    }// shortcut login to user dashboard
     public void switchToChecking(ActionEvent e) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Checking.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/Checking.fxml")));
         stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setTitle("Checking window");
         stage.setScene(scene);
         stage.show();
-    }
-
-    // the method will switch the user to the registration page
+    }// the method will switch the user to the checking page
     public void switchToRegistration(ActionEvent e) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Registration.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/Registration.fxml")));
         stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setTitle("Registration window");
         stage.setScene(scene);
         stage.show();
-    }
-
-    // the method will register the user and return to the login page
+    }// the method will switch the user to the registration page
     public void registeruser(ActionEvent e) throws SQLException, IOException {
-
         user = new User(null, name.getText(), lname.getText(), adress.getText(), email.getText(), number.getText(), password.getText(), false);
         System.out.println(user.getName() + "fsdfsdfsdf");
         boolean ok = Db.saveUser(user);
@@ -198,16 +197,12 @@ public class Controller implements Initializable {
         } else {
             registration_error.setText("Couldn't register the information");
         }
-    }
-
-    // the method will switch the user to the login page
+    }// the method will register the user and return to the login page
     public void switchToLogin(ActionEvent e) throws IOException {
         renderLoginPage(e, null);
-    }
-
-    // render pages
+    }// the method will switch the user to the login page
     public void renderLoginPage(ActionEvent e, String msg) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Login.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/Login.fxml")));
         success_msg = (Label) root.lookup("#success_msg");
         stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -215,153 +210,31 @@ public class Controller implements Initializable {
         stage.setScene(scene);
         success_msg.setText(msg);
         stage.show();
-    }
-
-    public void switchToviewFlights(ActionEvent e) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("FlightsView.fxml")));
-        stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setTitle("FlightsView");
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public void switchToGames (ActionEvent e) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Games.fxml")));
-        stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setTitle("JetStream | Games");
-        stage.setScene(scene);
-        stage.show();
-
-        menuButton1 = (Button) root.lookup("#menuButton1");
-        quizButton = (Button) root.lookup("#quizButton");
-        game1 = (StackPane) root.lookup("#game1");
-        game2 = (StackPane) root.lookup("#game2");
-        ImageView imageView = new ImageView(new Image("application/gamePosters/MusicQuiz.png"));
-        ImageView imageView2 = new ImageView(new Image("application/gamePosters/PONG.png"));
-        game1.getChildren().add(imageView);
-        game2.getChildren().add(imageView2);    }
-
-    //This metod will switch to adminview
-    public void switchToAdminView(ActionEvent e) {
-
-        if (!login_pass.getText().isEmpty() && !login_email.getText().isEmpty()) {
-            try {
-                User user = Db.authenticationAdmin(login_email.getText(), login_pass.getText());
-                if (user != null) {
-                    root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AdminView.fxml")));
-                    stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-                    scene = new Scene(root);
-                    stage.setTitle("Admin window");
-                    stage.setScene(scene);
-                    stage.show();
-                } else {
-                    error.setText("Wrong email or pass!");
-                }
-            }catch (IOException io){
-                io.printStackTrace();
-            }
-        } else {
-            error.setText("Fill the field!");
-        }
-    }
-
-    public void switchToMembersView(ActionEvent e) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MemberView.fxml")));
-        stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setTitle("Members window");
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public void switchToBookedFligthsView(ActionEvent e) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("BookedFlightsView.fxml")));
-        stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setTitle("Checking window");
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    //////  MENU  ///////
-
-    // the method will open the menu once the user clicked on his profile
-    public void openMenu() {
-        logout.setLayoutX(0); // this will move in menu from outside the window
-        System.out.println("Menu opened");
-    }
-
-    // the method will close the menu
-    public void closeMenu() {
-        logout.setLayoutX(-84); // this will move out the menu outside the window
-        System.out.println("Menu closed");
-    }
-
-    // the method will open the profile
-    public void openProfile() throws FileNotFoundException {
-        int user_id = Integer.parseInt(u_id.getText());
-        User user = Db.getUserWithID(user_id);
-        NewScene.showNewScene(user.getName() + "'s Profile", null);
-    }
-
+    }// render login page
     public void chooseSeat() {
         String chosenSeat = SeatManager.addSeatPlace();
         if (chosenSeat != null) {
             chosen_seat.setText(chosenSeat);
         }
-    }
+    }// the method will show the chosen sit on the screen
 
-    public void exit(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Exit");
-        alert.setHeaderText("You are about to Exit!");
-        alert.setContentText("Do you really want to Exit?");
 
-        if (alert.showAndWait().get() == ButtonType.OK) {
-            stage = (Stage) scrollPane.getScene().getWindow();
-            System.out.println("You have successfully exited!");
-            stage.close();
-        }
-    }
 
-    //Denna metoden gör så att man kan logga ut från application
-    public void logout(ActionEvent event) {
-        Alert alert2 = new Alert(Alert.AlertType.CONFIRMATION);
-        alert2.setTitle("Logout");
-        alert2.setHeaderText("You are about to logout!");
-        alert2.setContentText("Do you really want to logout?");
-
-        if (alert2.showAndWait().get() == ButtonType.OK) {
-            stage = (Stage) scrollPane.getScene().getWindow();
-            System.out.println("You have successfully logged out!");
-            stage.close();
-        }
-
-    }
-
-    @Override
-    public void initialize (URL url, ResourceBundle resourceBundle){
-
-    }
-
-    // the method will show the flights list on the right side of the dashboard when a user choose a country
+    //////////   flight lists dashboard   ///////////
     public void fillFlights (ArrayList <Flight> flights) {
-
         display_flight.getChildren().clear();
         Stage infoStage = new Stage();
         AtomicBoolean openedStage = new AtomicBoolean(false);
         ArrayList<Flight> compare = new ArrayList<>();
+
         for (int i = 0; i < flights.size();i++){
+
             StackPane stackholer = new StackPane();
-
-
             HBox hbox = new HBox(1);
             HBox hboxChildCenter = new HBox(1);
             HBox hboxChildRight = new HBox(1);
 
-            Image img = new Image("/application/jetStream.png");
+            Image img = new Image("/application/image/jetStream.png");
             ImageView image = new ImageView(img);
             image.setFitWidth(30);
             image.setFitHeight(40);
@@ -416,7 +289,7 @@ public class Controller implements Initializable {
             landingBox.setAlignment(Pos.CENTER_LEFT);
             landingBox.getChildren().addAll(landingIcon,desTime, titleD);
 
-            Button btn = new Button("Pick seat");
+            Button btn = new Button("Köpa");
             btn.setStyle("-fx-background-color:  #ff8000; -fx-text-fill: #333; -fx-padding: 10 25; ");
             int finalI1 = i;
             btn.setOnAction(e -> {
@@ -479,24 +352,113 @@ public class Controller implements Initializable {
 
 
         }
-        /*date_dash_flight.setText(flights.get(0).getDate());
-        destination_dash_flight.setText(flights.get(0).getDistination());
-        from_dash_flight.setText(flights.get(0).getFrom());*/
+    } // the method will show the flights list on the right side of the dashboard when a user choose a country
+
+
+
+    //////////   navigate to admin pages   ///////////
+    public void switchToviewFlights(ActionEvent e) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("admin/FlightsView.fxml")));
+        stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setTitle("FlightsView");
+        stage.setScene(scene);
+        stage.show();
+    }
+    public void switchToAdminView(ActionEvent e) {
+
+        if (!login_pass.getText().isEmpty() && !login_email.getText().isEmpty()) {
+            try {
+                User user = Db.authenticationAdmin(login_email.getText(), login_pass.getText());
+                if (user != null) {
+                    root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("admin/AdminView.fxml")));
+                    stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+                    scene = new Scene(root);
+                    stage.setTitle("Admin window");
+                    stage.setScene(scene);
+                    stage.show();
+                } else {
+                    error.setText("Wrong email or pass!");
+                }
+            }catch (IOException io){
+                io.printStackTrace();
+            }
+        } else {
+            error.setText("Fill the field!");
+        }
+    }
+    public void switchToMembersView(ActionEvent e) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("admin/MemberView.fxml")));
+        stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setTitle("Members window");
+        stage.setScene(scene);
+        stage.show();
+    }
+    public void switchToBookedFligthsView(ActionEvent e) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("admin/BookedFlightsView.fxml")));
+        stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setTitle("Checking window");
+        stage.setScene(scene);
+        stage.show();
+    }
+    public void logout(ActionEvent event) {
+        Alert alert2 = new Alert(Alert.AlertType.CONFIRMATION);
+        alert2.setTitle("Logout");
+        alert2.setHeaderText("You are about to logout!");
+        alert2.setContentText("Do you really want to logout?");
+
+        if (alert2.showAndWait().get() == ButtonType.OK) {
+            stage = (Stage) scrollPane.getScene().getWindow();
+            System.out.println("You have successfully logged out!");
+            stage.close();
+        }
+
     }
 
+
+
+    //////////   getters and setters   ///////////
     public Stage getStage() {
         return stage;
     }
-
     public void setStage(Stage stage) {
         this.stage = stage;
     }
-
     public Scene getScene() {
         return scene;
     }
-
     public void setScene(Scene scene) {
         this.scene = scene;
     }
+
+
+    //////  MENU  /////// none used methods
+    public void openMenu() {
+        logout.setLayoutX(0); // this will move in menu from outside the window
+        System.out.println("Menu opened");
+    } // the method will open the menu once the user clicked on his profile
+    public void closeMenu() {
+        logout.setLayoutX(-84); // this will move out the menu outside the window
+        System.out.println("Menu closed");
+    } // the method will close the menu
+    public void exit(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Exit");
+        alert.setHeaderText("You are about to Exit!");
+        alert.setContentText("Do you really want to Exit?");
+
+        if (alert.showAndWait().get() == ButtonType.OK) {
+            stage = (Stage) scrollPane.getScene().getWindow();
+            System.out.println("You have successfully exited!");
+            stage.close();
+        }
+    } // the method will close a scene
+    public void openProfile() throws FileNotFoundException {
+        int user_id = Integer.parseInt(u_id.getText());
+        User user = Db.getUserWithID(user_id);
+        NewScene.showNewScene(user.getName() + "'s Profile", null);
+    } // the method will open the profile
+
 }
