@@ -9,4 +9,5 @@ Java support javaFX as a tool that build desktop, mobile and other platform appl
 
 
 User dashboard window
-<img width="700" alt="historik" src="https://user-images.githubusercontent.com/51061202/161708407-1d4a5a07-e801-4e33-8e84-9ccc5e0acaaf.png">
+
+<img width="1080" alt="historik" src="https://user-images.githubusercontent.com/51061202/161708407-1d4a5a07-e801-4e33-8e84-9ccc5e0acaaf.png">
