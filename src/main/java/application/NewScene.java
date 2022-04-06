@@ -1,6 +1,6 @@
 package application;
 
-import application.Model.Flight;
+import application.model.Flight;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;

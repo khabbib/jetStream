@@ -1,15 +1,11 @@
 
-package eu.hansolo.fx.world;
+package worldMap;
 
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
-/**
- * Created by hansolo on 01.12.16.
- */
 public class CountryRegion implements CRegion {
     private String        name;
     private List<Country> countries;

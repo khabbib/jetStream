@@ -1,5 +1,5 @@
 
-package eu.hansolo.fx.world;
+package worldMap;
 
 import javafx.scene.control.Tooltip;
 import javafx.scene.shape.SVGPath;

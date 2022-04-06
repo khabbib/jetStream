@@ -1,9 +1,9 @@
 package application;
 
-import application.Database.Db;
-import application.Model.*;
-import application.MoveScreen.MoveScreen;
-import eu.hansolo.fx.world.World;
+import application.model.*;
+import application.moveScreen.MoveScreen;
+import application.databaseSQL.Db;
+import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +21,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import worldMap.World;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -61,6 +62,7 @@ public class Controller {
 
     // From registration page
     @FXML private TextField name, lname, adress, email, number, password;
+    public String[] args;
 
 
     //////////   Home   ///////////
@@ -96,7 +98,6 @@ public class Controller {
     public void playPong(){}
     public void playQuiz(){
         MPlayer mPlayer = new MPlayer();
-        System.out.println("hiaefjie");
         try {
            Stage primary = new Stage();
             mPlayer.start(primary);
@@ -503,6 +504,4 @@ public class Controller {
     public void exitProgram(){
         System.exit(0);
     } // to determinate the program
-
-
 }

@@ -1,12 +1,9 @@
-package application.MoveScreen;
+package application.moveScreen;
 
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-
-import javax.swing.*;
 
 public class MoveScreen {
     private static double xOffset =0;

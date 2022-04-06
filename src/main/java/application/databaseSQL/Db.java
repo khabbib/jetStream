@@ -1,6 +1,6 @@
-package application.Database;
+package application.databaseSQL;
 
-import application.Model.User;
+import application.model.User;
 
 import java.sql.*;
 

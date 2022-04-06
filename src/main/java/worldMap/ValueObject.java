@@ -1,5 +1,5 @@
 
-package eu.hansolo.fx.world;
+package worldMap;
 
 /**
  * @author Andres Almiray

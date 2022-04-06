@@ -1,4 +1,4 @@
-package eu.hansolo.fx.world;
+package worldMap;
 
 import java.util.Random;
 

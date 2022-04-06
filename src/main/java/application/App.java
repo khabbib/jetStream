@@ -1,8 +1,5 @@
 package application;
 
-import application.MoveScreen.MoveScreen;
-import eu.hansolo.fx.world.World;
-import eu.hansolo.fx.world.WorldBuilder;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import worldMap.World;
 
 import java.util.Objects;
 

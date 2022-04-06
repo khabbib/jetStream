@@ -1,7 +1,8 @@
-package eu.hansolo.fx.world;
+package worldMap;
 
 import application.Controller;
-import eu.hansolo.fx.world.World.Resolution;
+import worldMap.World;
+import worldMap.World.Resolution;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
@@ -18,10 +19,6 @@ import org.kordamp.ikonli.Ikon;
 
 import java.util.HashMap;
 
-
-/**
- * Created by hansolo on 21.11.16.
- */
 public class WorldBuilder<B extends WorldBuilder<B>> {
     private HashMap<String, Property> properties = new HashMap<>();
     private Resolution                resolution = Resolution.HI_RES;

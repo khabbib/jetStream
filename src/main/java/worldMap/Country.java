@@ -1,5 +1,5 @@
 
-package eu.hansolo.fx.world;
+package worldMap;
 
 import javafx.scene.paint.Color;
 

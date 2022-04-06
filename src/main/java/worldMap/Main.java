@@ -1,8 +1,7 @@
 
 
-package eu.hansolo.fx.world;
+package worldMap;
 
-import eu.hansolo.fx.world.World.Resolution;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -10,20 +9,9 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import org.kordamp.ikonli.javafx.FontIcon;
-import org.kordamp.ikonli.materialdesign.MaterialDesign;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.MissingResourceException;
 import java.util.Random;
-
-import static eu.hansolo.fx.world.Country.*;
-import static eu.hansolo.fx.world.Country.GB;
-import static eu.hansolo.fx.world.Country.PL;
 
 public class Main extends Application {
     private static final Random        RND = new Random();

@@ -1,7 +1,7 @@
-package eu.hansolo.fx.world;
+package worldMap;
 
 import application.Controller;
-import application.Model.Flight;
+import application.model.Flight;
 import javafx.application.Platform;
 import javafx.beans.DefaultProperty;
 import javafx.beans.property.BooleanProperty;
@@ -59,8 +59,8 @@ import static javafx.scene.input.MouseEvent.MOUSE_RELEASED;
 public class World extends Region {
     public enum Resolution { HI_RES, LO_RES };
     private static final StyleablePropertyFactory<World> FACTORY          = new StyleablePropertyFactory<>(Region.getClassCssMetaData());
-    private static final String                          HIRES_PROPERTIES = "eu/hansolo/fx/world/hires.properties";
-    private static final String                          LORES_PROPERTIES = "eu/hansolo/fx/world/lores.properties";
+    private static final String                          HIRES_PROPERTIES = "worldMap/hires.properties";
+    private static final String                          LORES_PROPERTIES = "worldMap/lores.properties";
     private static final double                          PREFERRED_WIDTH  = 980;
     private static final double                          PREFERRED_HEIGHT = 665;
     private static final double                          MINIMUM_WIDTH    = 100;
@@ -121,6 +121,7 @@ public class World extends Region {
             System.out.println("this controller");
         }
         //game = new Game(this);
+        System.out.println(Resolution.HI_RES == RESOLUTION ? World.HIRES_PROPERTIES : World.LORES_PROPERTIES);
         resolutionProperties = readProperties(Resolution.HI_RES == RESOLUTION ? World.HIRES_PROPERTIES : World.LORES_PROPERTIES);
         backgroundColor      = new StyleableObjectProperty<Color>(BACKGROUND_COLOR.getInitialValue(World.this)) {
             @Override protected void invalidated() { setBackground(new Background(new BackgroundFill(get(), CornerRadii.EMPTY, Insets.EMPTY))); }
@@ -537,6 +538,7 @@ public class World extends Region {
     }
 
     private Properties readProperties(final String FILE_NAME) {
+        System.out.println(Thread.currentThread().getContextClassLoader());
         final ClassLoader LOADER     = Thread.currentThread().getContextClassLoader();
         final Properties  PROPERTIES = new Properties();
         try(InputStream resourceStream = LOADER.getResourceAsStream(FILE_NAME)) {

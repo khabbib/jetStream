@@ -1,4 +1,4 @@
-package application.Model;
+package application.model;
 
 public class Book {
     private String valdeResa;

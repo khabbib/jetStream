@@ -1,8 +1,7 @@
-package application.Model;
+package application.model;
 
 import application.Controller;
-import eu.hansolo.fx.world.World;
-import eu.hansolo.fx.world.WorldBuilder;
+import worldMap.*;
 import javafx.scene.paint.Color;
 
 public class CreateWorld {
