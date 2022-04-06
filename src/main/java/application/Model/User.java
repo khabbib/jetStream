@@ -1,4 +1,4 @@
-package application.model;
+package application.Model;
 
 public class User {
     private String name, lname, adress, email, number, password, id;

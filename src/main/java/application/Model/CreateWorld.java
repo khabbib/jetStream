@@ -1,4 +1,4 @@
-package application.model;
+package application.Model;
 
 import application.Controller;
 import worldMap.*;
