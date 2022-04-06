@@ -1,9 +1,8 @@
 package application;
 
-import application.model.*;
+import application.Model.*;
 import application.moveScreen.MoveScreen;
 import application.databaseSQL.Db;
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -62,8 +61,11 @@ public class Controller {
 
     // From registration page
     @FXML private TextField name, lname, adress, email, number, password;
-    public String[] args;
-
+    // From sit
+    @FXML private TextField name_sit, lname_sit, fourdigit_sit, email_sit;
+    @FXML private Label sitnbr_sit;
+    @FXML private ScrollPane flight_sits;
+    @FXML private AnchorPane pnlSit;
 
     //////////   Home   ///////////
     // the method will switch the user to the Home page
@@ -107,7 +109,6 @@ public class Controller {
     }
 
 
-
     //////////   navigate to admin pages   ///////////
     public void switchToDashboard(ActionEvent e) throws IOException {
         if (!login_pass.getText().isEmpty() && !login_email.getText().isEmpty()) {
@@ -124,6 +125,13 @@ public class Controller {
     public void renderDashboard(ActionEvent e, User user) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/Dashboard.fxml")));
         this.user = user;
+        name_sit = (TextField) root.lookup("#name_sit");
+        lname_sit = (TextField) root.lookup("#lname_sit");
+        fourdigit_sit = (TextField) root.lookup("#fourdigit_sit");
+        email_sit = (TextField) root.lookup("#email_sit");
+        sitnbr_sit = (Label) root.lookup("#sitnbr_sit");
+        flight_sits = (ScrollPane) root.lookup("#flight_sits");
+
         display_flight = (VBox) root.lookup("#display_flight");
         scrollPane = (ScrollPane) root.lookup("#scrollPane");
         chosen_seat = (Label) root.lookup("#chosen_seat");
@@ -216,13 +224,6 @@ public class Controller {
         success_msg.setText(msg);
         stage.show();
     }// render login page
-    public void chooseSeat() {
-        String chosenSeat = SeatManager.addSeatPlace();
-        if (chosenSeat != null) {
-            chosen_seat.setText(chosenSeat);
-        }
-    }// the method will show the chosen sit on the screen
-
 
 
     //////////   flight lists dashboard   ///////////
@@ -298,7 +299,12 @@ public class Controller {
             btn.setStyle("-fx-background-color:  #ff8000; -fx-text-fill: #333; -fx-padding: 10 25; ");
             int finalI1 = i;
             btn.setOnAction(e -> {
-                chooseSeat();
+                System.out.println("clicked the btn");
+                //testDev(e);
+                System.out.println(e.getSource());
+                String sit = flights.get(finalI1).getDate(); // get the sits from API
+                int antalPlats = 50;
+                chooseSeat(antalPlats);
                 //valdeRese.getChildren().clear();
                 //valdeRese.getChildren().add(display_filght.getChildren().get(finalI1));
                 display_flight.getChildren().get(finalI1).setOpacity(0.8);
@@ -358,6 +364,71 @@ public class Controller {
 
         }
     } // the method will show the flights list on the right side of the dashboard when a user choose a country
+    private GridPane grid = new GridPane(); //Layout
+    private AnchorPane pane = new AnchorPane();
+    private HBox seatHbox;
+    private Label newSeat = new Label();
+    private VBox seatBox = new VBox();
+    private Label label = new Label();      // Label
+    private Label showSeat = new Label();
+
+    private String returnSeat;
+    private int height = 600;
+    private int width = 600;
+    private int pixel = 30;
+    public int plat;
+    public void chooseSeat(int antalSit) {
+        Button btn = new Button("Add seat");
+        Label seatTxt = new Label("Chosen seat: ");
+        seatHbox = new HBox();
+        seatHbox.getChildren().addAll(seatTxt, newSeat, btn);
+        seatHbox.setPadding(new Insets(10));
+        pane.getChildren().addAll(btn);
+        seatBox.getChildren().addAll(grid, pane);
+        flight_sits.setContent(new StackPane(seatBox));
+
+        plat = antalSit;
+        for(int i = 0;i< antalSit ;i++){
+            for(int j = 0;j<antalSit/10 ; j++){
+                addLabel(i,j);
+            }
+        }
+    }// the method will show the chosen sit on the screen
+
+    public void addLabel(int columnIndex, int rowIndex) {
+        Label label = new Label();
+        label.setMinWidth(pixel);
+        label.setText(label.getId());
+        label.setMinHeight(pixel);
+        label.setBackground(new Background(new BackgroundFill(Color.rgb(223, 223, 222),
+                new CornerRadii (5),
+                Insets.EMPTY)));
+        label.setBorder(new Border(new BorderStroke(Color.rgb(247, 245, 242), BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(1))));
+        GridPane.setColumnIndex(label, columnIndex);
+        GridPane.setRowIndex(label, rowIndex);
+        label.setId(rowIndex+ " " + columnIndex);
+        grid.getChildren().add(label);
+
+        label.setOnMouseClicked((MouseClick) ->{
+            System.out.println("hellooo");
+            clickedHandle(label.getId());
+
+            label.setBackground(new Background(new BackgroundFill(Color.rgb(255, 142, 0),
+                    new CornerRadii (5),
+                    Insets.EMPTY)));
+
+            for (int i = 0; i < grid.getChildren().size(); i++){
+                grid.getChildren().get(i).setOpacity(1);
+                if (!Objects.equals(grid.getChildren().get(i).getId(), label.getId())){
+                    grid.getChildren().get(i).setOpacity(0.2);
+                }
+            }
+        });
+    }
+
+    private void clickedHandle(String id) {
+        returnSeat = id;
+    }
 
 
 
@@ -442,12 +513,14 @@ public class Controller {
 
 
     //////  DEV TEST  ///////
-    @FXML private Button iconProfile, iconFlight, iconHistorik, iconGame, iconSuport;
+    @FXML private Button iconProfile, iconFlight, iconHistorik, iconGame, iconSuport, iconCloseSit;
     @FXML private AnchorPane pnlProfile, pnlHistorik, pnlFlight, pnlGame, pnlSupport;
     public void testDev(ActionEvent e){
-        System.out.println(e.getSource());
         if (e.getSource() == iconProfile) {
             pnlProfile.toFront();
+        }
+        else if(e.getSource() == iconCloseSit){
+            pnlSit.toBack();
         }
         else if (e.getSource() == iconFlight) {
             pnlFlight.toFront();

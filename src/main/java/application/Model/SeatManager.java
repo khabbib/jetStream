@@ -1,4 +1,4 @@
-package application.model;
+package application.Model;
 
 import javafx.geometry.Insets;
 import javafx.scene.Scene;

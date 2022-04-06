@@ -1,7 +1,7 @@
 package worldMap;
 
 import application.Controller;
-import application.model.Flight;
+import application.Model.Flight;
 import javafx.application.Platform;
 import javafx.beans.DefaultProperty;
 import javafx.beans.property.BooleanProperty;

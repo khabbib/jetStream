@@ -1,4 +1,4 @@
-package application.model;
+package application.Model;
 
 public class Flight {
     private String from, destination, date, time;
