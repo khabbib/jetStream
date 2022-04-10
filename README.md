@@ -13,5 +13,3 @@ Java support javaFX as a tool that build desktop, mobile and other platform appl
   <img src="https://user-images.githubusercontent.com/51061202/162635351-d326e46f-6f09-4527-9e7e-15d125f04066.PNG" width="500" /> 
 </p>
 
-
-User dashboard window
