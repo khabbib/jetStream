@@ -110,7 +110,12 @@
          <children>
             <AnchorPane layoutX="95.0" layoutY="27.0" prefHeight="646.0" prefWidth="1079.0" style="-fx-background-color: #151D3B; -fx-background-radius: 10;">
                <children>
-                  <ScrollPane fx:id="flight_sits" layoutX="638.0" prefHeight="646.0" prefWidth="441.0" style="-fx-background-color: #112;" />
+                  <AnchorPane layoutX="611.0" layoutY="1.0" prefHeight="646.0" prefWidth="469.0" style="-fx-background-color: #151A3C;">
+                     <children>
+                        <AnchorPane fx:id="flights_seats_business" layoutX="135.0" layoutY="20.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #112;" />
+                        <AnchorPane fx:id="flight_sits_eco" layoutX="135.0" layoutY="249.0" prefHeight="375.0" prefWidth="200.0" style="-fx-background-color: #112;" />
+                     </children>
+                  </AnchorPane>
                   <Label layoutX="40.0" layoutY="29.0" text="Passanger" textFill="WHITE">
                      <font>
                         <Font size="22.0" />
@@ -149,19 +154,34 @@
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <Label layoutX="10.0" layoutY="132.0" text="Sit" textFill="WHITE" GridPane.rowIndex="4">
+                        <Label layoutX="10.0" layoutY="132.0" text="Seat" textFill="WHITE" GridPane.rowIndex="4">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="name_sit" promptText="Name" GridPane.columnIndex="1" />
-                        <TextField fx:id="lname_sit" promptText="Last name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField fx:id="fourdigit_sit" layoutX="130.0" layoutY="56.0" promptText="Four digit" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <TextField fx:id="email_sit" layoutX="130.0" layoutY="95.0" promptText="Email address" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField fx:id="name_sit" promptText="Name" style="-fx-background-color: #112;" GridPane.columnIndex="1">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding></TextField>
+                        <TextField fx:id="lname_sit" promptText="Last name" style="-fx-background-color: #112;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding></TextField>
+                        <TextField fx:id="fourdigit_sit" layoutX="130.0" layoutY="56.0" promptText="Four digit" style="-fx-background-color: #112;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding></TextField>
+                        <TextField fx:id="email_sit" layoutX="130.0" layoutY="95.0" promptText="Email address" style="-fx-background-color: #112;" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding></TextField>
                         <Label fx:id="sitnbr_sit" layoutX="10.0" layoutY="168.0" text="None" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <font>
                               <Font size="20.0" />
                            </font>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
                         </Label>
                      </children>
                   </GridPane>
@@ -176,11 +196,14 @@
                <image>
                   <Image url="@../image/close.png" />
                </image>
+               <effect>
+                  <ColorAdjust brightness="-0.8" contrast="-0.57" hue="-0.05" saturation="-0.71" />
+               </effect>
             </ImageView>
             <Button fx:id="iconCloseSit" layoutX="1148.0" layoutY="6.0" mnemonicParsing="false" onAction="#testDev" opacity="0.0" prefHeight="43.0" prefWidth="44.0" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="pnlFlight" layoutX="65.0" prefHeight="700.0" prefWidth="1126.0" style="-fx-background-color: #112;" visible="false">
+      <AnchorPane fx:id="pnlFlight" layoutX="65.0" prefHeight="700.0" prefWidth="1126.0" style="-fx-background-color: #112;">
          <children>
             <Pane layoutY="-3.0" prefHeight="74.0" prefWidth="1141.0" style="-fx-background-color: #0E0E1B;">
                <children>
@@ -211,7 +234,7 @@
                   </Label>
                </children>
             </Pane>
-            <ScrollPane fx:id="scrollPane" layoutX="45.0" layoutY="118.0" prefHeight="420.0" prefWidth="657.0" style="-fx-background-color: #112;" />
+            <ScrollPane fx:id="scrollPane" layoutX="45.0" layoutY="118.0" prefHeight="420.0" prefWidth="657.0" style="-fx-background: #0E0E1B #0E0E1B; -fx-border-color: #112;" />
             <Text fill="WHITE" layoutX="288.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose your destination:" textAlignment="CENTER" wrappingWidth="170.953125">
                <font>
                   <Font name="System Bold" size="14.0" />

@@ -64,8 +64,28 @@ public class Controller {
     // From sit
     @FXML private TextField name_sit, lname_sit, fourdigit_sit, email_sit;
     @FXML private Label sitnbr_sit;
-    @FXML private ScrollPane flight_sits;
+    @FXML private AnchorPane flight_sits_eco, flights_seats_business;
     @FXML private AnchorPane pnlSit;
+
+
+    // sit
+    private GridPane grid_left = new GridPane(); //Layout
+    private GridPane grid_right = new GridPane(); //Layout
+    private GridPane grid_business = new GridPane(); //Layout
+    private AnchorPane pane = new AnchorPane();
+    private HBox seatHbox;
+    private Label newSeat = new Label();
+    private Label label = new Label();      // Label
+    private Label showSeat = new Label();
+
+    private String returnSeat;
+    private int height = 600;
+    private int width = 600;
+    private int antalSeats;
+
+    // toggle options
+    @FXML private Button iconProfile, iconFlight, iconHistorik, iconGame, iconSuport, iconCloseSit;
+    @FXML private AnchorPane pnlProfile, pnlHistorik, pnlFlight, pnlGame, pnlSupport;
 
     //////////   Home   ///////////
     // the method will switch the user to the Home page
@@ -130,7 +150,9 @@ public class Controller {
         fourdigit_sit = (TextField) root.lookup("#fourdigit_sit");
         email_sit = (TextField) root.lookup("#email_sit");
         sitnbr_sit = (Label) root.lookup("#sitnbr_sit");
-        flight_sits = (ScrollPane) root.lookup("#flight_sits");
+        flight_sits_eco = (AnchorPane) root.lookup("#flight_sits_eco");
+        flights_seats_business = (AnchorPane) root.lookup("#flights_seats_business");
+        pnlSit = (AnchorPane) root.lookup("#pnlSit");
 
         display_flight = (VBox) root.lookup("#display_flight");
         scrollPane = (ScrollPane) root.lookup("#scrollPane");
@@ -141,7 +163,23 @@ public class Controller {
         createWorld = new CreateWorld();
         world = createWorld.init(this);
 
+        // sit window
+        HBox hboxLR_seat = new HBox();
+        hboxLR_seat.getChildren().addAll(grid_left);
+        grid_left.setHgap(5);
+        grid_left.setVgap(5);
+        grid_business.setHgap(5);
+        grid_business.setVgap(5);
+        HBox hboxTLR_seat = new HBox();
+        hboxTLR_seat.getChildren().add(grid_business);
+        hboxTLR_seat.setAlignment(Pos.TOP_CENTER);
+        flight_sits_eco.getChildren().add(hboxLR_seat);
+        flights_seats_business.getChildren().add(hboxTLR_seat);
+        //seatBox.getChildren().addAll(hboxLR_seat);
 
+
+
+        // world map
         scrollPane.setContent(new StackPane(world));
         scrollPane.setBackground(new Background(new BackgroundFill(world.getBackgroundColor(), CornerRadii.EMPTY, Insets.EMPTY)));
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -299,14 +337,6 @@ public class Controller {
             btn.setStyle("-fx-background-color:  #ff8000; -fx-text-fill: #333; -fx-padding: 10 25; ");
             int finalI1 = i;
             btn.setOnAction(e -> {
-                System.out.println("clicked the btn");
-                //testDev(e);
-                System.out.println(e.getSource());
-                String sit = flights.get(finalI1).getDate(); // get the sits from API
-                int antalPlats = 50;
-                chooseSeat(antalPlats);
-                //valdeRese.getChildren().clear();
-                //valdeRese.getChildren().add(display_filght.getChildren().get(finalI1));
                 display_flight.getChildren().get(finalI1).setOpacity(0.8);
                 for (int m = 0; m < display_flight.getChildren().size(); m++){
                     if (display_flight.getChildren().get(m) != display_flight.getChildren().get(finalI1)) {
@@ -314,6 +344,8 @@ public class Controller {
                     }
                 }
                 compare.add(flights.get(finalI1));
+                chooseSeat(60, 9);
+                pnlSit.toFront();
 
                 /*HBox ls = new HBox();
                 ls.getChildren().add(display_filght.getChildren().get(finalI1));
@@ -346,14 +378,7 @@ public class Controller {
             display_flight.getChildren().addAll(stackholer); // the box
             display_flight.setAlignment(Pos.TOP_LEFT);
 
-            hbox.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
-                if (!openedStage.get()){
-                    infoStage.show();
-                    openedStage.set(true);
-                }else if(openedStage.get()){
-                    infoStage.close();
-                    openedStage.set(false);
-                }
+            hbox.addEventFilter(MouseEvent.MOUSE_ENTERED, e -> {
                 hbox.setBackground(new Background(new BackgroundFill(Color.rgb(223, 223, 222), CornerRadii.EMPTY, Insets.EMPTY)));
 
             });
@@ -364,63 +389,67 @@ public class Controller {
 
         }
     } // the method will show the flights list on the right side of the dashboard when a user choose a country
-    private GridPane grid = new GridPane(); //Layout
-    private AnchorPane pane = new AnchorPane();
-    private HBox seatHbox;
-    private Label newSeat = new Label();
-    private VBox seatBox = new VBox();
-    private Label label = new Label();      // Label
-    private Label showSeat = new Label();
 
-    private String returnSeat;
-    private int height = 600;
-    private int width = 600;
-    private int pixel = 30;
-    public int plat;
-    public void chooseSeat(int antalSit) {
-        Button btn = new Button("Add seat");
-        Label seatTxt = new Label("Chosen seat: ");
-        seatHbox = new HBox();
-        seatHbox.getChildren().addAll(seatTxt, newSeat, btn);
-        seatHbox.setPadding(new Insets(10));
-        pane.getChildren().addAll(btn);
-        seatBox.getChildren().addAll(grid, pane);
-        flight_sits.setContent(new StackPane(seatBox));
 
-        plat = antalSit;
-        for(int i = 0;i< antalSit ;i++){
-            for(int j = 0;j<antalSit/10 ; j++){
-                addLabel(i,j);
+    //////////   sit lists    ///////////
+    public void chooseSeat(int antalSit, int businessSeats) {
+        grid_left.getChildren().removeAll();
+        grid_right.getChildren().removeAll();
+        grid_business.getChildren().removeAll();
+        this.antalSeats = antalSit;
+        // 72/6 = 12
+        // 12 row
+        // 6 column
+        boolean business = false;
+            for(int i = 0;i < antalSit/10; i++){ // cal
+                for(int j = 0;j <antalSit/6; j++){ // row
+                    business = false;
+                    build_eco_seats(i,j, business);
+                }
+            }
+            for(int i = 0;i < businessSeats/3; i++){ // cal
+                for(int j = 0;j <businessSeats/3; j++){ // row
+                    business = true;
+                    build_eco_seats(i,j, business);
+                }
+            }
+
+
+
+    }// the method will show the chosen sit on the screen
+    public void build_eco_seats(int columnIndex, int rowIndex, boolean business) {
+        Label label = new Label();
+        label.setMinWidth(30);
+        label.setMinHeight(30);
+        label.setText(label.getId());
+        label.setBackground(new Background(new BackgroundFill(Color.rgb(223, 223, 222), new CornerRadii (5), Insets.EMPTY)));
+        label.setBorder(new Border(new BorderStroke(Color.rgb(247, 245, 242), BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(1))));
+        label.setId(rowIndex+ " " + columnIndex);
+        //grid_left.setColumnIndex(label, columnIndex);
+        if (business){
+            System.out.println("business: " + business);
+            grid_business.add(label, columnIndex,rowIndex);
+        }else if(!business) {
+            System.out.println("business: " + business);
+            if (grid_left.getColumnCount() == 3){
+                System.out.println("column 3");
+                grid_left.setMargin(label, new Insets(0, 0, 0, 20));
+                grid_left.add(label, columnIndex, rowIndex);
+            }else {
+                grid_left.setMargin(label, new Insets(0, 0, 0, 0));
+                grid_left.add(label, columnIndex, rowIndex);
             }
         }
-    }// the method will show the chosen sit on the screen
 
-    public void addLabel(int columnIndex, int rowIndex) {
-        Label label = new Label();
-        label.setMinWidth(pixel);
-        label.setText(label.getId());
-        label.setMinHeight(pixel);
-        label.setBackground(new Background(new BackgroundFill(Color.rgb(223, 223, 222),
-                new CornerRadii (5),
-                Insets.EMPTY)));
-        label.setBorder(new Border(new BorderStroke(Color.rgb(247, 245, 242), BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(1))));
-        GridPane.setColumnIndex(label, columnIndex);
-        GridPane.setRowIndex(label, rowIndex);
-        label.setId(rowIndex+ " " + columnIndex);
-        grid.getChildren().add(label);
 
-        label.setOnMouseClicked((MouseClick) ->{
-            System.out.println("hellooo");
-            clickedHandle(label.getId());
-
-            label.setBackground(new Background(new BackgroundFill(Color.rgb(255, 142, 0),
-                    new CornerRadii (5),
-                    Insets.EMPTY)));
-
-            for (int i = 0; i < grid.getChildren().size(); i++){
-                grid.getChildren().get(i).setOpacity(1);
-                if (!Objects.equals(grid.getChildren().get(i).getId(), label.getId())){
-                    grid.getChildren().get(i).setOpacity(0.2);
+        //grid_left.getColumnCount();
+        label.setOnMouseClicked(e ->{
+            sitnbr_sit.setText(label.getId());
+            // sit color change
+            for (int i = 0; i < grid_left.getChildren().size(); i++){
+                grid_left.getChildren().get(i).setOpacity(1);
+                if (!Objects.equals(grid_left.getChildren().get(i).getId(), label.getId())){
+                    grid_left.getChildren().get(i).setOpacity(0.5);
                 }
             }
         });
@@ -511,10 +540,7 @@ public class Controller {
 
 
 
-
     //////  DEV TEST  ///////
-    @FXML private Button iconProfile, iconFlight, iconHistorik, iconGame, iconSuport, iconCloseSit;
-    @FXML private AnchorPane pnlProfile, pnlHistorik, pnlFlight, pnlGame, pnlSupport;
     public void testDev(ActionEvent e){
         if (e.getSource() == iconProfile) {
             pnlProfile.toFront();
