@@ -91,6 +91,12 @@ public class Controller {
 
     //</editor-fold>
 
+    //<editor-fold desc="flight list">
+    ArrayList<Flight> avalibleFlights = new ArrayList<>();
+    @FXML private TextField from_input_flight, disc_input_flight;
+    @FXML private Label no_flight_aval_msg;
+    //</editor-fold>
+
 
 
 
@@ -328,10 +334,10 @@ public class Controller {
             Label titleF = new Label();
             titleF.setMaxSize(50,40);
 
-            titleF.setText(flights.get(i).getFrom());
+            titleF.setText(flights.get(i).getDeparture_name());
 
             Text depTime = new Text();
-            String tmp = flights.get(i).getTime();
+            String tmp = flights.get(i).getDeparture_time();
             String[] sorted = tmp.split(":");
             String s = sorted[0] + ": " + sorted[1];
             depTime.setText(s);
@@ -343,10 +349,10 @@ public class Controller {
 
             Label titleD = new Label();
             titleD.setMaxSize(50,40);
-            titleD.setText(flights.get(i).getDestination());
+            titleD.setText(flights.get(i).getDestination_name());
 
             Label date = new Label();
-            date.setText(flights.get(i).getDate());
+            date.setText(flights.get(i).getDestination_time());
             // box holderx
             VBox boardingBox = new VBox();
             boardingBox.setAlignment(Pos.CENTER_LEFT);
@@ -577,6 +583,22 @@ public class Controller {
 
     }
 
+    //////  SEARCH FLIGHTS  ///////
+
+    public void seachFlights(ActionEvent e) throws SQLException {
+        if (!(from_input_flight.getText().isEmpty()) && !(disc_input_flight.getText().isEmpty())){
+            avalibleFlights = Db.seachFlight(from_input_flight.getText(), disc_input_flight.getText());
+            System.out.println();
+            if (avalibleFlights.isEmpty()){
+                System.out.println("no flights available");
+                //no_flight_aval_msg.setText("No flights available!");
+            }else {
+                //no_flight_aval_msg.setText("sf");
+                fillFlights(avalibleFlights);
+            }
+        }
+    }
+
 
     //////  SEARCH FIELD  ///////
     public void searchHit(){
@@ -608,11 +630,6 @@ public class Controller {
             stage.close();
         }
     } // the method will close a scene
-    public void openProfile() throws FileNotFoundException {
-        int user_id = Integer.parseInt(u_id.getText());
-        User user = Db.getUserWithID(user_id);
-        NewScene.showNewScene(user.getName() + "'s Profile", null);
-    } // the method will open the profile
     public void exitProgram(){
         System.exit(0);
     } // to determinate the program
