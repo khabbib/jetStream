@@ -1,28 +1,49 @@
 package application.Model;
 
 public class Flight {
-    private String from, destination, date, time;
-    public Flight(String from, String distination, String date, String time){
-        this.from = from;
-        this.destination = distination;
-        this.date = date;
-        this.time = time;
+    private String id, departure_name, destination_name, departure_date, destination_date,  departure_time, destination_time, price;
+    public Flight(String id, String departure_name, String departure_date, String departure_time,String destination_name, String destination_date, String destination_time, String price){
+        this.id = id;
+        this.departure_name = departure_name;
+        this.departure_date = departure_date;
+        this.departure_time = departure_time;
+        this.destination_name = destination_name;
+        this.destination_date = destination_date;
+        this.destination_time = destination_time;
+        this.price = price;
+
     }
 
 
-    public String getTime() {
-        return time;
+    public String getDeparture_time() {
+        return departure_time;
     }
 
-    public String getFrom() {
-        return from;
+    public String getDeparture_name() {
+        return departure_name;
     }
 
-    public String getDestination() {
-        return destination;
+    public String getDestination_name() {
+        return destination_name;
     }
 
-    public String getDate() {
-        return date;
+    public String getDeparture_date() {
+        return departure_date;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getDestination_date() {
+        return destination_date;
+    }
+
+    public String getDestination_time() {
+        return destination_time;
+    }
+
+    public String getPrice() {
+        return price;
     }
 }

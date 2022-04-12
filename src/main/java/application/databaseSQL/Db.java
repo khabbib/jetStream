@@ -1,8 +1,10 @@
 package application.databaseSQL;
 
+import application.Model.Flight;
 import application.Model.User;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Db {
     // get database connection
@@ -108,6 +110,35 @@ public class Db {
         return user;
     }
 
+
+
+
+    //////  SEARCH FLIGHTS  ///////
+
+    public static ArrayList<Flight> seachFlight(String departure, String destination) throws SQLException {
+        ArrayList<Flight> flights = new ArrayList<>();
+        Connection con = getDatabaseConnection();
+        Statement stmt = con.createStatement();
+        flights.clear();
+        stmt.executeUpdate("SET search_path TO jetstream;");
+        ResultSet flight = stmt.executeQuery("select * from flight where f_departure_name = '" + departure + "' and f_destination_name = '"+destination+"';");
+        while (flight.next()){
+            String id_get = flight.getString("f_id");
+            String departure_name_get = flight.getString(("f_departure_name"));
+            String departure_date_get = flight.getString("f_departure_date");
+            String departure_time_get = flight.getString("f_departure_time");
+            String destination_name_get = flight.getString("f_destination_name");
+            String destination_date_get = flight.getString("f_destination_date");
+            String destination_time_get = flight.getString("f_destination_time");
+            String price_get = flight.getString("f_price");
+            System.out.println("Fetched info: \nid: " + id_get + "\nfrom: " + departure_name_get + "\ndestination: " + destination_name_get);
+            flights.add(new Flight(id_get,departure_name_get,departure_date_get,departure_time_get, destination_name_get,destination_date_get,destination_time_get,price_get));
+        }
+
+        con.close();
+        stmt.close();
+        return flights;
+    }
 
 
 }
