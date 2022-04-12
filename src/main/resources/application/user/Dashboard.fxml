@@ -216,7 +216,7 @@
                         <Circle fill="#151d3b" layoutX="62.0" layoutY="41.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" style="-fx-background-color: #151D3B;" />
                         <Circle fill="#151d3b" layoutX="1044.0" layoutY="41.0" radius="19.0" stroke="#151d3b" strokeType="INSIDE" strokeWidth="0.0" style="-fx-background-color: #151D3B;" />
                         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#151d3b" height="38.0" layoutX="55.0" layoutY="22.0" stroke="#151d3b" strokeType="INSIDE" strokeWidth="0.0" style="-fx-background-color: #151D3B;" width="986.0" />
-                        <TextField fx:id="search_f_name" layoutX="59.0" layoutY="22.0" onAction="#searchHit" onKeyPressed="#searchAppear" prefHeight="38.0" prefWidth="955.0" promptText="Search flight..." style="-fx-background-color: #151D3B; -fx-text-fill: #eee;" />
+                        <TextField fx:id="search_f_name" layoutX="59.0" layoutY="22.0" onAction="#searchHit" onKeyTyped="#searchAppear" prefHeight="38.0" prefWidth="955.0" promptText="Search flight..." style="-fx-background-color: #151D3B; -fx-text-fill: #eee;" />
                         <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="1027.0" layoutY="29.0" onMouseClicked="#searchHit" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../image/search.png" />
