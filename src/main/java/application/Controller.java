@@ -1,6 +1,7 @@
 package application;
 
 import application.Model.*;
+import application.Model.Pong;
 import application.moveScreen.MoveScreen;
 import application.databaseSQL.Db;
 import javafx.event.ActionEvent;
@@ -122,8 +123,19 @@ public class Controller {
         ImageView imageView = new ImageView(new Image("application/gamePosters/MusicQuiz.png"));
         ImageView imageView2 = new ImageView(new Image("application/gamePosters/PONG.png"));
         game1.getChildren().add(imageView);
-        game2.getChildren().add(imageView2);    }
-    public void playPong(){}
+        game2.getChildren().add(imageView2);
+    }
+
+    public void playPong(){
+        Pong pong = new Pong();
+        try {
+            Stage primary = new Stage();
+            pong.start(primary);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void playQuiz(){
         MPlayer mPlayer = new MPlayer();
         try {
