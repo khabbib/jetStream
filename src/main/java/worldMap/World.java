@@ -798,7 +798,7 @@ public class World extends Region {
             case "MY": s = "Malaysia"; break;
             case "MZ": s = "Mozambique"; break;
             case "NA": s = "Namibia"; break;
-            case "NC": s = "New Caledonia"; break;
+            case "NC": s = "New_Caledonia"; break;
             case "NE": s = "Niger"; break;
             case "NF": s = "Norfolk_Island"; break;
             case "NG": s = "Nigeria"; break;
@@ -808,7 +808,7 @@ public class World extends Region {
             case "NP": s = "Nepal"; break;
             case "NR": s = "Nauru"; break;
             case "NU": s = "Niue"; break;
-            case "NZ": s = "New Zealand"; break;
+            case "NZ": s = "New_Zealand"; break;
             case "OM": s = "Oman"; break;
             case "PA": s = "Panama"; break;
             case "PE": s = "Peru"; break;
@@ -875,7 +875,7 @@ public class World extends Region {
             case "UM_JQ": s = "Johnston_Atoll"; break;
             case "UM_MQ": s = "Midway_Islands"; break;
             case "UM_WQ": s = "United_States_Virgin_Islands"; break;
-            case "US": s = "United_States"; break;
+            case "US": s = "United_States_of_America"; break;
             case "UY": s = "Uruguay"; break;
             case "UZ": s = "Uzbekistan"; break;
             case "VA": s = "Vatikan_City"; break;
