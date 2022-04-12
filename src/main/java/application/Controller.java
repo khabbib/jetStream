@@ -4,6 +4,8 @@ import application.Model.*;
 import application.Model.Pong;
 import application.moveScreen.MoveScreen;
 import application.databaseSQL.Db;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,9 +25,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import worldMap.World;
 
-import java.io.FileNotFoundException;
+import javax.swing.*;
 import java.io.IOException;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -54,8 +57,6 @@ public class Controller {
     @FXML private VBox display_flight;
     @FXML private Button menuButton1;
     @FXML private Button menuButton2;
-    @FXML private TextField search_input;
-    @FXML private Label search_matching;
     // From game
     @FXML private StackPane game1;
     @FXML private StackPane game2;
@@ -92,11 +93,18 @@ public class Controller {
     //</editor-fold>
 
     //<editor-fold desc="flight list">
-    ArrayList<Flight> avalibleFlights = new ArrayList<>();
-    @FXML private TextField from_input_flight, disc_input_flight;
+    private ArrayList<Flight> avalibleFlights = new ArrayList<>();
+    @FXML private TextField from_input_flight,disc_input_flight;
+    @FXML private DatePicker date_input_flight;
     @FXML private Label no_flight_aval_msg;
     //</editor-fold>
 
+
+    //<editor-fold desc="search field">
+    @FXML private TextField search_f_name;
+    @FXML private ListView<String> searchListAprear, searchListAprear2, searchListAprear3;
+
+    //</editor-fold>
 
 
 
@@ -213,6 +221,9 @@ public class Controller {
         u_id = (Label) root.lookup("#u_id");
         name_sit = (TextField) root.lookup("#name_sit");
         lname_sit = (TextField) root.lookup("#lname_sit");
+        searchListAprear = (ListView<String>) root.lookup("#searchListAprear");
+        searchListAprear2 = (ListView<String>) root.lookup("#searchListAprear2");
+        searchListAprear3 = (ListView<String>) root.lookup("#searchListAprear3");
         fourdigit_sit = (TextField) root.lookup("#fourdigit_sit");
         email_sit = (TextField) root.lookup("#email_sit");
         sitnbr_sit = (Label) root.lookup("#sitnbr_sit");
@@ -224,8 +235,7 @@ public class Controller {
         scrollPane = (ScrollPane) root.lookup("#scrollPane");
         chosen_seat = (Label) root.lookup("#chosen_seat");
         menuButton2 = (Button) root.lookup("#menuButton2");
-        search_input = (TextField) root.lookup("#search_input");
-        search_matching = (Label) root.lookup("#search_matching");
+        search_f_name = (TextField) root.lookup("#search_f_name");
 
     }
     public void noLoginRequired(ActionEvent e) throws IOException {
@@ -299,6 +309,8 @@ public class Controller {
         Stage infoStage = new Stage();
         AtomicBoolean openedStage = new AtomicBoolean(false);
         ArrayList<Flight> compare = new ArrayList<>();
+        if (!flights.isEmpty()){
+
 
         for (int i = 0; i < flights.size();i++){
 
@@ -414,6 +426,10 @@ public class Controller {
             hbox.addEventFilter(MouseEvent.MOUSE_EXITED, e -> {
                 hbox.setBackground(new Background(new BackgroundFill(Color.rgb(247, 245, 242), CornerRadii.EMPTY, Insets.EMPTY)));
             });
+        }
+
+        }else {
+            System.out.println("flights list is null");
         }
     } // the method will show the flights list on the right side of the dashboard when a user choose a country
 
@@ -585,12 +601,15 @@ public class Controller {
 
     //////  SEARCH FLIGHTS  ///////
 
-    public void seachFlights(ActionEvent e) throws SQLException {
+    public void seachFlights(ActionEvent e) {
+        LocalDate d = date_input_flight.getValue();
+        System.out.println("Date: " +d);
         if (!(from_input_flight.getText().isEmpty()) && !(disc_input_flight.getText().isEmpty())){
-            avalibleFlights = Db.seachFlight(from_input_flight.getText(), disc_input_flight.getText());
+            avalibleFlights = Db.seachFlight(from_input_flight.getText(), disc_input_flight.getText(), String.valueOf(d));
             System.out.println();
             if (avalibleFlights.isEmpty()){
                 System.out.println("no flights available");
+                fillFlights(null);
                 //no_flight_aval_msg.setText("No flights available!");
             }else {
                 //no_flight_aval_msg.setText("sf");
@@ -602,10 +621,76 @@ public class Controller {
 
     //////  SEARCH FIELD  ///////
     public void searchHit(){
-        System.out.println("helllo");
-        search_input.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
-        search_matching.setText("Search for (" + search_input.getText() + ") not found :(");
-        System.out.println(" search clicked");
+        if (!search_f_name.getText().isEmpty()){
+            avalibleFlights.clear();
+            avalibleFlights = Db.seachFlightFromSearchField(search_f_name.getText());
+            if (!avalibleFlights.isEmpty()){
+                fillFlights(avalibleFlights);
+            }else {
+                JOptionPane.showMessageDialog(null, "No flight with: " + search_f_name.getText());
+            }
+        }else
+            JOptionPane.showMessageDialog(null, "empty search field!");
+    }
+    public void searchAppear(){ // on key pressed search and show name
+        ArrayList<String> obs = Db.seachAppear(search_f_name.getText());
+        ObservableList<String> searchAprear = FXCollections.observableList(obs);
+
+        if (!searchAprear.isEmpty()){
+            if (searchListAprear != null){
+                System.out.println("not null");
+                searchListAprear.getItems().removeAll();
+            }
+            System.out.println("fyll the list");
+            searchListAprear.setVisible(true);
+
+            searchListAprear.setItems(searchAprear);
+            //searchListAprear.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+            searchListAprear.getSelectionModel().selectedItemProperty().addListener(e ->{
+                search_f_name.setText(searchListAprear.getSelectionModel().getSelectedItem());
+                searchListAprear.setVisible(false);
+            });
+
+        }
+    }
+    public void searchAppearD(){// on key pressed search and show name
+        ArrayList<String> obs = Db.seachAppear(from_input_flight.getText());
+        ObservableList<String> searchAprear = FXCollections.observableList(obs);
+
+        if (!searchAprear.isEmpty()){
+            if (searchListAprear2 != null){
+                System.out.println("not null");
+                searchListAprear2.getItems().removeAll();
+            }
+            System.out.println("fyll the list");
+            searchListAprear2.setVisible(true);
+
+            searchListAprear2.setItems(searchAprear);
+            //searchListAprear.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+            searchListAprear2.getSelectionModel().selectedItemProperty().addListener(e ->{
+                from_input_flight.setText(searchListAprear2.getSelectionModel().getSelectedItem());
+                searchListAprear2.setVisible(false);
+            });
+
+        }
+    }
+    public void searchAppearDS(){// on key pressed search and show name
+        ArrayList<String> obs = Db.seachAppear(disc_input_flight.getText());
+        ObservableList<String> searchAprear = FXCollections.observableList(obs);
+
+        if (!searchAprear.isEmpty()){
+            if (searchListAprear3 != null){
+                searchListAprear3.getItems().removeAll();
+            }
+            searchListAprear3.setVisible(true);
+            searchListAprear3.setItems(searchAprear);
+            //searchListAprear.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+            searchListAprear3.getSelectionModel().selectedItemProperty().addListener(e ->{
+                disc_input_flight.setText(searchListAprear3.getSelectionModel().getSelectedItem());
+                searchListAprear3.setVisible(false);
+            });
+
+        }
     }
 
 
