@@ -478,7 +478,6 @@ public class World extends Region {
                         getFlights(convert(COUNTRY_NAME));
                         //Controller.setOutput_info(NewScene.showNewScene(COUNTRY_NAME, resor));
                         //Controller.fyllTable(NewScene.showNewScene(COUNTRY_NAME, resor));
-                        System.out.println(flights.get(1));
                         if (controller == null) {
                             System.out.println("Null controller");
                         }
@@ -603,11 +602,11 @@ public class World extends Region {
         Statement stmt = con.createStatement();
         flights.clear();
         stmt.executeUpdate("SET search_path TO jetstream;");
-        ResultSet flight = stmt.executeQuery("select * from flight where f_departure = '" + country + "';");
+        ResultSet flight = stmt.executeQuery("select * from flight where f_departure_name = '" + country + "';");
         while (flight.next()){
-            String destination = flight.getString("f_destination");
-            String date = flight.getString("f_date");
-            String time = flight.getString("f_time");
+            String destination = flight.getString("f_destination_name");
+            String date = flight.getString("f_destination_date");
+            String time = flight.getString("f_destination_time");
             System.out.println(destination + " | Date: " + date);
             flights.add(new Flight(country, destination,date, time));
         }

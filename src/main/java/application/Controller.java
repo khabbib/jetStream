@@ -30,6 +30,7 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Controller {
+    //<editor-fold desc="Variables" >
 
     // Default variables
     private CreateWorld createWorld;
@@ -67,7 +68,6 @@ public class Controller {
     @FXML private AnchorPane flight_sits_eco, flights_seats_business;
     @FXML private AnchorPane pnlSit;
 
-
     // sit
     private GridPane grid_left = new GridPane(); //Layout
     private GridPane grid_right = new GridPane(); //Layout
@@ -79,6 +79,7 @@ public class Controller {
     private Label showSeat = new Label();
 
     private String returnSeat;
+    private boolean typeSeat = false; // false = economy, true = business
     private int height = 600;
     private int width = 600;
     private int antalSeats;
@@ -86,6 +87,11 @@ public class Controller {
     // toggle options
     @FXML private Button iconProfile, iconFlight, iconHistorik, iconGame, iconSuport, iconCloseSit;
     @FXML private AnchorPane pnlProfile, pnlHistorik, pnlFlight, pnlGame, pnlSupport;
+
+    //</editor-fold>
+
+
+
 
     //////////   Home   ///////////
     // the method will switch the user to the Home page
@@ -145,21 +151,8 @@ public class Controller {
     public void renderDashboard(ActionEvent e, User user) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/Dashboard.fxml")));
         this.user = user;
-        name_sit = (TextField) root.lookup("#name_sit");
-        lname_sit = (TextField) root.lookup("#lname_sit");
-        fourdigit_sit = (TextField) root.lookup("#fourdigit_sit");
-        email_sit = (TextField) root.lookup("#email_sit");
-        sitnbr_sit = (Label) root.lookup("#sitnbr_sit");
-        flight_sits_eco = (AnchorPane) root.lookup("#flight_sits_eco");
-        flights_seats_business = (AnchorPane) root.lookup("#flights_seats_business");
-        pnlSit = (AnchorPane) root.lookup("#pnlSit");
 
-        display_flight = (VBox) root.lookup("#display_flight");
-        scrollPane = (ScrollPane) root.lookup("#scrollPane");
-        chosen_seat = (Label) root.lookup("#chosen_seat");
-        menuButton2 = (Button) root.lookup("#menuButton2");
-        search_input = (TextField) root.lookup("#search_input");
-        search_matching = (Label) root.lookup("#search_matching");
+        lookUpForEl(); // look up for elements in javaFX
         createWorld = new CreateWorld();
         world = createWorld.init(this);
 
@@ -187,9 +180,7 @@ public class Controller {
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
 
-        System.out.println(user.getName() + ", " + user.getId());
-        u_name = (Label) root.lookup("#u_name");
-        u_id = (Label) root.lookup("#u_id");
+
         u_name.setText(user.getName());
         u_id.setText(user.getId());
         stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
@@ -199,6 +190,26 @@ public class Controller {
         stage.setScene(scene);
         stage.show();
     } // the method will render dashboard page for user
+    public void lookUpForEl(){
+        u_name = (Label) root.lookup("#u_name");
+        u_id = (Label) root.lookup("#u_id");
+        name_sit = (TextField) root.lookup("#name_sit");
+        lname_sit = (TextField) root.lookup("#lname_sit");
+        fourdigit_sit = (TextField) root.lookup("#fourdigit_sit");
+        email_sit = (TextField) root.lookup("#email_sit");
+        sitnbr_sit = (Label) root.lookup("#sitnbr_sit");
+        flight_sits_eco = (AnchorPane) root.lookup("#flight_sits_eco");
+        flights_seats_business = (AnchorPane) root.lookup("#flights_seats_business");
+        pnlSit = (AnchorPane) root.lookup("#pnlSit");
+
+        display_flight = (VBox) root.lookup("#display_flight");
+        scrollPane = (ScrollPane) root.lookup("#scrollPane");
+        chosen_seat = (Label) root.lookup("#chosen_seat");
+        menuButton2 = (Button) root.lookup("#menuButton2");
+        search_input = (TextField) root.lookup("#search_input");
+        search_matching = (Label) root.lookup("#search_matching");
+
+    }
     public void noLoginRequired(ActionEvent e) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/Dashboard.fxml")));
         display_flight = (VBox) root.lookup("#display_flight");
@@ -385,36 +396,32 @@ public class Controller {
             hbox.addEventFilter(MouseEvent.MOUSE_EXITED, e -> {
                 hbox.setBackground(new Background(new BackgroundFill(Color.rgb(247, 245, 242), CornerRadii.EMPTY, Insets.EMPTY)));
             });
-
-
         }
     } // the method will show the flights list on the right side of the dashboard when a user choose a country
 
 
     //////////   sit lists    ///////////
-    public void chooseSeat(int antalSit, int businessSeats) {
+    public void chooseSeat(int econonySeats, int businessSeats) {
         grid_left.getChildren().removeAll();
-        grid_right.getChildren().removeAll();
         grid_business.getChildren().removeAll();
-        this.antalSeats = antalSit;
+        this.antalSeats = econonySeats;
         // 72/6 = 12
         // 12 row
         // 6 column
         boolean business = false;
-            for(int i = 0;i < antalSit/10; i++){ // cal
-                for(int j = 0;j <antalSit/6; j++){ // row
-                    business = false;
-                    build_eco_seats(i,j, business);
-                }
+        //
+        for(int i = 0;i < econonySeats/10; i++){ // cal
+            for(int j = 0;j <econonySeats/6; j++){ // row
+                business = false;
+                build_eco_seats(i,j, business);
             }
-            for(int i = 0;i < businessSeats/3; i++){ // cal
-                for(int j = 0;j <businessSeats/3; j++){ // row
-                    business = true;
-                    build_eco_seats(i,j, business);
-                }
+        }
+        for(int i = 0;i < businessSeats/3; i++){ // cal
+            for(int j = 0;j <businessSeats/3; j++){ // row
+                business = true;
+                build_eco_seats(i,j, business);
             }
-
-
+        }
 
     }// the method will show the chosen sit on the screen
     public void build_eco_seats(int columnIndex, int rowIndex, boolean business) {
@@ -422,20 +429,26 @@ public class Controller {
         label.setMinWidth(30);
         label.setMinHeight(30);
         label.setText(label.getId());
-        label.setBackground(new Background(new BackgroundFill(Color.rgb(223, 223, 222), new CornerRadii (5), Insets.EMPTY)));
+        label.setBackground(new Background(new BackgroundFill(Color.rgb(223, 223, 222), new CornerRadii(5), Insets.EMPTY)));
         label.setBorder(new Border(new BorderStroke(Color.rgb(247, 245, 242), BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(1))));
         label.setId(rowIndex+ " " + columnIndex);
         //grid_left.setColumnIndex(label, columnIndex);
         if (business){
             System.out.println("business: " + business);
             grid_business.add(label, columnIndex,rowIndex);
-        }else if(!business) {
+        }
+
+        else if(!business) {
             System.out.println("business: " + business);
-            if (grid_left.getColumnCount() == 3){
+            if (grid_left.getColumnCount() == 3 && grid_left.getRowCount() == 0){
                 System.out.println("column 3");
-                grid_left.setMargin(label, new Insets(0, 0, 0, 20));
                 grid_left.add(label, columnIndex, rowIndex);
-            }else {
+                grid_left.setMargin(label, new Insets(0, 0, 0, 20));
+            } else if (grid_left.getColumnCount() == 4 && grid_left.getRowCount() > 0) {
+            grid_left.add(label, columnIndex, rowIndex);
+            }
+            
+            else {
                 grid_left.setMargin(label, new Insets(0, 0, 0, 0));
                 grid_left.add(label, columnIndex, rowIndex);
             }
@@ -453,10 +466,6 @@ public class Controller {
                 }
             }
         });
-    }
-
-    private void clickedHandle(String id) {
-        returnSeat = id;
     }
 
 
@@ -525,19 +534,12 @@ public class Controller {
 
 
     //////////   getters and setters   ///////////
-    public Stage getStage() {
-        return stage;
-    }
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
     public Scene getScene() {
         return scene;
     }
     public void setScene(Scene scene) {
         this.scene = scene;
     }
-
 
 
     //////  DEV TEST  ///////
@@ -571,7 +573,6 @@ public class Controller {
         search_matching.setText("Search for (" + search_input.getText() + ") not found :(");
         System.out.println(" search clicked");
     }
-
 
 
     //////  MENU  /////// none used methods
