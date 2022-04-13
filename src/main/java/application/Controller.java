@@ -48,6 +48,7 @@ public class Controller {
     @FXML private ButtonBar logout;
     @FXML private TextField login_pass;
     @FXML private ScrollPane scrollPane;
+    @FXML private ScrollPane scrollFlights;
     @FXML private TextField login_email;
     @FXML private Label error;
     @FXML private Label registration_error;
@@ -231,7 +232,9 @@ public class Controller {
         flights_seats_business = (AnchorPane) root.lookup("#flights_seats_business");
         pnlSit = (AnchorPane) root.lookup("#pnlSit");
 
-        display_flight = (VBox) root.lookup("#display_flight");
+        scrollFlights = (ScrollPane) root.lookup("#scrollFlights");
+        scrollFlights.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        display_flight = (VBox) scrollFlights.getContent();
         scrollPane = (ScrollPane) root.lookup("#scrollPane");
         chosen_seat = (Label) root.lookup("#chosen_seat");
         menuButton2 = (Button) root.lookup("#menuButton2");
@@ -240,7 +243,10 @@ public class Controller {
     }
     public void noLoginRequired(ActionEvent e) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/Dashboard.fxml")));
-        display_flight = (VBox) root.lookup("#display_flight");
+        scrollFlights = (ScrollPane) root.lookup("#scrollFlights");
+        scrollFlights.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
+        display_flight = (VBox) scrollFlights.getContent();
         scrollPane = (ScrollPane) root.lookup("#scrollPane");
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
