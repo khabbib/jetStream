@@ -309,8 +309,8 @@ public class Controller {
         Stage infoStage = new Stage();
         AtomicBoolean openedStage = new AtomicBoolean(false);
         ArrayList<Flight> compare = new ArrayList<>();
-        if (!flights.isEmpty()){
 
+        if (flights != null) {
 
         for (int i = 0; i < flights.size();i++){
 
@@ -605,8 +605,11 @@ public class Controller {
         LocalDate d = date_input_flight.getValue();
         System.out.println("Date: " +d);
         if (!(from_input_flight.getText().isEmpty()) && !(disc_input_flight.getText().isEmpty())){
-            avalibleFlights = Db.seachFlight(from_input_flight.getText(), disc_input_flight.getText(), String.valueOf(d));
-            System.out.println();
+            if (d != null) {
+                avalibleFlights = Db.searchFlight(from_input_flight.getText(), disc_input_flight.getText(), String.valueOf(d));
+            } else {
+                avalibleFlights = Db.searchFlight(from_input_flight.getText(), disc_input_flight.getText());
+            }
             if (avalibleFlights.isEmpty()){
                 System.out.println("no flights available");
                 fillFlights(null);
