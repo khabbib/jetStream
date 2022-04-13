@@ -161,6 +161,16 @@ public class Controller {
         }
     }
 
+    public void playPiano(){
+        Piano piano = new Piano();
+        try {
+            Stage primary = new Stage();
+            piano.start(primary);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     //////////   navigate to admin pages   ///////////
     public void switchToDashboard(ActionEvent e) throws IOException {
