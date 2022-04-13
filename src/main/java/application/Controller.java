@@ -245,6 +245,9 @@ public class Controller {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/Dashboard.fxml")));
         scrollFlights = (ScrollPane) root.lookup("#scrollFlights");
         scrollFlights.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        pnlSit = (AnchorPane) root.lookup("#pnlSit");
+
+
 
         display_flight = (VBox) scrollFlights.getContent();
         scrollPane = (ScrollPane) root.lookup("#scrollPane");
