@@ -44,6 +44,11 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
+            <Button layoutX="611.0" layoutY="372.0" mnemonicParsing="false" onAction="#playPiano" prefHeight="30.0" prefWidth="196.0" style="-fx-background-color: #ff8000;" text="Play" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="pnlSupport" layoutX="69.0" layoutY="4.0" prefHeight="693.0" prefWidth="1127.0" style="-fx-background-color: #112;">

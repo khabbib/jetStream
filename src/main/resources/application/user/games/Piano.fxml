@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="399.0" prefWidth="641.0" style="-fx-background-color: #112;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Piano">
+   <children>
+      <Button focusTraversable="false" layoutX="500.0" layoutY="140.0" mnemonicParsing="false" prefHeight="224.0" prefWidth="60.0" style="-fx-focus-color: transparent;" text="L" />
+      <Button focusTraversable="false" layoutX="20.0" layoutY="140.0" mnemonicParsing="false" prefHeight="224.0" prefWidth="60.0" style="-fx-focus-color: transparent;" text="A" />
+      <Button focusTraversable="false" layoutX="80.0" layoutY="140.0" mnemonicParsing="false" prefHeight="224.0" prefWidth="60.0" style="-fx-focus-color: transparent;" text="S" />
+      <Button layoutX="62.0" layoutY="139.0" mnemonicParsing="false" prefHeight="126.0" prefWidth="35.0" style="-fx-background-color: LIGHTGREY;" text="W" />
+      <Button focusTraversable="false" layoutX="140.0" layoutY="140.0" mnemonicParsing="false" prefHeight="224.0" prefWidth="60.0" style="-fx-focus-color: transparent;" text="D" />
+      <Button layoutX="122.0" layoutY="139.0" mnemonicParsing="false" prefHeight="126.0" prefWidth="35.0" style="-fx-background-color: LIGHTGREY;" text="E" />
+      <Button focusTraversable="false" layoutX="200.0" layoutY="140.0" mnemonicParsing="false" prefHeight="224.0" prefWidth="60.0" style="-fx-focus-color: transparent;" text="F" />
+      <Button layoutX="182.0" layoutY="139.0" mnemonicParsing="false" prefHeight="126.0" prefWidth="35.0" style="-fx-background-color: LIGHTGREY;" text="R" />
+      <Button focusTraversable="false" layoutX="260.0" layoutY="140.0" mnemonicParsing="false" prefHeight="224.0" prefWidth="60.0" style="-fx-focus-color: transparent;" text="G" />
+      <Button focusTraversable="false" layoutX="320.0" layoutY="140.0" mnemonicParsing="false" prefHeight="224.0" prefWidth="60.0" style="-fx-focus-color: transparent;" text="H" />
+      <Button layoutX="302.0" layoutY="139.0" mnemonicParsing="false" prefHeight="126.0" prefWidth="35.0" style="-fx-background-color: LIGHTGREY;" text="Y" />
+      <Button focusTraversable="false" layoutX="380.0" layoutY="140.0" mnemonicParsing="false" prefHeight="224.0" prefWidth="60.0" style="-fx-focus-color: transparent;" text="J" />
+      <Button focusTraversable="false" layoutX="560.0" layoutY="140.0" mnemonicParsing="false" prefHeight="224.0" prefWidth="60.0" style="-fx-focus-color: transparent;" text="." />
+      <Button layoutX="365.0" layoutY="139.0" mnemonicParsing="false" prefHeight="126.0" prefWidth="35.0" style="-fx-background-color: LIGHTGREY;" text="U" />
+      <Button focusTraversable="false" layoutX="440.0" layoutY="140.0" mnemonicParsing="false" prefHeight="224.0" prefWidth="60.0" style="-fx-focus-color: transparent;" text="K" />
+      <Button layoutX="482.0" layoutY="139.0" mnemonicParsing="false" prefHeight="126.0" prefWidth="35.0" style="-fx-background-color: LIGHTGREY;" text="O" />
+      <Button layoutX="542.0" layoutY="139.0" mnemonicParsing="false" prefHeight="126.0" prefWidth="35.0" style="-fx-background-color: LIGHTGREY;" text="P" />
+      <Slider fx:id="instrumentSlider" blockIncrement="1.0" layoutX="20.0" layoutY="81.0" prefHeight="38.0" prefWidth="601.0" showTickLabels="true" showTickMarks="true" />
+      <Label layoutX="257.0" layoutY="24.0" text="Synthesizer Elite" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="232.0" layoutY="54.0" text="Choose instrument through slider." textFill="#c9c0c0">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
