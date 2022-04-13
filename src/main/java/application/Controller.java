@@ -655,65 +655,76 @@ public class Controller {
             JOptionPane.showMessageDialog(null, "empty search field!");
     }
     public void searchAppear(){ // on key pressed search and show name
-        ArrayList<String> obs = Db.seachAppear(search_f_name.getText());
-        ObservableList<String> searchAprear = FXCollections.observableList(obs);
-
-        if (!searchAprear.isEmpty()){
-            if (searchListAprear != null){
-                System.out.println("not null");
-                searchListAprear.getItems().removeAll();
-            }
-            System.out.println("fyll the list");
-            searchListAprear.setVisible(true);
-
-            searchListAprear.setItems(searchAprear);
-            //searchListAprear.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-            searchListAprear.getSelectionModel().selectedItemProperty().addListener(e ->{
-                search_f_name.setText(searchListAprear.getSelectionModel().getSelectedItem());
-                searchListAprear.setVisible(false);
+        if (search_f_name != null){
+            ObservableList<String> searchAprear = FXCollections.observableList(propareSearchTerm(search_f_name.getText().toLowerCase()));
+            if (!searchAprear.isEmpty()){
+                if (searchListAprear != null){
+                    searchListAprear.getItems().removeAll();
+                }
+                searchListAprear.setVisible(true);
+                searchListAprear.setItems(searchAprear);
+                searchListAprear.getSelectionModel().selectedItemProperty().addListener(e ->{
+                    search_f_name.setText(searchListAprear.getSelectionModel().getSelectedItem());
+                        searchListAprear.setVisible(false);
             });
-
+            }
         }
     }
-    public void searchAppearD(){// on key pressed search and show name
-        ArrayList<String> obs = Db.seachAppear(from_input_flight.getText());
-        ObservableList<String> searchAprear = FXCollections.observableList(obs);
-
-        if (!searchAprear.isEmpty()){
-            if (searchListAprear2 != null){
-                System.out.println("not null");
-                searchListAprear2.getItems().removeAll();
-            }
-            System.out.println("fyll the list");
-            searchListAprear2.setVisible(true);
-
-            searchListAprear2.setItems(searchAprear);
-            //searchListAprear.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-            searchListAprear2.getSelectionModel().selectedItemProperty().addListener(e ->{
-                from_input_flight.setText(searchListAprear2.getSelectionModel().getSelectedItem());
-                searchListAprear2.setVisible(false);
+    public void departureNameAppear(){// on key pressed search and show name
+        if (from_input_flight != null){
+            ObservableList<String> searchAprear = FXCollections.observableList(propareSearchTerm(from_input_flight.getText().toLowerCase()));
+            if (!searchAprear.isEmpty()){
+                if (searchListAprear2 != null){
+                    searchListAprear2.getItems().removeAll();
+                }
+                searchListAprear2.setVisible(true);
+                searchListAprear2.setItems(searchAprear);
+                searchListAprear2.getSelectionModel().selectedItemProperty().addListener(e ->{
+                    from_input_flight.setText(searchListAprear2.getSelectionModel().getSelectedItem());
+                        searchListAprear2.setVisible(false);
             });
-
+            }
         }
     }
-    public void searchAppearDS(){// on key pressed search and show name
-        ArrayList<String> obs = Db.seachAppear(disc_input_flight.getText());
-        ObservableList<String> searchAprear = FXCollections.observableList(obs);
-
-        if (!searchAprear.isEmpty()){
-            if (searchListAprear3 != null){
-                searchListAprear3.getItems().removeAll();
-            }
-            searchListAprear3.setVisible(true);
-            searchListAprear3.setItems(searchAprear);
-            //searchListAprear.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-            searchListAprear3.getSelectionModel().selectedItemProperty().addListener(e ->{
-                disc_input_flight.setText(searchListAprear3.getSelectionModel().getSelectedItem());
-                searchListAprear3.setVisible(false);
+    public void destinationNameAppear(){// on key pressed search and show name
+        if (disc_input_flight != null){
+            ObservableList<String> searchAprear = FXCollections.observableList(propareSearchTerm(disc_input_flight.getText().toLowerCase()));
+            if (!searchAprear.isEmpty()){
+                if (searchListAprear3 != null){
+                    searchListAprear3.getItems().removeAll();
+                }
+                searchListAprear3.setVisible(true);
+                searchListAprear3.setItems(searchAprear);
+                searchListAprear3.getSelectionModel().selectedItemProperty().addListener(e ->{
+                    disc_input_flight.setText(searchListAprear3.getSelectionModel().getSelectedItem());
+                        searchListAprear3.setVisible(false);
             });
-
+            }
         }
     }
+    private ArrayList<String> propareSearchTerm(String srch){
+        ArrayList<String> obs;
+        if (srch.length() > 1){
+            String searchTarget = srch.substring(0, 1).toUpperCase() + srch.substring(1); // convert first character to Uppercase
+            obs = compareSearchKey(searchTarget);
+        }else {
+            String searchTarget = srch.toUpperCase();
+            obs = compareSearchKey(searchTarget);
+        }
+        return obs;
+    }
+    private ArrayList<String> compareSearchKey(String searchTargetKey) {
+        ArrayList<String> obs  = new ArrayList<>();
+        for (Enum item : Countrylist.values()) {
+            if (item.toString().contains(searchTargetKey)){
+                obs.add(item.toString());
+                System.out.println(item + " /" + searchTargetKey);
+            }
+        }
+
+        return obs;
+    }
+
 
 
     //////  MENU  /////// none used methods
