@@ -216,7 +216,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </ImageView>
-                        <TextField layoutX="841.0" layoutY="27.0" prefHeight="25.0" prefWidth="213.0" promptText="Search..." style="-fx-background-color: transparent;" />
+                        <TextField fx:id="search_f_name" layoutX="841.0" layoutY="27.0" prefHeight="25.0" prefWidth="213.0" promptText="Search..." style="-fx-background-color: transparent; -fx-text-fill: white;" />
                      </children>
                   </Pane>
                </children>
