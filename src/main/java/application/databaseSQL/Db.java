@@ -137,7 +137,7 @@ public class Db {
                 String destination_date_get = flight.getString("f_destination_date");
                 String destination_time_get = flight.getString("f_destination_time");
                 String price_get = flight.getString("f_price");
-                System.out.println("Fetched info: \nid: " + id_get + "\nfrom: " + departure_name_get + "\ndestination: " + destination_name_get);
+                //System.out.println("Fetched info: \nid: " + id_get + "\nfrom: " + departure_name_get + "\ndestination: " + destination_name_get);
                 flights.add(new Flight(id_get,departure_name_get,departure_date_get,departure_time_get, destination_name_get,destination_date_get,destination_time_get,price_get));
             }
             con.close();
@@ -168,7 +168,7 @@ public class Db {
                 String destination_date_get = flight.getString("f_destination_date");
                 String destination_time_get = flight.getString("f_destination_time");
                 String price_get = flight.getString("f_price");
-                System.out.println("Fetched info: \nid: " + id_get + "\nfrom: " + departure_name_get + "\ndestination: " + destination_name_get);
+                //System.out.println("Fetched info: \nid: " + id_get + "\nfrom: " + departure_name_get + "\ndestination: " + destination_name_get);
                 flights.add(new Flight(id_get,departure_name_get,departure_date_get,departure_time_get, destination_name_get,destination_date_get,destination_time_get,price_get));
             }
             con.close();
@@ -200,7 +200,7 @@ public class Db {
                 String destination_date_get = flight.getString("f_destination_date");
                 String destination_time_get = flight.getString("f_destination_time");
                 String price_get = flight.getString("f_price");
-                System.out.println("Fetched info: \nid: " + id_get + "\nfrom: " + departure_name_get + "\ndestination: " + destination_name_get);
+                //System.out.println("Fetched info: \nid: " + id_get + "\nfrom: " + departure_name_get + "\ndestination: " + destination_name_get);
                 flights.add(new Flight(id_get,departure_name_get,departure_date_get,departure_time_get, destination_name_get,destination_date_get,destination_time_get,price_get));
             }
 
