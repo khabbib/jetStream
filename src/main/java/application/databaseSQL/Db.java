@@ -3,6 +3,8 @@ package application.databaseSQL;
 import application.Model.Flight;
 import application.Model.User;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -239,8 +241,44 @@ public class Db {
         }catch (SQLException e){
             System.out.println("some problem accused");
         }
+        return output;
+    }
 
 
+
+
+    ////////////// EXTRA THING ///////////////
+    // fetch and filter countries
+    public static ArrayList<String> fetchLander() throws IOException {
+        ArrayList<String> output = new ArrayList<>();
+        FileWriter myWriter = new FileWriter("land.txt");
+        try {
+            Connection con = getDatabaseConnection();
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate("SET search_path TO jetstream;");
+            ResultSet rs = stmt.executeQuery("select f_departure_name from flight");
+            while (rs.next()){
+                String name = rs.getString("f_departure_name");
+
+                if (output.isEmpty()){
+                    output.add(name);
+                }else {
+                    if (output.contains(name)){
+
+                        System.out.println("har flera värde ");
+                    }else {
+                        output.add(name);
+                        myWriter.write(name + ",\n");
+                    }
+                }
+
+            }
+            con.close();
+            stmt.close();
+            myWriter.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
         return output;
     }
 
