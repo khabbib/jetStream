@@ -262,7 +262,7 @@
                               <DatePicker fx:id="date_input_flight" prefHeight="26.0" prefWidth="116.0" />
                            </children>
                         </HBox>
-                        <Button fx:id="search_input_flight" graphicTextGap="6.0" mnemonicParsing="false" onAction="#seachFlights" prefHeight="38.0" prefWidth="142.0" style="-fx-background-color: #222;" text="Search Flight" textFill="WHITE">
+                        <Button fx:id="search_input_flight" graphicTextGap="6.0" mnemonicParsing="false" onAction="#seachFlights" prefHeight="38.0" prefWidth="142.0" style="-fx-background-color: #222;" text="Search flight" textFill="WHITE">
                            <padding>
                               <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
                            </padding>
