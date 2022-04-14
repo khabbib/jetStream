@@ -858,7 +858,7 @@ public class World extends Region {
             case "SZ": s = "Swaziland"; break;
             case "TC": s = "Turks_And_Caicos_Islands"; break;
             case "TD": s = "Chard"; break;
-            case "TF": s = "French_Southern"; break;
+            case "TF": s = "French_Southern_and_Antarctic_Lands"; break;
             case "TG": s = "Togo"; break;
             case "TH": s = "Thailand"; break;
             case "TJ": s = "Tajikistan"; break;
