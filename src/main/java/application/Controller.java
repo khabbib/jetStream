@@ -333,7 +333,6 @@ public class Controller {
         ArrayList<Flight> compare = new ArrayList<>();
 
         if (flights != null) {
-
         for (int i = 0; i < flights.size();i++){
 
             StackPane stackholer = new StackPane();
@@ -501,9 +500,8 @@ public class Controller {
                 grid_left.add(label, columnIndex, rowIndex);
                 grid_left.setMargin(label, new Insets(0, 0, 0, 20));
             } else if (grid_left.getColumnCount() == 4 && grid_left.getRowCount() > 0) {
-            grid_left.add(label, columnIndex, rowIndex);
+                grid_left.add(label, columnIndex, rowIndex);
             }
-            
             else {
                 grid_left.setMargin(label, new Insets(0, 0, 0, 0));
                 grid_left.add(label, columnIndex, rowIndex);
@@ -525,7 +523,28 @@ public class Controller {
     }
 
 
-
+    //////////   purchase   ///////////
+    @FXML private AnchorPane pnlPayment;
+    @FXML private TextField card_nbr,card_fname, card_lname, card_month, card_year, card_cvc;
+    @FXML private Button card_prev_btn, card_purchase_btn, sit_next_btn;
+    public void purchaseHandle(ActionEvent e){
+        if (e.getSource() == card_prev_btn){
+            fillInfo();
+            pnlPayment.toBack();
+        }else if(e.getSource() == card_purchase_btn){
+            JOptionPane.showMessageDialog(null, "Purchase successfully done!");
+        }else if(e.getSource() == sit_next_btn){
+            pnlPayment.toFront();
+        }
+    }
+    public void fillInfo(){
+        card_nbr.clear();
+        card_fname.clear();
+        card_lname.clear();
+        card_month.clear();
+        card_year.clear();
+        card_cvc.clear();
+    }
     //////////   navigate to admin pages   ///////////
     public void switchToAdminView(ActionEvent e) {
 
