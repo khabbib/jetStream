@@ -678,7 +678,7 @@ public class World extends Region {
             case "BZ": s = "Belize"; break;
             case "CA": s = "Canada"; break;
             case "CC": s = "Cocos_Islands"; break;
-            case "CD": s = "Congo_Democratic_Republic"; break;
+            case "CD": s = "Democratic_Republic_of_the_Congo"; break;
             case "CF": s = "Central_African_Republic"; break;
             case "CG": s = "Congo_Republic"; break;
             case "CH": s = "Switzerland"; break;
@@ -729,7 +729,7 @@ public class World extends Region {
             case "GP": s = "Guadeloupe"; break;
             case "GQ": s = "Equatorial_Guinea"; break;
             case "GR": s = "Greece"; break;
-            case "GS": s = "South_Georgia"; break;
+            case "GS": s = "South_Georgia_Island"; break;
             case "GT": s = "Guatemala"; break;
             case "GU": s = "Guam"; break;
             case "GW": s = "Guinea-Bissau"; break;
@@ -768,7 +768,7 @@ public class World extends Region {
             case "KW": s = "Kuwait"; break;
             case "KY": s = "Cayman_Islands"; break;
             case "KZ": s = "Kazakhstan"; break;
-            case "LA": s = "Lao"; break;
+            case "LA": s = "Laos"; break;
             case "LB": s = "Lebanon"; break;
             case "LC": s = "Saint_Lucia"; break;
             case "LI": s = "Liechtenstein"; break;
