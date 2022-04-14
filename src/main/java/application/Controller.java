@@ -562,7 +562,6 @@ public class Controller {
         this.scene = scene;
     }
 
-
     //////  DEV TEST  ///////
     public void testDev(ActionEvent e){
         if (e.getSource() == iconProfile) {
