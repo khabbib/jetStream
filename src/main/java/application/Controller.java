@@ -91,6 +91,9 @@ public class Controller {
     @FXML private Button iconProfile, iconFlight, iconHistorik, iconGame, iconSuport, iconCloseSit;
     @FXML private AnchorPane pnlProfile, pnlHistorik, pnlFlight, pnlGame, pnlSupport;
 
+    //Admin panels
+    @FXML private AnchorPane pnlFlights, pnlTickets, pnlMember;
+    @FXML private Button flightsBtn, membersBtn, ticketsBtn, logoutButton;
     //</editor-fold>
 
     //<editor-fold desc="flight list">
@@ -524,14 +527,6 @@ public class Controller {
 
 
     //////////   navigate to admin pages   ///////////
-    public void switchToviewFlights(ActionEvent e) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("admin/FlightsView.fxml")));
-        stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setTitle("FlightsView");
-        stage.setScene(scene);
-        stage.show();
-    }
     public void switchToAdminView(ActionEvent e) {
 
         if (!login_pass.getText().isEmpty() && !login_email.getText().isEmpty()) {
@@ -554,35 +549,8 @@ public class Controller {
             error.setText("Fill the field!");
         }
     }
-    public void switchToMembersView(ActionEvent e) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("admin/MemberView.fxml")));
-        stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setTitle("Members window");
-        stage.setScene(scene);
-        stage.show();
-    }
-    public void switchToBookedFligthsView(ActionEvent e) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("admin/BookedFlightsView.fxml")));
-        stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setTitle("Checking window");
-        stage.setScene(scene);
-        stage.show();
-    }
-    public void logout(ActionEvent event) {
-        Alert alert2 = new Alert(Alert.AlertType.CONFIRMATION);
-        alert2.setTitle("Logout");
-        alert2.setHeaderText("You are about to logout!");
-        alert2.setContentText("Do you really want to logout?");
 
-        if (alert2.showAndWait().get() == ButtonType.OK) {
-            stage = (Stage) scrollPane.getScene().getWindow();
-            System.out.println("You have successfully logged out!");
-            stage.close();
-        }
 
-    }
 
 
 
@@ -614,6 +582,30 @@ public class Controller {
         }
         else if(e.getSource() == iconSuport){
             pnlSupport.toFront();
+        }
+
+    }
+
+    /////// ADMIN DEV ///////
+    public void adminDev(ActionEvent e) throws IOException {
+        if(e.getSource() == logoutButton)
+        {
+            switchToLogin(e);
+        }
+
+        else if(e.getSource() == flightsBtn)
+        {
+            pnlFlights.toFront();
+        }
+
+        else if(e.getSource() == ticketsBtn)
+        {
+            pnlTickets.toFront();
+        }
+
+        else if(e.getSource() == membersBtn)
+        {
+            pnlMember.toFront();
         }
 
     }
