@@ -2,8 +2,10 @@ package application;
 
 import application.Model.*;
 import application.Model.Pong;
+import application.auth.Purchase;
 import application.moveScreen.MoveScreen;
 import application.databaseSQL.Db;
+import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -23,6 +25,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import worldMap.World;
 
 import javax.swing.*;
@@ -34,7 +37,7 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Controller {
-    //<editor-fold desc="Variables" >
+    //<editor-fold desc="Global variables" >
 
     // Default variables
     private CreateWorld createWorld;
@@ -54,22 +57,15 @@ public class Controller {
     @FXML private Label registration_error;
     @FXML private Label success_msg;
     @FXML private Label u_name, u_id;
-    @FXML private Label chosen_seat;
     @FXML private VBox display_flight;
-    @FXML private Button menuButton1;
-    @FXML private Button menuButton2;
     // From game
     @FXML private StackPane game1;
     @FXML private StackPane game2;
     @FXML private Button quizButton;
 
-    // From registration page
+    // Register a new user
     @FXML private TextField name, lname, adress, email, number, password;
-    // From sit
-    @FXML private TextField name_sit, lname_sit, fourdigit_sit, email_sit;
-    @FXML private Label sitnbr_sit;
-    @FXML private AnchorPane flight_sits_eco, flights_seats_business;
-    @FXML private AnchorPane pnlSit;
+
 
     // sit
     private GridPane grid_left = new GridPane(); //Layout
@@ -80,6 +76,8 @@ public class Controller {
     private Label newSeat = new Label();
     private Label label = new Label();      // Label
     private Label showSeat = new Label();
+
+
 
     private String returnSeat;
     private boolean typeSeat = false; // false = economy, true = business
@@ -95,20 +93,31 @@ public class Controller {
     @FXML private AnchorPane pnlFlights, pnlTickets, pnlMember;
     @FXML private Button flightsBtn, membersBtn, ticketsBtn, logoutButton;
     //</editor-fold>
-
-    //<editor-fold desc="flight list">
+    //<editor-fold desc="Flights and dashboard variables">
     private ArrayList<Flight> avalibleFlights = new ArrayList<>();
     @FXML private TextField from_input_flight,disc_input_flight;
     @FXML private DatePicker date_input_flight;
     @FXML private Label no_flight_aval_msg;
+
+    @FXML private AnchorPane pnlPayment;
+    @FXML private TextField card_nbr,card_fname, card_lname, card_month, card_year, card_cvc;
+    @FXML private Button card_prev_btn, card_purchase_btn, sit_next_btn;
+    @FXML private ImageView rotate_logo_success_purchase;
+
+    @FXML private AnchorPane pnl_success_purchase;
+    @FXML private Button redirect_to_dash_btn, print_ticket_purchase_btn;
+
+    // From seat
+    @FXML private AnchorPane pnlSit, pnlPassanger;
+    @FXML private TextField name_seat_pnl, lname_seat_pnl, fourdigit_seat_pnl, email_seat_pnl;
+    @FXML private AnchorPane flight_sits_eco, flights_seats_business;
+    @FXML private Label sitnbr_seat_pnl, msg_seat_pnl, flightnbr_seat_pnl, price_seat_pnl;
     //</editor-fold>
-
-
-    //<editor-fold desc="search field">
+    //<editor-fold desc="Search variables">
     @FXML private TextField search_f_name;
     @FXML private ListView<String> searchListAprear, searchListAprear2, searchListAprear3;
 
-    //</editor-fold>
+    //</editor-fold
 
 
 
@@ -134,7 +143,6 @@ public class Controller {
         stage.setScene(scene);
         stage.show();
 
-        menuButton1 = (Button) root.lookup("#menuButton1");
         quizButton = (Button) root.lookup("#quizButton");
         game1 = (StackPane) root.lookup("#game1");
         game2 = (StackPane) root.lookup("#game2");
@@ -175,7 +183,7 @@ public class Controller {
     }
 
 
-    //////////   navigate to admin pages   ///////////
+    //////////   navigate to dashboard pages   ///////////
     public void switchToDashboard(ActionEvent e) throws IOException {
         if (!login_pass.getText().isEmpty() && !login_email.getText().isEmpty()) {
             User user = Db.authenticationUser(login_email.getText(), login_pass.getText());
@@ -231,27 +239,45 @@ public class Controller {
         stage.show();
     } // the method will render dashboard page for user
     public void lookUpForEl(){
+        ////// look up for ticket variables
+        // Purchase info
+        card_nbr = (TextField) root.lookup("#card_nbr");
+        card_fname = (TextField) root.lookup("#card_fname");
+        card_lname = (TextField) root.lookup("#card_lname");
+        card_month = (TextField) root.lookup("#card_month");
+        card_year = (TextField) root.lookup("#card_year");
+        card_cvc = (TextField) root.lookup("#card_cvc");
+        rotate_logo_success_purchase = (ImageView) root.lookup("#rotate_logo_success_purchase");
+        // Passenger info
+        name_seat_pnl = (TextField) root.lookup("#name_seat_pnl");
+        lname_seat_pnl = (TextField) root.lookup("#lname_seat_pnl");
+        fourdigit_seat_pnl = (TextField) root.lookup("#fourdigit_seat_pnl");
+        email_seat_pnl = (TextField) root.lookup("#email_seat_pnl");
+        sitnbr_seat_pnl = (Label) root.lookup("#sitnbr_seat_pnl");
+        msg_seat_pnl = (Label) root.lookup("#msg_seat_pnl");
+        flightnbr_seat_pnl = (Label) root.lookup("#flightnbr_seat_pnl");
+        price_seat_pnl = (Label) root.lookup("#price_seat_pnl");
+
+
+        ////// look up for global variables
+
         u_name = (Label) root.lookup("#u_name");
         u_id = (Label) root.lookup("#u_id");
-        name_sit = (TextField) root.lookup("#name_sit");
-        lname_sit = (TextField) root.lookup("#lname_sit");
         searchListAprear = (ListView<String>) root.lookup("#searchListAprear");
         searchListAprear2 = (ListView<String>) root.lookup("#searchListAprear2");
         searchListAprear3 = (ListView<String>) root.lookup("#searchListAprear3");
-        fourdigit_sit = (TextField) root.lookup("#fourdigit_sit");
-        email_sit = (TextField) root.lookup("#email_sit");
-        sitnbr_sit = (Label) root.lookup("#sitnbr_sit");
+        sitnbr_seat_pnl = (Label) root.lookup("#sitnbr_seat_pnl");
         flight_sits_eco = (AnchorPane) root.lookup("#flight_sits_eco");
         flights_seats_business = (AnchorPane) root.lookup("#flights_seats_business");
         pnlSit = (AnchorPane) root.lookup("#pnlSit");
+        pnlPassanger = (AnchorPane) root.lookup("#pnlPassanger");
 
         scrollFlights = (ScrollPane) root.lookup("#scrollFlights");
         scrollFlights.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         display_flight = (VBox) scrollFlights.getContent();
         scrollPane = (ScrollPane) root.lookup("#scrollPane");
-        chosen_seat = (Label) root.lookup("#chosen_seat");
-        menuButton2 = (Button) root.lookup("#menuButton2");
         search_f_name = (TextField) root.lookup("#search_f_name");
+
 
     }
     public void noLoginRequired(ActionEvent e) throws IOException {
@@ -266,7 +292,6 @@ public class Controller {
         scrollPane = (ScrollPane) root.lookup("#scrollPane");
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        chosen_seat = (Label) root.lookup("#chosen_seat");
         createWorld = new CreateWorld();
         world = createWorld.init(this);
 
@@ -399,24 +424,28 @@ public class Controller {
             btn.setStyle("-fx-background-color:  #ff8000; -fx-text-fill: #333; -fx-padding: 10 25; ");
             int finalI1 = i;
             btn.setOnAction(e -> {
+                // the for loop is going to restore the seat opacity
+                for (int g = 0; g < grid_left.getChildren().size(); g++){
+                    grid_left.getChildren().get(g).setOpacity(1);
+                }
+                // chosen flight from flight list will get an opacity of 0.8
                 display_flight.getChildren().get(finalI1).setOpacity(0.8);
                 for (int m = 0; m < display_flight.getChildren().size(); m++){
                     if (display_flight.getChildren().get(m) != display_flight.getChildren().get(finalI1)) {
                         display_flight.getChildren().get(m).setOpacity(1);
                     }
                 }
+                // the chosen flight will be added inside an arraylist
                 compare.add(flights.get(finalI1));
+                // create the seats for chosen flight
                 chooseSeat(60, 9);
+                flightnbr_seat_pnl.setText(flights.get(finalI1).getId());
+                price_seat_pnl.setText(flights.get(finalI1).getPrice());
+                // flights seat panel will be shown
                 pnlSit.toFront();
+                //pnlPassanger.toFront();
 
-                /*HBox ls = new HBox();
-                ls.getChildren().add(display_filght.getChildren().get(finalI1));
-                hbox.setBackground(new Background(new BackgroundFill(Color.rgb(133, 200, 138),
-                        CornerRadii.EMPTY,
-                        Insets.EMPTY)));
-                hbox.setAlignment(Pos.TOP_CENTER);
-                display_filght.getChildren().clear();
-                display_filght.getChildren().add(ls);*/
+                //pnlPassanger.toFront();
             });
 
             hboxChildCenter.getChildren().addAll(boardingBox, pathIcon, landingBox);
@@ -455,7 +484,7 @@ public class Controller {
     } // the method will show the flights list on the right side of the dashboard when a user choose a country
 
 
-    //////////   sit lists    ///////////
+    //////////   create seats   ///////////
     public void chooseSeat(int econonySeats, int businessSeats) {
         grid_left.getChildren().removeAll();
         grid_business.getChildren().removeAll();
@@ -511,7 +540,7 @@ public class Controller {
 
         //grid_left.getColumnCount();
         label.setOnMouseClicked(e ->{
-            sitnbr_sit.setText(label.getId());
+            sitnbr_seat_pnl.setText(label.getId());
             // sit color change
             for (int i = 0; i < grid_left.getChildren().size(); i++){
                 grid_left.getChildren().get(i).setOpacity(1);
@@ -523,21 +552,71 @@ public class Controller {
     }
 
 
-    //////////   purchase   ///////////
-    @FXML private AnchorPane pnlPayment;
-    @FXML private TextField card_nbr,card_fname, card_lname, card_month, card_year, card_cvc;
-    @FXML private Button card_prev_btn, card_purchase_btn, sit_next_btn;
+    //////////   purchase  ticket ///////////
+
     public void purchaseHandle(ActionEvent e){
         if (e.getSource() == card_prev_btn){
-            fillInfo();
+            pnlPassanger.toFront();
             pnlPayment.toBack();
         }else if(e.getSource() == card_purchase_btn){
-            JOptionPane.showMessageDialog(null, "Purchase successfully done!");
+            System.out.println("purchase clicked");
+            //<editor-fold desc="file">
+                String nbr = card_nbr.getText();
+                String name = card_fname.getText();
+                String lname = card_lname.getText();
+                String month = card_month.getText();
+                String year = card_year.getText();
+                String cvc = card_cvc.getText();
+            //</editor-fold>
+
+            if (!card_nbr.getText().isEmpty()){
+                boolean validCard = Purchase.purchaseTicket(nbr, name, lname, month, year, cvc);
+                if (validCard){
+                    System.out.println("valid card");
+                    boolean saveTicket = Db.savePurchasedTicket(u_id.getText(), flightnbr_seat_pnl.getText(), sitnbr_seat_pnl.getText(), false);
+                    if (saveTicket){
+                        System.out.println("saved information in database");
+                        pnl_success_purchase.toFront();
+                    }else {
+                        JOptionPane.showMessageDialog(null, "Did not saved the purchase in database");
+                    }
+                }else {
+                    JOptionPane.showMessageDialog(null, "Card is not valid");
+                }
+            }else {
+                JOptionPane.showMessageDialog(null, "Purchase successfully done!");
+            }
         }else if(e.getSource() == sit_next_btn){
-            pnlPayment.toFront();
+            //<editor-fold desc="file">
+                String name_s = name_seat_pnl.getText();
+                String lname_s = lname_seat_pnl.getText();
+                String fourdigit = fourdigit_seat_pnl.getText();
+                String email = email_seat_pnl.getText();
+                String sitnbr = sitnbr_seat_pnl.getText();
+            //</editor-fold>
+           if (!name_s.isEmpty() && !lname_s.isEmpty() && !fourdigit.isEmpty() && !email.isEmpty() && !sitnbr.isEmpty()){
+                pnlPayment.toFront();
+            }else {
+               msg_seat_pnl.setText("Empty field!");
+               PauseTransition pause = new PauseTransition(Duration.seconds(2));
+               pause.setOnFinished(a -> msg_seat_pnl.setText(null));
+               pause.play();
+            }
+        }else if(e.getSource() == redirect_to_dash_btn){
+            pnlFlight.toFront();
+            restore_psgr_info();
+            pnl_success_purchase.toBack();
+            pnlPayment.toBack();
         }
     }
-    public void fillInfo(){
+    public void restore_psgr_info(){
+        name_seat_pnl.clear();
+        lname_seat_pnl.clear();
+        fourdigit_seat_pnl.clear();
+        email_seat_pnl.clear();
+        sitnbr_seat_pnl.setText(null);
+        flightnbr_seat_pnl.setText(null);
+        price_seat_pnl.setText(null);
         card_nbr.clear();
         card_fname.clear();
         card_lname.clear();
@@ -545,6 +624,12 @@ public class Controller {
         card_year.clear();
         card_cvc.clear();
     }
+
+
+
+
+
+
     //////////   navigate to admin pages   ///////////
     public void switchToAdminView(ActionEvent e) {
 
@@ -568,9 +653,6 @@ public class Controller {
             error.setText("Fill the field!");
         }
     }
-
-
-
 
 
     //////////   getters and setters   ///////////
@@ -628,8 +710,9 @@ public class Controller {
 
     }
 
-    //////  SEARCH FLIGHTS  ///////
 
+
+    /////  SEARCH FLIGHTS  ///////
     public void seachFlights(ActionEvent e) {
         LocalDate d = date_input_flight.getValue();
         System.out.println("Date: " +d);
