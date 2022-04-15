@@ -1,7 +1,9 @@
 package application.databaseSQL;
 
+import application.Model.Book;
 import application.Model.Flight;
 import application.Model.User;
+import javafx.scene.control.Label;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -117,7 +119,6 @@ public class Db {
 
 
     //////  SEARCH FLIGHTS  ///////
-
     public static ArrayList<Flight> searchFlight(String departure, String destination) {
         ArrayList<Flight> flights = new ArrayList<>();
         try {
@@ -149,7 +150,6 @@ public class Db {
         }
         return flights;
     }
-
     public static ArrayList<Flight> searchFlight(String departure, String destination, String date) {
         ArrayList<Flight> flights = new ArrayList<>();
         try {
@@ -180,11 +180,8 @@ public class Db {
         }
         return flights;
     }
-
-
     public static ArrayList<Flight> seachFlightFromSearchField(String name) {
         ArrayList<Flight> flights = new ArrayList<>();
-
         try {
             String convert = name.toLowerCase();
             String searchTarget = convert.substring(0, 1).toUpperCase() + convert.substring(1); // convert first character to Uppercase
@@ -215,7 +212,10 @@ public class Db {
         return flights;
     }
 
-    ///////// apear on screen when user type something in the search field
+
+    ///////// appear on screen when user type something in the search field
+    ////////////// EXTRA THING ///////////////
+    // fetch and filter countries
     public static ArrayList<String> seachAppear(String name) {
         ArrayList<String> output = new ArrayList<>();
         try {
@@ -242,13 +242,8 @@ public class Db {
             System.out.println("some problem accused");
         }
         return output;
+
     }
-
-
-
-
-    ////////////// EXTRA THING ///////////////
-    // fetch and filter countries
     public static ArrayList<String> fetchLander() throws IOException {
         ArrayList<String> output = new ArrayList<>();
         FileWriter myWriter = new FileWriter("land.txt");
@@ -283,4 +278,27 @@ public class Db {
     }
 
 
+    public static boolean savePurchasedTicket(String u_id, String flight_id, String seatNbr, boolean business) {
+        boolean saved = false;
+        try {
+            Connection con = getDatabaseConnection();
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate("SET search_path TO jetstream;");
+            int flight = stmt.executeUpdate("insert into booked values('" + u_id +"', '" +flight_id +"', '" +seatNbr +"');");
+            while (flight != -1){
+                System.out.println("Status: \n user: " + u_id + " has booked flight: " + flight_id);
+                saved = true;
+                //System.out.println("Fetched info: \nid: " + id_get + "\nfrom: " + departure_name_get + "\ndestination: " + destination_name_get);
+                Book booked = new Book(u_id, flight_id, seatNbr, business);
+                break;
+            }
+
+            con.close();
+            stmt.close();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return saved;
+    }
 }
