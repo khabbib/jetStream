@@ -354,12 +354,12 @@
                         <AnchorPane fx:id="flight_sits_eco" prefHeight="375.0" prefWidth="200.0" style="-fx-background-color: #112;" />
                      </children>
                   </VBox>
-                  <Label layoutX="40.0" layoutY="29.0" text="Passanger" textFill="WHITE">
+                  <Label layoutX="82.0" layoutY="34.0" text="Passanger" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
-                  <GridPane layoutX="38.0" layoutY="91.0" prefHeight="241.0" prefWidth="480.0">
+                  <GridPane layoutX="38.0" layoutY="91.0" prefHeight="323.0" prefWidth="480.0" vgap="10.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="267.0" minWidth="10.0" prefWidth="149.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="391.0" minWidth="10.0" prefWidth="328.0" />
@@ -457,7 +457,7 @@
                         <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                      </children>
                   </GridPane>
-                  <Button fx:id="sit_next_btn" layoutX="379.0" layoutY="372.0" mnemonicParsing="false" onAction="#purchaseHandle" prefHeight="37.0" prefWidth="139.0" style="-fx-background-color: #1a2e57;" text="Next" textFill="WHITE">
+                  <Button fx:id="sit_next_btn" layoutX="379.0" layoutY="438.0" mnemonicParsing="false" onAction="#purchaseHandle" prefHeight="37.0" prefWidth="139.0" style="-fx-background-color: #1a2e57;" text="Next" textFill="WHITE">
                      <padding>
                         <Insets bottom="5.0" left="25.0" right="25.0" top="5.0" />
                      </padding>
@@ -465,6 +465,11 @@
                         <Font size="18.0" />
                      </font>
                   </Button>
+                  <ImageView fitHeight="65.0" fitWidth="38.0" layoutX="38.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/user.png" />
+                     </image>
+                  </ImageView>
                </children>
             </AnchorPane>
             <ImageView fitHeight="25.0" fitWidth="30.0" layoutX="1070.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
