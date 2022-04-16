@@ -1,4 +1,4 @@
-package application.Model;
+package application.model;
 
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -11,6 +11,9 @@ import javafx.stage.Stage;
 
 import java.util.Objects;
 
+/**
+ *
+ */
 public class SeatManager {
     private static GridPane grid = new GridPane(); //Layout
     private static AnchorPane pane = new AnchorPane();
@@ -25,6 +28,9 @@ public class SeatManager {
     private static Stage stage;
     private static Scene scene;
 
+    /**
+     * @return
+     */
     public static String addSeatPlace() {
         stage = new Stage();
         grid.setGridLinesVisible(true);
@@ -56,6 +62,9 @@ public class SeatManager {
     }
 
 
+    /**
+     * @param plats
+     */
     private static void FillingLayoutWithLabels(int plats) {
         plat = plats;
         for(int i = 0;i< plats ;i++){
@@ -66,8 +75,11 @@ public class SeatManager {
 
     }
 
+    /**
+     * @param columnIndex
+     * @param rowIndex
+     */
     public static void addLabel(int columnIndex, int rowIndex) {
-
         Label label = new Label();
         label.setMinWidth(pixel);
         label.setText(label.getId());
@@ -98,10 +110,12 @@ public class SeatManager {
         });
     }
 
+    /**
+     * @param id
+     */
     private static void clickedHandle(String id) {
         returnSeat = id;
     }
-
 }
 
 

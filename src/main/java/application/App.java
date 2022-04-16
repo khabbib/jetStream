@@ -1,35 +1,29 @@
 package application;
 
-import application.Model.Countrylist;
-import application.databaseSQL.Db;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import worldMap.World;
 
-import java.io.File;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Objects;
 
 import static javafx.application.Application.launch;
 
+/**
+ *
+ */
 public class App extends Application {
-    @FXML
-    public StackPane pane;
-    public World world;
-    @Override
-    public void start(Stage stage) {
+
+    @FXML public StackPane pane;
+
+    /**
+     * @param stage
+     */
+    @Override public void start(Stage stage) {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Home.fxml")));
             Scene scene = new Scene(root);
@@ -44,8 +38,7 @@ public class App extends Application {
         }
     }
 
-
-
+    // Main application runs here
     public static void main(String[] args) {
         launch(args);
     }

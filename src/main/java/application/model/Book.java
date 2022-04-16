@@ -1,9 +1,19 @@
-package application.Model;
+package application.model;
 
+/**
+ *
+ */
 public class Book {
     private String valdeResa;
     private String user_id, flight_id, seatNbr;
     private boolean business;
+
+    /**
+     * @param user_id
+     * @param flight_id
+     * @param seatNbr
+     * @param business
+     */
     public Book(String user_id,String flight_id, String seatNbr, boolean business){
         this.business = business;
         this.user_id = user_id;
@@ -12,7 +22,7 @@ public class Book {
     }
 
 
-    /////// getter and setter /////////
+    // ----- GETTER AND SETTERS ----- //
     public String getValdeResa() {
         return valdeResa;
     }

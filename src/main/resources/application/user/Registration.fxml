@@ -13,8 +13,8 @@
    <children>
       <Pane layoutX="400.0" layoutY="183.0" prefHeight="334.0" prefWidth="359.0">
          <children>
-            <TextField fx:id="name" layoutX="29.0" layoutY="26.0" prefHeight="26.0" prefWidth="314.0" promptText="firstname" />
-            <TextField fx:id="lname" layoutX="28.0" layoutY="83.0" prefHeight="26.0" prefWidth="314.0" promptText="lastname" />
+            <TextField fx:id="firstName" layoutX="29.0" layoutY="26.0" prefHeight="26.0" prefWidth="314.0" promptText="firstname" />
+            <TextField fx:id="lastName" layoutX="28.0" layoutY="83.0" prefHeight="26.0" prefWidth="314.0" promptText="lastname" />
             <TextField fx:id="adress" layoutX="28.0" layoutY="138.0" prefHeight="26.0" prefWidth="314.0" promptText="address" />
             <TextField fx:id="email" layoutX="29.0" layoutY="193.0" prefHeight="26.0" prefWidth="314.0" promptText="email" />
             <TextField fx:id="number" layoutX="29.0" layoutY="249.0" prefHeight="26.0" prefWidth="314.0" promptText="phone nr." />

@@ -1,10 +1,22 @@
-package application.Model;
+package application.model;
 
+/**
+ *
+ */
 public class User {
     private String name, lname, adress, email, number, password, id;
     private boolean isAdmin;
 
-    // Constructor
+    /**
+     * @param id
+     * @param name
+     * @param lname
+     * @param adress
+     * @param email
+     * @param number
+     * @param password
+     * @param isAdmin
+     */
     public User(String id,String name, String lname, String adress, String email, String number, String password, boolean isAdmin){
         this.id = id;
         this.name = name;
@@ -16,40 +28,33 @@ public class User {
         this.isAdmin = isAdmin;
     }
 
-    // Getter and setter
+    // ----- GETTER AND SETTERS ----- //
     public String getId() {
         return id;
     }
-
     public String getName() {
         return name;
     }
-
     public String getLname() {
         return lname;
     }
-
     public String getAdress() {
         return adress;
     }
-
     public String getEmail() {
         return email;
     }
-
     public String getNumber() {
         return number;
     }
-
     public String getPassword() {
         return this.password;
     }
-
     public boolean isAdmin() {
         return isAdmin;
     }
 
-    // info
+    // ----- INFO ----- //
     public String getToString(){
         return "info: " + "name: "+name + " \n" +
                   "last name: " +lname + " \n" +

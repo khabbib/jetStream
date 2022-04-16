@@ -1,6 +1,9 @@
-package application.Model;
+package application.model;
 
-public enum Countrylist {
+/**
+ *
+ */
+public enum CountryList {
     Angola,
     Antigua_and_Barbuda,
     Argentina,
