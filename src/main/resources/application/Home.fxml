@@ -37,7 +37,7 @@
             <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
          </padding>
       </Button>
-      <Text fill="#949494" layoutX="543.0" layoutY="661.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Version 0.7.0">
+      <Text fill="#949494" layoutX="543.0" layoutY="661.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Version 0.8.1">
          <font>
             <Font size="16.0" />
          </font>

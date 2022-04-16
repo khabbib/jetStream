@@ -1,7 +1,7 @@
 package worldMap;
 
 import application.Controller;
-import application.Model.Flight;
+import application.model.Flight;
 import javafx.application.Platform;
 import javafx.beans.DefaultProperty;
 import javafx.beans.property.BooleanProperty;
@@ -76,7 +76,7 @@ public class World extends Region {
     private        final StyleableProperty<Color>        fillColor;
     private static final CssMetaData<World, Color>       STROKE_COLOR = FACTORY.createColorCssMetaData("-stroke-color", s -> s.strokeColor, Color.BLACK, false);
     private        final StyleableProperty<Color>        strokeColor;
-    private static final CssMetaData<World, Color>       HOVER_COLOR = FACTORY.createColorCssMetaData("-hover-color", s -> s.hoverColor, Color.web("#456acf"), false);
+    private static final CssMetaData<World, Color>       HOVER_COLOR = FACTORY.createColorCssMetaData("-hover-color", s -> s.hoverColor, Color.web("#ff9900"), false);
     private        final StyleableProperty<Color>        hoverColor;
     private static final CssMetaData<World, Color>       PRESSED_COLOR = FACTORY.createColorCssMetaData("-pressed-color", s -> s.pressedColor, Color.web("#789dff"), false);
     private        final StyleableProperty<Color>        pressedColor;
@@ -473,6 +473,8 @@ public class World extends Region {
                 } else {
                     setSelectedCountry(COUNTRY);
                     System.out.println("Pressed country: " + COUNTRY_NAME);
+
+
                     //game.checkAnswer(COUNTRY_NAME);
                     try {
                         getFlights(convert(COUNTRY_NAME));

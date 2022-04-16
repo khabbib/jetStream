@@ -5,9 +5,17 @@ import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+/**
+ *
+ */
 public class MoveScreen {
     private static double xOffset =0;
     private static double yOffset =0;
+
+    /**
+     * @param root
+     * @param stage
+     */
     public static void moveScreen(Parent root, Stage stage){
         root.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
@@ -24,10 +32,5 @@ public class MoveScreen {
                 stage.setY(event.getScreenY() - yOffset);
             }
         });
-
-
-
     }
-
-
 }

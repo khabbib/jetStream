@@ -1,10 +1,9 @@
 package application;
 
-import application.Model.*;
-import application.Model.Pong;
+import application.model.*;
 import application.auth.Purchase;
+import application.database.Connection;
 import application.moveScreen.MoveScreen;
-import application.databaseSQL.Db;
 import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,18 +27,17 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import worldMap.World;
 
-import javax.mail.*;
-import javax.mail.internet.*;
 import javax.swing.*;
-import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Properties;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ *
+ */
 public class Controller {
     //<editor-fold desc="Global variables" >
 
@@ -62,14 +60,14 @@ public class Controller {
     @FXML private Label success_msg;
     @FXML private Label u_name, u_id;
     @FXML private VBox display_flight;
+
     // From game
     @FXML private StackPane game1;
     @FXML private StackPane game2;
     @FXML private Button quizButton;
 
     // Register a new user
-    @FXML private TextField name, lname, adress, email, number, password;
-
+    @FXML private TextField firstName, lastName, adress, email, number, password;
 
     // sit
     private GridPane grid_left = new GridPane(); //Layout
@@ -81,8 +79,6 @@ public class Controller {
     private Label label = new Label();      // Label
     private Label showSeat = new Label();
 
-
-
     private String returnSeat;
     private boolean typeSeat = false; // false = economy, true = business
     private int height = 600;
@@ -90,13 +86,14 @@ public class Controller {
     private int antalSeats;
 
     // toggle options
-    @FXML private Button iconProfile, iconFlight, iconHistorik, iconGame, iconSuport, iconCloseSit;
+    @FXML private Button iconProfile, iconFlight, iconHistorik, iconGame, iconSupport, iconCloseSit;
     @FXML private AnchorPane pnlProfile, pnlHistorik, pnlFlight, pnlGame, pnlSupport;
 
     //Admin panels
     @FXML private AnchorPane pnlFlights, pnlTickets, pnlMember;
     @FXML private Button flightsBtn, membersBtn, ticketsBtn, logoutButton;
     //</editor-fold>
+
     //<editor-fold desc="Flights and dashboard variables">
     private ArrayList<Flight> avalibleFlights = new ArrayList<>();
     @FXML private TextField from_input_flight,disc_input_flight;
@@ -112,22 +109,25 @@ public class Controller {
     @FXML private Button redirect_to_dash_btn, print_ticket_purchase_btn;
 
     // From seat
-    @FXML private AnchorPane pnlSit, pnlPassanger;
-    @FXML private TextField name_seat_pnl, lname_seat_pnl, fourdigit_seat_pnl, email_seat_pnl;
+    @FXML private AnchorPane pnlSit, pnlPassager;
+    @FXML private TextField first_name_seat_pnl, last_name_seat_pnl, four_digit_seat_pnl, email_seat_pnl;
     @FXML private AnchorPane flight_sits_eco, flights_seats_business;
-    @FXML private Label sitnbr_seat_pnl, msg_seat_pnl, flightnbr_seat_pnl, price_seat_pnl;
+    @FXML private Label sit_nbr_seat_pnl, msg_seat_pnl, flight_nbr_seat_pnl, price_seat_pnl;
     //</editor-fold>
+
     //<editor-fold desc="Search variables">
     @FXML private TextField search_f_name;
-    @FXML private ListView<String> searchListAprear, searchListAprear2, searchListAprear3;
+    @FXML private ListView<String> searchListAppear, searchListAppear2, searchListAppear3;
 
     //</editor-fold
 
+    //----------------- HOME -----------------//
 
-
-
-    //////////   Home   ///////////
-    // the method will switch the user to the Home page
+    /**
+     * the method will switch the user to the Home page
+     * @param e
+     * @throws IOException
+     */
     public void switchToHome(ActionEvent e) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Home.fxml")));
         stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
@@ -139,7 +139,10 @@ public class Controller {
         stage.show();
     }
 
-    //////////   Play games   ///////////
+    /**
+     * @param e
+     * @throws IOException
+     */
     public void switchToGames (ActionEvent e) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/games/Games.fxml")));
         stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
@@ -157,6 +160,9 @@ public class Controller {
         game2.getChildren().add(imageView2);
     }
 
+    /**
+     *
+     */
     public void playPong(){
         Pong pong = new Pong();
         try {
@@ -167,6 +173,9 @@ public class Controller {
         }
     }
 
+    /**
+     *
+     */
     public void playQuiz(){
         MPlayer mPlayer = new MPlayer();
         try {
@@ -177,6 +186,9 @@ public class Controller {
         }
     }
 
+    /**
+     *
+     */
     public void playPiano(){
         Piano piano = new Piano();
         try {
@@ -187,11 +199,14 @@ public class Controller {
         }
     }
 
-
-    //////////   navigate to dashboard pages   ///////////
+    /**
+     * navigate to dashboard pages
+     * @param e
+     * @throws IOException
+     */
     public void switchToDashboard(ActionEvent e) throws IOException {
         if (!login_pass.getText().isEmpty() && !login_email.getText().isEmpty()) {
-            User user = Db.authenticationUser(login_email.getText(), login_pass.getText());
+            User user = Connection.authenticationUser(login_email.getText(), login_pass.getText());
             if (user != null) {
                 renderDashboard(e, user);
             } else {
@@ -201,6 +216,12 @@ public class Controller {
             renderDashboard(e, user);
         }
     } // the method will switch the user to the dashboard page
+
+    /**
+     * @param e
+     * @param user
+     * @throws IOException
+     */
     public void renderDashboard(ActionEvent e, User user) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/Dashboard.fxml")));
         this.user = user;
@@ -223,8 +244,6 @@ public class Controller {
         flights_seats_business.getChildren().add(hboxTLR_seat);
         //seatBox.getChildren().addAll(hboxLR_seat);
 
-
-
         // world map
         scrollPane.setContent(new StackPane(world));
         scrollPane.setBackground(new Background(new BackgroundFill(world.getBackgroundColor(), CornerRadii.EMPTY, Insets.EMPTY)));
@@ -232,7 +251,6 @@ public class Controller {
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
-
 
         u_name.setText(user.getName());
         u_id.setText(user.getId());
@@ -243,6 +261,10 @@ public class Controller {
         stage.setScene(scene);
         stage.show();
     } // the method will render dashboard page for user
+
+    /**
+     *
+     */
     public void lookUpForEl(){
         ////// look up for ticket variables
         // Purchase info
@@ -254,44 +276,44 @@ public class Controller {
         card_cvc = (TextField) root.lookup("#card_cvc");
         rotate_logo_success_purchase = (ImageView) root.lookup("#rotate_logo_success_purchase");
         // Passenger info
-        name_seat_pnl = (TextField) root.lookup("#name_seat_pnl");
-        lname_seat_pnl = (TextField) root.lookup("#lname_seat_pnl");
-        fourdigit_seat_pnl = (TextField) root.lookup("#fourdigit_seat_pnl");
+        first_name_seat_pnl = (TextField) root.lookup("#name_seat_pnl");
+        last_name_seat_pnl = (TextField) root.lookup("#lname_seat_pnl");
+        four_digit_seat_pnl = (TextField) root.lookup("#fourdigit_seat_pnl");
         email_seat_pnl = (TextField) root.lookup("#email_seat_pnl");
-        sitnbr_seat_pnl = (Label) root.lookup("#sitnbr_seat_pnl");
+        sit_nbr_seat_pnl = (Label) root.lookup("#sitnbr_seat_pnl");
         msg_seat_pnl = (Label) root.lookup("#msg_seat_pnl");
-        flightnbr_seat_pnl = (Label) root.lookup("#flightnbr_seat_pnl");
+        flight_nbr_seat_pnl = (Label) root.lookup("#flightnbr_seat_pnl");
         price_seat_pnl = (Label) root.lookup("#price_seat_pnl");
-
 
         ////// look up for global variables
 
         u_name = (Label) root.lookup("#u_name");
         u_id = (Label) root.lookup("#u_id");
-        searchListAprear = (ListView<String>) root.lookup("#searchListAprear");
-        searchListAprear2 = (ListView<String>) root.lookup("#searchListAprear2");
-        searchListAprear3 = (ListView<String>) root.lookup("#searchListAprear3");
-        sitnbr_seat_pnl = (Label) root.lookup("#sitnbr_seat_pnl");
+        searchListAppear = (ListView<String>) root.lookup("#searchListAprear");
+        searchListAppear2 = (ListView<String>) root.lookup("#searchListAprear2");
+        searchListAppear3 = (ListView<String>) root.lookup("#searchListAprear3");
+        sit_nbr_seat_pnl = (Label) root.lookup("#sitnbr_seat_pnl");
         flight_sits_eco = (AnchorPane) root.lookup("#flight_sits_eco");
         flights_seats_business = (AnchorPane) root.lookup("#flights_seats_business");
         pnlSit = (AnchorPane) root.lookup("#pnlSit");
-        pnlPassanger = (AnchorPane) root.lookup("#pnlPassanger");
+        pnlPassager = (AnchorPane) root.lookup("#pnlPassanger");
 
         scrollFlights = (ScrollPane) root.lookup("#scrollFlights");
         scrollFlights.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         display_flight = (VBox) scrollFlights.getContent();
         scrollPane = (ScrollPane) root.lookup("#scrollPane");
         search_f_name = (TextField) root.lookup("#search_f_name");
-
-
     }
+
+    /**
+     * @param e
+     * @throws IOException
+     */
     public void noLoginRequired(ActionEvent e) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/Dashboard.fxml")));
         scrollFlights = (ScrollPane) root.lookup("#scrollFlights");
         scrollFlights.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         pnlSit = (AnchorPane) root.lookup("#pnlSit");
-
-
 
         display_flight = (VBox) scrollFlights.getContent();
         scrollPane = (ScrollPane) root.lookup("#scrollPane");
@@ -314,6 +336,11 @@ public class Controller {
         stage.setScene(scene);
         stage.show();
     }// shortcut login to user dashboard
+
+    /**
+     * @param e
+     * @throws IOException
+     */
     public void switchToChecking(ActionEvent e) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/Checking.fxml")));
         stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
@@ -322,6 +349,11 @@ public class Controller {
         stage.setScene(scene);
         stage.show();
     }// the method will switch the user to the checking page
+
+    /**
+     * @param e
+     * @throws IOException
+     */
     public void switchToRegistration(ActionEvent e) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/Registration.fxml")));
         stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
@@ -330,19 +362,36 @@ public class Controller {
         stage.setScene(scene);
         stage.show();
     }// the method will switch the user to the registration page
+
+    /**
+     * @param e
+     * @throws SQLException
+     * @throws IOException
+     */
     public void registeruser(ActionEvent e) throws SQLException, IOException {
-        user = new User(null, name.getText(), lname.getText(), adress.getText(), email.getText(), number.getText(), password.getText(), false);
+        user = new User(null, firstName.getText(), lastName.getText(), adress.getText(), email.getText(), number.getText(), password.getText(), false);
         System.out.println(user.getName() + "fsdfsdfsdf");
-        boolean ok = Db.saveUser(user);
+        boolean ok = Connection.saveUser(user);
         if (ok) {
             renderLoginPage(e, "successfully registered the user!");
         } else {
             registration_error.setText("Couldn't register the information");
         }
     }// the method will register the user and return to the login page
+
+    /**
+     * @param e
+     * @throws IOException
+     */
     public void switchToLogin(ActionEvent e) throws IOException {
         renderLoginPage(e, null);
     }// the method will switch the user to the login page
+
+    /**
+     * @param e
+     * @param msg
+     * @throws IOException
+     */
     public void renderLoginPage(ActionEvent e, String msg) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/Login.fxml")));
         success_msg = (Label) root.lookup("#success_msg");
@@ -354,8 +403,10 @@ public class Controller {
         stage.show();
     }// render login page
 
-
-    //////////   flight lists dashboard   ///////////
+    /**
+     * flight lists dashboard
+     * @param flights
+     */
     public void fillFlights (ArrayList <Flight> flights) {
         display_flight.getChildren().clear();
         Stage infoStage = new Stage();
@@ -409,7 +460,6 @@ public class Controller {
             desTime.setText(s); // calculate arriving time
             desTime.setStyle("-fx-font-weight: bold");
 
-
             Label titleD = new Label();
             titleD.setMaxSize(50,40);
             titleD.setText(flights.get(i).getDestination_name());
@@ -444,12 +494,11 @@ public class Controller {
                 compare.add(flights.get(finalI1));
                 // create the seats for chosen flight
                 chooseSeat(60, 9);
-                flightnbr_seat_pnl.setText(flights.get(finalI1).getId());
+                flight_nbr_seat_pnl.setText(flights.get(finalI1).getId());
                 price_seat_pnl.setText(flights.get(finalI1).getPrice());
                 // flights seat panel will be shown
                 pnlSit.toFront();
                 //pnlPassanger.toFront();
-
                 //pnlPassanger.toFront();
             });
 
@@ -488,8 +537,11 @@ public class Controller {
         }
     } // the method will show the flights list on the right side of the dashboard when a user choose a country
 
-
-    //////////   create seats   ///////////
+    /**
+     * create seats
+     * @param econonySeats
+     * @param businessSeats
+     */
     public void chooseSeat(int econonySeats, int businessSeats) {
         grid_left.getChildren().removeAll();
         grid_business.getChildren().removeAll();
@@ -513,6 +565,12 @@ public class Controller {
         }
 
     }// the method will show the chosen sit on the screen
+
+    /**
+     * @param columnIndex
+     * @param rowIndex
+     * @param business
+     */
     public void build_eco_seats(int columnIndex, int rowIndex, boolean business) {
         Label label = new Label();
         label.setMinWidth(30);
@@ -542,10 +600,9 @@ public class Controller {
             }
         }
 
-
         //grid_left.getColumnCount();
         label.setOnMouseClicked(e ->{
-            sitnbr_seat_pnl.setText(label.getId());
+            sit_nbr_seat_pnl.setText(label.getId());
             // sit color change
             for (int i = 0; i < grid_left.getChildren().size(); i++){
                 grid_left.getChildren().get(i).setOpacity(1);
@@ -556,16 +613,20 @@ public class Controller {
         });
     }
 
-
-    //////////   purchase  ticket ///////////
-
+    /**
+     * Purchase  ticket.
+     * @param e
+     */
     public void sendMailTest(ActionEvent e){
         Purchase.sendEmail(null,null, null,null, null);
     }
 
+    /**
+     * @param e
+     */
     public void purchaseHandle(ActionEvent e){
         if (e.getSource() == card_prev_btn){
-            pnlPassanger.toFront();
+            pnlPassager.toFront();
             pnlPayment.toBack();
         }else if(e.getSource() == card_purchase_btn){
             System.out.println("purchase clicked");
@@ -582,10 +643,10 @@ public class Controller {
                 boolean validCard = Purchase.purchaseTicket(nbr, name, lname, month, year, cvc);
                 if (validCard){
                     System.out.println("valid card");
-                    boolean saveTicket = Db.savePurchasedTicket(u_id.getText(), flightnbr_seat_pnl.getText(), sitnbr_seat_pnl.getText(), false);
+                    boolean saveTicket = Connection.savePurchasedTicket(u_id.getText(), flight_nbr_seat_pnl.getText(), sit_nbr_seat_pnl.getText(), false);
                     if (saveTicket){
                         if (!email_seat_pnl.getText().isEmpty()){
-                            boolean sentMail = Purchase.sendEmail(email_seat_pnl.getText(), name_seat_pnl.getText(), flightnbr_seat_pnl.getText(), sitnbr_seat_pnl.getText(), price_seat_pnl.getText());
+                            boolean sentMail = Purchase.sendEmail(email_seat_pnl.getText(), first_name_seat_pnl.getText(), flight_nbr_seat_pnl.getText(), sit_nbr_seat_pnl.getText(), price_seat_pnl.getText());
                             if (sentMail){
                                 System.out.println("Email successfully sent!");
                                 pnl_success_purchase.toFront();
@@ -605,11 +666,11 @@ public class Controller {
             }
         }else if(e.getSource() == sit_next_btn){
             //<editor-fold desc="file">
-                String name_s = name_seat_pnl.getText();
-                String lname_s = lname_seat_pnl.getText();
-                String fourdigit = fourdigit_seat_pnl.getText();
+                String name_s = first_name_seat_pnl.getText();
+                String lname_s = last_name_seat_pnl.getText();
+                String fourdigit = four_digit_seat_pnl.getText();
                 String email = email_seat_pnl.getText();
-                String sitnbr = sitnbr_seat_pnl.getText();
+                String sitnbr = sit_nbr_seat_pnl.getText();
             //</editor-fold>
            if (!name_s.isEmpty() && !lname_s.isEmpty() && !fourdigit.isEmpty() && !email.isEmpty() && !sitnbr.isEmpty()){
                 pnlPayment.toFront();
@@ -627,12 +688,12 @@ public class Controller {
         }
     }
     public void restore_psgr_info(){
-        name_seat_pnl.clear();
-        lname_seat_pnl.clear();
-        fourdigit_seat_pnl.clear();
+        first_name_seat_pnl.clear();
+        last_name_seat_pnl.clear();
+        four_digit_seat_pnl.clear();
         email_seat_pnl.clear();
-        sitnbr_seat_pnl.setText(null);
-        flightnbr_seat_pnl.setText(null);
+        sit_nbr_seat_pnl.setText(null);
+        flight_nbr_seat_pnl.setText(null);
         price_seat_pnl.setText(null);
         card_nbr.clear();
         card_fname.clear();
@@ -642,17 +703,15 @@ public class Controller {
         card_cvc.clear();
     }
 
-
-
-
-
-
-    //////////   navigate to admin pages   ///////////
+    /**
+     * Navigate to admin pages.
+     * @param e
+     */
     public void switchToAdminView(ActionEvent e) {
 
         if (!login_pass.getText().isEmpty() && !login_email.getText().isEmpty()) {
             try {
-                User user = Db.authenticationAdmin(login_email.getText(), login_pass.getText());
+                User user = Connection.authenticationAdmin(login_email.getText(), login_pass.getText());
                 if (user != null) {
                     root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("admin/AdminView.fxml")));
                     stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
@@ -671,16 +730,10 @@ public class Controller {
         }
     }
 
-
-    //////////   getters and setters   ///////////
-    public Scene getScene() {
-        return scene;
-    }
-    public void setScene(Scene scene) {
-        this.scene = scene;
-    }
-
-    //////  DEV TEST  ///////
+    /**
+     * Dev test.
+     * @param e
+     */
     public void testDev(ActionEvent e){
         if (e.getSource() == iconProfile) {
             pnlProfile.toFront();
@@ -697,13 +750,17 @@ public class Controller {
         else if (e.getSource() == iconGame) {
             pnlGame.toFront();
         }
-        else if(e.getSource() == iconSuport){
+        else if(e.getSource() == iconSupport){
             pnlSupport.toFront();
         }
 
     }
 
-    /////// ADMIN DEV ///////
+    /**
+     * Administrator dev.
+     * @param e
+     * @throws IOException
+     */
     public void adminDev(ActionEvent e) throws IOException {
         if(e.getSource() == logoutButton)
         {
@@ -727,17 +784,19 @@ public class Controller {
 
     }
 
+    //----------------- SEARCH FLIGHTS -----------------//
 
-
-    /////  SEARCH FLIGHTS  ///////
+    /**
+     * @param e
+     */
     public void seachFlights(ActionEvent e) {
         LocalDate d = date_input_flight.getValue();
         System.out.println("Date: " +d);
         if (!(from_input_flight.getText().isEmpty()) && !(disc_input_flight.getText().isEmpty())){
             if (d != null) {
-                avalibleFlights = Db.searchFlight(from_input_flight.getText(), disc_input_flight.getText(), String.valueOf(d));
+                avalibleFlights = Connection.searchFlight(from_input_flight.getText(), disc_input_flight.getText(), String.valueOf(d));
             } else {
-                avalibleFlights = Db.searchFlight(from_input_flight.getText(), disc_input_flight.getText());
+                avalibleFlights = Connection.searchFlight(from_input_flight.getText(), disc_input_flight.getText());
             }
             if (avalibleFlights.isEmpty()){
                 System.out.println("no flights available");
@@ -750,12 +809,15 @@ public class Controller {
         }
     }
 
+    //----------------- SEARCH FIELD -----------------//
 
-    //////  SEARCH FIELD  ///////
+    /**
+     *
+     */
     public void searchHit(){
         if (!search_f_name.getText().isEmpty()){
             avalibleFlights.clear();
-            avalibleFlights = Db.seachFlightFromSearchField(search_f_name.getText());
+            avalibleFlights = Connection.seachFlightFromSearchField(search_f_name.getText());
             if (!avalibleFlights.isEmpty()){
                 fillFlights(avalibleFlights);
             }else {
@@ -764,54 +826,71 @@ public class Controller {
         }else
             JOptionPane.showMessageDialog(null, "empty search field!");
     }
+
+    /**
+     *
+     */
     public void searchAppear(){ // on key pressed search and show name
         if (search_f_name != null){
             ObservableList<String> searchAprear = FXCollections.observableList(propareSearchTerm(search_f_name.getText().toLowerCase()));
             if (!searchAprear.isEmpty()){
-                if (searchListAprear != null){
-                    searchListAprear.getItems().removeAll();
+                if (searchListAppear != null){
+                    searchListAppear.getItems().removeAll();
                 }
-                searchListAprear.setVisible(true);
-                searchListAprear.setItems(searchAprear);
-                searchListAprear.getSelectionModel().selectedItemProperty().addListener(e ->{
-                    search_f_name.setText(searchListAprear.getSelectionModel().getSelectedItem());
-                        searchListAprear.setVisible(false);
+                searchListAppear.setVisible(true);
+                searchListAppear.setItems(searchAprear);
+                searchListAppear.getSelectionModel().selectedItemProperty().addListener(e ->{
+                    search_f_name.setText(searchListAppear.getSelectionModel().getSelectedItem());
+                        searchListAppear.setVisible(false);
             });
             }
         }
     }
+
+    /**
+     *
+     */
     public void departureNameAppear(){// on key pressed search and show name
         if (from_input_flight != null){
             ObservableList<String> searchAprear = FXCollections.observableList(propareSearchTerm(from_input_flight.getText().toLowerCase()));
             if (!searchAprear.isEmpty()){
-                if (searchListAprear2 != null){
-                    searchListAprear2.getItems().removeAll();
+                if (searchListAppear2 != null){
+                    searchListAppear2.getItems().removeAll();
                 }
-                searchListAprear2.setVisible(true);
-                searchListAprear2.setItems(searchAprear);
-                searchListAprear2.getSelectionModel().selectedItemProperty().addListener(e ->{
-                    from_input_flight.setText(searchListAprear2.getSelectionModel().getSelectedItem());
-                        searchListAprear2.setVisible(false);
+                searchListAppear2.setVisible(true);
+                searchListAppear2.setItems(searchAprear);
+                searchListAppear2.getSelectionModel().selectedItemProperty().addListener(e ->{
+                    from_input_flight.setText(searchListAppear2.getSelectionModel().getSelectedItem());
+                        searchListAppear2.setVisible(false);
             });
             }
         }
     }
+
+    /**
+     *
+     */
     public void destinationNameAppear(){// on key pressed search and show name
         if (disc_input_flight != null){
             ObservableList<String> searchAprear = FXCollections.observableList(propareSearchTerm(disc_input_flight.getText().toLowerCase()));
             if (!searchAprear.isEmpty()){
-                if (searchListAprear3 != null){
-                    searchListAprear3.getItems().removeAll();
+                if (searchListAppear3 != null){
+                    searchListAppear3.getItems().removeAll();
                 }
-                searchListAprear3.setVisible(true);
-                searchListAprear3.setItems(searchAprear);
-                searchListAprear3.getSelectionModel().selectedItemProperty().addListener(e ->{
-                    disc_input_flight.setText(searchListAprear3.getSelectionModel().getSelectedItem());
-                        searchListAprear3.setVisible(false);
+                searchListAppear3.setVisible(true);
+                searchListAppear3.setItems(searchAprear);
+                searchListAppear3.getSelectionModel().selectedItemProperty().addListener(e ->{
+                    disc_input_flight.setText(searchListAppear3.getSelectionModel().getSelectedItem());
+                        searchListAppear3.setVisible(false);
             });
             }
         }
     }
+
+    /**
+     * @param srch
+     * @return
+     */
     private ArrayList<String> propareSearchTerm(String srch){
         ArrayList<String> obs;
         if (srch.length() > 1){
@@ -823,29 +902,35 @@ public class Controller {
         }
         return obs;
     }
+
+    /**
+     * @param searchTargetKey
+     * @return
+     */
     private ArrayList<String> compareSearchKey(String searchTargetKey) {
         ArrayList<String> obs  = new ArrayList<>();
-        for (Enum item : Countrylist.values()) {
+        for (Enum item : CountryList.values()) {
             if (item.toString().contains(searchTargetKey)){
                 obs.add(item.toString());
                 System.out.println(item + " /" + searchTargetKey);
             }
         }
-
         return obs;
     }
 
 
+    //----------------- MENU (Not used) -----------------//
 
-    //////  MENU  /////// none used methods
     public void openMenu() {
         logout.setLayoutX(0); // this will move in menu from outside the window
         System.out.println("Menu opened");
     } // the method will open the menu once the user clicked on his profile
+
     public void closeMenu() {
         logout.setLayoutX(-84); // this will move out the menu outside the window
         System.out.println("Menu closed");
     } // the method will close the menu
+
     public void exit(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Exit");
@@ -858,7 +943,17 @@ public class Controller {
             stage.close();
         }
     } // the method will close a scene
+
     public void exitProgram(){
         System.exit(0);
     } // to determinate the program
+
+
+    //----------------- GETTERS AND SETTERS -----------------//
+    public Scene getScene() {
+        return scene;
+    }
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
 }

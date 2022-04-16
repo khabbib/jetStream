@@ -1,4 +1,4 @@
-package application.Model;
+package application;
 
 import java.util.Random;
 import javafx.animation.KeyFrame;

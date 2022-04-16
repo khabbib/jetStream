@@ -1,13 +1,21 @@
-package application.Model;
+package application.model;
 
 import application.Controller;
 import worldMap.*;
 import javafx.scene.paint.Color;
 
+/**
+ *
+ */
 public class CreateWorld {
     static World world;
     private Controller controller;
-    // build the world
+
+    /**
+     * Build the world
+     * @param controller
+     * @return
+     */
     public World init(Controller controller) {
         world = WorldBuilder.create()
                 .resolution(World.Resolution.HI_RES)

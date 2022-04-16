@@ -1,25 +1,30 @@
-package application.databaseSQL;
+package application.database;
 
-import application.Model.Book;
-import application.Model.Flight;
-import application.Model.User;
-import javafx.scene.control.Label;
+import application.model.Book;
+import application.model.Flight;
+import application.model.User;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Locale;
 
-public class Db {
-    // get database connection
-    public static Connection getDatabaseConnection() {
+/**
+ *
+ */
+public class Connection {
+
+    /**
+     * get database connection
+     * @return
+     */
+    public static java.sql.Connection getDatabaseConnection() {
 
         String url = "jdbc:postgresql://pgserver.mau.se:5432/am2510";
         String user = "am2510";
         String password = "zyvl0ir7";
 
-        Connection con = null;
+        java.sql.Connection con = null;
 
         try {
             con = DriverManager.getConnection(url, user, password);
@@ -30,11 +35,16 @@ public class Db {
         }
     }
 
-    // register new user
+    /**
+     * register new user
+     * @param user
+     * @return
+     * @throws SQLException
+     */
     public static boolean saveUser(User user) throws SQLException {
         boolean ok = false;
         if(user != null){
-            Connection con = getDatabaseConnection();
+            java.sql.Connection con = getDatabaseConnection();
             Statement stmt = con.createStatement();
             stmt.executeUpdate("SET search_path TO jetstream;");
             String bool = "false";
@@ -51,11 +61,16 @@ public class Db {
         return ok;
     }
 
-    // authenticate the USER with email and password
+    /**
+     * authenticate the USER with email and password
+     * @param email
+     * @param password
+     * @return
+     */
     public static User authenticationUser(String email, String password){
         User user = null;
         try {
-            Connection con = getDatabaseConnection();
+            java.sql.Connection con = getDatabaseConnection();
             Statement stmt = con.createStatement();
             stmt.executeUpdate("SET search_path TO jetstream;");
             ResultSet rs = stmt.executeQuery("select * from userr where u_email = '" + email +"' and u_password = '"+ password+ "'");
@@ -73,11 +88,16 @@ public class Db {
         return user;
     }
 
-    // authenticate the ADMIN with email and password
+    /**
+     * authenticate the ADMIN with email and password
+     * @param email
+     * @param password
+     * @return
+     */
     public static User authenticationAdmin(String email, String password){
         User user = null;
         try {
-            Connection con = getDatabaseConnection();
+            java.sql.Connection con = getDatabaseConnection();
             Statement stmt = con.createStatement();
             stmt.executeUpdate("SET search_path TO jetstream;");
             ResultSet rs = stmt.executeQuery("select * from userr where u_email = '" + email +"' and u_password = '"+ password+ "'");
@@ -95,11 +115,15 @@ public class Db {
         return user;
     }
 
-    // get the user with ID
+    /**
+     * get the user with ID
+     * @param user_id
+     * @return
+     */
     public static User getUserWithID(int user_id) {
         User user = null;
         try {
-            Connection con = getDatabaseConnection();
+            java.sql.Connection con = getDatabaseConnection();
             Statement stmt = con.createStatement();
             stmt.executeUpdate("SET search_path TO jetstream;");
             ResultSet rs = stmt.executeQuery("select * from userr where u_id = '" + user_id +"'");
@@ -115,15 +139,18 @@ public class Db {
         return user;
     }
 
+    // ------------------------- SEARCH FLIGHTS ------------------------- //
 
-
-
-    //////  SEARCH FLIGHTS  ///////
+    /**
+     * @param departure
+     * @param destination
+     * @return
+     */
     public static ArrayList<Flight> searchFlight(String departure, String destination) {
         ArrayList<Flight> flights = new ArrayList<>();
         try {
 
-            Connection con = getDatabaseConnection();
+            java.sql.Connection con = getDatabaseConnection();
             Statement stmt = con.createStatement();
             ResultSet flight;
 
@@ -150,11 +177,18 @@ public class Db {
         }
         return flights;
     }
+
+    /**
+     * @param departure
+     * @param destination
+     * @param date
+     * @return
+     */
     public static ArrayList<Flight> searchFlight(String departure, String destination, String date) {
         ArrayList<Flight> flights = new ArrayList<>();
         try {
 
-            Connection con = getDatabaseConnection();
+            java.sql.Connection con = getDatabaseConnection();
             Statement stmt = con.createStatement();
 
             flights.clear();
@@ -180,12 +214,17 @@ public class Db {
         }
         return flights;
     }
+
+    /**
+     * @param name
+     * @return
+     */
     public static ArrayList<Flight> seachFlightFromSearchField(String name) {
         ArrayList<Flight> flights = new ArrayList<>();
         try {
             String convert = name.toLowerCase();
             String searchTarget = convert.substring(0, 1).toUpperCase() + convert.substring(1); // convert first character to Uppercase
-            Connection con = getDatabaseConnection();
+            java.sql.Connection con = getDatabaseConnection();
             Statement stmt = con.createStatement();
             flights.clear();
             stmt.executeUpdate("SET search_path TO jetstream;");
@@ -212,16 +251,21 @@ public class Db {
         return flights;
     }
 
+    // ------------------------- EXTRA THING ------------------------- //
 
     ///////// appear on screen when user type something in the search field
-    ////////////// EXTRA THING ///////////////
-    // fetch and filter countries
+
+    /**
+     * fetch and filter countries
+     * @param name
+     * @return
+     */
     public static ArrayList<String> seachAppear(String name) {
         ArrayList<String> output = new ArrayList<>();
         try {
             String convert = name.toLowerCase();
             String searchTarget = convert.substring(0, 1).toUpperCase() + convert.substring(1); // convert first character to Uppercase
-            Connection con = getDatabaseConnection();
+            java.sql.Connection con = getDatabaseConnection();
             Statement stmt = con.createStatement();
             output.clear();
             stmt.executeUpdate("SET search_path TO jetstream;");
@@ -244,11 +288,16 @@ public class Db {
         return output;
 
     }
+
+    /**
+     * @return
+     * @throws IOException
+     */
     public static ArrayList<String> fetchLander() throws IOException {
         ArrayList<String> output = new ArrayList<>();
         FileWriter myWriter = new FileWriter("land.txt");
         try {
-            Connection con = getDatabaseConnection();
+            java.sql.Connection con = getDatabaseConnection();
             Statement stmt = con.createStatement();
             stmt.executeUpdate("SET search_path TO jetstream;");
             ResultSet rs = stmt.executeQuery("select f_departure_name from flight");
@@ -277,11 +326,17 @@ public class Db {
         return output;
     }
 
-
+    /**
+     * @param u_id
+     * @param flight_id
+     * @param seatNbr
+     * @param business
+     * @return
+     */
     public static boolean savePurchasedTicket(String u_id, String flight_id, String seatNbr, boolean business) {
         boolean saved = false;
         try {
-            Connection con = getDatabaseConnection();
+            java.sql.Connection con = getDatabaseConnection();
             Statement stmt = con.createStatement();
             stmt.executeUpdate("SET search_path TO jetstream;");
             int flight = stmt.executeUpdate("insert into booked values('" + u_id +"', '" +flight_id +"', '" +seatNbr +"');");

@@ -336,7 +336,7 @@
                   </ImageView>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="pnlPassanger" layoutX="27.0" layoutY="27.0" prefHeight="647.0" prefWidth="1072.0" style="-fx-background-color: #151D3B; -fx-background-radius: 10;">
+            <AnchorPane fx:id="pnlPassager" layoutX="27.0" layoutY="27.0" prefHeight="647.0" prefWidth="1072.0" style="-fx-background-color: #151D3B; -fx-background-radius: 10;">
                <children>
                   <VBox layoutX="749.0" layoutY="4.0" spacing="5.0">
                      <children>
@@ -400,17 +400,17 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="name_seat_pnl" promptText="Name" style="-fx-background-color: #112; -fx-text-fill: #eee;" text="test first name" GridPane.columnIndex="1">
+                        <TextField fx:id="first_name_seat_pnl" promptText="Name" style="-fx-background-color: #112; -fx-text-fill: #eee;" text="test first name" GridPane.columnIndex="1">
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
                         </TextField>
-                        <TextField fx:id="lname_seat_pnl" promptText="Last name" style="-fx-background-color: #112; -fx-text-fill: #eee;" text="test last name" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <TextField fx:id="last_name_seat_pnl" promptText="Last name" style="-fx-background-color: #112; -fx-text-fill: #eee;" text="test last name" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
                         </TextField>
-                        <TextField fx:id="fourdigit_seat_pnl" layoutX="130.0" layoutY="56.0" promptText="Four digit" style="-fx-background-color: #112; -fx-text-fill: #eee;" text="test four digit" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <TextField fx:id="four_digit_seat_pnl" layoutX="130.0" layoutY="56.0" promptText="Four digit" style="-fx-background-color: #112; -fx-text-fill: #eee;" text="test four digit" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
@@ -422,7 +422,7 @@
                         </TextField>
                         <Group GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <children>
-                              <Label fx:id="sitnbr_seat_pnl" layoutX="2.0" text="69" textFill="WHITE">
+                              <Label fx:id="sit_nbr_seat_pnl" layoutX="2.0" text="69" textFill="WHITE">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -439,7 +439,7 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label fx:id="flightnbr_seat_pnl" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                        <Label fx:id="flight_nbr_seat_pnl" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -532,7 +532,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <ListView fx:id="searchListAprear" layoutX="833.0" layoutY="62.0" prefHeight="169.0" prefWidth="299.0" style="-fx-background-color: #151D3B; -fx-background-radius: 5;" visible="false">
+            <ListView fx:id="searchListAppear" layoutX="833.0" layoutY="62.0" prefHeight="169.0" prefWidth="299.0" style="-fx-background-color: #151D3B; -fx-background-radius: 5;" visible="false">
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
@@ -575,12 +575,12 @@
                </children>
             </AnchorPane>
             <CheckBox layoutX="125.0" layoutY="561.0" mnemonicParsing="false" text="Round-trip" textFill="#b9b9b9" />
-            <ListView fx:id="searchListAprear2" layoutX="52.0" layoutY="647.0" prefHeight="50.0" prefWidth="299.0" style="-fx-background-color: #151D3B; -fx-background-radius: 5;" visible="false">
+            <ListView fx:id="searchListAppear2" layoutX="52.0" layoutY="647.0" prefHeight="50.0" prefWidth="299.0" style="-fx-background-color: #151D3B; -fx-background-radius: 5;" visible="false">
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
             </ListView>
-            <ListView fx:id="searchListAprear3" layoutX="242.0" layoutY="647.0" prefHeight="50.0" prefWidth="299.0" style="-fx-background-color: #151D3B; -fx-background-radius: 5;" visible="false">
+            <ListView fx:id="searchListAppear3" layoutX="242.0" layoutY="647.0" prefHeight="50.0" prefWidth="299.0" style="-fx-background-color: #151D3B; -fx-background-radius: 5;" visible="false">
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
@@ -595,6 +595,11 @@
                   </VBox>
                </content>
             </ScrollPane>
+            <ImageView fitHeight="107.0" fitWidth="113.0" layoutX="888.0" layoutY="574.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/loader2.gif" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
       <Pane layoutY="-2.0" prefHeight="702.0" prefWidth="71.0" style="-fx-background-color: #151D3B;">
@@ -644,7 +649,7 @@
                   <Image url="@../image/help.png" />
                </image>
             </ImageView>
-            <Button fx:id="iconSuport" layoutX="14.0" layoutY="362.0" mnemonicParsing="false" onAction="#testDev" opacity="0.0" prefHeight="45.0" prefWidth="44.0">
+            <Button fx:id="iconSupport" layoutX="14.0" layoutY="362.0" mnemonicParsing="false" onAction="#testDev" opacity="0.0" prefHeight="45.0" prefWidth="44.0">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
