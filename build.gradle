@@ -32,6 +32,8 @@ javafx {
     modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.media','javafx.graphics' ]}
 
 dependencies {
+
+    implementation group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
     implementation('org.kordamp.ikonli:ikonli-javafx:12.2.0')
     implementation('org.kordamp.ikonli:ikonli-materialdesign-pack:1.9.0')
     implementation(group: 'org.openjfx', name: 'javafx-media', version: '13')
