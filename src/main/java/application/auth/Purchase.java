@@ -41,9 +41,7 @@ public class Purchase {
 
             message.setFrom(new InternetAddress("anonym@gmail.com"));
             message.setRecipients(
-                    Message.RecipientType.TO, InternetAddress.parse("habib.pakdel1121@gmail.com"));
-            message.setRecipients(
-                    Message.RecipientType.TO, InternetAddress.parse("habib.pakdel1121@gmail.com"));
+                    Message.RecipientType.TO, InternetAddress.parse("kadestalkasper@gmail.com"));
 /*
             message.setRecipients(
                     Message.RecipientType.TO, InternetAddress.parse("kadestalkasper@gmail.com"));
@@ -76,6 +74,7 @@ public class Purchase {
             message.setContent(multipart);
 
             Transport.send(message);
+            System.out.println("Email sent!");
             return true;
         } catch (MessagingException | IOException ex) {
             ex.printStackTrace();
