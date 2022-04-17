@@ -280,9 +280,9 @@ public class Controller {
         last_name_seat_pnl = (TextField) root.lookup("#lname_seat_pnl");
         four_digit_seat_pnl = (TextField) root.lookup("#fourdigit_seat_pnl");
         email_seat_pnl = (TextField) root.lookup("#email_seat_pnl");
-        sit_nbr_seat_pnl = (Label) root.lookup("#sitnbr_seat_pnl");
+        sit_nbr_seat_pnl = (Label) root.lookup("#sit_nbr_seat_pnl");
         msg_seat_pnl = (Label) root.lookup("#msg_seat_pnl");
-        flight_nbr_seat_pnl = (Label) root.lookup("#flightnbr_seat_pnl");
+        flight_nbr_seat_pnl = (Label) root.lookup("#flight_nbr_seat_pnl");
         price_seat_pnl = (Label) root.lookup("#price_seat_pnl");
 
         ////// look up for global variables
@@ -292,7 +292,7 @@ public class Controller {
         searchListAppear = (ListView<String>) root.lookup("#searchListAprear");
         searchListAppear2 = (ListView<String>) root.lookup("#searchListAprear2");
         searchListAppear3 = (ListView<String>) root.lookup("#searchListAprear3");
-        sit_nbr_seat_pnl = (Label) root.lookup("#sitnbr_seat_pnl");
+        sit_nbr_seat_pnl = (Label) root.lookup("#sit_nbr_seat_pnl");
         flight_sits_eco = (AnchorPane) root.lookup("#flight_sits_eco");
         flights_seats_business = (AnchorPane) root.lookup("#flights_seats_business");
         pnlSit = (AnchorPane) root.lookup("#pnlSit");
@@ -409,6 +409,7 @@ public class Controller {
      */
     public void fillFlights (ArrayList <Flight> flights) {
         display_flight.getChildren().clear();
+        grid_left.getChildren().clear();
         Stage infoStage = new Stage();
         AtomicBoolean openedStage = new AtomicBoolean(false);
         ArrayList<Flight> compare = new ArrayList<>();
@@ -480,8 +481,8 @@ public class Controller {
             int finalI1 = i;
             btn.setOnAction(e -> {
                 // the for loop is going to restore the seat opacity
-                for (int g = 0; g < grid_left.getChildren().size(); g++){
-                    grid_left.getChildren().get(g).setOpacity(1);
+                for (int g = 0; g < display_flight.getChildren().size(); g++){
+                    display_flight.getChildren().get(g).setOpacity(1);
                 }
                 // chosen flight from flight list will get an opacity of 0.8
                 display_flight.getChildren().get(finalI1).setOpacity(0.8);
@@ -494,8 +495,8 @@ public class Controller {
                 compare.add(flights.get(finalI1));
                 // create the seats for chosen flight
                 chooseSeat(60, 9);
-                flight_nbr_seat_pnl.setText(flights.get(finalI1).getId());
                 price_seat_pnl.setText(flights.get(finalI1).getPrice());
+                flight_nbr_seat_pnl.setText(flights.get(finalI1).getId());
                 // flights seat panel will be shown
                 pnlSit.toFront();
                 //pnlPassanger.toFront();
@@ -740,6 +741,7 @@ public class Controller {
         }
         else if(e.getSource() == iconCloseSit){
             pnlSit.toBack();
+            restore_psgr_info();
         }
         else if (e.getSource() == iconFlight) {
             pnlFlight.toFront();
