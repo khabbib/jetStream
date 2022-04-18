@@ -3,6 +3,7 @@ package application.database;
 import application.model.Book;
 import application.model.Flight;
 import application.model.User;
+import javafx.scene.image.Image;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -59,6 +60,13 @@ public class Connection {
             stmt.close();
         }
         return ok;
+    }
+
+    public static void updateUser(User user) throws SQLException {
+        java.sql.Connection con = getDatabaseConnection();
+        Statement stmt = con.createStatement();
+        stmt.executeUpdate("SET search_path TO jetstream;");
+        stmt.executeUpdate("UPDATE userr SET u_f_name = '" + user.getName() + "', u_l_name = '" + user.getLname() + "', u_address = '" + user.getAdress() + "', u_email = '" + user.getEmail() + "', u_phone_nr = '" + user.getNumber() + "', u_password = '" + user.getPassword() + "'  WHERE u_id = " + user.getId() + ";");
     }
 
     /**
@@ -355,5 +363,28 @@ public class Connection {
             e.printStackTrace();
         }
         return saved;
+    }
+
+    public static Image getProfilePicture(User user) throws SQLException {
+        Image image = null;
+        java.sql.Connection con = getDatabaseConnection();
+        Statement stmt = con.createStatement();
+        stmt.executeUpdate("SET search_path TO jetstream;");
+        ResultSet result = stmt.executeQuery("select picture from profile_picture where u_id = " + user.getId() + ";");
+
+        while (result.next()) {
+            System.out.println(result.getString("picture"));
+            image = new Image(result.getString("picture"));
+        }
+        return image;
+    }
+
+    public static void setProfilePicture(String string, User user) throws SQLException {
+        Image image = null;
+        java.sql.Connection con = getDatabaseConnection();
+        Statement stmt = con.createStatement();
+        stmt.executeUpdate("SET search_path TO jetstream;");
+        stmt.executeUpdate("UPDATE profile_picture SET picture = '" + string + "' WHERE u_id = " + user.getId() + ";");
+
     }
 }
