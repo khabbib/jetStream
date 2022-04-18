@@ -498,7 +498,7 @@ public class Controller {
             ImageView pathIcon = new ImageView(path);
             pathIcon.setFitWidth(70);
             pathIcon.setFitHeight(30);
-            pathIcon.setStyle("-fx-margin: 0 40 0 40");
+            pathIcon.setStyle("-fx-margin: 0 40 0 40; -fx-opacity: 0.5");
 
             Image landing = new Image("/application/image/landing.png");
             ImageView landingIcon = new ImageView(landing);
@@ -508,7 +508,7 @@ public class Controller {
 
             Label titleF = new Label();
             titleF.setMaxSize(50,40);
-
+            titleF.setStyle("-fx-text-fill: #999;");
             titleF.setText(flights.get(i).getDeparture_name());
 
             Text depTime = new Text();
@@ -516,14 +516,19 @@ public class Controller {
             String[] sorted = tmp.split(":");
             String s = sorted[0] + ": " + sorted[1];
             depTime.setText(s);
+            depTime.setFill(Color.valueOf("#eee"));
             depTime.setStyle("-fx-font-weight: bold");
             Text desTime = new Text();
             desTime.setText(s); // calculate arriving time
             desTime.setStyle("-fx-font-weight: bold");
+            desTime.setFill(Color.valueOf("#eee"));
+
 
             Label titleD = new Label();
             titleD.setMaxSize(50,40);
             titleD.setText(flights.get(i).getDestination_name());
+            titleD.setStyle("-fx-text-fill: #999;");
+
 
             Label date = new Label();
             date.setText(flights.get(i).getDestination_time());
@@ -537,15 +542,43 @@ public class Controller {
             landingBox.getChildren().addAll(landingIcon,desTime, titleD);
 
             Button btn = new Button("Book");
-            btn.setStyle("-fx-background-color:  #ff8000; -fx-text-fill: #333; -fx-padding: 10 25; ");
-            int finalI1 = i;
+            btn.setStyle("-fx-background-color:  #ff8000; -fx-text-fill: #333; -fx-padding: 10; ");
+
             btn.setOnAction(e -> {
                 // the for loop is going to restore the seat opacity
+                System.out.println("Book clicked");
+            });
+
+            hboxChildCenter.getChildren().addAll(boardingBox, pathIcon, landingBox);
+            hboxChildCenter.setSpacing(15);
+            hboxChildCenter.setAlignment(Pos.CENTER_LEFT);
+
+            hboxChildRight.getChildren().add(btn);
+            hboxChildRight.setAlignment(Pos.CENTER_RIGHT);
+
+            /***************  main box to hold the list  *********************/
+            hbox.setBackground(new Background(new BackgroundFill(Color.valueOf("#151D3B"), CornerRadii.EMPTY, Insets.EMPTY)));
+            hbox.getChildren().addAll(hboxChildCenter, hboxChildRight);
+            hbox.setHgrow(hboxChildCenter, Priority.ALWAYS);
+            hbox.setPadding(new Insets(5));
+            hbox.setEffect(new DropShadow(2.0, Color.BLACK));
+            hbox.setAlignment(Pos.TOP_LEFT);
+            hbox.setSpacing(30);
+
+            stackholer.getChildren().add(hbox);
+            stackholer.setAlignment(Pos.TOP_LEFT);
+            display_flight.getChildren().addAll(stackholer); // the box
+            display_flight.setAlignment(Pos.TOP_LEFT);
+
+            int finalI1 = i;
+            // to click
+            hbox.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
                 for (int g = 0; g < display_flight.getChildren().size(); g++){
                     display_flight.getChildren().get(g).setOpacity(1);
                 }
+
                 // chosen flight from flight list will get an opacity of 0.8
-                display_flight.getChildren().get(finalI1).setOpacity(0.8);
+                display_flight.getChildren().get(finalI1).setOpacity(0.95);
                 for (int m = 0; m < display_flight.getChildren().size(); m++){
                     if (display_flight.getChildren().get(m) != display_flight.getChildren().get(finalI1)) {
                         display_flight.getChildren().get(m).setOpacity(1);
@@ -559,37 +592,14 @@ public class Controller {
                 flight_nbr_seat_pnl.setText(flights.get(finalI1).getId());
                 // flights seat panel will be shown
                 pnlSeat.toFront();
-                //pnlPassanger.toFront();
-                //pnlPassanger.toFront();
+
             });
-
-            hboxChildCenter.getChildren().addAll(boardingBox, pathIcon, landingBox);
-            hboxChildCenter.setSpacing(15);
-            hboxChildCenter.setAlignment(Pos.CENTER_LEFT);
-
-            hboxChildRight.getChildren().add(btn);
-            hboxChildRight.setAlignment(Pos.CENTER_RIGHT);
-
-            /***************  main box to hold the list  *********************/
-            hbox.setBackground(new Background(new BackgroundFill(Color.rgb(247, 245, 242), CornerRadii.EMPTY, Insets.EMPTY)));
-            hbox.getChildren().addAll(hboxChildCenter, hboxChildRight);
-            hbox.setHgrow(hboxChildCenter, Priority.ALWAYS);
-            hbox.setPadding(new Insets(5));
-            hbox.setEffect(new DropShadow(2.0, Color.BLACK));
-            hbox.setAlignment(Pos.TOP_LEFT);
-            hbox.setSpacing(30);
-
-            stackholer.getChildren().add(hbox);
-            stackholer.setAlignment(Pos.TOP_LEFT);
-            display_flight.getChildren().addAll(stackholer); // the box
-            display_flight.setAlignment(Pos.TOP_LEFT);
-
+            // to hover
             hbox.addEventFilter(MouseEvent.MOUSE_ENTERED, e -> {
-                hbox.setBackground(new Background(new BackgroundFill(Color.rgb(223, 223, 222), CornerRadii.EMPTY, Insets.EMPTY)));
-
+                hbox.setBackground(new Background(new BackgroundFill(Color.valueOf("#112"), CornerRadii.EMPTY, Insets.EMPTY)));
             });
             hbox.addEventFilter(MouseEvent.MOUSE_EXITED, e -> {
-                hbox.setBackground(new Background(new BackgroundFill(Color.rgb(247, 245, 242), CornerRadii.EMPTY, Insets.EMPTY)));
+                hbox.setBackground(new Background(new BackgroundFill(Color.valueOf("#151D3B"), CornerRadii.EMPTY, Insets.EMPTY)));
             });
         }
 
