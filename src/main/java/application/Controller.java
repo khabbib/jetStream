@@ -28,6 +28,7 @@ import javafx.util.Duration;
 import worldMap.World;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.io.File;
 import java.io.IOException;
 import java.sql.*;
@@ -325,6 +326,8 @@ public class Controller {
             profileNumber.setDisable(true);
             profilePassword.setDisable(true);
         }
+
+        // Config scrollbar
 
         // Passenger info
         first_name_seat_pnl = (TextField) root.lookup("#name_seat_pnl");

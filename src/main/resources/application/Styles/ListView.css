@@ -1,0 +1,11 @@
+.list-view .list-cell:odd,
+.list-view .list-cell:even {
+    -fx-background-color: #151D3B;
+    -fx-text-fill: #eee;
+}
+
+
+.list-view .list-cell:filled:hover {
+    -fx-background-color: -fx-cell-hover-color;
+    -fx-text-fill: -fx-text-inner-color;
+}
