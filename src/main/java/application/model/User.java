@@ -54,6 +54,12 @@ public class User {
         return isAdmin;
     }
 
+    public void setName(String name) {this.name = name;}
+    public void setLname(String lname) {this.lname = lname;}
+    public void setAdress(String adress) {this.adress = adress;}public void setEmail(String email) {this.email = email;}
+    public void setNumber(String number) {this.number = number;}
+    public void setPassword(String password) {this.password = password;}
+
     // ----- INFO ----- //
     public String getToString(){
         return "info: " + "name: "+name + " \n" +
