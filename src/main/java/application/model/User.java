@@ -4,48 +4,48 @@ package application.model;
  *
  */
 public class User {
-    private String name, lname, adress, email, number, password, id;
+    private String firstName, lastName, address, email, phoneNumber, password, userId;
     private boolean isAdmin;
 
     /**
-     * @param id
-     * @param name
-     * @param lname
-     * @param adress
+     * @param userId
+     * @param firstName
+     * @param lastName
+     * @param address
      * @param email
-     * @param number
+     * @param phoneNumber
      * @param password
      * @param isAdmin
      */
-    public User(String id,String name, String lname, String adress, String email, String number, String password, boolean isAdmin){
-        this.id = id;
-        this.name = name;
-        this.lname = lname;
-        this.adress = adress;
+    public User(String userId, String firstName, String lastName, String address, String email, String phoneNumber, String password, boolean isAdmin){
+        this.userId = userId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
         this.email = email;
-        this.number = number;
+        this.phoneNumber = phoneNumber;
         this.password = password;
         this.isAdmin = isAdmin;
     }
 
     // ----- GETTER AND SETTERS ----- //
-    public String getId() {
-        return id;
+    public String getUserId() {
+        return userId;
     }
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
-    public String getLname() {
-        return lname;
+    public String getLastName() {
+        return lastName;
     }
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
     public String getEmail() {
         return email;
     }
-    public String getNumber() {
-        return number;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
     public String getPassword() {
         return this.password;
@@ -54,19 +54,19 @@ public class User {
         return isAdmin;
     }
 
-    public void setName(String name) {this.name = name;}
-    public void setLname(String lname) {this.lname = lname;}
-    public void setAdress(String adress) {this.adress = adress;}public void setEmail(String email) {this.email = email;}
-    public void setNumber(String number) {this.number = number;}
+    public void setFirstName(String firstName) {this.firstName = firstName;}
+    public void setLastName(String lastName) {this.lastName = lastName;}
+    public void setAddress(String address) {this.address = address;}public void setEmail(String email) {this.email = email;}
+    public void setPhoneNumber(String phoneNumber) {this.phoneNumber = phoneNumber;}
     public void setPassword(String password) {this.password = password;}
 
     // ----- INFO ----- //
     public String getToString(){
-        return "info: " + "name: "+name + " \n" +
-                  "last name: " +lname + " \n" +
-                  "address: "+adress + " \n" +
+        return "info: " + "name: "+ firstName + " \n" +
+                  "last name: " + lastName + " \n" +
+                  "address: "+ address + " \n" +
                   "email: "+email + " \n"+
-                  "number: "+number ;
+                  "number: "+ phoneNumber;
     }
 }
 

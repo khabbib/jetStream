@@ -28,7 +28,6 @@ import javafx.util.Duration;
 import worldMap.World;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.io.File;
 import java.io.IOException;
 import java.sql.*;
@@ -268,8 +267,8 @@ public class Controller {
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
 
-        u_name.setText(user.getName());
-        u_id.setText(user.getId());
+        u_name.setText(user.getFirstName());
+        u_id.setText(user.getUserId());
         stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         scene = new Scene(root);
         //MoveScreen.moveScreen(root,stage);
@@ -307,11 +306,11 @@ public class Controller {
             profileSelector = (GridPane) root.lookup("#profileSelector");
             btnEditProfile = (Button) root.lookup("#btnEditProfile");
 
-            profileFirstName.setText(user.getName());
-            profileLastName.setText(user.getLname());
+            profileFirstName.setText(user.getFirstName());
+            profileLastName.setText(user.getLastName());
             profileEmail.setText(user.getEmail());
-            profileAdress.setText(user.getAdress());
-            profileNumber.setText(user.getNumber());
+            profileAdress.setText(user.getAddress());
+            profileNumber.setText(user.getPhoneNumber());
             profilePassword.setText(user.getPassword());
 
             try {
@@ -434,7 +433,7 @@ public class Controller {
      */
     public void registeruser(ActionEvent e) throws SQLException, IOException {
         user = new User(null, firstName.getText(), lastName.getText(), adress.getText(), email.getText(), number.getText(), password.getText(), false);
-        System.out.println(user.getName() + "fsdfsdfsdf");
+        System.out.println(user.getFirstName() + "fsdfsdfsdf");
         boolean ok = Connection.saveUser(user);
         if (ok) {
             renderLoginPage(e, "successfully registered the user!");
@@ -628,11 +627,11 @@ public class Controller {
             Boolean edited = false;
 
             if (!profileFirstName.getText().isEmpty()) {
-                editedUser.setName(profileFirstName.getText());
+                editedUser.setFirstName(profileFirstName.getText());
                 edited = true;
             }
             if(!profileLastName.getText().isEmpty()) {
-                editedUser.setLname(profileLastName.getText());
+                editedUser.setLastName(profileLastName.getText());
                 edited = true;
             }
             if (!profileEmail.getText().isEmpty()) {
@@ -640,11 +639,11 @@ public class Controller {
                 edited = true;
             }
             if (!profileAdress.getText().isEmpty()){
-                editedUser.setAdress(profileAdress.getText());
+                editedUser.setAddress(profileAdress.getText());
                 edited = true;
             }
             if (!profileNumber.getText().isEmpty()){
-                editedUser.setNumber(profileNumber.getText());
+                editedUser.setPhoneNumber(profileNumber.getText());
                 edited = true;
             }
             if (!profilePassword.getText().isEmpty()){
@@ -913,7 +912,7 @@ public class Controller {
                         {
                             pageNr++;
                             StringBuilder temp2 = new StringBuilder();
-                            temp2.append(pageNr).append(" Member[ id. ").append(item.getId()).append(", First Name: ").append(item.getName()).append(", List Name: ").append(item.getLname()).append(", Adress: ").append(item.getAdress()).append(", Email: ").append(item.getEmail()).append(", Number: ").append(item.getNumber()).append(", Password: ").append(item.getPassword()).append(", isAdmin").append(item.isAdmin()).append(" ]");
+                            temp2.append(pageNr).append(" Member[ id. ").append(item.getUserId()).append(", First Name: ").append(item.getFirstName()).append(", List Name: ").append(item.getLastName()).append(", Adress: ").append(item.getAddress()).append(", Email: ").append(item.getEmail()).append(", Number: ").append(item.getPhoneNumber()).append(", Password: ").append(item.getPassword()).append(", isAdmin").append(item.isAdmin()).append(" ]");
                             temp.add(temp2.toString());
                         }
 
