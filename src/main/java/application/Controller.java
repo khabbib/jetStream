@@ -105,6 +105,7 @@ public class Controller {
     @FXML private AnchorPane pnlProfile, pnlHistorik, pnlFlight, pnlGame, pnlSupport;
 
     //Admin panels
+    @FXML private ListView<String> ticketListView, memberListView, flightListView;
     @FXML private AnchorPane pnlFlights, pnlTickets, pnlMember;
     @FXML private Button flightsBtn, membersBtn, ticketsBtn, logoutButton;
     //</editor-fold>
@@ -890,12 +891,53 @@ public class Controller {
             try {
                 User user = Connection.authenticationAdmin(login_email.getText(), login_pass.getText());
                 if (user != null) {
+
+
+
                     root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("admin/AdminView.fxml")));
                     stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
                     scene = new Scene(root);
                     stage.setTitle("Admin window");
                     stage.setScene(scene);
                     stage.show();
+
+
+
+                    memberListView = (ListView<String>) root.lookup("#memberListView");
+                    if(memberListView != null)
+                    {
+                        ArrayList<User> member = Connection.searchMember();
+                        ArrayList<String> temp = new ArrayList<>();
+                        int pageNr = 0;
+                        for(User item: member)
+                        {
+                            pageNr++;
+                            StringBuilder temp2 = new StringBuilder();
+                            temp2.append(pageNr).append(" Member[ id. ").append(item.getId()).append(", First Name: ").append(item.getName()).append(", List Name: ").append(item.getLname()).append(", Adress: ").append(item.getAdress()).append(", Email: ").append(item.getEmail()).append(", Number: ").append(item.getNumber()).append(", Password: ").append(item.getPassword()).append(", isAdmin").append(item.isAdmin()).append(" ]");
+                            temp.add(temp2.toString());
+                        }
+
+                        ObservableList<String> tickets = FXCollections.observableList(temp);
+                        memberListView.setItems(tickets);
+
+                    }
+
+                    ticketListView = (ListView<String>) root.lookup("#ticketListView");
+                    if(ticketListView != null)
+                    {
+
+
+                        ArrayList<Book> ticket = Connection.searchTicket();
+                        ArrayList<String> temp = new ArrayList<>();
+                        for(Book item: ticket)
+                        {
+                            StringBuilder temp2 = new StringBuilder();
+                            temp2.append("Ticket[ user. ").append(item.getUser_id()).append(", flightid: ").append(item.getFlight_id()).append(", seat number: ").append(item.getSeatNbr()).append(" ]");
+                            temp.add(temp2.toString());
+                        }
+                        ObservableList<String> tickets = FXCollections.observableList(temp);
+                        ticketListView.setItems(tickets);
+                    }
                 } else {
                     error.setText("Wrong email or pass!");
                 }

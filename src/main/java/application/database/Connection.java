@@ -387,4 +387,69 @@ public class Connection {
         stmt.executeUpdate("UPDATE profile_picture SET picture = '" + string + "' WHERE u_id = " + user.getId() + ";");
 
     }
+
+    public static ArrayList<Book> searchTicket() {
+        ArrayList<Book> flights = new ArrayList<>();
+        try {
+
+            java.sql.Connection con = Connection.getDatabaseConnection();
+            Statement stmt = con.createStatement();
+            ResultSet flight;
+
+            flights.clear();
+            stmt.executeUpdate("SET search_path TO jetstream;");
+            flight = stmt.executeQuery("select * from booked");
+
+            while (flight.next()){
+                String f_id = flight.getString("f_id");
+                String u_id = flight.getString(("u_id"));
+                String b_seat = flight.getString("b_seat");
+
+                flights.add(new Book(f_id, u_id, b_seat, false));
+
+            }
+            con.close();
+            stmt.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return flights;
+    }
+
+    public static ArrayList<User> searchMember() {
+        ArrayList<User> members = new ArrayList<>();
+        try {
+
+            java.sql.Connection con = Connection.getDatabaseConnection();
+            Statement stmt = con.createStatement();
+            ResultSet user;
+
+            members.clear();
+            stmt.executeUpdate("SET search_path TO jetstream;");
+            user = stmt.executeQuery("select * from userr where u_isadmin = 'false'");
+
+            while (user.next()){
+
+                String u_id = user.getString(("u_id"));
+                String u_f_name = user.getString(("u_f_name"));
+                String u_l_name = user.getString(("u_l_name"));
+                String u_address = user.getString(("u_address"));
+                String u_password = user.getString(("u_password"));
+                String u_email = user.getString(("u_email"));
+                String u_phone_nr = user.getString(("u_phone_nr"));
+                boolean u_isAdmin = user.getBoolean(("u_isadmin"));
+
+
+                members.add(new User(u_id, u_f_name, u_l_name,  u_address, u_email, u_phone_nr, u_password,u_isAdmin));
+
+            }
+            con.close();
+            stmt.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return members;
+    }
+
+
 }
