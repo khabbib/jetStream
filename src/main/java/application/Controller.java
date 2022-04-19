@@ -23,6 +23,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import worldMap.World;
@@ -1138,34 +1139,17 @@ public class Controller {
     }
 
 
-    //----------------- MENU (Not used) -----------------//
 
-    public void openMenu() {
-        logout.setLayoutX(0); // this will move in menu from outside the window
-        System.out.println("Menu opened");
-    } // the method will open the menu once the user clicked on his profile
+    //----------------- Support -----------------//
+    @FXML private Button issue_btn_sup, feedback_btn_sup, contact_btn_sup, send_fb_btn_sup, send_issue_btn_sup, send_contact_btn_sup;
+    @FXML private TextField subject_fb_txt_sup,email_fb_txt_sup, subject_contact_txt_sup, email_contact_txt_sup,title_issue_txt_sup, email_issue_txt_sup;
+    @FXML private TextFlow msgcontent_fb_txt_sup,msgcontent_contact_txt_sup,msgcontent_issue_txt_sup;
+    @FXML private AnchorPane issue_panel_sup, contact_panel_sup, feedback_panel_sup;
 
-    public void closeMenu() {
-        logout.setLayoutX(-84); // this will move out the menu outside the window
-        System.out.println("Menu closed");
-    } // the method will close the menu
-
-    public void exit(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Exit");
-        alert.setHeaderText("You are about to Exit!");
-        alert.setContentText("Do you really want to Exit?");
-
-        if (alert.showAndWait().get() == ButtonType.OK) {
-            stage = (Stage) scrollPane.getScene().getWindow();
-            System.out.println("You have successfully exited!");
-            stage.close();
-        }
-    } // the method will close a scene
-
-    public void exitProgram(){
-        System.exit(0);
-    } // to determinate the program
+    public void support_event_handler(ActionEvent e){
+        System.out.println("support!!");
+        //Support.takeCareOfEvent();
+    }
 
 
     //----------------- GETTERS AND SETTERS -----------------//
