@@ -20,7 +20,7 @@ public class TestX implements Initializable {
      */
     public void passData(User user){
         this.user = user;
-        name.setText(user.getName());
+        name.setText(user.getFirstName());
     }
 
     /**

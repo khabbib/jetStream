@@ -49,7 +49,7 @@ public class Connection {
             Statement stmt = con.createStatement();
             stmt.executeUpdate("SET search_path TO jetstream;");
             String bool = "false";
-            stmt.executeUpdate("insert into userr(u_f_name, u_l_name, u_address, u_email, u_phone_nr, u_password, u_isAdmin) values('" + user.getName() + "' , '" + user.getLname() + "' , '" + user.getAdress()+ "' , '" + user.getEmail() +"' , '" + user.getNumber() + "', '" + user.getPassword() +"', '" + bool + "')");
+            stmt.executeUpdate("insert into userr(u_f_name, u_l_name, u_address, u_email, u_phone_nr, u_password, u_isAdmin) values('" + user.getFirstName() + "' , '" + user.getLastName() + "' , '" + user.getAddress()+ "' , '" + user.getEmail() +"' , '" + user.getPhoneNumber() + "', '" + user.getPassword() +"', '" + bool + "')");
             ResultSet rs = stmt.executeQuery("select * from userr where u_email = '" + user.getEmail() +"'");
             while (rs.next()){
                 System.out.println("User saved not from db");
@@ -66,7 +66,7 @@ public class Connection {
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
         stmt.executeUpdate("SET search_path TO jetstream;");
-        stmt.executeUpdate("UPDATE userr SET u_f_name = '" + user.getName() + "', u_l_name = '" + user.getLname() + "', u_address = '" + user.getAdress() + "', u_email = '" + user.getEmail() + "', u_phone_nr = '" + user.getNumber() + "', u_password = '" + user.getPassword() + "'  WHERE u_id = " + user.getId() + ";");
+        stmt.executeUpdate("UPDATE userr SET u_f_name = '" + user.getFirstName() + "', u_l_name = '" + user.getLastName() + "', u_address = '" + user.getAddress() + "', u_email = '" + user.getEmail() + "', u_phone_nr = '" + user.getPhoneNumber() + "', u_password = '" + user.getPassword() + "'  WHERE u_id = " + user.getUserId() + ";");
     }
 
     /**
@@ -370,7 +370,7 @@ public class Connection {
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
         stmt.executeUpdate("SET search_path TO jetstream;");
-        ResultSet result = stmt.executeQuery("select picture from profile_picture where u_id = " + user.getId() + ";");
+        ResultSet result = stmt.executeQuery("select picture from profile_picture where u_id = " + user.getUserId() + ";");
 
         while (result.next()) {
             System.out.println(result.getString("picture"));
@@ -384,7 +384,7 @@ public class Connection {
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
         stmt.executeUpdate("SET search_path TO jetstream;");
-        stmt.executeUpdate("UPDATE profile_picture SET picture = '" + string + "' WHERE u_id = " + user.getId() + ";");
+        stmt.executeUpdate("UPDATE profile_picture SET picture = '" + string + "' WHERE u_id = " + user.getUserId() + ";");
 
     }
 
