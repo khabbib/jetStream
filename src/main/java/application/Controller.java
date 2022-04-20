@@ -216,24 +216,28 @@ public class Controller {
     }
 
     /**
+     * the method will switch the user to the dashboard page
      * navigate to dashboard pages
      * @param e
      * @throws IOException
      */
     public void switchToDashboard(ActionEvent e) throws IOException {
-        if (!login_pass.getText().isEmpty() || !login_email.getText().isEmpty()) {
-            User user = Connection.authenticationUser(login_email.getText(), login_pass.getText());
-            if (user != null) {
-                renderDashboard(e, user);
+        if (!login_email.getText().isEmpty() || !login_pass.getText().isEmpty()) {
+            if (login_email.getText().contains("@") && (login_email.getText().contains("gmail") || login_email.getText().contains("hotmail") || login_email.getText().contains("yahoo") || login_email.getText().contains("outlook"))) {
+                User user = Connection.authenticationUser(login_email.getText(), login_pass.getText());
+                if (user != null) {
+                    error_msg.setText("");
+                    renderDashboard(e, user);
+                } else {
+                    error_msg.setText("Wrong email or password!");
+                }
             } else {
-                error_msg.setText("Wrong email or pass!");
+                error_msg.setText("Email has wrong format!");
             }
         } else {
             error_msg.setText("Email or password is empty, please fill in fields!");
-            //System.out.println("Is empty!");
-            //renderDashboard(e, user);
         }
-    } // the method will switch the user to the dashboard page
+    }
 
     /**
      * @param e
