@@ -1147,8 +1147,23 @@ public class Controller {
     @FXML private AnchorPane issue_panel_sup, contact_panel_sup, feedback_panel_sup;
 
     public void support_event_handler(ActionEvent e){
-        System.out.println("support!!");
-        //Support.takeCareOfEvent();
+        if (e.getSource() == issue_btn_sup){
+            issue_btn_sup.setStyle("-fx-background-color: #eee; -fx-text-fill: #112");
+            feedback_btn_sup.setStyle("-fx-background-color: #333; -fx-text-fill: #eee");
+            contact_btn_sup.setStyle("-fx-background-color: #333; -fx-text-fill: #eee");
+            issue_panel_sup.toFront();
+        }else if(e.getSource() == feedback_btn_sup){
+            feedback_btn_sup.setStyle("-fx-background-color: #eee; -fx-text-fill: #112");
+            issue_btn_sup.setStyle("-fx-background-color: #333; -fx-text-fill: #eee");
+            contact_btn_sup.setStyle("-fx-background-color: #333; -fx-text-fill: #eee");
+            feedback_panel_sup.toFront();
+        }else if(e.getSource() == contact_btn_sup){
+            contact_panel_sup.toFront();
+            contact_btn_sup.setStyle("-fx-background-color: #eee; -fx-text-fill: #112");
+            feedback_btn_sup.setStyle("-fx-background-color: #333; -fx-text-fill: #eee");
+            issue_btn_sup.setStyle("-fx-background-color: #333; -fx-text-fill: #eee");
+
+        }
     }
 
 
