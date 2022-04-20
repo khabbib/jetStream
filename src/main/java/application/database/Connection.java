@@ -38,27 +38,23 @@ public class Connection {
 
     /**
      * register new user
-     * @param user
+     * @param
      * @return
      * @throws SQLException
      */
-    public static boolean saveUser(User user) throws SQLException {
+    public static boolean saveUser(String first_name_reg, String last_name_reg, String address_reg, String email_reg, String phone_number_reg, String password_reg, boolean isAdmin) throws SQLException {
         boolean ok = false;
-        if(user != null){
-            java.sql.Connection con = getDatabaseConnection();
-            Statement stmt = con.createStatement();
-            stmt.executeUpdate("SET search_path TO jetstream;");
-            String bool = "false";
-            stmt.executeUpdate("insert into userr(u_f_name, u_l_name, u_address, u_email, u_phone_nr, u_password, u_isAdmin) values('" + user.getFirstName() + "' , '" + user.getLastName() + "' , '" + user.getAddress()+ "' , '" + user.getEmail() +"' , '" + user.getPhoneNumber() + "', '" + user.getPassword() +"', '" + bool + "')");
-            ResultSet rs = stmt.executeQuery("select * from userr where u_email = '" + user.getEmail() +"'");
-            while (rs.next()){
-                System.out.println("User saved not from db");
-                System.out.println(rs);
-            }
-            ok= true;
-            con.close();
-            stmt.close();
+        java.sql.Connection con = getDatabaseConnection();
+        Statement stmt = con.createStatement();
+        stmt.executeUpdate("SET search_path TO jetstream;");
+        stmt.executeUpdate("insert into userr(u_f_name, u_l_name, u_address, u_email, u_phone_nr, u_password, u_isAdmin) values('" + first_name_reg + "' , '" + last_name_reg + "' , '" + address_reg+ "' , '" + email_reg +"' , '" + phone_number_reg + "', '" + password_reg +"', '" + isAdmin + "')");
+        ResultSet rs = stmt.executeQuery("select * from userr where u_email = '" + email_reg +"'");
+        while (rs.next()){
+            System.out.println("User "+ first_name_reg +" registered.");
         }
+        ok= true;
+        con.close();
+        stmt.close();
         return ok;
     }
 
