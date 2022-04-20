@@ -16,8 +16,8 @@
    <children>
       <VBox layoutX="416.0" layoutY="224.0" prefHeight="252.0" prefWidth="368.0" spacing="10.0">
          <children>
-            <TextField fx:id="login_email" prefHeight="36.0" prefWidth="260.0" promptText="email" text="test@test.com" />
-            <PasswordField fx:id="login_pass" prefHeight="36.0" prefWidth="260.0" promptText="password" text="123" />
+            <TextField fx:id="login_email" prefHeight="36.0" prefWidth="260.0" promptText="email" text="user@gmail.com" />
+            <PasswordField fx:id="login_pass" prefHeight="36.0" prefWidth="260.0" promptText="password" text="user" />
             <HBox alignment="CENTER" prefHeight="75.0" prefWidth="368.0" spacing="10.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#switchToDashboard" prefHeight="36.0" prefWidth="260.0" style="-fx-background-color: #f87000;" text="User" textFill="WHITE" />
