@@ -61,7 +61,6 @@ public class Controller {
     @FXML private ScrollPane scrollFlights;
     @FXML private TextField login_email;
     @FXML private Label error_msg;
-    @FXML private Label registration_error;
     @FXML private Label success_msg;
     @FXML private Label u_name, u_id;
     @FXML private VBox display_flight;
@@ -81,8 +80,6 @@ public class Controller {
     @FXML private StackPane game2;
     @FXML private Button quizButton;
 
-    // Register a new user
-    @FXML private TextField firstName, lastName, adress, email, number, password;
 
     // Seat
     private GridPane grid_left = new GridPane(); //Layout
@@ -131,10 +128,19 @@ public class Controller {
     @FXML private Label seat_nbr_seat_pnl, msg_seat_pnl, flight_nbr_seat_pnl, price_seat_pnl;
     //</editor-fold>
 
+
+
     //<editor-fold desc="Search variables">
     @FXML private TextField search_f_name;
     @FXML private ListView<String> searchListAppear, searchListAppear2, searchListAppear3;
 
+    //</editor-fold
+
+    //<editor-fold desc="Register a new user variables">
+    @FXML private Label registration_error;
+    // Register a new user
+    @FXML private TextField first_name_reg, last_name_reg, address_reg, emailaddress_reg, phone_number_reg, password_reg, confirm_password_reg;
+    @FXML private Label name_issue_reg, last_name_issue_reg, address_issue_reg,email_issue_reg,phone_number_issue_reg, password_issue_reg, confirm_password_issue_reg;
     //</editor-fold
 
     //----------------- HOME -----------------//
@@ -288,6 +294,18 @@ public class Controller {
      *
      */
     public void initializeFXML(){
+
+        //registration page
+        name_issue_reg = (Label) root.lookup("#name_issue_reg");
+        last_name_issue_reg = (Label) root.lookup("#last_name_issue_reg");
+        address_issue_reg = (Label) root.lookup("#address_issue_reg");
+        email_issue_reg = (Label) root.lookup("#email_issue_reg");
+        phone_number_issue_reg = (Label) root.lookup("#phone_number_issue_reg");
+        password_issue_reg = (Label) root.lookup("#password_issue_reg");
+        confirm_password_issue_reg = (Label) root.lookup("#confirm_password_issue_reg");
+
+
+
         ////// look up for ticket variables
 
         // Purchase info
@@ -439,13 +457,64 @@ public class Controller {
      * @throws IOException
      */
     public void registeruser(ActionEvent e) throws SQLException, IOException {
-        user = new User(null, firstName.getText(), lastName.getText(), adress.getText(), email.getText(), number.getText(), password.getText(), false);
-        System.out.println(user.getFirstName() + "fsdfsdfsdf");
-        boolean ok = Connection.saveUser(user);
-        if (ok) {
-            renderLoginPage(e, "successfully registered the user!");
-        } else {
-            registration_error.setText("Couldn't register the information");
+        if (!first_name_reg.getText().isEmpty() && !last_name_reg.getText().isEmpty() && !address_reg.getText().isEmpty() && !emailaddress_reg.getText().isEmpty() && !phone_number_reg.getText().isEmpty() && !password_reg.getText().isEmpty() && !confirm_password_reg.getText().isEmpty()){
+            if ((first_name_reg.getText().length() >= 3 && first_name_reg.getText().length() <= 30)){
+                if ((last_name_reg.getText().length() >= 3 && last_name_reg.getText().length() <= 30)){
+                    if ((address_reg.getText().length() >= 5 && address_reg.getText().length() <= 60)){
+                        if((emailaddress_reg.getText().length() >= 6 && emailaddress_reg.getText().length() <= 30)){
+                            if ((phone_number_reg.getText().length() == 12)){
+                                try {
+                                    long phonenbr = Integer.parseInt(phone_number_reg.getText());
+                                }catch (Exception a){
+                                    System.out.println("Phone number is not a digit issue");
+                                    phone_number_issue_reg.setText("Only digit number [phone number]");
+                                }
+                                    if (password_reg.getText().length() >= 8 && password_reg.getText().length() <= 20){
+                                        if (password_reg.getText().equals(confirm_password_reg.getText())){
+                                            if(emailaddress_reg.getText().contains("@") && (emailaddress_reg.getText().contains("gmail") || emailaddress_reg.getText().contains("hotmail") || emailaddress_reg.getText().contains("yahoo") || emailaddress_reg.getText().contains("outlook"))){
+                                                System.out.println("all fine!");
+                                                boolean ok = Connection.saveUser(first_name_reg.getText(), last_name_reg.getText(), address_reg.getText(), emailaddress_reg.getText(), phone_number_reg.getText(), password_reg.getText(), false);
+                                                if (ok) {
+                                                    renderLoginPage(e, "successfully registered the user!");
+                                                } else {
+                                                    registration_error.setText("Couldn't register the information");
+                                                }
+                                            }else {
+                                                System.out.println("Email type issue");
+                                                email_issue_reg.setText("Type issue [email]");
+                                            }
+                                        }else {
+                                            System.out.println("confirm password not much the actual password");
+                                            confirm_password_issue_reg.setText("Much issue [confirm password]");
+                                        }
+                                    }else {
+                                        System.out.println("password issue");
+                                        password_issue_reg.setText("Size issue 8-20");
+                                    }
+
+
+                            }else {
+                                System.out.println("phone number issue");
+                                phone_number_issue_reg.setText("size issue 12 digit");
+                            }
+                        } else {
+                            System.out.println("email address issue");
+                            email_issue_reg.setText("size issue 6-30");
+                        }
+                    }else {
+                        System.out.println("address issue");
+                        address_issue_reg.setText("size issue 5-60");
+                    }
+                } else {
+                    System.out.println("last name issue");
+                    last_name_issue_reg.setText("Size issue 3-30");
+                }
+            } else {
+                name_issue_reg.setText("Size issue 3-30");
+                System.out.println("fist name issue");
+            }
+        }else {
+            registration_error.setText("Empty field issue");
         }
     }// the method will register the user and return to the login page
 

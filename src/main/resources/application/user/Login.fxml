@@ -20,8 +20,8 @@
             <PasswordField fx:id="login_pass" prefHeight="36.0" prefWidth="260.0" promptText="password" text="user" />
             <HBox alignment="CENTER" prefHeight="75.0" prefWidth="368.0" spacing="10.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#switchToDashboard" prefHeight="36.0" prefWidth="260.0" style="-fx-background-color: #f87000;" text="User" textFill="WHITE" />
-                  <Button mnemonicParsing="false" onAction="#switchToAdminView" prefHeight="36.0" prefWidth="260.0" style="-fx-background-color: #f87000;" text="Admin" textFill="WHITE" />
+                  <Button mnemonicParsing="false" onAction="#switchToDashboard" prefHeight="36.0" prefWidth="260.0" style="-fx-background-color: #f87000;" text="Login as user" textFill="WHITE" />
+                  <Button mnemonicParsing="false" onAction="#switchToAdminView" prefHeight="36.0" prefWidth="260.0" style="-fx-background-color: #f87000;" text="Login as admin" textFill="WHITE" />
                </children>
             </HBox>
             <Label text="No account?" textFill="WHITE">
@@ -29,19 +29,23 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Button fx:id="register" mnemonicParsing="false" onAction="#switchToRegistration" prefHeight="36.0" prefWidth="370.0" style="-fx-background-color: #347c9e;" text="Register" textFill="WHITE" />
+            <Button fx:id="register" mnemonicParsing="false" onAction="#switchToRegistration" prefHeight="36.0" prefWidth="370.0" style="-fx-background-color: #347c9e;" text="Register a new user" textFill="WHITE" />
          </children>
       </VBox>
-      <ImageView fx:id="logo" fitHeight="44.0" fitWidth="36.0" layoutX="44.0" layoutY="20.0" onMouseClicked="#switchToHome" preserveRatio="true">
-         <image>
-            <Image url="@../image/jetStream.png" />
-         </image>
-      </ImageView>
-      <Text fill="WHITE" layoutX="87.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JetStream">
-         <font>
-            <Font size="13.0" />
-         </font>
-      </Text>
+      <HBox alignment="CENTER" layoutX="44.0" layoutY="20.0" spacing="5.0">
+         <children>
+            <ImageView fx:id="logo" fitHeight="44.0" fitWidth="36.0" onMouseClicked="#switchToHome" preserveRatio="true">
+               <image>
+                  <Image url="@../image/jetStream.png" />
+               </image>
+            </ImageView>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="JetStream">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Text>
+         </children>
+      </HBox>
       <Label fx:id="success_msg" layoutX="515.0" layoutY="33.0" textFill="#3dee46" />
       <Label fx:id="error_msg" layoutX="416.0" layoutY="489.0" prefHeight="17.0" prefWidth="368.0" textFill="#d74141" />
    </children>
