@@ -60,7 +60,7 @@ public class Controller {
     @FXML private ScrollPane scrollPane;
     @FXML private ScrollPane scrollFlights;
     @FXML private TextField login_email;
-    @FXML private Label error;
+    @FXML private Label error_msg;
     @FXML private Label registration_error;
     @FXML private Label success_msg;
     @FXML private Label u_name, u_id;
@@ -221,15 +221,17 @@ public class Controller {
      * @throws IOException
      */
     public void switchToDashboard(ActionEvent e) throws IOException {
-        if (!login_pass.getText().isEmpty() && !login_email.getText().isEmpty()) {
+        if (!login_pass.getText().isEmpty() || !login_email.getText().isEmpty()) {
             User user = Connection.authenticationUser(login_email.getText(), login_pass.getText());
             if (user != null) {
                 renderDashboard(e, user);
             } else {
-                error.setText("Wrong email or pass!");
+                error_msg.setText("Wrong email or pass!");
             }
         } else {
-            renderDashboard(e, user);
+            error_msg.setText("Email or password is empty, please fill in fields!");
+            //System.out.println("Is empty!");
+            //renderDashboard(e, user);
         }
     } // the method will switch the user to the dashboard page
 
@@ -939,13 +941,13 @@ public class Controller {
                         ticketListView.setItems(tickets);
                     }
                 } else {
-                    error.setText("Wrong email or pass!");
+                    error_msg.setText("Wrong email or pass!");
                 }
             }catch (IOException io){
                 io.printStackTrace();
             }
         } else {
-            error.setText("Fill the field!");
+            error_msg.setText("Fill the field!");
         }
     }
 

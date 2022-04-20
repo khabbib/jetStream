@@ -43,5 +43,6 @@
          </font>
       </Text>
       <Label fx:id="success_msg" layoutX="515.0" layoutY="33.0" textFill="#3dee46" />
+      <Label fx:id="error_msg" layoutX="416.0" layoutY="489.0" prefHeight="17.0" prefWidth="368.0" textFill="#d74141" />
    </children>
 </AnchorPane>
