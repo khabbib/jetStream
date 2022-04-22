@@ -2,6 +2,7 @@ package application.database;
 
 import application.model.Book;
 import application.model.Flight;
+import application.model.TestData;
 import application.model.User;
 import javafx.scene.image.Image;
 
@@ -374,8 +375,8 @@ public class Connection {
 
 
     //////// fyl table history ///////////
-    public static ArrayList<Book> searchDataForTableHistory() {
-        ArrayList<Book> flights = new ArrayList<>();
+    public static ArrayList<TestData> searchDataForTableHistory() {
+        ArrayList<TestData> flights = new ArrayList<>();
         try {
 
             java.sql.Connection con = Connection.getDatabaseConnection();
@@ -385,13 +386,14 @@ public class Connection {
             flights.clear();
             stmt.executeUpdate("SET search_path TO jetstream;");
             flight = stmt.executeQuery("select * from booked");
-
+            int i = 1;
             while (flight.next()){
+                i++;
                 String f_id = flight.getString("f_id");
                 String u_id = flight.getString(("u_id"));
                 String b_seat = flight.getString("b_seat");
 
-                flights.add(new Book(f_id, u_id, b_seat, false));
+                flights.add(new TestData());
 
             }
             con.close();

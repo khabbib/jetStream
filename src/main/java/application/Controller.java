@@ -37,6 +37,7 @@ import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -1254,29 +1255,32 @@ public class Controller implements Initializable {
     }
 
     //----------------- History  -----------------//
-    @FXML private TableView<Book> table_historik;
-    ObservableList<Book> fetchedList;
+    @FXML private TableView<TestData> table_historik;
+    ObservableList<TestData> fetchedList;
     @FXML private TableColumn<Book, String> no_col_table_historik, bookid_col_table_historik,
             flightid_col_table_historik,from_col_table_historik, to_col_table_historik,
             seatno_col_table_historik, date_col_table_historik;
 
     public void setInfoIntoTableHistorik(){ // the method calls from user dashboard to load everything.
-        ArrayList<Book> temp = Connection.searchTicket();
 
+        table_historik = (TableView<TestData>) root.lookup("#table_historik");
+        table_historik.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("no_col_table_historik"));
+        table_historik.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("bookid_col_table_historik"));
+        table_historik.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("flightid_col_table_historik"));
+        table_historik.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("from_col_table_historik"));
+        table_historik.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("to_col_table_historik"));
+        table_historik.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("seatno_col_table_historik"));
+        table_historik.getColumns().get(6).setCellValueFactory(new PropertyValueFactory<>("date_col_table_historik"));
 
-        for (int i = 0; i < temp.size(); i++){
-            fetchedList = FXCollections.observableList(temp);
-
-        }
-
-        no_col_table_historik.setCellValueFactory(new PropertyValueFactory<>("no_col_table_historik"));
-        bookid_col_table_historik.setCellValueFactory(new PropertyValueFactory<>("bookid_col_table_historik"));
-        flightid_col_table_historik.setCellValueFactory(new PropertyValueFactory<>("flightid_col_table_historik"));
-        from_col_table_historik.setCellValueFactory(new PropertyValueFactory<>("from_col_table_historik"));
-        to_col_table_historik.setCellValueFactory(new PropertyValueFactory<>("to_col_table_historik"));
-        seatno_col_table_historik.setCellValueFactory(new PropertyValueFactory<>("seatno_col_table_historik"));
-        date_col_table_historik.setCellValueFactory(new PropertyValueFactory<>("date_col_table_historik"));
+        Connection.searchDataForTableHistory();
+        ArrayList<TestData> list = new ArrayList<>();
+        fetchedList = FXCollections.observableArrayList(list);
         table_historik.setItems(fetchedList);
+
+
+        //no_col_table_historik = (TableColumn<Book, String>)root.lookup("#no_col_table_historik");
+
+
     }
 
 
@@ -1292,7 +1296,6 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        System.out.println(stage.getX() + " stage");
     }
 }
 
