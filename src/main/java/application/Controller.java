@@ -10,12 +10,14 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -31,16 +33,18 @@ import worldMap.World;
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  *
  */
-public class Controller {
+public class Controller implements Initializable {
     //<editor-fold desc="Global variables" >
 
     // Default variables
@@ -288,7 +292,15 @@ public class Controller {
         stage.setTitle("JetStream | Dashboard");
         stage.setScene(scene);
         stage.show();
+
+        lookUpForTable();
+        // Fyl historic table
+        setInfoIntoTableHistorik();
     } // the method will render dashboard page for user
+
+    private void lookUpForTable() {
+
+    }
 
     /**
      *
@@ -1241,6 +1253,33 @@ public class Controller {
         }
     }
 
+    //----------------- History  -----------------//
+    @FXML private TableView<Book> table_historik;
+    ObservableList<Book> fetchedList;
+    @FXML private TableColumn<Book, String> no_col_table_historik, bookid_col_table_historik,
+            flightid_col_table_historik,from_col_table_historik, to_col_table_historik,
+            seatno_col_table_historik, date_col_table_historik;
+
+    public void setInfoIntoTableHistorik(){ // the method calls from user dashboard to load everything.
+        ArrayList<Book> temp = Connection.searchTicket();
+
+
+        for (int i = 0; i < temp.size(); i++){
+            fetchedList = FXCollections.observableList(temp);
+
+        }
+
+        no_col_table_historik.setCellValueFactory(new PropertyValueFactory<>("no_col_table_historik"));
+        bookid_col_table_historik.setCellValueFactory(new PropertyValueFactory<>("bookid_col_table_historik"));
+        flightid_col_table_historik.setCellValueFactory(new PropertyValueFactory<>("flightid_col_table_historik"));
+        from_col_table_historik.setCellValueFactory(new PropertyValueFactory<>("from_col_table_historik"));
+        to_col_table_historik.setCellValueFactory(new PropertyValueFactory<>("to_col_table_historik"));
+        seatno_col_table_historik.setCellValueFactory(new PropertyValueFactory<>("seatno_col_table_historik"));
+        date_col_table_historik.setCellValueFactory(new PropertyValueFactory<>("date_col_table_historik"));
+        table_historik.setItems(fetchedList);
+    }
+
+
 
     //----------------- GETTERS AND SETTERS -----------------//
     public Scene getScene() {
@@ -1249,4 +1288,26 @@ public class Controller {
     public void setScene(Scene scene) {
         this.scene = scene;
     }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+        System.out.println(stage.getX() + " stage");
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

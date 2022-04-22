@@ -255,81 +255,6 @@ public class Connection {
         return flights;
     }
 
-    // ------------------------- EXTRA THING ------------------------- //
-
-    ///////// appear on screen when user type something in the search field
-
-    /**
-     * fetch and filter countries
-     * @param name
-     * @return
-     */
-    public static ArrayList<String> seachAppear(String name) {
-        ArrayList<String> output = new ArrayList<>();
-        try {
-            String convert = name.toLowerCase();
-            String searchTarget = convert.substring(0, 1).toUpperCase() + convert.substring(1); // convert first character to Uppercase
-            java.sql.Connection con = getDatabaseConnection();
-            Statement stmt = con.createStatement();
-            output.clear();
-            stmt.executeUpdate("SET search_path TO jetstream;");
-            ResultSet flight = stmt.executeQuery("select f_departure_name from flight where f_departure_name like '%" + searchTarget +"%';");
-            while (flight.next()){
-                if (output.size() >= 19){
-                    break;
-                }else {
-                    String departure_name_get = flight.getString(("f_departure_name"));
-                    output.add(departure_name_get);
-                }
-            }
-
-            con.close();
-            stmt.close();
-
-        }catch (SQLException e){
-            System.out.println("some problem accused");
-        }
-        return output;
-
-    }
-
-    /**
-     * @return
-     * @throws IOException
-     */
-    public static ArrayList<String> fetchLander() throws IOException {
-        ArrayList<String> output = new ArrayList<>();
-        FileWriter myWriter = new FileWriter("land.txt");
-        try {
-            java.sql.Connection con = getDatabaseConnection();
-            Statement stmt = con.createStatement();
-            stmt.executeUpdate("SET search_path TO jetstream;");
-            ResultSet rs = stmt.executeQuery("select f_departure_name from flight");
-            while (rs.next()){
-                String name = rs.getString("f_departure_name");
-
-                if (output.isEmpty()){
-                    output.add(name);
-                }else {
-                    if (output.contains(name)){
-
-                        System.out.println("har flera värde ");
-                    }else {
-                        output.add(name);
-                        myWriter.write(name + ",\n");
-                    }
-                }
-
-            }
-            con.close();
-            stmt.close();
-            myWriter.close();
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-        return output;
-    }
-
     /**
      * @param u_id
      * @param flight_id
@@ -448,4 +373,32 @@ public class Connection {
     }
 
 
+    //////// fyl table history ///////////
+    public static ArrayList<Book> searchDataForTableHistory() {
+        ArrayList<Book> flights = new ArrayList<>();
+        try {
+
+            java.sql.Connection con = Connection.getDatabaseConnection();
+            Statement stmt = con.createStatement();
+            ResultSet flight;
+
+            flights.clear();
+            stmt.executeUpdate("SET search_path TO jetstream;");
+            flight = stmt.executeQuery("select * from booked");
+
+            while (flight.next()){
+                String f_id = flight.getString("f_id");
+                String u_id = flight.getString(("u_id"));
+                String b_seat = flight.getString("b_seat");
+
+                flights.add(new Book(f_id, u_id, b_seat, false));
+
+            }
+            con.close();
+            stmt.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return flights;
+    }
 }

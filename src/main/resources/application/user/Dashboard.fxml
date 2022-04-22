@@ -12,6 +12,8 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
@@ -369,9 +371,20 @@
                   <Image url="@../image/history.png" />
                </image>
             </ImageView>
+            <TableView fx:id="table_historik" layoutX="168.0" layoutY="150.0" prefHeight="433.0" prefWidth="855.0">
+              <columns>
+                <TableColumn fx:id="no_col_table_historik" prefWidth="39.0" text="No" />
+                <TableColumn fx:id="bookid_col_table_historik" prefWidth="82.0" text="Bookning id" />
+                  <TableColumn fx:id="flightid_col_table_historik" prefWidth="85.0" text="Flight id" />
+                  <TableColumn fx:id="from_col_table_historik" prefWidth="177.0" text="From" />
+                  <TableColumn fx:id="to_col_table_historik" prefWidth="227.0" text="To" />
+                  <TableColumn fx:id="seatno_col_table_historik" prefWidth="87.0" text="Seat number" />
+                  <TableColumn fx:id="date_col_table_historik" prefWidth="157.0" text="Date" />
+              </columns>
+            </TableView>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="pnlSeat" layoutX="70.0" prefHeight="700.0" prefWidth="1120.0">
+      <AnchorPane fx:id="pnlSeat" layoutX="70.0" prefHeight="700.0" prefWidth="1120.0" visible="false">
          <children>
             <AnchorPane fx:id="pnl_success_purchase" prefHeight="700.0" prefWidth="1127.0" style="-fx-background-color: #1119;">
                <cursor>
@@ -747,7 +760,7 @@
             <Button fx:id="iconCloseSeat" layoutX="1076.0" layoutY="19.0" mnemonicParsing="false" onAction="#testDev" opacity="0.0" prefHeight="32.0" prefWidth="28.0" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="pnlFlight" layoutX="65.0" prefHeight="700.0" prefWidth="1126.0" style="-fx-background-color: #112;">
+      <AnchorPane fx:id="pnlFlight" layoutX="65.0" prefHeight="700.0" prefWidth="1126.0" style="-fx-background-color: #112;" visible="false">
          <children>
             <HBox alignment="CENTER" prefHeight="74.0" prefWidth="1135.0">
                <children>
