@@ -1,5 +1,4 @@
 package application;
-
 import application.model.*;
 import application.auth.Purchase;
 import application.database.Connection;
@@ -37,11 +36,9 @@ import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicBoolean;
-
 /**
  *
  */
@@ -111,7 +108,6 @@ public class Controller implements Initializable {
     @FXML private AnchorPane pnlFlights, pnlTickets, pnlMember;
     @FXML private Button flightsBtn, membersBtn, ticketsBtn, logoutButton;
     //</editor-fold>
-
     //<editor-fold desc="Flights and dashboard variables">
     private ArrayList<Flight> avalibleFlights = new ArrayList<>();
     @FXML private TextField from_input_flight,disc_input_flight;
@@ -132,15 +128,19 @@ public class Controller implements Initializable {
     @FXML private AnchorPane flight_seats_eco, flights_seats_business;
     @FXML private Label seat_nbr_seat_pnl, msg_seat_pnl, flight_nbr_seat_pnl, price_seat_pnl;
     //</editor-fold>
-
-
-
+    //<editor-fold desc="HISTORY VARIABLES">
+    @FXML private TableView<UserHistory> table_historik;
+    ObservableList<UserHistory> fetchedList;
+    @FXML private TableColumn<Book, String>
+            no_col_table_historik, company_col_table_historik,model_col_table_historik, rfc_col_table_historik,
+            flightid_col_table_historik,from_col_table_historik, to_col_table_historik,
+            seatno_col_table_historik, date_col_table_historik, price_col_table_historik;
+    //</editor-fold
     //<editor-fold desc="Search variables">
     @FXML private TextField search_f_name;
     @FXML private ListView<String> searchListAppear, searchListAppear2, searchListAppear3;
 
     //</editor-fold
-
     //<editor-fold desc="Register a new user variables">
     @FXML private Label registration_error;
     // Register a new user
@@ -1255,32 +1255,31 @@ public class Controller implements Initializable {
     }
 
     //----------------- History  -----------------//
-    @FXML private TableView<TestData> table_historik;
-    ObservableList<TestData> fetchedList;
-    @FXML private TableColumn<Book, String> no_col_table_historik, bookid_col_table_historik,
-            flightid_col_table_historik,from_col_table_historik, to_col_table_historik,
-            seatno_col_table_historik, date_col_table_historik;
+
 
     public void setInfoIntoTableHistorik(){ // the method calls from user dashboard to load everything.
-
-        table_historik = (TableView<TestData>) root.lookup("#table_historik");
+        table_historik = (TableView<UserHistory>) root.lookup("#table_historik");
         table_historik.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("no_col_table_historik"));
-        table_historik.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("bookid_col_table_historik"));
-        table_historik.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("flightid_col_table_historik"));
-        table_historik.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("from_col_table_historik"));
-        table_historik.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("to_col_table_historik"));
-        table_historik.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("seatno_col_table_historik"));
-        table_historik.getColumns().get(6).setCellValueFactory(new PropertyValueFactory<>("date_col_table_historik"));
+        table_historik.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("company_col_table_historik"));
+        table_historik.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("model_col_table_historik"));
+        table_historik.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("rfc_col_table_historik"));
+        table_historik.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("flightid_col_table_historik"));
+        table_historik.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("from_col_table_historik"));
+        table_historik.getColumns().get(6).setCellValueFactory(new PropertyValueFactory<>("to_col_table_historik"));
+        table_historik.getColumns().get(7).setCellValueFactory(new PropertyValueFactory<>("seatno_col_table_historik"));
+        table_historik.getColumns().get(8).setCellValueFactory(new PropertyValueFactory<>("date_col_table_historik"));
+        table_historik.getColumns().get(9).setCellValueFactory(new PropertyValueFactory<>("price_col_table_historik"));
 
-        Connection.searchDataForTableHistory();
-        ArrayList<TestData> list = new ArrayList<>();
+        ArrayList<UserHistory> list = Connection.searchDataForTableHistory();
+        //list.add(new UserHistory(1, "JetStream", "Boeing 767", "AAA123123123", 12,"Sweden", "Maqdonie", 55, "2022-04-29", 300.00));
         fetchedList = FXCollections.observableArrayList(list);
         table_historik.setItems(fetchedList);
 
+        /*
 
-        //no_col_table_historik = (TableColumn<Book, String>)root.lookup("#no_col_table_historik");
-
-
+                new UserHistory(1, "EastJet", "Boeing 321", "ABB123123123", 1,"Germany", "USA", 11, "2022-06-01", 639.00),
+                new UserHistory(1, "Qatar airline", "Boeing 067", "ACC123123123", 33,"North Korea", "Paris", 7, "2022-04-20", 499.00)
+         */
     }
 
 

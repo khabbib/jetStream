@@ -2,12 +2,10 @@ package application.database;
 
 import application.model.Book;
 import application.model.Flight;
-import application.model.TestData;
+import application.model.UserHistory;
 import application.model.User;
 import javafx.scene.image.Image;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -375,8 +373,8 @@ public class Connection {
 
 
     //////// fyl table history ///////////
-    public static ArrayList<TestData> searchDataForTableHistory() {
-        ArrayList<TestData> flights = new ArrayList<>();
+    public static ArrayList<UserHistory> searchDataForTableHistory() {
+        ArrayList<UserHistory> flights = new ArrayList<>();
         try {
 
             java.sql.Connection con = Connection.getDatabaseConnection();
@@ -385,16 +383,21 @@ public class Connection {
 
             flights.clear();
             stmt.executeUpdate("SET search_path TO jetstream;");
-            flight = stmt.executeQuery("select * from booked");
+            flight = stmt.executeQuery("select * from History;");
             int i = 1;
             while (flight.next()){
+                String compnay = flight.getString("p_company");
+                String model = flight.getString("p_model");
+                String referenceNo = flight.getString("b_rfc"); // most create a column in booked table for b_id/...
+                int f_id = flight.getInt("f_id");
+                String from = flight.getString("f_departure_name");
+                String to = flight.getString("f_destination_name");
+                int seat = flight.getInt("b_seat");
+                String date_purchased_ticket = flight.getString("b_date"); // temporary can be the destination date later it should be changed to real date from booked table
+                double price = Double.parseDouble(flight.getString("f_price"));
+                flights.add(new UserHistory(i, compnay, model, referenceNo, f_id, from, to, seat, date_purchased_ticket, price));
+
                 i++;
-                String f_id = flight.getString("f_id");
-                String u_id = flight.getString(("u_id"));
-                String b_seat = flight.getString("b_seat");
-
-                flights.add(new TestData());
-
             }
             con.close();
             stmt.close();

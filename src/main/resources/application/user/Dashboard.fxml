@@ -361,7 +361,7 @@
       </AnchorPane>
       <AnchorPane fx:id="pnlHistorik" layoutX="67.0" layoutY="-3.0" prefHeight="700.0" prefWidth="1135.0" style="-fx-background-color: #112;">
          <children>
-            <Label layoutX="70.0" layoutY="100.0" text="Historiken" textFill="WHITE">
+            <Label layoutX="64.0" layoutY="95.0" text="Historiken" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -371,15 +371,18 @@
                   <Image url="@../image/history.png" />
                </image>
             </ImageView>
-            <TableView fx:id="table_historik" layoutX="168.0" layoutY="150.0" prefHeight="433.0" prefWidth="855.0">
+            <TableView fx:id="table_historik" layoutX="50.0" layoutY="150.0" prefHeight="433.0" prefWidth="1059.0">
               <columns>
                 <TableColumn fx:id="no_col_table_historik" prefWidth="39.0" text="No" />
-                <TableColumn fx:id="bookid_col_table_historik" prefWidth="82.0" text="Bookning id" />
+                  <TableColumn fx:id="company_col_table_historik" prefWidth="74.36572265625" text="Airline" />
+                  <TableColumn fx:id="model_col_table_historik" prefWidth="74.36572265625" text="Model" />
+                <TableColumn fx:id="rfc_col_table_historik" prefWidth="82.0" text="RFC no" />
                   <TableColumn fx:id="flightid_col_table_historik" prefWidth="85.0" text="Flight id" />
-                  <TableColumn fx:id="from_col_table_historik" prefWidth="177.0" text="From" />
-                  <TableColumn fx:id="to_col_table_historik" prefWidth="227.0" text="To" />
-                  <TableColumn fx:id="seatno_col_table_historik" prefWidth="87.0" text="Seat number" />
-                  <TableColumn fx:id="date_col_table_historik" prefWidth="157.0" text="Date" />
+                  <TableColumn fx:id="from_col_table_historik" prefWidth="120.6793212890625" text="From" />
+                  <TableColumn fx:id="to_col_table_historik" prefWidth="155.60296630859375" text="To" />
+                  <TableColumn fx:id="seatno_col_table_historik" prefWidth="83.29266357421875" text="Seat" />
+                  <TableColumn fx:id="date_col_table_historik" prefWidth="106.2545166015625" text="Date" />
+                  <TableColumn fx:id="price_col_table_historik" prefWidth="102.8907470703125" text="Price" />
               </columns>
             </TableView>
          </children>
