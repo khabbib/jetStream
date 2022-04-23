@@ -406,4 +406,24 @@ public class Connection {
         }
         return flights;
     }
+
+    public static boolean deleteHistoryByRFC(String rfc_col_table_historik) {
+        boolean deleted = false;
+        try {
+            java.sql.Connection con = Connection.getDatabaseConnection();
+            Statement stmt = con.createStatement();
+            ResultSet flight;
+
+            stmt.executeUpdate("SET search_path TO jetstream;");
+            flight = stmt.executeQuery("delete from booked where b_rfc = '" + rfc_col_table_historik+"';");
+            while (flight.next()){
+                deleted = true;
+            }
+            con.close();
+            stmt.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return deleted;
+    }
 }

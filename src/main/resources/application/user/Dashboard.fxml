@@ -311,7 +311,7 @@
             </Group>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="pnlGame" layoutX="65.0" prefHeight="700.0" prefWidth="1135.0" style="-fx-background-color: #112;" visible="false">
+      <AnchorPane fx:id="pnlGame" layoutX="65.0" prefHeight="700.0" prefWidth="1135.0" style="-fx-background-color: #112;">
          <children>
             <ImageView fitHeight="241.0" fitWidth="284.0" layoutX="447.0" layoutY="230.0" opacity="0.08" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -361,7 +361,7 @@
       </AnchorPane>
       <AnchorPane fx:id="pnlHistorik" layoutX="67.0" layoutY="-3.0" prefHeight="700.0" prefWidth="1135.0" style="-fx-background-color: #112;">
          <children>
-            <Label layoutX="64.0" layoutY="95.0" text="Historiken" textFill="WHITE">
+            <Label layoutX="50.0" layoutY="91.0" style="-fx-text-fill: #ff7000;" text="Historiken" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -376,7 +376,7 @@
                   <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
                </padding>
             </Button>
-            <TableView fx:id="table_historik" layoutX="50.0" layoutY="150.0" prefHeight="398.0" prefWidth="1028.0">
+            <TableView fx:id="table_historik" layoutX="50.0" layoutY="150.0" prefHeight="398.0" prefWidth="1063.0">
               <columns>
                 <TableColumn fx:id="no_col_table_historik" prefWidth="39.0" text="No" />
                   <TableColumn fx:id="company_col_table_historik" prefWidth="111.05429077148438" text="Airline" />
@@ -387,7 +387,12 @@
                   <TableColumn fx:id="to_col_table_historik" prefWidth="153.99554443359375" text="To" />
                   <TableColumn fx:id="seatno_col_table_historik" prefWidth="62.98980712890625" text="Seat" />
                   <TableColumn fx:id="date_col_table_historik" prefWidth="120.49224853515625" text="Paurchased Date" />
-                  <TableColumn fx:id="price_col_table_historik" prefWidth="121.49072265625" text="Price" />
+                  <TableColumn fx:id="price_col_table_historik" prefWidth="72.0" text="Price" />
+                  <TableColumn fx:id="select_col_table_historik" prefWidth="81.0" text="Select All">
+                     <graphic>
+                        <CheckBox fx:id="select_all_box_historik" mnemonicParsing="false" />
+                     </graphic>
+                  </TableColumn>
               </columns>
                <stylesheets>
                   <URL value="@../Styles/Table.css" />
@@ -401,7 +406,7 @@
             </Button>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="pnlSeat" layoutX="70.0" prefHeight="700.0" prefWidth="1120.0" visible="false">
+      <AnchorPane fx:id="pnlSeat" layoutX="70.0" prefHeight="700.0" prefWidth="1120.0">
          <children>
             <AnchorPane fx:id="pnl_success_purchase" prefHeight="700.0" prefWidth="1127.0" style="-fx-background-color: #1119;">
                <cursor>
@@ -777,7 +782,7 @@
             <Button fx:id="iconCloseSeat" layoutX="1076.0" layoutY="19.0" mnemonicParsing="false" onAction="#testDev" opacity="0.0" prefHeight="32.0" prefWidth="28.0" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="pnlFlight" layoutX="65.0" prefHeight="700.0" prefWidth="1126.0" style="-fx-background-color: #112;" visible="false">
+      <AnchorPane fx:id="pnlFlight" layoutX="65.0" prefHeight="700.0" prefWidth="1126.0" style="-fx-background-color: #112;">
          <children>
             <HBox alignment="CENTER" prefHeight="74.0" prefWidth="1135.0">
                <children>

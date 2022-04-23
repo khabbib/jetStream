@@ -4,6 +4,8 @@ import application.auth.Purchase;
 import application.database.Connection;
 import application.moveScreen.MoveScreen;
 import javafx.animation.PauseTransition;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -118,8 +120,10 @@ public class Controller implements Initializable {
     //</editor-fold>
     //<editor-fold desc="HISTORY VARIABLES">
     ObservableList<UserHistory> fetchedList;
+    ObservableList<UserHistory> items;
     @FXML private TableView<UserHistory> table_historik;
     @FXML private Button mremove_btn_historik, sremove_btn_historik;
+    @FXML private CheckBox select_all_box_historik;
     @FXML private TableColumn<Book, String>
             no_col_table_historik, company_col_table_historik,model_col_table_historik, rfc_col_table_historik,
             flightid_col_table_historik,from_col_table_historik, to_col_table_historik,
@@ -1248,12 +1252,11 @@ public class Controller implements Initializable {
     }
 
     //----------------- History  -----------------//
-    public void userRemoveHistory(){
 
-    }
 
     public void setInfoIntoTableHistorik(){ // the method calls from user dashboard to load everything.
         table_historik = (TableView<UserHistory>) root.lookup("#table_historik");
+        select_all_box_historik = (CheckBox) root.lookup("#select_all_box_historik");
         table_historik.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("no_col_table_historik"));
         table_historik.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("company_col_table_historik"));
         table_historik.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("model_col_table_historik"));
@@ -1264,19 +1267,69 @@ public class Controller implements Initializable {
         table_historik.getColumns().get(7).setCellValueFactory(new PropertyValueFactory<>("seatno_col_table_historik"));
         table_historik.getColumns().get(8).setCellValueFactory(new PropertyValueFactory<>("date_col_table_historik"));
         table_historik.getColumns().get(9).setCellValueFactory(new PropertyValueFactory<>("price_col_table_historik"));
+        table_historik.getColumns().get(10).setCellValueFactory(new PropertyValueFactory<>("select_col_table_historik"));
+        table_historik.getSelectionModel().setSelectionMode(
+                SelectionMode.MULTIPLE
+        );
+
 
         table_historik.getSelectionModel().selectedItemProperty().addListener((ObservableList, oldValue, newValue) ->{
             if (newValue != null){
-                System.out.println("selected item: " + newValue.getNo_col_table_historik() + ", company: " + newValue.getCompany_col_table_historik());
+                if (newValue.getSelect_col_table_historik().isSelected()){
+                    newValue.getSelect_col_table_historik().setSelected(false);
+                }else
+                    newValue.getSelect_col_table_historik().setSelected(true);
+                System.out.println("selected item: " + newValue.getCompany_col_table_historik() + " value: " + newValue.getSelect_col_table_historik().isSelected());
 
-            }
+             }
         });
+
+
 
         ArrayList<UserHistory> list = Connection.searchDataForTableHistory();
         fetchedList = FXCollections.observableArrayList(list);
         table_historik.setItems(fetchedList);
 
+
+
+        // checkbox all
+
+        select_all_box_historik.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                System.out.println("selected all");
+                items = table_historik.getItems();
+                for (UserHistory item : items){
+                    if (select_all_box_historik.isSelected()){
+                        item.getSelect_col_table_historik().setSelected(true);
+                        System.out.println(item.getSelect_col_table_historik().isSelected() + " state");
+                    }else {
+                        item.getSelect_col_table_historik().setSelected(false);
+                        System.out.println(item.getSelect_col_table_historik().isSelected() + " state");
+                    }
+                }
+
+            }
+        });
+
     }
+    public void userRemoveHistory(ActionEvent e){
+        System.out.println("inside the remove function");
+        items = table_historik.getItems();
+        if (items != null){
+            System.out.println("not null items");
+            for (UserHistory item: items){
+                if (item.getSelect_col_table_historik().isSelected()){
+                    boolean ok = Connection.deleteHistoryByRFC(item.getRfc_col_table_historik());
+                    if (ok){
+                        System.out.println("selected for delete " + item.getCompany_col_table_historik());
+                        System.out.println("Item has been deleted successfully!");
+                    }
+                }
+            }
+        }
+    }
+
 
 
 

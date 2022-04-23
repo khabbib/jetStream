@@ -1,12 +1,17 @@
 package application.model;
 
+import javafx.scene.control.CheckBox;
+
+import java.awt.*;
+
 public class UserHistory {
-    private int     no_col_table_historik,
-                    seatno_col_table_historik, flightid_col_table_historik;
-    private String  company_col_table_historik,model_col_table_historik,
-                    rfc_col_table_historik, from_col_table_historik, to_col_table_historik,
-                    date_col_table_historik;
-    private double  price_col_table_historik;
+    private int         no_col_table_historik,
+                        seatno_col_table_historik, flightid_col_table_historik;
+    private String      company_col_table_historik,model_col_table_historik,
+                        rfc_col_table_historik, from_col_table_historik, to_col_table_historik,
+                        date_col_table_historik;
+    private double      price_col_table_historik;
+    private CheckBox select_col_table_historik;
 
     public UserHistory(int no_col_table_historik, String company_col_table_historik, String model_col_table_historik, String rfc_col_table_historik,
                        int flightid_col_table_historik, String from_col_table_historik, String to_col_table_historik,
@@ -22,6 +27,7 @@ public class UserHistory {
         this.seatno_col_table_historik      = seatno_col_table_historik;
         this.date_col_table_historik        = date_col_table_historik;
         this.price_col_table_historik       = price_col_table_historik;
+        this.select_col_table_historik      = new CheckBox();
 
     }
 
@@ -104,5 +110,13 @@ public class UserHistory {
 
     public void setPrice_col_table_historik(double price_col_table_historik) {
         this.price_col_table_historik = price_col_table_historik;
+    }
+
+    public CheckBox getSelect_col_table_historik() {
+        return select_col_table_historik;
+    }
+
+    public void setSelect_col_table_historik(CheckBox select_col_table_historik) {
+        this.select_col_table_historik = select_col_table_historik;
     }
 }
