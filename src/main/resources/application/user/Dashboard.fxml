@@ -311,7 +311,7 @@
             </Group>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="pnlGame" layoutX="65.0" prefHeight="700.0" prefWidth="1135.0" style="-fx-background-color: #112;">
+      <AnchorPane fx:id="pnlGame" layoutX="65.0" prefHeight="700.0" prefWidth="1135.0" style="-fx-background-color: #112;" visible="false">
          <children>
             <ImageView fitHeight="241.0" fitWidth="284.0" layoutX="447.0" layoutY="230.0" opacity="0.08" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -371,20 +371,34 @@
                   <Image url="@../image/history.png" />
                </image>
             </ImageView>
-            <TableView fx:id="table_historik" layoutX="50.0" layoutY="150.0" prefHeight="433.0" prefWidth="1059.0">
+            <Button fx:id="mremove_btn_historik" graphicTextGap="6.0" layoutX="830.0" layoutY="555.0" mnemonicParsing="false" onAction="#userRemoveHistory" prefHeight="43.0" prefWidth="219.0" style="-fx-background-color: #151D3B#151D3B;" text="Remove all history" textFill="WHITE">
+               <padding>
+                  <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
+               </padding>
+            </Button>
+            <TableView fx:id="table_historik" layoutX="50.0" layoutY="150.0" prefHeight="398.0" prefWidth="1028.0">
               <columns>
                 <TableColumn fx:id="no_col_table_historik" prefWidth="39.0" text="No" />
-                  <TableColumn fx:id="company_col_table_historik" prefWidth="74.36572265625" text="Airline" />
-                  <TableColumn fx:id="model_col_table_historik" prefWidth="74.36572265625" text="Model" />
-                <TableColumn fx:id="rfc_col_table_historik" prefWidth="82.0" text="RFC no" />
-                  <TableColumn fx:id="flightid_col_table_historik" prefWidth="85.0" text="Flight id" />
-                  <TableColumn fx:id="from_col_table_historik" prefWidth="120.6793212890625" text="From" />
-                  <TableColumn fx:id="to_col_table_historik" prefWidth="155.60296630859375" text="To" />
-                  <TableColumn fx:id="seatno_col_table_historik" prefWidth="83.29266357421875" text="Seat" />
-                  <TableColumn fx:id="date_col_table_historik" prefWidth="106.2545166015625" text="Date" />
-                  <TableColumn fx:id="price_col_table_historik" prefWidth="102.8907470703125" text="Price" />
+                  <TableColumn fx:id="company_col_table_historik" prefWidth="111.05429077148438" text="Airline" />
+                  <TableColumn fx:id="model_col_table_historik" prefWidth="83.94570922851562" text="Model" />
+                <TableColumn fx:id="rfc_col_table_historik" prefWidth="122.11917114257812" text="RFC no" />
+                  <TableColumn fx:id="flightid_col_table_historik" prefWidth="63.501556396484375" text="Flight id" />
+                  <TableColumn fx:id="from_col_table_historik" prefWidth="144.49847412109375" text="From" />
+                  <TableColumn fx:id="to_col_table_historik" prefWidth="153.99554443359375" text="To" />
+                  <TableColumn fx:id="seatno_col_table_historik" prefWidth="62.98980712890625" text="Seat" />
+                  <TableColumn fx:id="date_col_table_historik" prefWidth="120.49224853515625" text="Paurchased Date" />
+                  <TableColumn fx:id="price_col_table_historik" prefWidth="121.49072265625" text="Price" />
               </columns>
+               <stylesheets>
+                  <URL value="@../Styles/Table.css" />
+                  <URL value="@../Styles/ScrollStyle.css" />
+               </stylesheets>
             </TableView>
+            <Button fx:id="sremove_btn_historik" graphicTextGap="6.0" layoutX="568.0" layoutY="555.0" mnemonicParsing="false" onAction="#userRemoveHistory" prefHeight="43.0" prefWidth="253.0" style="-fx-background-color: #151D3B#151D3B;" text="Remove selected history" textFill="WHITE">
+               <padding>
+                  <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
+               </padding>
+            </Button>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="pnlSeat" layoutX="70.0" prefHeight="700.0" prefWidth="1120.0" visible="false">

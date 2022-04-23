@@ -5,9 +5,8 @@
 
     }
 .table-view .column-header-background{
-        -fx-background-color: #eee;
+        -fx-background-color: #151D3B;
         -fx-background-radius:5;
-        -fx-padding:0;
 
 
 
@@ -19,5 +18,28 @@
     }
 
 .table-view .column-header .label {
-        -fx-text-fill: #333 ;
+        -fx-text-fill: #eee;
+
+       -fx-alignment: CENTER-LEFT;
     }
+
+
+.table-view .table-cell{
+    -fx-border-color: transparent;
+       -fx-alignment: TOP-LEFT;
+
+}
+
+.table-row-cell{
+    -fx-text-background-color: #999;
+}
+.table-row-cell: hover {
+    -fx-text-background-color: #eee;
+}
+.table-row-cell: odd{
+    -fx-background-color: transparent;
+
+}
+.table-row-cell: even{
+    -fx-background-color: #111;
+}

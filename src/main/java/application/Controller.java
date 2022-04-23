@@ -43,7 +43,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  *
  */
 public class Controller implements Initializable {
-    //<editor-fold desc="Global variables" >
+    //<editor-fold desc="GLOBAL VARIABLES" >
 
     // Default variables
     private CreateWorld createWorld;
@@ -84,31 +84,19 @@ public class Controller implements Initializable {
 
 
     // Seat
-    private GridPane grid_left = new GridPane(); //Layout
-    private GridPane grid_right = new GridPane(); //Layout
-    private GridPane grid_business = new GridPane(); //Layout
-    private AnchorPane pane = new AnchorPane();
-    private HBox seatHbox;
-    private Label newSeat = new Label();
-    private Label label = new Label();      // Label
-    private Label showSeat = new Label();
-
-    private String returnSeat;
-    private boolean typeSeat = false; // false = economy, true = business
-    private int height = 600;
-    private int width = 600;
-    private int SeatAmount;
+    private final GridPane grid_left = new GridPane(); //Layout
+    private final GridPane grid_business = new GridPane(); //Layout
 
     // toggle options
     @FXML private Button iconProfile, iconFlight, iconHistorik, iconGame, iconSupport, iconCloseSeat;
     @FXML private AnchorPane pnlProfile, pnlHistorik, pnlFlight, pnlGame, pnlSupport;
 
     //Admin panels
-    @FXML private ListView<String> ticketListView, memberListView, flightListView;
+    @FXML private ListView<String> ticketListView, memberListView;
     @FXML private AnchorPane pnlFlights, pnlTickets, pnlMember;
     @FXML private Button flightsBtn, membersBtn, ticketsBtn, logoutButton;
     //</editor-fold>
-    //<editor-fold desc="Flights and dashboard variables">
+    //<editor-fold desc="DASHBOARD VARIABLES">
     private ArrayList<Flight> avalibleFlights = new ArrayList<>();
     @FXML private TextField from_input_flight,disc_input_flight;
     @FXML private DatePicker date_input_flight;
@@ -129,24 +117,34 @@ public class Controller implements Initializable {
     @FXML private Label seat_nbr_seat_pnl, msg_seat_pnl, flight_nbr_seat_pnl, price_seat_pnl;
     //</editor-fold>
     //<editor-fold desc="HISTORY VARIABLES">
-    @FXML private TableView<UserHistory> table_historik;
     ObservableList<UserHistory> fetchedList;
+    @FXML private TableView<UserHistory> table_historik;
+    @FXML private Button mremove_btn_historik, sremove_btn_historik;
     @FXML private TableColumn<Book, String>
             no_col_table_historik, company_col_table_historik,model_col_table_historik, rfc_col_table_historik,
             flightid_col_table_historik,from_col_table_historik, to_col_table_historik,
             seatno_col_table_historik, date_col_table_historik, price_col_table_historik;
     //</editor-fold
-    //<editor-fold desc="Search variables">
+    //<editor-fold desc="SUPPORT VARIABLES">
+    @FXML private Button issue_btn_sup, feedback_btn_sup, contact_btn_sup, send_fb_btn_sup, send_issue_btn_sup, send_contact_btn_sup;
+    @FXML private TextField subject_fb_txt_sup,email_fb_txt_sup, subject_contact_txt_sup, email_contact_txt_sup,title_issue_txt_sup, email_issue_txt_sup;
+    @FXML private TextFlow msgcontent_fb_txt_sup,msgcontent_contact_txt_sup,msgcontent_issue_txt_sup;
+    @FXML private AnchorPane issue_panel_sup, contact_panel_sup, feedback_panel_sup;
+
+    //</editor-fold
+    //<editor-fold desc="SEARCH VARIABLES">
     @FXML private TextField search_f_name;
     @FXML private ListView<String> searchListAppear, searchListAppear2, searchListAppear3;
 
     //</editor-fold
-    //<editor-fold desc="Register a new user variables">
+    //<editor-fold desc="REGISTER VARIABLES">
     @FXML private Label registration_error;
     // Register a new user
     @FXML private TextField first_name_reg, last_name_reg, address_reg, emailaddress_reg, phone_number_reg, password_reg, confirm_password_reg;
     @FXML private Label name_issue_reg, last_name_issue_reg, address_issue_reg,email_issue_reg,phone_number_issue_reg, password_issue_reg, confirm_password_issue_reg;
     //</editor-fold
+
+
 
     //----------------- HOME -----------------//
 
@@ -811,7 +809,6 @@ public class Controller implements Initializable {
     public void chooseSeat(int econonySeats, int businessSeats) {
         grid_left.getChildren().removeAll();
         grid_business.getChildren().removeAll();
-        this.SeatAmount = econonySeats;
         // 72/6 = 12
         // 12 row
         // 6 column
@@ -1229,10 +1226,6 @@ public class Controller implements Initializable {
 
 
     //----------------- Support -----------------//
-    @FXML private Button issue_btn_sup, feedback_btn_sup, contact_btn_sup, send_fb_btn_sup, send_issue_btn_sup, send_contact_btn_sup;
-    @FXML private TextField subject_fb_txt_sup,email_fb_txt_sup, subject_contact_txt_sup, email_contact_txt_sup,title_issue_txt_sup, email_issue_txt_sup;
-    @FXML private TextFlow msgcontent_fb_txt_sup,msgcontent_contact_txt_sup,msgcontent_issue_txt_sup;
-    @FXML private AnchorPane issue_panel_sup, contact_panel_sup, feedback_panel_sup;
 
     public void support_event_handler(ActionEvent e){
         if (e.getSource() == issue_btn_sup){
@@ -1255,7 +1248,9 @@ public class Controller implements Initializable {
     }
 
     //----------------- History  -----------------//
+    public void userRemoveHistory(){
 
+    }
 
     public void setInfoIntoTableHistorik(){ // the method calls from user dashboard to load everything.
         table_historik = (TableView<UserHistory>) root.lookup("#table_historik");
@@ -1270,16 +1265,17 @@ public class Controller implements Initializable {
         table_historik.getColumns().get(8).setCellValueFactory(new PropertyValueFactory<>("date_col_table_historik"));
         table_historik.getColumns().get(9).setCellValueFactory(new PropertyValueFactory<>("price_col_table_historik"));
 
+        table_historik.getSelectionModel().selectedItemProperty().addListener((ObservableList, oldValue, newValue) ->{
+            if (newValue != null){
+                System.out.println("selected item: " + newValue.getNo_col_table_historik() + ", company: " + newValue.getCompany_col_table_historik());
+
+            }
+        });
+
         ArrayList<UserHistory> list = Connection.searchDataForTableHistory();
-        //list.add(new UserHistory(1, "JetStream", "Boeing 767", "AAA123123123", 12,"Sweden", "Maqdonie", 55, "2022-04-29", 300.00));
         fetchedList = FXCollections.observableArrayList(list);
         table_historik.setItems(fetchedList);
 
-        /*
-
-                new UserHistory(1, "EastJet", "Boeing 321", "ABB123123123", 1,"Germany", "USA", 11, "2022-06-01", 639.00),
-                new UserHistory(1, "Qatar airline", "Boeing 067", "ACC123123123", 33,"North Korea", "Paris", 7, "2022-04-20", 499.00)
-         */
     }
 
 
