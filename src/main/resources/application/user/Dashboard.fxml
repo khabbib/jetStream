@@ -414,7 +414,7 @@
             </TableView>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="pnlSeat" layoutX="70.0" prefHeight="700.0" prefWidth="1120.0" visible="false">
+      <AnchorPane fx:id="pnlSeat" layoutX="70.0" prefHeight="700.0" prefWidth="1120.0">
          <children>
             <AnchorPane fx:id="pnl_success_purchase" prefHeight="700.0" prefWidth="1127.0" style="-fx-background-color: #1119;">
                <cursor>
@@ -790,7 +790,7 @@
             <Button fx:id="iconCloseSeat" layoutX="1076.0" layoutY="19.0" mnemonicParsing="false" onAction="#testDev" opacity="0.0" prefHeight="32.0" prefWidth="28.0" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="pnlFlight" layoutX="65.0" prefHeight="700.0" prefWidth="1126.0" style="-fx-background-color: #112;" visible="false">
+      <AnchorPane fx:id="pnlFlight" layoutX="65.0" prefHeight="700.0" prefWidth="1126.0" style="-fx-background-color: #112;">
          <children>
             <HBox alignment="CENTER" prefHeight="74.0" prefWidth="1135.0">
                <children>

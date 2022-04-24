@@ -37,10 +37,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 /**
  *
@@ -912,21 +910,30 @@ public class Controller implements Initializable {
                 boolean validCard = Purchase.purchaseTicket(nbr, name, lname, month, year, cvc);
                 if (validCard){
                     System.out.println("valid card");
-                    boolean saveTicket = Connection.savePurchasedTicket(u_id.getText(), flight_nbr_seat_pnl.getText(), seat_nbr_seat_pnl.getText(), false);
-                    if (saveTicket){
-                        if (!email_seat_pnl.getText().isEmpty()){
-                            boolean sentMail = Purchase.sendEmail(email_seat_pnl.getText(), first_name_seat_pnl.getText(), flight_nbr_seat_pnl.getText(), seat_nbr_seat_pnl.getText(), price_seat_pnl.getText());
-                            if (sentMail){
-                                System.out.println("Email successfully sent!");
-                                pnl_success_purchase.toFront();
-                            }else {
-                                JOptionPane.showMessageDialog(null, "The email address is not correct!");
+                    StringBuilder rfc = Connection.generateRandomRFC();
+                    boolean uniq = Connection.compareRFC(rfc);
+                    if (uniq){
+                        System.out.println("Save information");
+                        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                        boolean saveTicket = Connection.savePurchasedTicket(u_id.getText(), flight_nbr_seat_pnl.getText(), String.valueOf(rfc), date, seat_nbr_seat_pnl.getText(), false);
+                        if (saveTicket){
+                            if (!email_seat_pnl.getText().isEmpty()){
+                                boolean sentMail = Purchase.sendEmail(email_seat_pnl.getText(), first_name_seat_pnl.getText(), flight_nbr_seat_pnl.getText(), seat_nbr_seat_pnl.getText(), price_seat_pnl.getText());
+                                if (sentMail){
+                                    System.out.println("Email successfully sent!");
+                                    pnl_success_purchase.toFront();
+                                }else {
+                                    JOptionPane.showMessageDialog(null, "The email address is not correct!");
+                                }
                             }
+                            System.out.println("saved information in database");
+                        }else {
+                            JOptionPane.showMessageDialog(null, "Did not saved the purchase in database");
                         }
-                        System.out.println("saved information in database");
                     }else {
-                        JOptionPane.showMessageDialog(null, "Did not saved the purchase in database");
+                        System.out.println("Try again! not unique tho generate new rfc");
                     }
+
                 }else {
                     JOptionPane.showMessageDialog(null, "Card is not valid");
                 }
@@ -956,6 +963,10 @@ public class Controller implements Initializable {
             pnlPayment.toBack();
         }
     }
+
+
+
+
     public void restore_psgr_info(){
         first_name_seat_pnl.clear();
         last_name_seat_pnl.clear();
