@@ -39,6 +39,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicBoolean;
 /**
@@ -309,6 +310,7 @@ public class Controller implements Initializable {
      *
      */
     public void initializeFXML(){
+
 
         //registration page
         name_issue_reg = (Label) root.lookup("#name_issue_reg");
@@ -1255,6 +1257,8 @@ public class Controller implements Initializable {
 
 
     public void setInfoIntoTableHistorik(){ // the method calls from user dashboard to load everything.
+        sremove_btn_historik = (Button) root.lookup("#sremove_btn_historik");
+        mremove_btn_historik = (Button) root.lookup("#mremove_btn_historik");
         table_historik = (TableView<UserHistory>) root.lookup("#table_historik");
         select_all_box_historik = (CheckBox) root.lookup("#select_all_box_historik");
         table_historik.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("no_col_table_historik"));
@@ -1271,64 +1275,109 @@ public class Controller implements Initializable {
         table_historik.getSelectionModel().setSelectionMode(
                 SelectionMode.MULTIPLE
         );
-
-
         table_historik.getSelectionModel().selectedItemProperty().addListener((ObservableList, oldValue, newValue) ->{
+
             if (newValue != null){
                 if (newValue.getSelect_col_table_historik().isSelected()){
                     newValue.getSelect_col_table_historik().setSelected(false);
                 }else
                     newValue.getSelect_col_table_historik().setSelected(true);
                 System.out.println("selected item: " + newValue.getCompany_col_table_historik() + " value: " + newValue.getSelect_col_table_historik().isSelected());
-
              }
+            sremove_btn_historik.setDisable(false);
         });
-
-
-
-        ArrayList<UserHistory> list = Connection.searchDataForTableHistory();
-        fetchedList = FXCollections.observableArrayList(list);
-        table_historik.setItems(fetchedList);
-
-
-
-        // checkbox all
-
+        updateHistoryList();
         select_all_box_historik.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 System.out.println("selected all");
                 items = table_historik.getItems();
+                boolean selectedAllItems = false; // selected or not
+
                 for (UserHistory item : items){
                     if (select_all_box_historik.isSelected()){
+                        selectedAllItems = true;
                         item.getSelect_col_table_historik().setSelected(true);
                         System.out.println(item.getSelect_col_table_historik().isSelected() + " state");
                     }else {
+                        selectedAllItems = false;
                         item.getSelect_col_table_historik().setSelected(false);
                         System.out.println(item.getSelect_col_table_historik().isSelected() + " state");
                     }
+                }
+
+                if (selectedAllItems){ // check if all items are selected
+                    mremove_btn_historik.setDisable(false);
+
+                }else {
+                    mremove_btn_historik.setDisable(true);
+                    System.out.println("no content in the list");
                 }
 
             }
         });
 
     }
+
+    /**
+     * separated method to use multiple times
+     * it will update the historic table in user dashboard everytime an action happen or user want to navigate to the panel etc.
+     */
+    public void updateHistoryList(){
+        ArrayList<UserHistory> list = Connection.searchDataForTableHistory();
+        fetchedList = FXCollections.observableArrayList(list);
+        table_historik.setItems(fetchedList);
+    }
+
+    /**
+     * the method will handle delete option in history panel.
+     * @param e event
+     */
     public void userRemoveHistory(ActionEvent e){
-        System.out.println("inside the remove function");
-        items = table_historik.getItems();
-        if (items != null){
-            System.out.println("not null items");
-            for (UserHistory item: items){
-                if (item.getSelect_col_table_historik().isSelected()){
-                    boolean ok = Connection.deleteHistoryByRFC(item.getRfc_col_table_historik());
-                    if (ok){
-                        System.out.println("selected for delete " + item.getCompany_col_table_historik());
-                        System.out.println("Item has been deleted successfully!");
+        if (table_historik.getItems().size() > 0){ // check if there is any items before running the operation.
+            if (e.getSource() == sremove_btn_historik){ // if single remove button clicked
+                items = table_historik.getItems(); // get the whole tables items into an observable list to compare.
+                if (items != null){ // if observable items has item
+                    // show a confirmation message to user
+                    boolean confirmed = ConfirmActions.confirmThisAction("Confirm to delete selected item", "Do you want to proceed?", "The selected items will be deleted!");
+                    if (confirmed){ // if user confirm the action
+                        for (UserHistory item: items){ // loop through all historic items
+                            if (item.getSelect_col_table_historik().isSelected()){ // check if the checkbox for one or more item is selected
+                                boolean ok = Connection.deleteHistoryByRFC(item.getRfc_col_table_historik()); // send the actual reference number as an argument to database to compare and delete
+                                if (ok){ // if database succeed to delete the item runs this statement
+                                    updateHistoryList(); // historic table updates
+                                    System.out.println("Item has been deleted successfully!"); // show a success message for user
+                                }
+                            }
+                        }
+                    }else { // if user not confirm the action
+                        System.out.println("not deleted screen message");
                     }
                 }
+            }else if(e.getSource() == mremove_btn_historik){ // if remove all button clicked
+                items = table_historik.getItems(); // get the whole tables items into an observable list to compare.
+                if (items != null){ // if observable items has item
+                    // show a confirmation message to user
+                    boolean confirmed = ConfirmActions.confirmThisAction("Confirm to delete the item", "Do you want to proceed?", items.size() +" items will be deleted.");
+                    if (confirmed){ // if user confirm the action
+                        for (UserHistory item: items){ // loop through all historic items
+                            boolean ok = Connection.deleteHistoryByRFC(item.getRfc_col_table_historik()); // send the actual reference number as an argument to database to compare and delete
+                            if (ok){ // if database succeed to delete the item runs this statement
+                                updateHistoryList(); // historic table updates
+                                System.out.println("Item has been deleted successfully!"); // show a success message for user
+                            }
+                        }
+                    }else {
+                        System.out.println("The action is canceled! screen message"); // canceled message to user
+                    }
+                }
+
             }
+
         }
     }
+
+
 
 
 
