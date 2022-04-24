@@ -261,18 +261,18 @@ public class Connection {
      * @param business
      * @return
      */
-    public static boolean savePurchasedTicket(String u_id, String flight_id, String seatNbr, boolean business) {
+    public static boolean savePurchasedTicket(String u_id, String flight_id, String rfc, String date, String seatNbr, boolean business) {
         boolean saved = false;
         try {
             java.sql.Connection con = getDatabaseConnection();
             Statement stmt = con.createStatement();
             stmt.executeUpdate("SET search_path TO jetstream;");
-            int flight = stmt.executeUpdate("insert into booked values('" + u_id +"', '" +flight_id +"', '" +seatNbr +"');");
+            int flight = stmt.executeUpdate("insert into booked values('" + u_id +"', '" +flight_id +"', '" +rfc +"', '" +date +"', '" +seatNbr +"');");
             while (flight != -1){
                 System.out.println("Status: \n user: " + u_id + " has booked flight: " + flight_id);
                 saved = true;
                 //System.out.println("Fetched info: \nid: " + id_get + "\nfrom: " + departure_name_get + "\ndestination: " + destination_name_get);
-                Book booked = new Book(u_id, flight_id, seatNbr, business);
+                //Book booked = new Book(u_id, flight_id, seatNbr, business);
                 break;
             }
 
@@ -423,5 +423,45 @@ public class Connection {
             e.printStackTrace();
         }
         return deleted;
+    }
+
+    public static StringBuilder generateRandomRFC() {
+        StringBuilder s = new StringBuilder();
+        for (int i = 0; i < 3; i++) {
+            char ch = (char) (Math.random() * 26 + 'A');
+            s.append(ch);
+        }
+        for (int i = 0; i < 4; i++) {
+            char digit1 = (char) (Math.random() * 10 + '0');
+            s.append(digit1);
+        }
+        System.out.println("Random vehicle plate number: " + s);
+        return s;
+    }
+    private static StringBuilder rfc = new StringBuilder();
+    public static boolean compareRFC(StringBuilder s) {
+        boolean isUnique = false;
+        rfc = generateRandomRFC();
+        try {
+            java.sql.Connection con = Connection.getDatabaseConnection();
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate("SET search_path TO jetstream;");
+            ResultSet rs = stmt.executeQuery("select b_rfc from booked;");
+            while (rs.next()){
+
+                if (rs.getString("b_rfc").contains(s)){
+                    rfc = generateRandomRFC();
+                    isUnique = false;
+                    break;
+                }
+                isUnique = true;
+            }
+            con.close();
+            stmt.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return isUnique;
     }
 }
