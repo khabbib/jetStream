@@ -421,26 +421,26 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
                <children>
-                  <AnchorPane layoutX="174.0" layoutY="71.0" prefHeight="530.0" prefWidth="779.0" style="-fx-background-color: #6BCB77; -fx-background-radius: 10;">
+                  <AnchorPane layoutX="174.0" layoutY="125.0" prefHeight="375.0" prefWidth="779.0" style="-fx-background-color: #122; -fx-background-radius: 10;">
                      <children>
-                        <Label layoutX="176.0" layoutY="173.0" text="Thanks for purchasing with JetStream" textFill="#111122">
+                        <Label layoutX="67.0" layoutY="96.0" text="Thanks for purchasing with JetStream" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
                         </Label>
-                        <ImageView fx:id="rotate_logo_success_purchase" fitHeight="241.0" fitWidth="328.0" layoutX="136.0" layoutY="70.0" opacity="0.1" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="rotate_logo_success_purchase" fitHeight="241.0" fitWidth="328.0" layoutX="516.0" layoutY="70.0" opacity="0.1" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../image/jetStream.png" />
+                              <Image url="@../image/checked.png" />
                            </image>
                         </ImageView>
-                        <Label layoutX="176.0" layoutY="218.0" text="Tickets details:" textFill="#111122">
+                        <Label layoutX="67.0" layoutY="141.0" text="Tickets details:" textFill="WHITE">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <HBox layoutX="172.0" layoutY="320.0" spacing="10.0">
+                        <HBox layoutX="63.0" layoutY="243.0" spacing="10.0">
                            <children>
-                              <Button mnemonicParsing="false" prefHeight="37.0" prefWidth="139.0" style="-fx-background-color: #C0EDA6;" text="Play" textFill="#111122">
+                              <Button mnemonicParsing="false" prefHeight="37.0" prefWidth="139.0" style="-fx-background-color: #eee;" text="Play" textFill="#111122">
                                  <padding>
                                     <Insets bottom="5.0" left="25.0" right="25.0" top="5.0" />
                                  </padding>
@@ -448,7 +448,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="print_ticket_purchase_btn" mnemonicParsing="false" onAction="#purchaseHandle" prefHeight="37.0" prefWidth="139.0" style="-fx-background-color: #C0EDA6;" text="Print" textFill="#111122">
+                              <Button fx:id="print_ticket_purchase_btn" mnemonicParsing="false" onAction="#purchaseHandle" prefHeight="37.0" prefWidth="139.0" style="-fx-background-color: #eee;" text="Print" textFill="#111122">
                                  <padding>
                                     <Insets bottom="5.0" left="25.0" right="25.0" top="5.0" />
                                  </padding>
@@ -456,7 +456,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="redirect_to_dash_btn" mnemonicParsing="false" onAction="#purchaseHandle" prefHeight="37.0" prefWidth="139.0" style="-fx-background-color: #C0EDA6;" text="Dasboard" textFill="#111122">
+                              <Button fx:id="redirect_to_dash_btn" mnemonicParsing="false" onAction="#purchaseHandle" prefHeight="37.0" prefWidth="139.0" style="-fx-background-color: #eee;" text="Dasboard" textFill="#111122">
                                  <padding>
                                     <Insets bottom="5.0" left="25.0" right="25.0" top="5.0" />
                                  </padding>
@@ -466,9 +466,14 @@
                               </Button>
                            </children>
                         </HBox>
-                        <Label layoutX="176.0" layoutY="245.0" text="Tocken: A3F56Z" textFill="#111122">
+                        <Label layoutX="67.0" layoutY="168.0" text="RFC no:" textFill="#cdcdcd">
                            <font>
                               <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="rfc_no_sucesspnl" layoutX="132.0" layoutY="168.0" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
                      </children>
@@ -487,21 +492,6 @@
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
-                  <Group layoutX="896.0" layoutY="36.0">
-                     <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1a2e57" height="50.0" layoutX="-8.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="162.0" />
-                        <Label layoutX="-8.0" layoutY="-28.0" text="Remining time" textFill="#ffe500">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="card_counter_nbr" layoutX="27.0" layoutY="7.0" text="00:01:59" textFill="#f7bb00">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </Group>
                   <Label layoutX="99.0" layoutY="132.0" text="Card number" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
@@ -697,22 +687,22 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="first_name_seat_pnl" promptText="Name" style="-fx-background-color: #112; -fx-text-fill: #eee;" text="test first name" GridPane.columnIndex="1">
+                        <TextField fx:id="first_name_seat_pnl" promptText="Name" style="-fx-background-color: #112; -fx-text-fill: #eee;" GridPane.columnIndex="1">
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
                         </TextField>
-                        <TextField fx:id="last_name_seat_pnl" promptText="Last name" style="-fx-background-color: #112; -fx-text-fill: #eee;" text="test last name" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <TextField fx:id="last_name_seat_pnl" promptText="Last name" style="-fx-background-color: #112; -fx-text-fill: #eee;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
                         </TextField>
-                        <TextField fx:id="four_digit_seat_pnl" layoutX="130.0" layoutY="56.0" promptText="Four digit" style="-fx-background-color: #112; -fx-text-fill: #eee;" text="test four digit" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <TextField fx:id="four_digit_seat_pnl" layoutX="130.0" layoutY="56.0" promptText="Four digit" style="-fx-background-color: #112; -fx-text-fill: #eee;" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
                         </TextField>
-                        <TextField fx:id="email_seat_pnl" layoutX="130.0" layoutY="95.0" promptText="Email address" style="-fx-background-color: #112; -fx-text-fill: #eee;" text="test email address" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <TextField fx:id="email_seat_pnl" layoutX="130.0" layoutY="95.0" promptText="Email address" style="-fx-background-color: #112; -fx-text-fill: #eee;" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
@@ -721,7 +711,7 @@
                            <children>
                               <Group>
                                  <children>
-                                    <Label fx:id="seat_nbr_seat_pnl" layoutX="2.0" layoutY="1.0" text="69" textFill="WHITE">
+                                    <Label fx:id="seat_nbr_seat_pnl" layoutX="2.0" layoutY="1.0" textFill="WHITE">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -779,6 +769,20 @@
                   </ImageView>
                </children>
             </AnchorPane>
+            <VBox layoutX="975.0" layoutY="612.0">
+               <children>
+                  <Label text="Remining time" textFill="#ffe500">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="card_counter_nbr" text="00:01:59" textFill="#f7bb00">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
             <ImageView fitHeight="25.0" fitWidth="30.0" layoutX="1079.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../image/close.png" />
