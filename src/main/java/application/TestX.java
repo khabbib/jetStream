@@ -9,7 +9,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- *
+ * This is a test class.
  */
 public class TestX implements Initializable {
     @FXML private Label name;

@@ -7,14 +7,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import worldMap.World;
 
 import java.util.Objects;
 
 import static javafx.application.Application.launch;
 
 /**
- *
+ * This class executes the program.
  */
 public class App extends Application {
 

@@ -1,4 +1,4 @@
-package application;
+package application.games;
 
 import java.util.Random;
 import javafx.animation.KeyFrame;

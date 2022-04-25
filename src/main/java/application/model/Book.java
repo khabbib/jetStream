@@ -1,7 +1,7 @@
 package application.model;
 
 /**
- *
+ * This class saves data to book.
  */
 public class Book {
     private String valdeResa;
@@ -20,7 +20,6 @@ public class Book {
         this.flight_id = flight_id;
         this.seatNbr = seatNbr;
     }
-
 
     // ----- GETTER AND SETTERS ----- //
     public String getValdeResa() {

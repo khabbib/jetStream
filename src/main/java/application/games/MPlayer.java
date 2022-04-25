@@ -1,4 +1,4 @@
-package application;
+package application.games;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -54,7 +54,7 @@ public class MPlayer extends Application implements ChangeListener {
     public void start(Stage primaryStage) throws Exception {
         try {
             //primaryStage.initModality(Modality.WINDOW_MODAL);
-            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/games/mplayer.fxml")));
+            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("mplayer.fxml")));
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.setTitle("Music Quiz");

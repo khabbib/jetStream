@@ -1,4 +1,4 @@
-package worldMap;
+package worldMapAPI;
 
 import java.util.Random;
 

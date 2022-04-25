@@ -1,5 +1,9 @@
 package application;
-import application.Components.Support;
+import application.components.Support;
+import application.games.Game2048Main;
+import application.games.MPlayer;
+import application.games.Piano;
+import application.games.Pong;
 import application.model.*;
 import application.auth.Purchase;
 import application.database.Connection;
@@ -30,7 +34,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import worldMap.World;
+import worldMapAPI.World;
 
 import javax.swing.*;
 import java.io.File;
@@ -100,11 +104,6 @@ public class Controller implements Initializable {
     @FXML private Button flightsBtn, membersBtn, ticketsBtn, logoutButton;
     //</editor-fold>
     //<editor-fold desc="DASHBOARD VARIABLES">
-
-    // menu images
-    @FXML private ImageView map_menu_user,historik_menu_user,game_menu_user,support_menu_user;
-
-
     private ArrayList<Flight> avalibleFlights = new ArrayList<>();
     @FXML private TextField from_input_flight,disc_input_flight;
     @FXML private DatePicker date_input_flight;
@@ -112,7 +111,7 @@ public class Controller implements Initializable {
 
     // purchase variables
     @FXML private AnchorPane pnlPayment;
-    @FXML private TextField card_nbr,card_fname, card_lname, card_month, card_year, card_cvc;
+    @FXML private TextField card_nbr, card_fname, card_lname, card_month, card_year, card_cvc;
     @FXML private Button card_prev_btn, card_purchase_btn, seat_next_btn;
     @FXML private Label card_counter_nbr;
 
@@ -125,6 +124,9 @@ public class Controller implements Initializable {
     @FXML private TextField first_name_seat_pnl, last_name_seat_pnl, four_digit_seat_pnl, email_seat_pnl;
     @FXML private AnchorPane flight_seats_eco, flights_seats_business;
     @FXML private Label seat_nbr_seat_pnl, msg_seat_pnl, flight_nbr_seat_pnl, price_seat_pnl;
+
+    // menu images
+    @FXML private ImageView map_menu_user,historik_menu_user,game_menu_user,support_menu_user;
 
 
     //</editor-fold>
@@ -245,6 +247,19 @@ public class Controller implements Initializable {
     }
 
     /**
+     *
+     */
+    public void play2048(){
+        Game2048Main game2048Main = new Game2048Main();
+        try {
+            Stage primary = new Stage();
+            game2048Main.start(primary);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * the method will switch the user to the dashboard page
      * navigate to dashboard pages
      * @param e
@@ -255,16 +270,24 @@ public class Controller implements Initializable {
             if (login_email.getText().contains("@") && (login_email.getText().contains("gmail") || login_email.getText().contains("hotmail") || login_email.getText().contains("yahoo") || login_email.getText().contains("outlook"))) {
                 User user = Connection.authenticationUser(login_email.getText(), login_pass.getText());
                 if (user != null) {
-                    error_msg.setText("");
                     renderDashboard(e, user);
                 } else {
                     error_msg.setText("Wrong email or password!");
+                    PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                    pause.setOnFinished(a -> error_msg.setText(null));
+                    pause.play();
                 }
             } else {
                 error_msg.setText("Email has wrong format!");
+                PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                pause.setOnFinished(a -> error_msg.setText(null));
+                pause.play();
             }
         } else {
             error_msg.setText("Email or password is empty, please fill in fields!");
+            PauseTransition pause = new PauseTransition(Duration.seconds(2));
+            pause.setOnFinished(a -> error_msg.setText(null));
+            pause.play();
         }
     }
 
@@ -325,12 +348,12 @@ public class Controller implements Initializable {
      *
      */
     public void initializeFXML(){
+
         // user menu images
         map_menu_user = (ImageView)root.lookup("#map_menu_user");
         game_menu_user = (ImageView)root.lookup("#game_menu_user");
         historik_menu_user = (ImageView)root.lookup("#historik_menu_user");
         support_menu_user = (ImageView)root.lookup("#support_menu_user");
-
 
         // Success page
         rfc_no_sucesspnl = (Label) root.lookup("#rfc_no_sucesspnl");
@@ -505,6 +528,9 @@ public class Controller implements Initializable {
                                 }catch (Exception a){
                                     System.out.println("Phone number is not a digit issue");
                                     phone_number_issue_reg.setText("Only digit number [phone number]");
+                                    PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                                    pause.setOnFinished(b -> phone_number_issue_reg.setText(null));
+                                    pause.play();
                                 }
                                     if (password_reg.getText().length() >= 8 && password_reg.getText().length() <= 20){
                                         if (password_reg.getText().equals(confirm_password_reg.getText())){
@@ -515,6 +541,9 @@ public class Controller implements Initializable {
                                                     renderLoginPage(e, "successfully registered the user!");
                                                 } else {
                                                     registration_error.setText("Couldn't register the information");
+                                                    PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                                                    pause.setOnFinished(a -> registration_error.setText(null));
+                                                    pause.play();
                                                 }
                                             }else {
                                                 System.out.println("Email type issue");
@@ -523,35 +552,58 @@ public class Controller implements Initializable {
                                         }else {
                                             System.out.println("confirm password not much the actual password");
                                             confirm_password_issue_reg.setText("Much issue [confirm password]");
+                                            PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                                            pause.setOnFinished(a -> confirm_password_issue_reg.setText(null));
+                                            pause.play();
                                         }
                                     }else {
                                         System.out.println("password issue");
                                         password_issue_reg.setText("Size issue 8-20");
+                                        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                                        pause.setOnFinished(a -> password_issue_reg.setText(null));
+                                        pause.play();
                                     }
 
 
                             }else {
                                 System.out.println("phone number issue");
                                 phone_number_issue_reg.setText("size issue 12 digit");
+                                PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                                pause.setOnFinished(a -> phone_number_issue_reg.setText(null));
+                                pause.play();
                             }
                         } else {
                             System.out.println("email address issue");
                             email_issue_reg.setText("size issue 6-30");
+                            PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                            pause.setOnFinished(a -> email_issue_reg.setText(null));
+                            pause.play();
                         }
                     }else {
                         System.out.println("address issue");
                         address_issue_reg.setText("size issue 5-60");
+                        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                        pause.setOnFinished(a -> address_issue_reg.setText(null));
+                        pause.play();
                     }
                 } else {
                     System.out.println("last name issue");
                     last_name_issue_reg.setText("Size issue 3-30");
+                    PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                    pause.setOnFinished(a -> last_name_issue_reg.setText(null));
+                    pause.play();
                 }
             } else {
                 name_issue_reg.setText("Size issue 3-30");
-                System.out.println("fist name issue");
+                PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                pause.setOnFinished(a -> name_issue_reg.setText(null));
+                pause.play();
             }
         }else {
             registration_error.setText("Empty field issue");
+            PauseTransition pause = new PauseTransition(Duration.seconds(2));
+            pause.setOnFinished(x -> registration_error.setText(null));
+            pause.play();
         }
     }// the method will register the user and return to the login page
 
@@ -986,7 +1038,7 @@ public class Controller implements Initializable {
            if (!name_s.isEmpty() && !lname_s.isEmpty() && !fourdigit.isEmpty() && !email.isEmpty() && !seatnbr.isEmpty()){
                 pnlPayment.toFront();
             }else {
-               msg_seat_pnl.setText("Empty field!");
+               msg_seat_pnl.setText("Empty field issue!");
                PauseTransition pause = new PauseTransition(Duration.seconds(2));
                pause.setOnFinished(a -> msg_seat_pnl.setText(null));
                pause.play();
@@ -999,6 +1051,9 @@ public class Controller implements Initializable {
             pnlPayment.toBack();
         }
     }
+
+
+
 
     public void restore_psgr_info(){
         first_name_seat_pnl.clear();
@@ -1075,12 +1130,16 @@ public class Controller implements Initializable {
                     }
                 } else {
                     error_msg.setText("Wrong email or pass!");
+                    PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                    pause.setOnFinished(a -> error_msg.setText(null));
+                    pause.play();
                 }
             }catch (IOException io){
                 io.printStackTrace();
             }
         } else {
             error_msg.setText("Fill the field!");
+
         }
     }
 
@@ -1298,7 +1357,7 @@ public class Controller implements Initializable {
     //----------------- Support -----------------//
 
     public void support_event_handler(ActionEvent e){
-        support.eventHandler(e);
+        support.supportInfo(e);
     }
 
     //----------------- History  -----------------//

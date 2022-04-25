@@ -6,6 +6,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.util.Optional;
 
+/**
+ *  This class is used to warn if the user really want to confirm an action.
+ */
 public class ConfirmActions {
     /**
      * The following method will open a confirmation window to the user to confirm an action.

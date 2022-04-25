@@ -1,11 +1,11 @@
 package application.model;
 
 import application.Controller;
-import worldMap.*;
+import worldMapAPI.*;
 import javafx.scene.paint.Color;
 
 /**
- *
+ * This class creates world map to application were the user can search for flight trips.
  */
 public class CreateWorld {
     static World world;

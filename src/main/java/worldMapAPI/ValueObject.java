@@ -1,5 +1,5 @@
 
-package worldMap;
+package worldMapAPI;
 
 /**
  * @author Andres Almiray

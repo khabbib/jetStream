@@ -1,8 +1,7 @@
-package worldMap;
+package worldMapAPI;
 
 import application.Controller;
-import worldMap.World;
-import worldMap.World.Resolution;
+import worldMapAPI.World.Resolution;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;

@@ -1,10 +1,7 @@
 
-package worldMap;
+package worldMapAPI;
 
 import javafx.scene.paint.Color;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public enum Country {
     AD, AE, AF, AG, AI, AL, AM, AO, AR, AS, AT, AU, AW, AX, AZ,

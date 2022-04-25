@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 import java.util.Objects;
 
 /**
- *
+ * This class manages booking system of seats.
  */
 public class SeatManager {
     private static GridPane grid = new GridPane(); //Layout

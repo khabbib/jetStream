@@ -10,12 +10,12 @@ import java.sql.*;
 import java.util.ArrayList;
 
 /**
- *
+ * This class connects java to pgadmin to claim data from database.
  */
 public class Connection {
 
     /**
-     * get database connection
+     * Get the database connection
      * @return
      */
     public static java.sql.Connection getDatabaseConnection() {
@@ -57,6 +57,10 @@ public class Connection {
         return ok;
     }
 
+    /**
+     * @param user
+     * @throws SQLException
+     */
     public static void updateUser(User user) throws SQLException {
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
@@ -92,7 +96,7 @@ public class Connection {
     }
 
     /**
-     * authenticate the ADMIN with email and password
+     * Authenticate the ADMIN with email and password
      * @param email
      * @param password
      * @return
@@ -286,6 +290,11 @@ public class Connection {
         return saved;
     }
 
+    /**
+     * @param user
+     * @return
+     * @throws SQLException
+     */
     public static Image getProfilePicture(User user) throws SQLException {
         Image image = null;
         java.sql.Connection con = getDatabaseConnection();
@@ -300,15 +309,22 @@ public class Connection {
         return image;
     }
 
+    /**
+     * @param string
+     * @param user
+     * @throws SQLException
+     */
     public static void setProfilePicture(String string, User user) throws SQLException {
         Image image = null;
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
         stmt.executeUpdate("SET search_path TO jetstream;");
         stmt.executeUpdate("UPDATE profile_picture SET picture = '" + string + "' WHERE u_id = " + user.getUserId() + ";");
-
     }
 
+    /**
+     * @return
+     */
     public static ArrayList<Book> searchTicket() {
         ArrayList<Book> flights = new ArrayList<>();
         try {
@@ -337,6 +353,9 @@ public class Connection {
         return flights;
     }
 
+    /**
+     * @return
+     */
     public static ArrayList<User> searchMember() {
         ArrayList<User> members = new ArrayList<>();
         try {
@@ -373,6 +392,10 @@ public class Connection {
     }
 
 
+    /**
+     * @param userID
+     * @return
+     */
     //////// fyl table history ///////////
     public static ArrayList<UserHistory> searchDataForTableHistory(int userID) {
         ArrayList<UserHistory> flights = new ArrayList<>();
@@ -408,6 +431,10 @@ public class Connection {
         return flights;
     }
 
+    /**
+     * @param rfc_col_table_historik
+     * @return
+     */
     public static boolean deleteHistoryByRFC(String rfc_col_table_historik) {
         boolean deleted = false;
         try {
@@ -425,6 +452,9 @@ public class Connection {
         return deleted;
     }
 
+    /**
+     * @return
+     */
     public static StringBuilder generateRandomRFC() {
         StringBuilder s = new StringBuilder();
         for (int i = 0; i < 3; i++) {
@@ -438,6 +468,8 @@ public class Connection {
         System.out.println("Random vehicle plate number: " + s);
         return s;
     }
+
+    // not used
     private static StringBuilder rfc = new StringBuilder();
     public static boolean compareRFC(StringBuilder s) {
         boolean isUnique = false;

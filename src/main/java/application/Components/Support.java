@@ -1,14 +1,24 @@
-package application.Components;
+package application.components;
 import application.Controller;
 import javafx.event.ActionEvent;
 
+/**
+ * This class handles support path.
+ */
 public class Support {
     private Controller controller;
+
+    /**
+     * @param controller
+     */
     public Support(Controller controller){
         this.controller = controller;
     }
 
-    public void eventHandler(ActionEvent e){
+    /**
+     * @param e
+     */
+    public void supportInfo(ActionEvent e){
         System.out.println(e.getSource());
         System.out.println(controller.issue_btn_sup);
         if (e.getSource() == controller.issue_btn_sup){
@@ -27,9 +37,6 @@ public class Support {
             controller.contact_btn_sup.setStyle("-fx-background-color: #eee; -fx-text-fill: #112");
             controller.feedback_btn_sup.setStyle("-fx-background-color: #333; -fx-text-fill: #eee");
             controller.issue_btn_sup.setStyle("-fx-background-color: #333; -fx-text-fill: #eee");
-
         }
     }
-
-
 }

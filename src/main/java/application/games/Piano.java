@@ -1,4 +1,4 @@
-package application;
+package application.games;
 
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -30,7 +30,7 @@ public class Piano extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/games/piano.fxml")));
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("piano.fxml")));
 
         instrumentSlider = (Slider) root.lookup("#instrumentSlider");
         instrumentSlider.valueChangingProperty().addListener(new ChangeListener<Boolean>() {

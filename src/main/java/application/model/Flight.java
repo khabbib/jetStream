@@ -1,7 +1,7 @@
 package application.model;
 
 /**
- *
+ * This class saves data to flight.
  */
 public class Flight {
     private String id, departure_name, destination_name, departure_date, destination_date,  departure_time, destination_time, price;

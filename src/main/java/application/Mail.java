@@ -8,6 +8,9 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
+/**
+ * This is a test class to send an email.
+ */
 public class Mail {
     private String to = "abcd@gmail.com";
     private String from = "web@gmail.com";
@@ -17,6 +20,11 @@ public class Mail {
         Mail mail = new Mail("kadestalkasper@gmail.com","kadestalkasper@gmail.com","localhost");
     }
 
+    /**
+     * @param to
+     * @param from
+     * @param host
+     */
     public Mail(String to, String from, String host) {
         this.to = to;
         this.from = from;

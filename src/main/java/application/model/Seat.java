@@ -1,7 +1,7 @@
 package application.model;
 
 /**
- *
+ * This class saves data to seat.
  */
 public class Seat {
     private String id;

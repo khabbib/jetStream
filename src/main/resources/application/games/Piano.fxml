@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="399.0" prefWidth="641.0" style="-fx-background-color: #112;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Piano">
+<AnchorPane prefHeight="399.0" prefWidth="641.0" style="-fx-background-color: #112;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.games.Piano">
    <children>
       <Button focusTraversable="false" layoutX="500.0" layoutY="140.0" mnemonicParsing="false" prefHeight="224.0" prefWidth="60.0" style="-fx-focus-color: transparent;" text="L" />
       <Button focusTraversable="false" layoutX="20.0" layoutY="140.0" mnemonicParsing="false" prefHeight="224.0" prefWidth="60.0" style="-fx-focus-color: transparent;" text="A" />

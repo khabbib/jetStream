@@ -1,7 +1,7 @@
 package application.model;
 
 /**
- *
+ * This class saves data to a user.
  */
 public class User {
     private String firstName, lastName, address, email, phoneNumber, password, userId;
@@ -60,7 +60,10 @@ public class User {
     public void setPhoneNumber(String phoneNumber) {this.phoneNumber = phoneNumber;}
     public void setPassword(String password) {this.password = password;}
 
-    // ----- INFO ----- //
+
+    /**
+     * @return full user information.
+     */
     public String getToString(){
         return "info: " + "name: "+ firstName + " \n" +
                   "last name: " + lastName + " \n" +

@@ -1,4 +1,4 @@
-package worldMap;
+package worldMapAPI;
 
 import application.Controller;
 import application.model.Flight;
@@ -59,8 +59,8 @@ import static javafx.scene.input.MouseEvent.MOUSE_RELEASED;
 public class World extends Region {
     public enum Resolution { HI_RES, LO_RES };
     private static final StyleablePropertyFactory<World> FACTORY          = new StyleablePropertyFactory<>(Region.getClassCssMetaData());
-    private static final String                          HIRES_PROPERTIES = "worldMap/hires.properties";
-    private static final String                          LORES_PROPERTIES = "worldMap/lores.properties";
+    private static final String                          HIRES_PROPERTIES = "worldMapAPI/hires.properties";
+    private static final String                          LORES_PROPERTIES = "worldMapAPI/lores.properties";
     private static final double                          PREFERRED_WIDTH  = 980;
     private static final double                          PREFERRED_HEIGHT = 665;
     private static final double                          MINIMUM_WIDTH    = 100;

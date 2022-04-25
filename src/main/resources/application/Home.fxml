@@ -15,7 +15,7 @@
             <Font size="25.0" />
          </font></Text>
 
-      <Button fx:id="login" layoutX="1121.0" layoutY="25.0" mnemonicParsing="false" onAction="#switchToLogin" style="-fx-background-color: #ff8000;" text="Login">
+      <Button fx:id="login" layoutX="1100.0" layoutY="35.0" mnemonicParsing="false" onAction="#switchToLogin" style="-fx-background-color: #ff8000;" text="Login">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
@@ -27,13 +27,13 @@
          <image>
             <Image url="@image/jetStream.png" />
          </image></ImageView>
-      <Button layoutX="471.0" layoutY="484.0" mnemonicParsing="false" onAction="#noLoginRequired" style="-fx-background-color: #ff8000 #ff8000;" text="Explore" textFill="WHITE">
+      <Button layoutX="533.0" layoutY="484.0" mnemonicParsing="false" onAction="#noLoginRequired" style="-fx-background-color: #ff8000 #ff8000;" text="Explore" textFill="WHITE">
          <padding>
             <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
          </padding>
       </Button>
 
-      <Text fill="#949494" layoutX="543.0" layoutY="661.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Version 0.8.1">
+      <Text fill="#949494" layoutX="543.0" layoutY="661.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Version 0.9.4">
          <font>
             <Font size="16.0" />
          </font>

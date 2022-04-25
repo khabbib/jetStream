@@ -1,5 +1,5 @@
 
-package worldMap;
+package worldMapAPI;
 
 import javafx.scene.control.Tooltip;
 import javafx.scene.shape.SVGPath;

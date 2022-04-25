@@ -1,5 +1,5 @@
 
-package worldMap;
+package worldMapAPI;
 
 import javafx.scene.paint.Color;
 

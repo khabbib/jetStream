@@ -1,7 +1,7 @@
 package application.model;
 
 /**
- *
+ * Enumeration for country names.
  */
 public enum CountryList {
     Afghanistan,
