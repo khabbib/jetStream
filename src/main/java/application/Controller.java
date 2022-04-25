@@ -100,6 +100,11 @@ public class Controller implements Initializable {
     @FXML private Button flightsBtn, membersBtn, ticketsBtn, logoutButton;
     //</editor-fold>
     //<editor-fold desc="DASHBOARD VARIABLES">
+
+    // menu images
+    @FXML private ImageView map_menu_user,historik_menu_user,game_menu_user,support_menu_user;
+
+
     private ArrayList<Flight> avalibleFlights = new ArrayList<>();
     @FXML private TextField from_input_flight,disc_input_flight;
     @FXML private DatePicker date_input_flight;
@@ -320,6 +325,12 @@ public class Controller implements Initializable {
      *
      */
     public void initializeFXML(){
+        // user menu images
+        map_menu_user = (ImageView)root.lookup("#map_menu_user");
+        game_menu_user = (ImageView)root.lookup("#game_menu_user");
+        historik_menu_user = (ImageView)root.lookup("#historik_menu_user");
+        support_menu_user = (ImageView)root.lookup("#support_menu_user");
+
 
         // Success page
         rfc_no_sucesspnl = (Label) root.lookup("#rfc_no_sucesspnl");
@@ -989,9 +1000,6 @@ public class Controller implements Initializable {
         }
     }
 
-
-
-
     public void restore_psgr_info(){
         first_name_seat_pnl.clear();
         last_name_seat_pnl.clear();
@@ -1083,6 +1091,10 @@ public class Controller implements Initializable {
     public void testDev(ActionEvent e){
         if (e.getSource() == iconProfile) {
             pnlProfile.toFront();
+            map_menu_user.setOpacity(0.5);
+            historik_menu_user.setOpacity(0.5);
+            game_menu_user.setOpacity(0.5);
+            support_menu_user.setOpacity(0.5);
         }
         else if(e.getSource() == iconCloseSeat){
             pnlSeat.toBack();
@@ -1090,15 +1102,31 @@ public class Controller implements Initializable {
         }
         else if (e.getSource() == iconFlight) {
             pnlFlight.toFront();
+            map_menu_user.setOpacity(1);
+            historik_menu_user.setOpacity(0.5);
+            game_menu_user.setOpacity(0.5);
+            support_menu_user.setOpacity(0.5);
         }
         else if (e.getSource() == iconHistorik) {
             pnlHistorik.toFront();
+            map_menu_user.setOpacity(0.5);
+            historik_menu_user.setOpacity(1);
+            game_menu_user.setOpacity(0.5);
+            support_menu_user.setOpacity(0.5);
         }
         else if (e.getSource() == iconGame) {
             pnlGame.toFront();
+            map_menu_user.setOpacity(0.5);
+            historik_menu_user.setOpacity(0.5);
+            game_menu_user.setOpacity(1);
+            support_menu_user.setOpacity(0.5);
         }
         else if(e.getSource() == iconSupport){
             pnlSupport.toFront();
+            map_menu_user.setOpacity(0.5);
+            historik_menu_user.setOpacity(0.5);
+            game_menu_user.setOpacity(0.5);
+            support_menu_user.setOpacity(1);
         }
 
     }

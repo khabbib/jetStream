@@ -14,72 +14,112 @@
    <children>
       <Pane layoutY="-2.0" prefHeight="702.0" prefWidth="71.0" style="-fx-background-color: #151D3B;">
          <children>
-            <ImageView fx:id="profilePicture" fitHeight="65.0" fitWidth="38.0" layoutX="17.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../image/user.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="iconProfile" layoutX="14.0" layoutY="22.0" mnemonicParsing="false" onAction="#testDev" opacity="0.0" prefHeight="45.0" prefWidth="44.0">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <ImageView fitHeight="65.0" fitWidth="38.0" layoutX="17.0" layoutY="315.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../image/game_icon.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="iconGame" layoutX="14.0" layoutY="310.0" mnemonicParsing="false" onAction="#testDev" opacity="0.0" prefHeight="45.0" prefWidth="44.0">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <ImageView fitHeight="65.0" fitWidth="38.0" layoutX="17.0" layoutY="263.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../image/history.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="65.0" fitWidth="38.0" layoutX="17.0" layoutY="213.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../image/airplane.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="iconHistorik" layoutX="14.0" layoutY="260.0" mnemonicParsing="false" onAction="#testDev" opacity="0.0" prefHeight="45.0" prefWidth="44.0">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Button fx:id="iconFlight" layoutX="14.0" layoutY="209.0" mnemonicParsing="false" onAction="#testDev" opacity="0.0" prefHeight="45.0" prefWidth="44.0">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <ImageView fitHeight="58.0" fitWidth="63.0" layoutX="7.0" layoutY="355.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../image/help.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="iconSupport" layoutX="14.0" layoutY="362.0" mnemonicParsing="false" onAction="#testDev" opacity="0.0" prefHeight="45.0" prefWidth="44.0">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="20.0" layoutY="649.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../image/logout.png" />
-               </image>
-               <effect>
-                  <ColorAdjust brightness="0.75" />
-               </effect>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ImageView>
-            <Button fx:id="iconSuport1" layoutX="13.0" layoutY="644.0" mnemonicParsing="false" onAction="#switchToLogin" opacity="0.0" prefHeight="45.0" prefWidth="44.0">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
+            <Group layoutX="11.0" layoutY="23.0">
+               <children>
+                  <ImageView fx:id="profilePicture" fitHeight="65.0" fitWidth="38.0" layoutX="3.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/user.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="iconProfile" mnemonicParsing="false" onAction="#testDev" opacity="0.0" prefHeight="45.0" prefWidth="44.0">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </Group>
+            <VBox layoutX="10.0" layoutY="208.0" spacing="20.0">
+               <children>
+                  <Group>
+                     <children>
+                        <ImageView fx:id="map_menu_user" fitHeight="65.0" fitWidth="38.0" layoutX="3.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/collection/find.png" />
+                           </image>
+                           <effect>
+                              <ColorAdjust brightness="1.0" />
+                           </effect>
+                        </ImageView>
+                        <Button fx:id="iconFlight" mnemonicParsing="false" onAction="#testDev" opacity="0.0" prefHeight="45.0" prefWidth="44.0">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </Group>
+                  <Group>
+                     <children>
+                        <ImageView fx:id="historik_menu_user" fitHeight="65.0" fitWidth="38.0" layoutX="3.0" layoutY="3.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/collection/tickets.png" />
+                           </image>
+                           <effect>
+                              <ColorAdjust brightness="1.0" />
+                           </effect>
+                        </ImageView>
+                        <Button fx:id="iconHistorik" mnemonicParsing="false" onAction="#testDev" opacity="0.0" prefHeight="45.0" prefWidth="44.0">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </Group>
+                  <Group>
+                     <children>
+                        <ImageView fx:id="game_menu_user" fitHeight="65.0" fitWidth="38.0" layoutX="3.0" layoutY="5.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/laugh.png" />
+                           </image>
+                           <effect>
+                              <ColorAdjust brightness="1.0" contrast="-1.0" hue="-1.0" saturation="-1.0" />
+                           </effect>
+                        </ImageView>
+                        <Button fx:id="iconGame" mnemonicParsing="false" onAction="#testDev" opacity="0.0" prefHeight="45.0" prefWidth="44.0">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </Group>
+                  <Group>
+                     <children>
+                        <ImageView fx:id="support_menu_user" fitHeight="48.0" fitWidth="44.0" layoutY="1.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/collection/support.png" />
+                           </image>
+                           <effect>
+                              <ColorAdjust brightness="1.0" />
+                           </effect>
+                        </ImageView>
+                        <Button fx:id="iconSupport" layoutX="1.0" mnemonicParsing="false" onAction="#testDev" opacity="0.0" prefHeight="45.0" prefWidth="44.0">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </Group>
+               </children>
+            </VBox>
+            <Group layoutX="10.0" layoutY="643.0" opacity="0.5">
+               <children>
+                  <ImageView fx:id="logout_menu_user" fitHeight="30.0" fitWidth="30.0" layoutX="6.0" layoutY="7.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/logout.png" />
+                     </image>
+                     <effect>
+                        <ColorAdjust brightness="0.1" hue="-1.0" saturation="-1.0" />
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </ImageView>
+                  <Button fx:id="iconSuport1" mnemonicParsing="false" onAction="#switchToLogin" opacity="0.0" prefHeight="45.0" prefWidth="44.0">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </Group>
          </children>
       </Pane>
       <AnchorPane fx:id="pnlGame" layoutX="65.0" prefHeight="700.0" prefWidth="1135.0" style="-fx-background-color: #112;">
@@ -411,7 +451,7 @@
                               <Group>
                                  <children>
                                     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#111122" height="47.0" layoutY="1.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="42.0" />
-                                    <TextField fx:id="card_nbr" layoutX="35.0" layoutY="1.0" prefHeight="37.0" prefWidth="392.0" promptText="2424  -  2424  -  2424  -  2424" style="-fx-background-color: #112;">
+                                    <TextField fx:id="card_nbr" layoutX="35.0" layoutY="1.0" prefHeight="37.0" prefWidth="392.0" promptText="2424  -  2424  -  2424  -  2424" style="-fx-background-color: #112; -fx-text-fill: #eee;">
                                        <padding>
                                           <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                        </padding>
