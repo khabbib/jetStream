@@ -135,7 +135,6 @@ public class Controller implements Initializable {
             flightid_col_table_historik,from_col_table_historik, to_col_table_historik,
             seatno_col_table_historik, date_col_table_historik, price_col_table_historik;
     //</editor-fold
-
     //<editor-fold desc="SEARCH VARIABLES">
     @FXML private TextField search_f_name;
     @FXML private ListView<String> searchListAppear, searchListAppear2, searchListAppear3;
@@ -625,7 +624,10 @@ public class Controller implements Initializable {
             depTime.setFill(Color.valueOf("#eee"));
             depTime.setStyle("-fx-font-weight: bold");
             Text desTime = new Text();
-            desTime.setText(s); // calculate arriving time
+            String tmp1 = flights.get(i).getDestination_time();
+            String[] sorted1 = tmp1.split(":");
+            String s1 = sorted1[0] + ": " + sorted1[1];
+            desTime.setText(s1); // calculate arriving time
             desTime.setStyle("-fx-font-weight: bold");
             desTime.setFill(Color.valueOf("#eee"));
 
