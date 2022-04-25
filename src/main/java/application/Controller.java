@@ -999,6 +999,8 @@ public class Controller implements Initializable {
                         String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                         boolean saveTicket = Connection.savePurchasedTicket(u_id.getText(), flight_nbr_seat_pnl.getText(), String.valueOf(rfc), date, seat_nbr_seat_pnl.getText(), false);
                         if (saveTicket){
+
+                            System.out.println(email_seat_pnl.getText() + " Your email!!!");
                             if (!email_seat_pnl.getText().isEmpty()){
                                 boolean sentMail = Purchase.sendEmail(email_seat_pnl.getText(), first_name_seat_pnl.getText(), flight_nbr_seat_pnl.getText(), seat_nbr_seat_pnl.getText(), price_seat_pnl.getText());
                                 if (sentMail){

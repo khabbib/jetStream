@@ -57,8 +57,8 @@ public class Purchase {
 
             Message message = new MimeMessage(session);
 
-            message.setFrom(new InternetAddress("anonym@gmail.com"));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("kadestalkasper@gmail.com"));
+            message.setFrom(new InternetAddress("jetstream@gmail.com"));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receiver));
 
             /*
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("kadestalkasper@gmail.com"));
