@@ -281,7 +281,7 @@ public class Connection {
 
         }catch (SQLException e){
             saved = false;
-            //e.printStackTrace();
+            e.printStackTrace();
         }
         return saved;
     }
@@ -374,7 +374,7 @@ public class Connection {
 
 
     //////// fyl table history ///////////
-    public static ArrayList<UserHistory> searchDataForTableHistory() {
+    public static ArrayList<UserHistory> searchDataForTableHistory(int userID) {
         ArrayList<UserHistory> flights = new ArrayList<>();
         try {
 
@@ -384,7 +384,7 @@ public class Connection {
 
             flights.clear();
             stmt.executeUpdate("SET search_path TO jetstream;");
-            flight = stmt.executeQuery("select * from History;");
+            flight = stmt.executeQuery("select * from History where u_id = '"+ userID +"';");
             int i = 1;
             while (flight.next()){
                 String compnay = flight.getString("p_company");
@@ -393,7 +393,7 @@ public class Connection {
                 int f_id = flight.getInt("f_id");
                 String from = flight.getString("f_departure_name");
                 String to = flight.getString("f_destination_name");
-                int seat = flight.getInt("b_seat");
+                String seat = flight.getString("b_seat");
                 String date_purchased_ticket = flight.getString("b_date"); // temporary can be the destination date later it should be changed to real date from booked table
                 double price = Double.parseDouble(flight.getString("f_price"));
                 flights.add(new UserHistory(i, compnay, model, referenceNo, f_id, from, to, seat, date_purchased_ticket, price));
@@ -431,7 +431,7 @@ public class Connection {
             char ch = (char) (Math.random() * 26 + 'A');
             s.append(ch);
         }
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 9; i++) {
             char digit1 = (char) (Math.random() * 10 + '0');
             s.append(digit1);
         }
@@ -448,9 +448,9 @@ public class Connection {
             stmt.executeUpdate("SET search_path TO jetstream;");
             ResultSet rs = stmt.executeQuery("select b_rfc from booked;");
             while (rs.next()){
-
                 if (rs.getString("b_rfc").contains(s)){
-                    rfc = generateRandomRFC();
+                    System.out.println("rfc comparation");
+                    //rfc = generateRandomRFC();
                     isUnique = false;
                     break;
                 }

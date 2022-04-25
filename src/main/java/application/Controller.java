@@ -1,4 +1,5 @@
 package application;
+import application.Components.Support;
 import application.model.*;
 import application.auth.Purchase;
 import application.database.Connection;
@@ -36,6 +37,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -103,10 +105,12 @@ public class Controller implements Initializable {
     @FXML private DatePicker date_input_flight;
     @FXML private Label no_flight_aval_msg;
 
+    // purchase variables
     @FXML private AnchorPane pnlPayment;
     @FXML private TextField card_nbr,card_fname, card_lname, card_month, card_year, card_cvc;
     @FXML private Button card_prev_btn, card_purchase_btn, seat_next_btn;
-    @FXML private ImageView rotate_logo_success_purchase;
+    @FXML private Label card_counter_nbr;
+
 
     @FXML private AnchorPane pnl_success_purchase;
     @FXML private Button redirect_to_dash_btn, print_ticket_purchase_btn;
@@ -116,11 +120,14 @@ public class Controller implements Initializable {
     @FXML private TextField first_name_seat_pnl, last_name_seat_pnl, four_digit_seat_pnl, email_seat_pnl;
     @FXML private AnchorPane flight_seats_eco, flights_seats_business;
     @FXML private Label seat_nbr_seat_pnl, msg_seat_pnl, flight_nbr_seat_pnl, price_seat_pnl;
+
+
     //</editor-fold>
     //<editor-fold desc="HISTORY VARIABLES">
     ObservableList<UserHistory> fetchedList;
     ObservableList<UserHistory> items;
     @FXML private TableView<UserHistory> table_historik;
+    @FXML private Label rfc_no_sucesspnl;
     @FXML private Button mremove_btn_historik, sremove_btn_historik;
     @FXML private CheckBox select_all_box_historik;
     @FXML private TableColumn<Book, String>
@@ -128,13 +135,7 @@ public class Controller implements Initializable {
             flightid_col_table_historik,from_col_table_historik, to_col_table_historik,
             seatno_col_table_historik, date_col_table_historik, price_col_table_historik;
     //</editor-fold
-    //<editor-fold desc="SUPPORT VARIABLES">
-    @FXML private Button issue_btn_sup, feedback_btn_sup, contact_btn_sup, send_fb_btn_sup, send_issue_btn_sup, send_contact_btn_sup;
-    @FXML private TextField subject_fb_txt_sup,email_fb_txt_sup, subject_contact_txt_sup, email_contact_txt_sup,title_issue_txt_sup, email_issue_txt_sup;
-    @FXML private TextFlow msgcontent_fb_txt_sup,msgcontent_contact_txt_sup,msgcontent_issue_txt_sup;
-    @FXML private AnchorPane issue_panel_sup, contact_panel_sup, feedback_panel_sup;
 
-    //</editor-fold
     //<editor-fold desc="SEARCH VARIABLES">
     @FXML private TextField search_f_name;
     @FXML private ListView<String> searchListAppear, searchListAppear2, searchListAppear3;
@@ -146,8 +147,20 @@ public class Controller implements Initializable {
     @FXML private TextField first_name_reg, last_name_reg, address_reg, emailaddress_reg, phone_number_reg, password_reg, confirm_password_reg;
     @FXML private Label name_issue_reg, last_name_issue_reg, address_issue_reg,email_issue_reg,phone_number_issue_reg, password_issue_reg, confirm_password_issue_reg;
     //</editor-fold
+    //<editor-fold desc="SUPPORT VARIABLES">
+    @FXML public Button issue_btn_sup, feedback_btn_sup, contact_btn_sup, send_fb_btn_sup, send_issue_btn_sup, send_contact_btn_sup;
+    @FXML private TextField subject_fb_txt_sup,email_fb_txt_sup, subject_contact_txt_sup, email_contact_txt_sup,title_issue_txt_sup, email_issue_txt_sup;
+    @FXML private TextFlow msgcontent_fb_txt_sup,msgcontent_contact_txt_sup,msgcontent_issue_txt_sup;
+    @FXML public AnchorPane issue_panel_sup, contact_panel_sup, feedback_panel_sup;
+    //</editor-fold
 
 
+    Support support;
+
+    //----------------- HOME -----------------//
+    public Controller(){
+        support = new Support(this);
+    }
 
     //----------------- HOME -----------------//
 
@@ -309,6 +322,8 @@ public class Controller implements Initializable {
      */
     public void initializeFXML(){
 
+        // Success page
+        rfc_no_sucesspnl = (Label) root.lookup("#rfc_no_sucesspnl");
 
         //registration page
         name_issue_reg = (Label) root.lookup("#name_issue_reg");
@@ -320,9 +335,6 @@ public class Controller implements Initializable {
         confirm_password_issue_reg = (Label) root.lookup("#confirm_password_issue_reg");
 
 
-
-        ////// look up for ticket variables
-
         // Purchase info
         card_nbr = (TextField) root.lookup("#card_nbr");
         card_fname = (TextField) root.lookup("#card_fname");
@@ -330,7 +342,7 @@ public class Controller implements Initializable {
         card_month = (TextField) root.lookup("#card_month");
         card_year = (TextField) root.lookup("#card_year");
         card_cvc = (TextField) root.lookup("#card_cvc");
-        rotate_logo_success_purchase = (ImageView) root.lookup("#rotate_logo_success_purchase");
+        card_counter_nbr = (Label) root.lookup("#card_counter_nbr");
 
         //Profile info
         if (user != null) {
@@ -681,7 +693,11 @@ public class Controller implements Initializable {
                 // the chosen flight will be added inside an arraylist
                 compare.add(flights.get(finalI1));
                 // create the seats for chosen flight
-                chooseSeat(60, 9);
+                try {
+                    chooseSeat(60, 9);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
                 price_seat_pnl.setText(flights.get(finalI1).getPrice());
                 flight_nbr_seat_pnl.setText(flights.get(finalI1).getId());
                 // flights seat panel will be shown
@@ -810,7 +826,7 @@ public class Controller implements Initializable {
      * @param econonySeats
      * @param businessSeats
      */
-    public void chooseSeat(int econonySeats, int businessSeats) {
+    public void chooseSeat(int econonySeats, int businessSeats) throws InterruptedException {
         grid_left.getChildren().removeAll();
         grid_business.getChildren().removeAll();
         // 72/6 = 12
@@ -830,6 +846,10 @@ public class Controller implements Initializable {
                 build_eco_seats(i,j, business);
             }
         }
+        Instant start = Instant.now();
+        Thread.sleep(1000);
+        Instant end = Instant.now();
+        System.out.println("timer: " + start + " end: " + end); // prints PT1M3.553S
 
     }// the method will show the chosen seat on the screen
 
@@ -884,9 +904,6 @@ public class Controller implements Initializable {
      * Purchase  ticket.
      * @param e
      */
-    public void sendMailTest(ActionEvent e){
-        Purchase.sendEmail(null,null, null,null, null);
-    }
 
     /**
      * @param e
@@ -911,34 +928,39 @@ public class Controller implements Initializable {
                 if (validCard){
                     System.out.println("valid card");
                     StringBuilder rfc = Connection.generateRandomRFC();
-                    boolean uniq = Connection.compareRFC(rfc);
-                    if (uniq){
+                    //boolean uniq = Connection.compareRFC(rfc);
+                    //if (uniq){
                         System.out.println("Save information");
-                        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                         boolean saveTicket = Connection.savePurchasedTicket(u_id.getText(), flight_nbr_seat_pnl.getText(), String.valueOf(rfc), date, seat_nbr_seat_pnl.getText(), false);
                         if (saveTicket){
                             if (!email_seat_pnl.getText().isEmpty()){
                                 boolean sentMail = Purchase.sendEmail(email_seat_pnl.getText(), first_name_seat_pnl.getText(), flight_nbr_seat_pnl.getText(), seat_nbr_seat_pnl.getText(), price_seat_pnl.getText());
                                 if (sentMail){
                                     System.out.println("Email successfully sent!");
+                                    rfc_no_sucesspnl.setText(rfc.toString());
                                     pnl_success_purchase.toFront();
                                 }else {
-                                    JOptionPane.showMessageDialog(null, "The email address is not correct!");
+                                    System.out.println("The email addrss is not correct");
+                                    //JOptionPane.showMessageDialog(null, "The email address is not correct!");
                                 }
                             }
                             System.out.println("saved information in database");
                         }else {
-                            JOptionPane.showMessageDialog(null, "Did not saved the purchase in database");
+                            System.out.println("Did not saved the purchase in database");
+                            //JOptionPane.showMessageDialog(null, "Did not saved the purchase in database");
                         }
-                    }else {
-                        System.out.println("Try again! not unique tho generate new rfc");
-                    }
+                    //}else {
+                    //    System.out.println("Try again! not unique tho generate new rfc");
+                    //}
 
                 }else {
-                    JOptionPane.showMessageDialog(null, "Card is not valid");
+                    System.out.println("Card not valid");
+                    //JOptionPane.showMessageDialog(null, "Card is not valid");
                 }
             }else {
-                JOptionPane.showMessageDialog(null, "Purchase successfully done!");
+                System.out.println("Purchase successfully done!");
+                //JOptionPane.showMessageDialog(null, "Purchase successfully done!");
             }
         }else if(e.getSource() == seat_next_btn){
             //<editor-fold desc="file">
@@ -957,6 +979,7 @@ public class Controller implements Initializable {
                pause.play();
             }
         }else if(e.getSource() == redirect_to_dash_btn){
+            updateHistoryList();
             pnlFlight.toFront();
             restore_psgr_info();
             pnl_success_purchase.toBack();
@@ -1245,23 +1268,7 @@ public class Controller implements Initializable {
     //----------------- Support -----------------//
 
     public void support_event_handler(ActionEvent e){
-        if (e.getSource() == issue_btn_sup){
-            issue_btn_sup.setStyle("-fx-background-color: #eee; -fx-text-fill: #112");
-            feedback_btn_sup.setStyle("-fx-background-color: #333; -fx-text-fill: #eee");
-            contact_btn_sup.setStyle("-fx-background-color: #333; -fx-text-fill: #eee");
-            issue_panel_sup.toFront();
-        }else if(e.getSource() == feedback_btn_sup){
-            feedback_btn_sup.setStyle("-fx-background-color: #eee; -fx-text-fill: #112");
-            issue_btn_sup.setStyle("-fx-background-color: #333; -fx-text-fill: #eee");
-            contact_btn_sup.setStyle("-fx-background-color: #333; -fx-text-fill: #eee");
-            feedback_panel_sup.toFront();
-        }else if(e.getSource() == contact_btn_sup){
-            contact_panel_sup.toFront();
-            contact_btn_sup.setStyle("-fx-background-color: #eee; -fx-text-fill: #112");
-            feedback_btn_sup.setStyle("-fx-background-color: #333; -fx-text-fill: #eee");
-            issue_btn_sup.setStyle("-fx-background-color: #333; -fx-text-fill: #eee");
-
-        }
+        support.eventHandler(e);
     }
 
     //----------------- History  -----------------//
@@ -1335,7 +1342,8 @@ public class Controller implements Initializable {
      * it will update the historic table in user dashboard everytime an action happen or user want to navigate to the panel etc.
      */
     public void updateHistoryList(){
-        ArrayList<UserHistory> list = Connection.searchDataForTableHistory();
+        ArrayList<UserHistory> list = Connection.searchDataForTableHistory(Integer.parseInt(user.getUserId()));
+
         fetchedList = FXCollections.observableArrayList(list);
         table_historik.setItems(fetchedList);
     }
@@ -1387,10 +1395,6 @@ public class Controller implements Initializable {
 
         }
     }
-
-
-
-
 
 
     //----------------- GETTERS AND SETTERS -----------------//

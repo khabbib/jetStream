@@ -6,16 +6,16 @@ import java.awt.*;
 
 public class UserHistory {
     private int         no_col_table_historik,
-                        seatno_col_table_historik, flightid_col_table_historik;
+                        flightid_col_table_historik;
     private String      company_col_table_historik,model_col_table_historik,
                         rfc_col_table_historik, from_col_table_historik, to_col_table_historik,
-                        date_col_table_historik;
+                        date_col_table_historik, seatno_col_table_historik;
     private double      price_col_table_historik;
     private CheckBox select_col_table_historik;
 
     public UserHistory(int no_col_table_historik, String company_col_table_historik, String model_col_table_historik, String rfc_col_table_historik,
                        int flightid_col_table_historik, String from_col_table_historik, String to_col_table_historik,
-                       int seatno_col_table_historik, String date_col_table_historik, double price_col_table_historik){
+                       String seatno_col_table_historik, String date_col_table_historik, double price_col_table_historik){
 
         this.no_col_table_historik          = no_col_table_historik;
         this.company_col_table_historik     = company_col_table_historik;
@@ -40,11 +40,11 @@ public class UserHistory {
         this.no_col_table_historik = no_col_table_historik;
     }
 
-    public int getSeatno_col_table_historik() {
+    public String getSeatno_col_table_historik() {
         return seatno_col_table_historik;
     }
 
-    public void setSeatno_col_table_historik(int seatno_col_table_historik) {
+    public void setSeatno_col_table_historik(String seatno_col_table_historik) {
         this.seatno_col_table_historik = seatno_col_table_historik;
     }
 
