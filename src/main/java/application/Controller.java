@@ -523,15 +523,6 @@ public class Controller implements Initializable {
                     if ((address_reg.getText().length() >= 5 && address_reg.getText().length() <= 60)){
                         if((emailaddress_reg.getText().length() >= 6 && emailaddress_reg.getText().length() <= 30)){
                             if ((phone_number_reg.getText().length() == 12)){
-                                try {
-                                    long phonenbr = Integer.parseInt(phone_number_reg.getText());
-                                }catch (Exception a){
-                                    System.out.println("Phone number is not a digit issue");
-                                    phone_number_issue_reg.setText("Only digit number [phone number]");
-                                    PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                                    pause.setOnFinished(b -> phone_number_issue_reg.setText(null));
-                                    pause.play();
-                                }
                                     if (password_reg.getText().length() >= 8 && password_reg.getText().length() <= 20){
                                         if (password_reg.getText().equals(confirm_password_reg.getText())){
                                             if(emailaddress_reg.getText().contains("@") && (emailaddress_reg.getText().contains("gmail") || emailaddress_reg.getText().contains("hotmail") || emailaddress_reg.getText().contains("yahoo") || emailaddress_reg.getText().contains("outlook"))){
