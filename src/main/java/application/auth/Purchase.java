@@ -105,14 +105,14 @@ public class Purchase {
      */
     private static String buildTemplate(String user, String flightnbr, String seatnbr, String price) {
         return (
-                "<h1>Verification</h1>\n" +
+                "<h1>Flight Confirmation</h1>\n" +
                 "<p> Hi <span class=\"color:red;\">"+ user+",</p> \n" +
                 "<h2>More details about your ticket</h2>\n" +
                 "<p>Flight number: "+flightnbr+"</p>\n" +
                 "<p>Seat: "+seatnbr+"</p>\n" +
                 "<h3> Total price: "+price+" SEK</h3>\n" +
-                "<h2 style=\"color:red\">Please verify your email</h2> \n" +
-                "<button>Verify</button> \n" +
+                "<h2 style=\"color:red\">Online check in will be open 24 hours before boarding</h2> \n" +
+                "<button>Check in</button> \n" +
                 "\n" +
                 "<h4>Best wish</h4>"
         );
