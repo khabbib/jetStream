@@ -160,6 +160,9 @@ public class Controller implements Initializable {
     @FXML public AnchorPane issue_panel_sup, contact_panel_sup, feedback_panel_sup;
     //</editor-fold
 
+    // Edit profile
+    @FXML private Label pfp_edit_error_msg, pfp_edit_info_msg;
+
 
     Support support;
 
@@ -273,19 +276,19 @@ public class Controller implements Initializable {
                     renderDashboard(e, user);
                 } else {
                     error_msg.setText("Wrong email or password!");
-                    PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                    PauseTransition pause = new PauseTransition(Duration.seconds(4));
                     pause.setOnFinished(a -> error_msg.setText(null));
                     pause.play();
                 }
             } else {
                 error_msg.setText("Email has wrong format!");
-                PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                PauseTransition pause = new PauseTransition(Duration.seconds(4));
                 pause.setOnFinished(a -> error_msg.setText(null));
                 pause.play();
             }
         } else {
             error_msg.setText("Email or password is empty, please fill in fields!");
-            PauseTransition pause = new PauseTransition(Duration.seconds(2));
+            PauseTransition pause = new PauseTransition(Duration.seconds(4));
             pause.setOnFinished(a -> error_msg.setText(null));
             pause.play();
         }
@@ -367,7 +370,6 @@ public class Controller implements Initializable {
         password_issue_reg = (Label) root.lookup("#password_issue_reg");
         confirm_password_issue_reg = (Label) root.lookup("#confirm_password_issue_reg");
 
-
         // Purchase info
         card_nbr = (TextField) root.lookup("#card_nbr");
         card_fname = (TextField) root.lookup("#card_fname");
@@ -390,6 +392,9 @@ public class Controller implements Initializable {
             profilePicturePreview = (ImageView) root.lookup("#profilePicturePreview");
             profileSelector = (GridPane) root.lookup("#profileSelector");
             btnEditProfile = (Button) root.lookup("#btnEditProfile");
+
+            pfp_edit_error_msg = (Label) root.lookup("#pfp_edit_error_msg");
+            pfp_edit_info_msg = (Label) root.lookup("#pfp_edit_info_msg");
 
             profileFirstName.setText(user.getFirstName());
             profileLastName.setText(user.getLastName());
@@ -512,91 +517,100 @@ public class Controller implements Initializable {
     }// the method will switch the user to the registration page
 
     /**
-     * @param e
-     * @throws SQLException
-     * @throws IOException
+     * The method will register the user and return to the login page.
+     * The method will also go in through nestled-if-statements to handle errors.
+     * @param e listens to register button.
+     * @throws SQLException if any sql issues occurs.
+     * @throws IOException if any io issues occurs.
+     * @author Khabib. Developed by Sossio and Khabib.
      */
-    public void registeruser(ActionEvent e) throws SQLException, IOException {
+    public void registerUser(ActionEvent e) throws SQLException, IOException {
         if (!first_name_reg.getText().isEmpty() && !last_name_reg.getText().isEmpty() && !address_reg.getText().isEmpty() && !emailaddress_reg.getText().isEmpty() && !phone_number_reg.getText().isEmpty() && !password_reg.getText().isEmpty() && !confirm_password_reg.getText().isEmpty()){
             if ((first_name_reg.getText().length() >= 3 && first_name_reg.getText().length() <= 30)){
                 if ((last_name_reg.getText().length() >= 3 && last_name_reg.getText().length() <= 30)){
                     if ((address_reg.getText().length() >= 5 && address_reg.getText().length() <= 60)){
                         if((emailaddress_reg.getText().length() >= 6 && emailaddress_reg.getText().length() <= 30)){
-                            if ((phone_number_reg.getText().length() == 12)){
-                                    if (password_reg.getText().length() >= 8 && password_reg.getText().length() <= 20){
-                                        if (password_reg.getText().equals(confirm_password_reg.getText())){
-                                            if(emailaddress_reg.getText().contains("@") && (emailaddress_reg.getText().contains("gmail") || emailaddress_reg.getText().contains("hotmail") || emailaddress_reg.getText().contains("yahoo") || emailaddress_reg.getText().contains("outlook"))){
-                                                System.out.println("all fine!");
-                                                boolean ok = Connection.saveUser(first_name_reg.getText(), last_name_reg.getText(), address_reg.getText(), emailaddress_reg.getText(), phone_number_reg.getText(), password_reg.getText(), false);
-                                                if (ok) {
-                                                    renderLoginPage(e, "successfully registered the user!");
-                                                } else {
-                                                    registration_error.setText("Couldn't register the information");
-                                                    PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                                                    pause.setOnFinished(a -> registration_error.setText(null));
-                                                    pause.play();
+                            if ((phone_number_reg.getText().length() == 10)){
+                                if (password_reg.getText().length() >= 8 && password_reg.getText().length() <= 20){
+                                    if (password_reg.getText().equals(confirm_password_reg.getText())){
+                                        if(emailaddress_reg.getText().contains("@") && (emailaddress_reg.getText().contains("gmail") || emailaddress_reg.getText().contains("hotmail") || emailaddress_reg.getText().contains("yahoo") || emailaddress_reg.getText().contains("outlook"))){
+                                            System.out.println("all fine!");
+                                            boolean ok = Connection.saveUser(first_name_reg.getText(), last_name_reg.getText(), address_reg.getText(), emailaddress_reg.getText(), phone_number_reg.getText(), password_reg.getText(), false);
+                                            if (ok) {
+                                                renderLoginPage(e, "The user is successfully registered!");
+                                                try {
+                                                    Connection.setProfilePicture("application/profiles/user.png", emailaddress_reg.getText());
+                                                } catch (SQLException ex) {
+                                                    ex.printStackTrace();
                                                 }
-                                            }else {
-                                                System.out.println("Email type issue");
-                                                email_issue_reg.setText("Type issue [email]");
+                                            } else {
+                                                registration_error.setText("Could not register.");
+                                                PauseTransition pause = new PauseTransition(Duration.seconds(4));
+                                                pause.setOnFinished(a -> registration_error.setText(null));
+                                                pause.play();
                                             }
                                         }else {
-                                            System.out.println("confirm password not much the actual password");
-                                            confirm_password_issue_reg.setText("Much issue [confirm password]");
-                                            PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                                            pause.setOnFinished(a -> confirm_password_issue_reg.setText(null));
+                                            System.out.println("Email type issue");
+                                            email_issue_reg.setText("Format issue!");
+                                            PauseTransition pause = new PauseTransition(Duration.seconds(4));
+                                            pause.setOnFinished(a -> email_issue_reg.setText(null));
                                             pause.play();
                                         }
                                     }else {
-                                        System.out.println("password issue");
-                                        password_issue_reg.setText("Size issue 8-20");
-                                        PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                                        pause.setOnFinished(a -> password_issue_reg.setText(null));
+                                        System.out.println("confirm password not much the actual password");
+                                        confirm_password_issue_reg.setText("Match issue!");
+                                        PauseTransition pause = new PauseTransition(Duration.seconds(4));
+                                        pause.setOnFinished(a -> confirm_password_issue_reg.setText(null));
                                         pause.play();
                                     }
-
-
+                                }else {
+                                    System.out.println("password issue");
+                                    password_issue_reg.setText("Size issue 8-20!");
+                                    PauseTransition pause = new PauseTransition(Duration.seconds(4));
+                                    pause.setOnFinished(a -> password_issue_reg.setText(null));
+                                    pause.play();
+                                }
                             }else {
                                 System.out.println("phone number issue");
-                                phone_number_issue_reg.setText("size issue 12 digit");
-                                PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                                phone_number_issue_reg.setText("Size issue 12 digit!");
+                                PauseTransition pause = new PauseTransition(Duration.seconds(4));
                                 pause.setOnFinished(a -> phone_number_issue_reg.setText(null));
                                 pause.play();
                             }
                         } else {
                             System.out.println("email address issue");
-                            email_issue_reg.setText("size issue 6-30");
-                            PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                            email_issue_reg.setText("Size issue 6-30!");
+                            PauseTransition pause = new PauseTransition(Duration.seconds(4));
                             pause.setOnFinished(a -> email_issue_reg.setText(null));
                             pause.play();
                         }
                     }else {
                         System.out.println("address issue");
-                        address_issue_reg.setText("size issue 5-60");
-                        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                        address_issue_reg.setText("Size issue 5-60!");
+                        PauseTransition pause = new PauseTransition(Duration.seconds(4));
                         pause.setOnFinished(a -> address_issue_reg.setText(null));
                         pause.play();
                     }
                 } else {
-                    System.out.println("last name issue");
-                    last_name_issue_reg.setText("Size issue 3-30");
-                    PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                    System.out.println("Last name issue");
+                    last_name_issue_reg.setText("Size issue 3-30!");
+                    PauseTransition pause = new PauseTransition(Duration.seconds(4));
                     pause.setOnFinished(a -> last_name_issue_reg.setText(null));
                     pause.play();
                 }
             } else {
-                name_issue_reg.setText("Size issue 3-30");
-                PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                name_issue_reg.setText("Size issue 3-30!");
+                PauseTransition pause = new PauseTransition(Duration.seconds(4));
                 pause.setOnFinished(a -> name_issue_reg.setText(null));
                 pause.play();
             }
         }else {
-            registration_error.setText("Empty field issue");
-            PauseTransition pause = new PauseTransition(Duration.seconds(2));
+            registration_error.setText("Empty field issue!");
+            PauseTransition pause = new PauseTransition(Duration.seconds(4));
             pause.setOnFinished(x -> registration_error.setText(null));
             pause.play();
         }
-    }// the method will register the user and return to the login page
+    }
 
     /**
      * @param e
@@ -619,6 +633,9 @@ public class Controller implements Initializable {
         stage.setTitle("Login window");
         stage.setScene(scene);
         success_msg.setText(msg);
+        PauseTransition pause = new PauseTransition(Duration.seconds(6));
+        pause.setOnFinished(a -> success_msg.setText(null));
+        pause.play();
         stage.show();
     }// render login page
 
@@ -774,6 +791,10 @@ public class Controller implements Initializable {
         }
     } // the method will show the flights list on the right side of the dashboard when a user choose a country
 
+    /**
+     * @throws SQLException if any sql issues occurs.
+     * @author Kasper. Developed by Sossio.
+     */
     public void editProfile() throws SQLException {
         if (editingProfile == false) {
             profileFirstName.setDisable(false);
@@ -785,8 +806,8 @@ public class Controller implements Initializable {
             btnEditProfile.setText("Confirm");
             editingProfile = true;
         } else {
-
             User editedUser = user;
+            String rollbackToOldEmailText = user.getEmail();
             Boolean edited = false;
 
             if (!profileFirstName.getText().isEmpty()) {
@@ -815,11 +836,24 @@ public class Controller implements Initializable {
             }
 
             if (edited) {
-                System.out.println("Updating user..");
+                System.out.println("Updating user...");
                 user = editedUser;
-                Connection.updateUser(user);
+                boolean okToEditProfile = Connection.updateUser(user);
+
+                if(okToEditProfile) {
+                    pfp_edit_info_msg.setText("Profile is updated!");
+                    PauseTransition pause = new PauseTransition(Duration.seconds(4));
+                    pause.setOnFinished(a -> pfp_edit_info_msg.setText(null));
+                    pause.play();
+                } else {
+                    pfp_edit_error_msg.setText("New email is taken!");
+                    profileEmail.setText(Connection.getUserEmail(user.getUserId()));
+                    PauseTransition pause = new PauseTransition(Duration.seconds(4));
+                    pause.setOnFinished(a -> pfp_edit_error_msg.setText(null));
+                    pause.play();
+                }
             } else {
-                System.out.println("ypoo");
+                System.out.println("Edited is false!");
             }
 
             profileFirstName.setDisable(true);
@@ -833,8 +867,11 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     *
+     * @author Kasper.
+     */
     public void changeImage() {
-
         profileSelector.setVisible(true);
         dir = new File("src/main/resources/application/profiles/64x64");
         files = dir.listFiles();
@@ -847,6 +884,11 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     *
+     * @param event
+     * @author Kasper.
+     */
     public void clickGrid(javafx.scene.input.MouseEvent event) {
         Node clickedNode = event.getPickResult().getIntersectedNode();
         if (clickedNode != profileSelector) {
@@ -865,12 +907,10 @@ public class Controller implements Initializable {
             System.out.println(profilePic);
 
             try {
-                Connection.setProfilePicture(profilePic, user);
+                Connection.updateProfilePicture(profilePic, user);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
-
 
             profileSelector.setVisible(false);
             System.out.println("Mouse clicked cell: " + colIndex + " And: " + rowIndex);
@@ -1032,7 +1072,7 @@ public class Controller implements Initializable {
                 pnlPayment.toFront();
             }else {
                msg_seat_pnl.setText("Empty field issue!");
-               PauseTransition pause = new PauseTransition(Duration.seconds(2));
+               PauseTransition pause = new PauseTransition(Duration.seconds(4));
                pause.setOnFinished(a -> msg_seat_pnl.setText(null));
                pause.play();
             }
@@ -1074,17 +1114,12 @@ public class Controller implements Initializable {
             try {
                 User user = Connection.authenticationAdmin(login_email.getText(), login_pass.getText());
                 if (user != null) {
-
-
-
                     root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("admin/AdminView.fxml")));
                     stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
                     scene = new Scene(root);
                     stage.setTitle("Admin window");
                     stage.setScene(scene);
                     stage.show();
-
-
 
                     memberListView = (ListView<String>) root.lookup("#memberListView");
                     if(memberListView != null)
@@ -1108,8 +1143,6 @@ public class Controller implements Initializable {
                     ticketListView = (ListView<String>) root.lookup("#ticketListView");
                     if(ticketListView != null)
                     {
-
-
                         ArrayList<Book> ticket = Connection.searchTicket();
                         ArrayList<String> temp = new ArrayList<>();
                         for(Book item: ticket)
@@ -1123,7 +1156,7 @@ public class Controller implements Initializable {
                     }
                 } else {
                     error_msg.setText("Wrong email or pass!");
-                    PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                    PauseTransition pause = new PauseTransition(Duration.seconds(4));
                     pause.setOnFinished(a -> error_msg.setText(null));
                     pause.play();
                 }

@@ -349,6 +349,8 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>
+            <Label fx:id="pfp_edit_error_msg" layoutX="175.0" layoutY="626.0" prefHeight="17.0" prefWidth="241.0" textFill="#da342b" />
+            <Label fx:id="pfp_edit_info_msg" layoutX="175.0" layoutY="657.0" prefHeight="17.0" prefWidth="241.0" textFill="#203de1" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="pnlSeat" layoutX="70.0" prefHeight="700.0" prefWidth="1120.0">
@@ -784,7 +786,7 @@
             </Button>
             <ImageView fitHeight="241.0" fitWidth="200.0" layoutX="825.0" layoutY="116.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../gamePosters/2048.jpg" />
+                  <Image url="@../gamePosters/2048.png" />
                </image>
                <cursor>
                   <Cursor fx:constant="MOVE" />
