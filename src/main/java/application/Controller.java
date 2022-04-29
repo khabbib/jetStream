@@ -46,8 +46,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+
 /**
- *
+ * Head class.
  */
 public class Controller implements Initializable {
     //<editor-fold desc="GLOBAL VARIABLES" >
@@ -211,7 +212,7 @@ public class Controller implements Initializable {
     }
 
     /**
-     *
+     * @author Kasper.
      */
     public void playPong(){
         Pong pong = new Pong();
@@ -224,7 +225,7 @@ public class Controller implements Initializable {
     }
 
     /**
-     *
+     * @author Kasper.
      */
     public void playQuiz(){
         MPlayer mPlayer = new MPlayer();
@@ -237,7 +238,7 @@ public class Controller implements Initializable {
     }
 
     /**
-     *
+     * @author Kasper.
      */
     public void playPiano(){
         Piano piano = new Piano();
@@ -250,7 +251,7 @@ public class Controller implements Initializable {
     }
 
     /**
-     *
+     * @author Sossio.
      */
     public void play2048(){
         Game2048Main game2048Main = new Game2048Main();
@@ -263,7 +264,7 @@ public class Controller implements Initializable {
     }
 
     /**
-     * the method will switch the user to the dashboard page
+     * The method will switch the user to the dashboard page
      * navigate to dashboard pages
      * @param e
      * @throws IOException
@@ -343,6 +344,9 @@ public class Controller implements Initializable {
         setInfoIntoTableHistorik();
     } // the method will render dashboard page for user
 
+    /**
+     *
+     */
     private void lookUpForTable() {
 
     }
@@ -351,7 +355,6 @@ public class Controller implements Initializable {
      *
      */
     public void initializeFXML(){
-
         // user menu images
         map_menu_user = (ImageView)root.lookup("#map_menu_user");
         game_menu_user = (ImageView)root.lookup("#game_menu_user");
@@ -458,6 +461,7 @@ public class Controller implements Initializable {
     }
 
     /**
+     * Shortcut login to user dashboard
      * @param e
      * @throws IOException
      */
@@ -488,9 +492,10 @@ public class Controller implements Initializable {
         stage.setTitle("Test dashboard window");
         stage.setScene(scene);
         stage.show();
-    }// shortcut login to user dashboard
+    }
 
     /**
+     * The method will switch the user to the checking page
      * @param e
      * @throws IOException
      */
@@ -501,9 +506,10 @@ public class Controller implements Initializable {
         stage.setTitle("Checking window");
         stage.setScene(scene);
         stage.show();
-    }// the method will switch the user to the checking page
+    }
 
     /**
+     * The method will switch the user to the registration page
      * @param e
      * @throws IOException
      */
@@ -514,7 +520,7 @@ public class Controller implements Initializable {
         stage.setTitle("Registration window");
         stage.setScene(scene);
         stage.show();
-    }// the method will switch the user to the registration page
+    }
 
     /**
      * The method will register the user and return to the login page.
@@ -613,14 +619,16 @@ public class Controller implements Initializable {
     }
 
     /**
+     * The method will switch the user to the login page
      * @param e
      * @throws IOException
      */
     public void switchToLogin(ActionEvent e) throws IOException {
         renderLoginPage(e, null);
-    }// the method will switch the user to the login page
+    }
 
     /**
+     * Render login page
      * @param e
      * @param msg
      * @throws IOException
@@ -637,9 +645,10 @@ public class Controller implements Initializable {
         pause.setOnFinished(a -> success_msg.setText(null));
         pause.play();
         stage.show();
-    }// render login page
+    }
 
     /**
+     * The method will show the flights list on the right side of the dashboard when a user choose a country
      * flight lists dashboard
      * @param flights
      */
@@ -652,7 +661,6 @@ public class Controller implements Initializable {
 
         if (flights != null) {
         for (int i = 0; i < flights.size();i++){
-
             StackPane stackholer = new StackPane();
             HBox hbox = new HBox(1);
             HBox hboxChildCenter = new HBox(1);
@@ -702,12 +710,10 @@ public class Controller implements Initializable {
             desTime.setStyle("-fx-font-weight: bold");
             desTime.setFill(Color.valueOf("#eee"));
 
-
             Label titleD = new Label();
             titleD.setMaxSize(50,40);
             titleD.setText(flights.get(i).getDestination_name());
             titleD.setStyle("-fx-text-fill: #999;");
-
 
             Label date = new Label();
             date.setText(flights.get(i).getDestination_time());
@@ -789,7 +795,7 @@ public class Controller implements Initializable {
         }else {
             System.out.println("flights list is null");
         }
-    } // the method will show the flights list on the right side of the dashboard when a user choose a country
+    }
 
     /**
      * @throws SQLException if any sql issues occurs.
@@ -997,11 +1003,6 @@ public class Controller implements Initializable {
     }
 
     /**
-     * Purchase  ticket.
-     * @param e
-     */
-
-    /**
      * @param e
      */
     public void purchaseHandle(ActionEvent e){
@@ -1085,9 +1086,9 @@ public class Controller implements Initializable {
         }
     }
 
-
-
-
+    /**
+     *
+     */
     public void restore_psgr_info(){
         first_name_seat_pnl.clear();
         last_name_seat_pnl.clear();
@@ -1213,7 +1214,6 @@ public class Controller implements Initializable {
             game_menu_user.setOpacity(0.5);
             support_menu_user.setOpacity(1);
         }
-
     }
 
     /**
@@ -1222,23 +1222,19 @@ public class Controller implements Initializable {
      * @throws IOException
      */
     public void adminDev(ActionEvent e) throws IOException {
-        if(e.getSource() == logoutButton)
-        {
+        if(e.getSource() == logoutButton) {
             switchToLogin(e);
         }
 
-        else if(e.getSource() == flightsBtn)
-        {
+        else if(e.getSource() == flightsBtn) {
             pnlFlights.toFront();
         }
 
-        else if(e.getSource() == ticketsBtn)
-        {
+        else if(e.getSource() == ticketsBtn) {
             pnlTickets.toFront();
         }
 
-        else if(e.getSource() == membersBtn)
-        {
+        else if(e.getSource() == membersBtn) {
             pnlMember.toFront();
         }
 
@@ -1301,8 +1297,8 @@ public class Controller implements Initializable {
                 searchListAppear.setItems(searchAprear);
                 searchListAppear.getSelectionModel().selectedItemProperty().addListener(e ->{
                     search_f_name.setText(searchListAppear.getSelectionModel().getSelectedItem());
-                        searchListAppear.setVisible(false);
-            });
+                    searchListAppear.setVisible(false);
+                });
             }
         }
     }
@@ -1382,6 +1378,9 @@ public class Controller implements Initializable {
 
     //----------------- Support -----------------//
 
+    /**
+     * @param e
+     */
     public void support_event_handler(ActionEvent e){
         support.supportInfo(e);
     }
@@ -1389,6 +1388,9 @@ public class Controller implements Initializable {
     //----------------- History  -----------------//
 
 
+    /**
+     *
+     */
     public void setInfoIntoTableHistorik(){ // the method calls from user dashboard to load everything.
         sremove_btn_historik = (Button) root.lookup("#sremove_btn_historik");
         mremove_btn_historik = (Button) root.lookup("#mremove_btn_historik");
@@ -1510,7 +1512,6 @@ public class Controller implements Initializable {
 
         }
     }
-
 
     //----------------- GETTERS AND SETTERS -----------------//
     public Scene getScene() {
