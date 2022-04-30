@@ -148,7 +148,7 @@
          <children>
             <AnchorPane fx:id="issue_panel_sup" layoutX="49.0" layoutY="132.0" prefHeight="530.0" prefWidth="1042.0" style="-fx-background-color: #222; -fx-background-radius: 5;">
                <children>
-                  <Label layoutX="57.0" layoutY="71.0" text="Report an issue" textFill="WHITE">
+                  <Label layoutX="57.0" layoutY="71.0" text="Raport an issue" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
@@ -349,8 +349,122 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>
-            <Label fx:id="pfp_edit_error_msg" layoutX="175.0" layoutY="626.0" prefHeight="17.0" prefWidth="241.0" textFill="#da342b" />
-            <Label fx:id="pfp_edit_info_msg" layoutX="175.0" layoutY="657.0" prefHeight="17.0" prefWidth="241.0" textFill="#203de1" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="pnlGame" layoutX="65.0" prefHeight="700.0" prefWidth="1135.0" style="-fx-background-color: #112;">
+         <children>
+            <ImageView fitHeight="241.0" fitWidth="284.0" layoutX="447.0" layoutY="230.0" opacity="0.08" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/game_icon.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="241.0" fitWidth="200.0" layoutX="181.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../gamePosters/MusicQuiz.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="MOVE" />
+               </cursor>
+            </ImageView>
+            <ImageView fitHeight="241.0" fitWidth="200.0" layoutX="396.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../gamePosters/PONG.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="MOVE" />
+               </cursor>
+            </ImageView>
+            <Button layoutX="181.0" layoutY="372.0" mnemonicParsing="false" onAction="#playQuiz" prefHeight="30.0" prefWidth="196.0" style="-fx-background-color: #ff8000;" text="Play" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="396.0" layoutY="372.0" mnemonicParsing="false" onAction="#playPong" prefHeight="30.0" prefWidth="196.0" style="-fx-background-color: #ff8000;" text="Play" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="611.0" layoutY="372.0" mnemonicParsing="false" onAction="#playPiano" prefHeight="30.0" prefWidth="196.0" style="-fx-background-color: #ff8000;" text="Play" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <ImageView fitHeight="241.0" fitWidth="200.0" layoutX="611.0" layoutY="116.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../gamePosters/Synth.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="MOVE" />
+               </cursor>
+            </ImageView>
+            <Button layoutX="825.0" layoutY="372.0" mnemonicParsing="false" onAction="#play2048" prefHeight="30.0" prefWidth="196.0" style="-fx-background-color: #ff8000;" text="Play" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <ImageView fitHeight="241.0" fitWidth="200.0" layoutX="825.0" layoutY="116.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../gamePosters/2048.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="MOVE" />
+               </cursor>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="pnlHistorik" layoutX="67.0" layoutY="-3.0" prefHeight="700.0" prefWidth="1135.0" style="-fx-background-color: #112;">
+         <children>
+            <Label layoutX="50.0" layoutY="91.0" text="History" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="241.0" fitWidth="284.0" layoutX="398.0" layoutY="230.0" opacity="0.08" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/history.png" />
+               </image>
+            </ImageView>
+            <Pane layoutX="681.0" layoutY="546.0">
+               <children>
+                  <HBox spacing="15.0">
+                     <children>
+                        <Button fx:id="mremove_btn_historik" disable="true" graphicTextGap="6.0" mnemonicParsing="false" onAction="#userRemoveHistory" prefHeight="43.0" prefWidth="172.0" style="-fx-background-color: #151D3B#151D3B;" text="Remove all history" textFill="WHITE">
+                           <padding>
+                              <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
+                           </padding>
+                        </Button>
+                        <Button fx:id="sremove_btn_historik" disable="true" graphicTextGap="6.0" mnemonicParsing="false" onAction="#userRemoveHistory" prefHeight="43.0" prefWidth="253.0" style="-fx-background-color: #151D3B#151D3B;" text="Remove selected history" textFill="WHITE">
+                           <padding>
+                              <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
+                           </padding>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </Pane>
+            <TableView fx:id="table_historik" layoutX="50.0" layoutY="150.0" prefHeight="398.0" prefWidth="1063.0">
+              <columns>
+                <TableColumn fx:id="no_col_table_historik" prefWidth="39.0" text="No" />
+                  <TableColumn fx:id="company_col_table_historik" prefWidth="111.05429077148438" text="Airline" />
+                  <TableColumn fx:id="model_col_table_historik" prefWidth="83.94570922851562" text="Model" />
+                <TableColumn fx:id="rfc_col_table_historik" prefWidth="122.11917114257812" text="RFC no" />
+                  <TableColumn fx:id="flightid_col_table_historik" prefWidth="63.501556396484375" text="Flight id" />
+                  <TableColumn fx:id="from_col_table_historik" prefWidth="144.49847412109375" text="From" />
+                  <TableColumn fx:id="to_col_table_historik" prefWidth="153.99554443359375" text="To" />
+                  <TableColumn fx:id="seatno_col_table_historik" prefWidth="62.98980712890625" text="Seat" />
+                  <TableColumn fx:id="date_col_table_historik" prefWidth="120.49224853515625" text="Paurchased Date" />
+                  <TableColumn fx:id="price_col_table_historik" prefWidth="72.0" text="Price" />
+                  <TableColumn fx:id="select_col_table_historik" prefWidth="81.0" text="Select All">
+                     <graphic>
+                        <CheckBox fx:id="select_all_box_historik" mnemonicParsing="false" />
+                     </graphic>
+                  </TableColumn>
+              </columns>
+               <stylesheets>
+                  <URL value="@../Styles/Table.css" />
+                  <URL value="@../Styles/ScrollStyle.css" />
+               </stylesheets>
+            </TableView>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="pnlSeat" layoutX="70.0" prefHeight="700.0" prefWidth="1120.0">
@@ -571,13 +685,21 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <AnchorPane fx:id="flights_seats_business" prefHeight="119.0" prefWidth="200.0" style="-fx-background-color: #112;" />
+                        <ScrollPane fx:id="business_scrollpane" prefHeight="212.0" prefWidth="278.0" stylesheets="@../Styles/ScrollStyle.css">
+                           <content>
+                              <AnchorPane fx:id="flights_seats_business" prefHeight="212.0" prefWidth="281.0" style="-fx-background-color: #112;" />
+                           </content>
+                        </ScrollPane>
                         <Label text="Economy" textFill="WHITE">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <AnchorPane fx:id="flight_seats_eco" prefHeight="375.0" prefWidth="200.0" style="-fx-background-color: #112;" />
+                        <ScrollPane fx:id="eco_scrollpane" prefHeight="318.0" prefWidth="278.0" stylesheets="@../Styles/ScrollStyle.css">
+                           <content>
+                              <AnchorPane fx:id="flight_seats_eco" prefHeight="314.0" prefWidth="277.0" style="-fx-background-color: #112;" />
+                           </content>
+                        </ScrollPane>
                      </children>
                   </VBox>
                   <Label layoutX="82.0" layoutY="34.0" text="Passenger" textFill="WHITE">
@@ -601,47 +723,47 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Label text="First name" textFill="WHITE">
+                        <Label text="Name:" textFill="WHITE">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label layoutX="10.0" layoutY="28.0" text="Person number" textFill="WHITE" GridPane.rowIndex="2">
+                        <Label layoutX="10.0" layoutY="28.0" text="Four digit:" textFill="WHITE" GridPane.rowIndex="2">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label layoutX="10.0" layoutY="69.0" text="Email" textFill="WHITE" GridPane.rowIndex="3">
+                        <Label layoutX="10.0" layoutY="69.0" text="Email address:" textFill="WHITE" GridPane.rowIndex="3">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label layoutX="10.0" layoutY="93.0" text="Last name" textFill="WHITE" GridPane.rowIndex="1">
+                        <Label layoutX="10.0" layoutY="93.0" text="Last name:" textFill="WHITE" GridPane.rowIndex="1">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label layoutX="10.0" layoutY="132.0" text="Seat number" textFill="WHITE" GridPane.rowIndex="4">
+                        <Label layoutX="10.0" layoutY="132.0" text="Seat:" textFill="WHITE" GridPane.rowIndex="4">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="first_name_seat_pnl" promptText="first name" style="-fx-background-color: #112; -fx-text-fill: #eee;" GridPane.columnIndex="1">
+                        <TextField fx:id="first_name_seat_pnl" promptText="Name" style="-fx-background-color: #112; -fx-text-fill: #eee;" GridPane.columnIndex="1">
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
                         </TextField>
-                        <TextField fx:id="last_name_seat_pnl" promptText="last name" style="-fx-background-color: #112; -fx-text-fill: #eee;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <TextField fx:id="last_name_seat_pnl" promptText="Last name" style="-fx-background-color: #112; -fx-text-fill: #eee;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
                         </TextField>
-                        <TextField fx:id="four_digit_seat_pnl" layoutX="130.0" layoutY="56.0" promptText="person number" style="-fx-background-color: #112; -fx-text-fill: #eee;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <TextField fx:id="four_digit_seat_pnl" layoutX="130.0" layoutY="56.0" promptText="Four digit" style="-fx-background-color: #112; -fx-text-fill: #eee;" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
                         </TextField>
-                        <TextField fx:id="email_seat_pnl" layoutX="130.0" layoutY="95.0" promptText="email" style="-fx-background-color: #112; -fx-text-fill: #eee;" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <TextField fx:id="email_seat_pnl" layoutX="130.0" layoutY="95.0" promptText="Email address" style="-fx-background-color: #112; -fx-text-fill: #eee;" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
@@ -662,7 +784,7 @@
                               <Insets left="10.0" right="10.0" />
                            </padding>
                         </HBox>
-                        <Label layoutX="10.0" layoutY="170.0" text="Flight ID" textFill="WHITE" GridPane.rowIndex="5">
+                        <Label layoutX="10.0" layoutY="170.0" text="Flights ID:" textFill="WHITE" GridPane.rowIndex="5">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -672,7 +794,7 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label layoutX="10.0" layoutY="173.0" text="Price (SEK):" textFill="WHITE" GridPane.rowIndex="7">
+                        <Label layoutX="10.0" layoutY="173.0" text="Price:" textFill="WHITE" GridPane.rowIndex="7">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
@@ -731,122 +853,6 @@
                </effect>
             </ImageView>
             <Button fx:id="iconCloseSeat" layoutX="1076.0" layoutY="19.0" mnemonicParsing="false" onAction="#testDev" opacity="0.0" prefHeight="32.0" prefWidth="28.0" />
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="pnlGame" layoutX="65.0" prefHeight="700.0" prefWidth="1135.0" style="-fx-background-color: #112;">
-         <children>
-            <ImageView fitHeight="241.0" fitWidth="284.0" layoutX="447.0" layoutY="230.0" opacity="0.08" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../image/game_icon.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="241.0" fitWidth="200.0" layoutX="181.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../gamePosters/MusicQuiz.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="MOVE" />
-               </cursor>
-            </ImageView>
-            <ImageView fitHeight="241.0" fitWidth="200.0" layoutX="396.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../gamePosters/PONG.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="MOVE" />
-               </cursor>
-            </ImageView>
-            <Button layoutX="181.0" layoutY="372.0" mnemonicParsing="false" onAction="#playQuiz" prefHeight="30.0" prefWidth="196.0" style="-fx-background-color: #ff8000;" text="Play" textFill="WHITE">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Button layoutX="396.0" layoutY="372.0" mnemonicParsing="false" onAction="#playPong" prefHeight="30.0" prefWidth="196.0" style="-fx-background-color: #ff8000;" text="Play" textFill="WHITE">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Button layoutX="611.0" layoutY="372.0" mnemonicParsing="false" onAction="#playPiano" prefHeight="30.0" prefWidth="196.0" style="-fx-background-color: #ff8000;" text="Play" textFill="WHITE">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <ImageView fitHeight="241.0" fitWidth="200.0" layoutX="611.0" layoutY="116.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../gamePosters/Synth.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="MOVE" />
-               </cursor>
-            </ImageView>
-            <Button layoutX="825.0" layoutY="372.0" mnemonicParsing="false" onAction="#play2048" prefHeight="30.0" prefWidth="196.0" style="-fx-background-color: #ff8000;" text="Play" textFill="WHITE">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <ImageView fitHeight="241.0" fitWidth="200.0" layoutX="825.0" layoutY="116.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../gamePosters/2048.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="MOVE" />
-               </cursor>
-            </ImageView>
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="pnlHistorik" layoutX="67.0" layoutY="-3.0" prefHeight="700.0" prefWidth="1135.0" style="-fx-background-color: #112;">
-         <children>
-            <Label layoutX="50.0" layoutY="91.0" text="History" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="241.0" fitWidth="284.0" layoutX="398.0" layoutY="230.0" opacity="0.08" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../image/history.png" />
-               </image>
-            </ImageView>
-            <Pane layoutX="681.0" layoutY="546.0">
-               <children>
-                  <HBox spacing="15.0">
-                     <children>
-                        <Button fx:id="mremove_btn_historik" disable="true" graphicTextGap="6.0" mnemonicParsing="false" onAction="#userRemoveHistory" prefHeight="43.0" prefWidth="172.0" style="-fx-background-color: #151D3B#151D3B;" text="Remove all history" textFill="WHITE">
-                           <padding>
-                              <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
-                           </padding>
-                        </Button>
-                        <Button fx:id="sremove_btn_historik" disable="true" graphicTextGap="6.0" mnemonicParsing="false" onAction="#userRemoveHistory" prefHeight="43.0" prefWidth="253.0" style="-fx-background-color: #151D3B#151D3B;" text="Remove selected history" textFill="WHITE">
-                           <padding>
-                              <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
-                           </padding>
-                        </Button>
-                     </children>
-                  </HBox>
-               </children>
-            </Pane>
-            <TableView fx:id="table_historik" layoutX="50.0" layoutY="150.0" prefHeight="398.0" prefWidth="1063.0">
-              <columns>
-                <TableColumn fx:id="no_col_table_historik" prefWidth="39.0" text="No" />
-                  <TableColumn fx:id="company_col_table_historik" prefWidth="111.05429077148438" text="Airline" />
-                  <TableColumn fx:id="model_col_table_historik" prefWidth="83.94570922851562" text="Model" />
-                <TableColumn fx:id="rfc_col_table_historik" prefWidth="122.11917114257812" text="RFC no" />
-                  <TableColumn fx:id="flightid_col_table_historik" prefWidth="63.501556396484375" text="Flight id" />
-                  <TableColumn fx:id="from_col_table_historik" prefWidth="144.49847412109375" text="From" />
-                  <TableColumn fx:id="to_col_table_historik" prefWidth="153.99554443359375" text="To" />
-                  <TableColumn fx:id="seatno_col_table_historik" prefWidth="62.98980712890625" text="Seat" />
-                  <TableColumn fx:id="date_col_table_historik" prefWidth="120.49224853515625" text="Paurchased Date" />
-                  <TableColumn fx:id="price_col_table_historik" prefWidth="72.0" text="Price" />
-                  <TableColumn fx:id="select_col_table_historik" prefWidth="81.0" text="Select All">
-                     <graphic>
-                        <CheckBox fx:id="select_all_box_historik" mnemonicParsing="false" />
-                     </graphic>
-                  </TableColumn>
-              </columns>
-               <stylesheets>
-                  <URL value="@../Styles/Table.css" />
-                  <URL value="@../Styles/ScrollStyle.css" />
-               </stylesheets>
-            </TableView>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="pnlFlight" layoutX="65.0" prefHeight="700.0" prefWidth="1126.0" style="-fx-background-color: #112;">

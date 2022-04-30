@@ -1,9 +1,6 @@
 package application.database;
 
-import application.model.Book;
-import application.model.Flight;
-import application.model.UserHistory;
-import application.model.User;
+import application.model.*;
 import javafx.scene.image.Image;
 
 import java.sql.*;
@@ -15,9 +12,8 @@ import java.util.ArrayList;
 public class Connection {
 
     /**
-     * Get the database connection.
-     * @return connection of the database.
-     * @author Sossio.
+     * Get the database connection
+     * @return
      */
     public static java.sql.Connection getDatabaseConnection() {
 
@@ -37,11 +33,10 @@ public class Connection {
     }
 
     /**
-     * Register new user
+     * register new user
      * @param
      * @return
      * @throws SQLException
-     * @author Khabib.
      */
     public static boolean saveUser(String first_name_reg, String last_name_reg, String address_reg, String email_reg, String phone_number_reg, String password_reg, boolean isAdmin) throws SQLException {
         boolean ok = false;
@@ -53,59 +48,21 @@ public class Connection {
         while (rs.next()){
             System.out.println("User "+ first_name_reg +" registered.");
         }
-        ok = true;
+        ok= true;
         con.close();
         stmt.close();
         return ok;
     }
 
     /**
-     * @param user takes as a parameter to edit user information.
-     * @throws SQLException if any sql issue occurs.
-     * @author Kasper. Developed by Sossio.
+     * @param user
+     * @throws SQLException
      */
-    public static boolean updateUser(User user) throws SQLException {
-        boolean uniqueEmail = true;
+    public static void updateUser(User user) throws SQLException {
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
         stmt.executeUpdate("SET search_path TO jetstream;");
-        ResultSet rs = stmt.executeQuery("select u_email from userr");
-
-        while(rs.next()) {
-            if(rs.getString("u_email").equals(user.getEmail())) {
-                System.out.println("Email found!");
-                uniqueEmail = false;
-                break;
-            } else{
-                System.out.println("Email not found!");
-            }
-        }
-
-        if(uniqueEmail) {
-            stmt.executeUpdate("UPDATE userr SET u_f_name = '" + user.getFirstName() + "', u_l_name = '" + user.getLastName() + "', u_address = '" + user.getAddress() + "', u_email = '" + user.getEmail() + "', u_phone_nr = '" + user.getPhoneNumber() + "', u_password = '" + user.getPassword() + "'  WHERE u_id = " + user.getUserId() + ";");
-        } //else { System.out.println("Error message! Email is not unique!");}
-
-        return uniqueEmail;
-    }
-
-    /**
-     * @param u_id gets userId from user.
-     * @return 'old' email.
-     * @throws SQLException if any sql issue occurs.
-     * @author Sossio.
-     */
-    public static String getUserEmail(String u_id) throws SQLException {
-        java.sql.Connection con = getDatabaseConnection();
-        Statement stmt = con.createStatement();
-        stmt.executeUpdate("SET search_path TO jetstream;");
-
-        String email = null;
-        ResultSet rs = stmt.executeQuery("select u_email from userr where u_id = " + u_id + ";");
-        while(rs.next()) {
-            email = rs.getString(("u_email"));
-            return email;
-        }
-        return email;
+        stmt.executeUpdate("UPDATE userr SET u_f_name = '" + user.getFirstName() + "', u_l_name = '" + user.getLastName() + "', u_address = '" + user.getAddress() + "', u_email = '" + user.getEmail() + "', u_phone_nr = '" + user.getPhoneNumber() + "', u_password = '" + user.getPassword() + "'  WHERE u_id = " + user.getUserId() + ";");
     }
 
     /**
@@ -113,7 +70,6 @@ public class Connection {
      * @param email
      * @param password
      * @return
-     * @author Khabib.
      */
     public static User authenticationUser(String email, String password){
         User user = null;
@@ -141,7 +97,6 @@ public class Connection {
      * @param email
      * @param password
      * @return
-     * @author Sossio.
      */
     public static User authenticationAdmin(String email, String password){
         User user = null;
@@ -356,7 +311,7 @@ public class Connection {
      * @param user
      * @throws SQLException
      */
-    public static void updateProfilePicture(String string, User user) throws SQLException {
+    public static void setProfilePicture(String string, User user) throws SQLException {
         Image image = null;
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
@@ -365,26 +320,12 @@ public class Connection {
     }
 
     /**
-     * @param pfpImageSrc
-     * @param email
-     * @throws SQLException
-     */
-    public static void setProfilePicture(String pfpImageSrc, String email) throws SQLException {
-        Image image = null;
-        java.sql.Connection con = getDatabaseConnection();
-        Statement stmt = con.createStatement();
-        stmt.executeUpdate("SET search_path TO jetstream;");
-        String userId = "select u_id from userr where u_email = '" + email + "'";
-        stmt.executeUpdate("INSERT INTO profile_picture(u_id, picture) values((" + userId + "), '" + pfpImageSrc + "');");
-    }
-
-
-    /**
      * @return
      */
     public static ArrayList<Book> searchTicket() {
         ArrayList<Book> flights = new ArrayList<>();
         try {
+
             java.sql.Connection con = Connection.getDatabaseConnection();
             Statement stmt = con.createStatement();
             ResultSet flight;
@@ -399,6 +340,7 @@ public class Connection {
                 String b_seat = flight.getString("b_seat");
 
                 flights.add(new Book(f_id, u_id, b_seat, false));
+
             }
             con.close();
             stmt.close();
@@ -424,6 +366,7 @@ public class Connection {
             user = stmt.executeQuery("select * from userr where u_isadmin = 'false'");
 
             while (user.next()){
+
                 String u_id = user.getString(("u_id"));
                 String u_f_name = user.getString(("u_f_name"));
                 String u_l_name = user.getString(("u_l_name"));
@@ -433,7 +376,9 @@ public class Connection {
                 String u_phone_nr = user.getString(("u_phone_nr"));
                 boolean u_isAdmin = user.getBoolean(("u_isadmin"));
 
+
                 members.add(new User(u_id, u_f_name, u_l_name,  u_address, u_email, u_phone_nr, u_password,u_isAdmin));
+
             }
             con.close();
             stmt.close();
@@ -442,6 +387,7 @@ public class Connection {
         }
         return members;
     }
+
 
     /**
      * @param userID
@@ -546,5 +492,53 @@ public class Connection {
         }
 
         return isUnique;
+    }
+
+    /**
+     * To fetch seats number
+     * @param id
+     * @return
+     */
+    public static int[] getSeatNumber(String id) {
+        int[] seats = new int[2];
+        try {
+            java.sql.Connection con = Connection.getDatabaseConnection();
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate("SET search_path TO jetstream;");
+            ResultSet rs = stmt.executeQuery("select * from seats where f_id = '"+ id+"'");
+            while (rs.next()){
+                int eco_seats = rs.getInt("p_seat_business");
+                int bus_seats = rs.getInt("p_seat_economy");
+                seats[0] = eco_seats;
+                seats[1] = bus_seats;
+
+
+            }
+            con.close();
+            stmt.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return seats;
+    }
+
+    public static ArrayList<String> getBookedSeats(String id) {
+        ArrayList<String> seat = new ArrayList<>();
+        try {
+            java.sql.Connection con = Connection.getDatabaseConnection();
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate("SET search_path TO jetstream;");
+            ResultSet rs = stmt.executeQuery("select * from booked where f_id = '"+ id+"'");
+            while (rs.next()){
+                String seats = rs.getString("b_seat");
+                seat.add(seats);
+            }
+            con.close();
+            stmt.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return seat;
     }
 }

@@ -46,9 +46,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
-
 /**
- * Head class.
+ *
  */
 public class Controller implements Initializable {
     //<editor-fold desc="GLOBAL VARIABLES" >
@@ -92,7 +91,7 @@ public class Controller implements Initializable {
 
 
     // Seat
-    private final GridPane grid_left = new GridPane(); //Layout
+    private final GridPane grid_eco = new GridPane(); //Layout
     private final GridPane grid_business = new GridPane(); //Layout
 
     // toggle options
@@ -116,6 +115,8 @@ public class Controller implements Initializable {
     @FXML private Button card_prev_btn, card_purchase_btn, seat_next_btn;
     @FXML private Label card_counter_nbr;
 
+    // scrollpane seats
+    @FXML private ScrollPane business_scrollpane, eco_scrollpane;
 
     @FXML private AnchorPane pnl_success_purchase;
     @FXML private Button redirect_to_dash_btn, print_ticket_purchase_btn;
@@ -160,10 +161,6 @@ public class Controller implements Initializable {
     @FXML private TextFlow msgcontent_fb_txt_sup,msgcontent_contact_txt_sup,msgcontent_issue_txt_sup;
     @FXML public AnchorPane issue_panel_sup, contact_panel_sup, feedback_panel_sup;
     //</editor-fold
-
-    // Edit profile
-    @FXML private Label pfp_edit_error_msg, pfp_edit_info_msg;
-
 
     Support support;
 
@@ -212,7 +209,7 @@ public class Controller implements Initializable {
     }
 
     /**
-     * @author Kasper.
+     *
      */
     public void playPong(){
         Pong pong = new Pong();
@@ -225,7 +222,7 @@ public class Controller implements Initializable {
     }
 
     /**
-     * @author Kasper.
+     *
      */
     public void playQuiz(){
         MPlayer mPlayer = new MPlayer();
@@ -238,7 +235,7 @@ public class Controller implements Initializable {
     }
 
     /**
-     * @author Kasper.
+     *
      */
     public void playPiano(){
         Piano piano = new Piano();
@@ -251,7 +248,7 @@ public class Controller implements Initializable {
     }
 
     /**
-     * @author Sossio.
+     *
      */
     public void play2048(){
         Game2048Main game2048Main = new Game2048Main();
@@ -264,7 +261,7 @@ public class Controller implements Initializable {
     }
 
     /**
-     * The method will switch the user to the dashboard page
+     * the method will switch the user to the dashboard page
      * navigate to dashboard pages
      * @param e
      * @throws IOException
@@ -277,19 +274,19 @@ public class Controller implements Initializable {
                     renderDashboard(e, user);
                 } else {
                     error_msg.setText("Wrong email or password!");
-                    PauseTransition pause = new PauseTransition(Duration.seconds(4));
+                    PauseTransition pause = new PauseTransition(Duration.seconds(2));
                     pause.setOnFinished(a -> error_msg.setText(null));
                     pause.play();
                 }
             } else {
                 error_msg.setText("Email has wrong format!");
-                PauseTransition pause = new PauseTransition(Duration.seconds(4));
+                PauseTransition pause = new PauseTransition(Duration.seconds(2));
                 pause.setOnFinished(a -> error_msg.setText(null));
                 pause.play();
             }
         } else {
             error_msg.setText("Email or password is empty, please fill in fields!");
-            PauseTransition pause = new PauseTransition(Duration.seconds(4));
+            PauseTransition pause = new PauseTransition(Duration.seconds(2));
             pause.setOnFinished(a -> error_msg.setText(null));
             pause.play();
         }
@@ -308,18 +305,7 @@ public class Controller implements Initializable {
         createWorld = new CreateWorld();
         world = createWorld.init(this);
 
-        // Seat window
-        HBox hboxLR_seat = new HBox();
-        hboxLR_seat.getChildren().addAll(grid_left);
-        grid_left.setHgap(5);
-        grid_left.setVgap(5);
-        grid_business.setHgap(5);
-        grid_business.setVgap(5);
-        HBox hboxTLR_seat = new HBox();
-        hboxTLR_seat.getChildren().add(grid_business);
-        hboxTLR_seat.setAlignment(Pos.TOP_CENTER);
-        flight_seats_eco.getChildren().add(hboxLR_seat);
-        flights_seats_business.getChildren().add(hboxTLR_seat);
+
         //seatBox.getChildren().addAll(hboxLR_seat);
 
         // world map
@@ -344,9 +330,6 @@ public class Controller implements Initializable {
         setInfoIntoTableHistorik();
     } // the method will render dashboard page for user
 
-    /**
-     *
-     */
     private void lookUpForTable() {
 
     }
@@ -355,6 +338,17 @@ public class Controller implements Initializable {
      *
      */
     public void initializeFXML(){
+
+        // scrollpane seats
+        eco_scrollpane = (ScrollPane) root.lookup("#eco_scrollpane");
+        business_scrollpane = (ScrollPane) root.lookup("#business_scrollpane");
+        eco_scrollpane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        business_scrollpane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
+
+        flight_seats_eco = (AnchorPane) eco_scrollpane.getContent();
+        flights_seats_business = (AnchorPane) business_scrollpane.getContent();
+
         // user menu images
         map_menu_user = (ImageView)root.lookup("#map_menu_user");
         game_menu_user = (ImageView)root.lookup("#game_menu_user");
@@ -372,6 +366,7 @@ public class Controller implements Initializable {
         phone_number_issue_reg = (Label) root.lookup("#phone_number_issue_reg");
         password_issue_reg = (Label) root.lookup("#password_issue_reg");
         confirm_password_issue_reg = (Label) root.lookup("#confirm_password_issue_reg");
+
 
         // Purchase info
         card_nbr = (TextField) root.lookup("#card_nbr");
@@ -395,9 +390,6 @@ public class Controller implements Initializable {
             profilePicturePreview = (ImageView) root.lookup("#profilePicturePreview");
             profileSelector = (GridPane) root.lookup("#profileSelector");
             btnEditProfile = (Button) root.lookup("#btnEditProfile");
-
-            pfp_edit_error_msg = (Label) root.lookup("#pfp_edit_error_msg");
-            pfp_edit_info_msg = (Label) root.lookup("#pfp_edit_info_msg");
 
             profileFirstName.setText(user.getFirstName());
             profileLastName.setText(user.getLastName());
@@ -439,8 +431,7 @@ public class Controller implements Initializable {
         searchListAppear2 = (ListView<String>) root.lookup("#searchListAprear2");
         searchListAppear3 = (ListView<String>) root.lookup("#searchListAprear3");
         seat_nbr_seat_pnl = (Label) root.lookup("#seat_nbr_seat_pnl");
-        flight_seats_eco = (AnchorPane) root.lookup("#flight_seats_eco");
-        flights_seats_business = (AnchorPane) root.lookup("#flights_seats_business");
+
         pnlSeat = (AnchorPane) root.lookup("#pnlSeat");
         pnlPassager = (AnchorPane) root.lookup("#pnlPassanger");
         scrollFlights = (ScrollPane) root.lookup("#scrollFlights");
@@ -461,7 +452,6 @@ public class Controller implements Initializable {
     }
 
     /**
-     * Shortcut login to user dashboard
      * @param e
      * @throws IOException
      */
@@ -492,10 +482,9 @@ public class Controller implements Initializable {
         stage.setTitle("Test dashboard window");
         stage.setScene(scene);
         stage.show();
-    }
+    }// shortcut login to user dashboard
 
     /**
-     * The method will switch the user to the checking page
      * @param e
      * @throws IOException
      */
@@ -506,10 +495,9 @@ public class Controller implements Initializable {
         stage.setTitle("Checking window");
         stage.setScene(scene);
         stage.show();
-    }
+    }// the method will switch the user to the checking page
 
     /**
-     * The method will switch the user to the registration page
      * @param e
      * @throws IOException
      */
@@ -520,115 +508,101 @@ public class Controller implements Initializable {
         stage.setTitle("Registration window");
         stage.setScene(scene);
         stage.show();
-    }
+    }// the method will switch the user to the registration page
 
     /**
-     * The method will register the user and return to the login page.
-     * The method will also go in through nestled-if-statements to handle errors.
-     * @param e listens to register button.
-     * @throws SQLException if any sql issues occurs.
-     * @throws IOException if any io issues occurs.
-     * @author Khabib. Developed by Sossio and Khabib.
+     * @param e
+     * @throws SQLException
+     * @throws IOException
      */
-    public void registerUser(ActionEvent e) throws SQLException, IOException {
+    public void registeruser(ActionEvent e) throws SQLException, IOException {
         if (!first_name_reg.getText().isEmpty() && !last_name_reg.getText().isEmpty() && !address_reg.getText().isEmpty() && !emailaddress_reg.getText().isEmpty() && !phone_number_reg.getText().isEmpty() && !password_reg.getText().isEmpty() && !confirm_password_reg.getText().isEmpty()){
             if ((first_name_reg.getText().length() >= 3 && first_name_reg.getText().length() <= 30)){
                 if ((last_name_reg.getText().length() >= 3 && last_name_reg.getText().length() <= 30)){
                     if ((address_reg.getText().length() >= 5 && address_reg.getText().length() <= 60)){
                         if((emailaddress_reg.getText().length() >= 6 && emailaddress_reg.getText().length() <= 30)){
-                            if ((phone_number_reg.getText().length() == 10)){
-                                if (password_reg.getText().length() >= 8 && password_reg.getText().length() <= 20){
-                                    if (password_reg.getText().equals(confirm_password_reg.getText())){
-                                        if(emailaddress_reg.getText().contains("@") && (emailaddress_reg.getText().contains("gmail") || emailaddress_reg.getText().contains("hotmail") || emailaddress_reg.getText().contains("yahoo") || emailaddress_reg.getText().contains("outlook"))){
-                                            System.out.println("all fine!");
-                                            boolean ok = Connection.saveUser(first_name_reg.getText(), last_name_reg.getText(), address_reg.getText(), emailaddress_reg.getText(), phone_number_reg.getText(), password_reg.getText(), false);
-                                            if (ok) {
-                                                renderLoginPage(e, "The user is successfully registered!");
-                                                try {
-                                                    Connection.setProfilePicture("application/profiles/user.png", emailaddress_reg.getText());
-                                                } catch (SQLException ex) {
-                                                    ex.printStackTrace();
+                            if ((phone_number_reg.getText().length() == 12)){
+                                    if (password_reg.getText().length() >= 8 && password_reg.getText().length() <= 20){
+                                        if (password_reg.getText().equals(confirm_password_reg.getText())){
+                                            if(emailaddress_reg.getText().contains("@") && (emailaddress_reg.getText().contains("gmail") || emailaddress_reg.getText().contains("hotmail") || emailaddress_reg.getText().contains("yahoo") || emailaddress_reg.getText().contains("outlook"))){
+                                                boolean ok = Connection.saveUser(first_name_reg.getText(), last_name_reg.getText(), address_reg.getText(), emailaddress_reg.getText(), phone_number_reg.getText(), password_reg.getText(), false);
+                                                if (ok) {
+                                                    renderLoginPage(e, "successfully registered the user!");
+                                                } else {
+                                                    registration_error.setText("Couldn't register the information");
+                                                    PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                                                    pause.setOnFinished(a -> registration_error.setText(null));
+                                                    pause.play();
                                                 }
-                                            } else {
-                                                registration_error.setText("Could not register.");
-                                                PauseTransition pause = new PauseTransition(Duration.seconds(4));
-                                                pause.setOnFinished(a -> registration_error.setText(null));
-                                                pause.play();
+                                            }else {
+                                                System.out.println("Email type issue");
+                                                email_issue_reg.setText("Type issue [email]");
                                             }
                                         }else {
-                                            System.out.println("Email type issue");
-                                            email_issue_reg.setText("Format issue!");
-                                            PauseTransition pause = new PauseTransition(Duration.seconds(4));
-                                            pause.setOnFinished(a -> email_issue_reg.setText(null));
+                                            System.out.println("confirm password not much the actual password");
+                                            confirm_password_issue_reg.setText("Much issue [confirm password]");
+                                            PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                                            pause.setOnFinished(a -> confirm_password_issue_reg.setText(null));
                                             pause.play();
                                         }
                                     }else {
-                                        System.out.println("confirm password not much the actual password");
-                                        confirm_password_issue_reg.setText("Match issue!");
-                                        PauseTransition pause = new PauseTransition(Duration.seconds(4));
-                                        pause.setOnFinished(a -> confirm_password_issue_reg.setText(null));
+                                        System.out.println("password issue");
+                                        password_issue_reg.setText("Size issue 8-20");
+                                        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                                        pause.setOnFinished(a -> password_issue_reg.setText(null));
                                         pause.play();
                                     }
-                                }else {
-                                    System.out.println("password issue");
-                                    password_issue_reg.setText("Size issue 8-20!");
-                                    PauseTransition pause = new PauseTransition(Duration.seconds(4));
-                                    pause.setOnFinished(a -> password_issue_reg.setText(null));
-                                    pause.play();
-                                }
                             }else {
                                 System.out.println("phone number issue");
-                                phone_number_issue_reg.setText("Size issue 12 digit!");
-                                PauseTransition pause = new PauseTransition(Duration.seconds(4));
+                                phone_number_issue_reg.setText("size issue 12 digit");
+                                PauseTransition pause = new PauseTransition(Duration.seconds(2));
                                 pause.setOnFinished(a -> phone_number_issue_reg.setText(null));
                                 pause.play();
                             }
                         } else {
                             System.out.println("email address issue");
-                            email_issue_reg.setText("Size issue 6-30!");
-                            PauseTransition pause = new PauseTransition(Duration.seconds(4));
+                            email_issue_reg.setText("size issue 6-30");
+                            PauseTransition pause = new PauseTransition(Duration.seconds(2));
                             pause.setOnFinished(a -> email_issue_reg.setText(null));
                             pause.play();
                         }
                     }else {
                         System.out.println("address issue");
-                        address_issue_reg.setText("Size issue 5-60!");
-                        PauseTransition pause = new PauseTransition(Duration.seconds(4));
+                        address_issue_reg.setText("size issue 5-60");
+                        PauseTransition pause = new PauseTransition(Duration.seconds(2));
                         pause.setOnFinished(a -> address_issue_reg.setText(null));
                         pause.play();
                     }
                 } else {
-                    System.out.println("Last name issue");
-                    last_name_issue_reg.setText("Size issue 3-30!");
-                    PauseTransition pause = new PauseTransition(Duration.seconds(4));
+                    System.out.println("last name issue");
+                    last_name_issue_reg.setText("Size issue 3-30");
+                    PauseTransition pause = new PauseTransition(Duration.seconds(2));
                     pause.setOnFinished(a -> last_name_issue_reg.setText(null));
                     pause.play();
                 }
             } else {
-                name_issue_reg.setText("Size issue 3-30!");
-                PauseTransition pause = new PauseTransition(Duration.seconds(4));
+                name_issue_reg.setText("Size issue 3-30");
+                PauseTransition pause = new PauseTransition(Duration.seconds(2));
                 pause.setOnFinished(a -> name_issue_reg.setText(null));
                 pause.play();
             }
         }else {
-            registration_error.setText("Empty field issue!");
-            PauseTransition pause = new PauseTransition(Duration.seconds(4));
+            registration_error.setText("Empty field issue");
+            PauseTransition pause = new PauseTransition(Duration.seconds(2));
             pause.setOnFinished(x -> registration_error.setText(null));
             pause.play();
         }
-    }
+    }// the method will register the user and return to the login page
 
     /**
-     * The method will switch the user to the login page
      * @param e
      * @throws IOException
      */
     public void switchToLogin(ActionEvent e) throws IOException {
         renderLoginPage(e, null);
-    }
+    }// the method will switch the user to the login page
 
     /**
-     * Render login page
      * @param e
      * @param msg
      * @throws IOException
@@ -641,26 +615,20 @@ public class Controller implements Initializable {
         stage.setTitle("Login window");
         stage.setScene(scene);
         success_msg.setText(msg);
-        PauseTransition pause = new PauseTransition(Duration.seconds(6));
-        pause.setOnFinished(a -> success_msg.setText(null));
-        pause.play();
         stage.show();
-    }
+    }// render login page
 
     /**
-     * The method will show the flights list on the right side of the dashboard when a user choose a country
      * flight lists dashboard
      * @param flights
      */
     public void fillFlights (ArrayList <Flight> flights) {
         display_flight.getChildren().clear();
-        grid_left.getChildren().clear();
-        Stage infoStage = new Stage();
-        AtomicBoolean openedStage = new AtomicBoolean(false);
         ArrayList<Flight> compare = new ArrayList<>();
 
         if (flights != null) {
         for (int i = 0; i < flights.size();i++){
+
             StackPane stackholer = new StackPane();
             HBox hbox = new HBox(1);
             HBox hboxChildCenter = new HBox(1);
@@ -710,10 +678,12 @@ public class Controller implements Initializable {
             desTime.setStyle("-fx-font-weight: bold");
             desTime.setFill(Color.valueOf("#eee"));
 
+
             Label titleD = new Label();
             titleD.setMaxSize(50,40);
             titleD.setText(flights.get(i).getDestination_name());
             titleD.setStyle("-fx-text-fill: #999;");
+
 
             Label date = new Label();
             date.setText(flights.get(i).getDestination_time());
@@ -758,6 +728,21 @@ public class Controller implements Initializable {
             int finalI1 = i;
             // to click
             hbox.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+
+                grid_eco.getChildren().clear();
+                // Seat window
+                HBox hboxLR_seat = new HBox();
+                hboxLR_seat.getChildren().addAll(grid_eco);
+                grid_eco.setHgap(5);
+                grid_eco.setVgap(5);
+                grid_business.setHgap(5);
+                grid_business.setVgap(5);
+                HBox hboxTLR_seat = new HBox();
+                hboxTLR_seat.getChildren().add(grid_business);
+                hboxTLR_seat.setAlignment(Pos.TOP_CENTER);
+                flight_seats_eco.getChildren().add(hboxLR_seat);
+                flights_seats_business.getChildren().add(hboxTLR_seat);
+
                 for (int g = 0; g < display_flight.getChildren().size(); g++){
                     display_flight.getChildren().get(g).setOpacity(1);
                 }
@@ -773,7 +758,25 @@ public class Controller implements Initializable {
                 compare.add(flights.get(finalI1));
                 // create the seats for chosen flight
                 try {
-                    chooseSeat(60, 9);
+                    int[] seatNumbers = Connection.getSeatNumber(flights.get(finalI1).getId());
+                    boolean buildSucess = chooseSeat(seatNumbers[0], seatNumbers[1]);
+                    if(buildSucess){
+                       ArrayList<String> bookedSeats = Connection.getBookedSeats(flights.get(finalI1).getId());
+                       if (!bookedSeats.isEmpty()){
+                           for (int c = 0; c < grid_eco.getChildren().size(); c++){
+                               for (int bid = 0; bid < bookedSeats.size(); bid++){
+                                   System.out.println(grid_eco.getChildren().get(c).getId() + " grid id");
+                                   System.out.println(bookedSeats.get(bid) + " bookedSeat");
+                                   if (bookedSeats.get(bid).contains(grid_eco.getChildren().get(c).getId())){
+                                       grid_eco.getChildren().get(c).setOpacity(0.5);
+                                       grid_eco.getChildren().get(c).setDisable(true);
+                                       grid_eco.getChildren().get(c).setStyle("-fx-background-color: #fb3856");
+                                       break;
+                                   }
+                               }
+                           }
+                       }
+                    }
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
@@ -795,12 +798,8 @@ public class Controller implements Initializable {
         }else {
             System.out.println("flights list is null");
         }
-    }
+    } // the method will show the flights list on the right side of the dashboard when a user choose a country
 
-    /**
-     * @throws SQLException if any sql issues occurs.
-     * @author Kasper. Developed by Sossio.
-     */
     public void editProfile() throws SQLException {
         if (editingProfile == false) {
             profileFirstName.setDisable(false);
@@ -812,8 +811,8 @@ public class Controller implements Initializable {
             btnEditProfile.setText("Confirm");
             editingProfile = true;
         } else {
+
             User editedUser = user;
-            String rollbackToOldEmailText = user.getEmail();
             Boolean edited = false;
 
             if (!profileFirstName.getText().isEmpty()) {
@@ -842,24 +841,11 @@ public class Controller implements Initializable {
             }
 
             if (edited) {
-                System.out.println("Updating user...");
+                System.out.println("Updating user..");
                 user = editedUser;
-                boolean okToEditProfile = Connection.updateUser(user);
-
-                if(okToEditProfile) {
-                    pfp_edit_info_msg.setText("Profile is updated!");
-                    PauseTransition pause = new PauseTransition(Duration.seconds(4));
-                    pause.setOnFinished(a -> pfp_edit_info_msg.setText(null));
-                    pause.play();
-                } else {
-                    pfp_edit_error_msg.setText("New email is taken!");
-                    profileEmail.setText(Connection.getUserEmail(user.getUserId()));
-                    PauseTransition pause = new PauseTransition(Duration.seconds(4));
-                    pause.setOnFinished(a -> pfp_edit_error_msg.setText(null));
-                    pause.play();
-                }
+                Connection.updateUser(user);
             } else {
-                System.out.println("Edited is false!");
+                System.out.println("ypoo");
             }
 
             profileFirstName.setDisable(true);
@@ -873,11 +859,8 @@ public class Controller implements Initializable {
         }
     }
 
-    /**
-     *
-     * @author Kasper.
-     */
     public void changeImage() {
+
         profileSelector.setVisible(true);
         dir = new File("src/main/resources/application/profiles/64x64");
         files = dir.listFiles();
@@ -890,11 +873,6 @@ public class Controller implements Initializable {
         }
     }
 
-    /**
-     *
-     * @param event
-     * @author Kasper.
-     */
     public void clickGrid(javafx.scene.input.MouseEvent event) {
         Node clickedNode = event.getPickResult().getIntersectedNode();
         if (clickedNode != profileSelector) {
@@ -913,10 +891,12 @@ public class Controller implements Initializable {
             System.out.println(profilePic);
 
             try {
-                Connection.updateProfilePicture(profilePic, user);
+                Connection.setProfilePicture(profilePic, user);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+
+
 
             profileSelector.setVisible(false);
             System.out.println("Mouse clicked cell: " + colIndex + " And: " + rowIndex);
@@ -928,31 +908,41 @@ public class Controller implements Initializable {
      * @param econonySeats
      * @param businessSeats
      */
-    public void chooseSeat(int econonySeats, int businessSeats) throws InterruptedException {
-        grid_left.getChildren().removeAll();
+    public boolean chooseSeat(int econonySeats, int businessSeats) throws InterruptedException {
+        grid_eco.getChildren().removeAll();
         grid_business.getChildren().removeAll();
         // 72/6 = 12
         // 12 row
         // 6 column
         boolean business = false;
         //
-        for(int i = 0;i < econonySeats/10; i++){ // cal
-            for(int j = 0;j <econonySeats/6; j++){ // row
-                business = false;
-                build_eco_seats(i,j, business);
+        if (econonySeats%6 == 0){
+            for(int row = 0;row < econonySeats/6; row++){ // cal
+                for(int col = 0;col < 6; col++){ // row
+                    build_eco_seats(row,col, business); // business is false for now
+                }
             }
         }
+
+
+
+        /*
         for(int i = 0;i < businessSeats/3; i++){ // cal
             for(int j = 0;j <businessSeats/3; j++){ // row
                 business = true;
                 build_eco_seats(i,j, business);
             }
         }
+
+         */
+
+
+
         Instant start = Instant.now();
         Thread.sleep(1000);
         Instant end = Instant.now();
         System.out.println("timer: " + start + " end: " + end); // prints PT1M3.553S
-
+        return true;
     }// the method will show the chosen seat on the screen
 
     /**
@@ -960,47 +950,61 @@ public class Controller implements Initializable {
      * @param rowIndex
      * @param business
      */
-    public void build_eco_seats(int columnIndex, int rowIndex, boolean business) {
-        Label label = new Label();
-        label.setMinWidth(30);
-        label.setMinHeight(30);
-        label.setText(label.getId());
-        label.setBackground(new Background(new BackgroundFill(Color.rgb(223, 223, 222), new CornerRadii(5), Insets.EMPTY)));
-        label.setBorder(new Border(new BorderStroke(Color.rgb(247, 245, 242), BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(1))));
-        label.setId(rowIndex+ " " + columnIndex);
+    public void build_eco_seats(int rowIndex, int columnIndex, boolean business) {
+
         //grid_left.setColumnIndex(label, columnIndex);
+        /*
         if (business){
             System.out.println("business: " + business);
             grid_business.add(label, columnIndex,rowIndex);
-        }
 
-        else if(!business) {
-            System.out.println("business: " + business);
-            if (grid_left.getColumnCount() == 3 && grid_left.getRowCount() == 0){
+        }
+            */
+       if(!business) {
+           Label label = new Label();
+           label.setMinWidth(30);
+           label.setMinHeight(30);
+           label.setText(label.getId());
+           label.setBackground(new Background(new BackgroundFill(Color.rgb(223, 223, 222), new CornerRadii(5), Insets.EMPTY)));
+           label.setBorder(new Border(new BorderStroke(Color.rgb(247, 245, 242), BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(1))));
+           label.setId("E " + rowIndex+ " " + columnIndex);
+
+           System.out.println(grid_eco.getColumnCount() + " count col");
+           System.out.println(grid_eco.getRowCount() + " count row");
+            if (grid_eco.getColumnCount() == 2 && grid_eco.getRowCount() == 1){
                 System.out.println("column 3");
-                grid_left.add(label, columnIndex, rowIndex);
-                grid_left.setMargin(label, new Insets(0, 0, 0, 20));
-            } else if (grid_left.getColumnCount() == 4 && grid_left.getRowCount() > 0) {
-                grid_left.add(label, columnIndex, rowIndex);
+                grid_eco.add(label, columnIndex, rowIndex);
+                grid_eco.setMargin(label, new Insets(0, 20, 0, 0));
+            } else if (grid_eco.getColumnCount() == 3 && grid_eco.getRowCount() > 1) {
+                System.out.println("column 4");
+                grid_eco.setMargin(label, new Insets(0, 0, 0, 20));
+                grid_eco.add(label, columnIndex, rowIndex);
             }
             else {
-                grid_left.setMargin(label, new Insets(0, 0, 0, 0));
-                grid_left.add(label, columnIndex, rowIndex);
+                grid_eco.add(label, columnIndex, rowIndex);
             }
+
+
+           //grid_left.getColumnCount();
+           label.setOnMouseClicked(e ->{
+               seat_nbr_seat_pnl.setText(label.getId());
+               // seat color change
+               for (int i = 0; i < grid_eco.getChildren().size(); i++){
+                   grid_eco.getChildren().get(i).setOpacity(1);
+                   if (!Objects.equals(grid_eco.getChildren().get(i).getId(), label.getId())){
+                       grid_eco.getChildren().get(i).setOpacity(0.5);
+                   }
+               }
+           });
         }
 
-        //grid_left.getColumnCount();
-        label.setOnMouseClicked(e ->{
-            seat_nbr_seat_pnl.setText(label.getId());
-            // seat color change
-            for (int i = 0; i < grid_left.getChildren().size(); i++){
-                grid_left.getChildren().get(i).setOpacity(1);
-                if (!Objects.equals(grid_left.getChildren().get(i).getId(), label.getId())){
-                    grid_left.getChildren().get(i).setOpacity(0.5);
-                }
-            }
-        });
+
     }
+
+    /**
+     * Purchase  ticket.
+     * @param e
+     */
 
     /**
      * @param e
@@ -1073,7 +1077,7 @@ public class Controller implements Initializable {
                 pnlPayment.toFront();
             }else {
                msg_seat_pnl.setText("Empty field issue!");
-               PauseTransition pause = new PauseTransition(Duration.seconds(4));
+               PauseTransition pause = new PauseTransition(Duration.seconds(2));
                pause.setOnFinished(a -> msg_seat_pnl.setText(null));
                pause.play();
             }
@@ -1086,9 +1090,9 @@ public class Controller implements Initializable {
         }
     }
 
-    /**
-     *
-     */
+
+
+
     public void restore_psgr_info(){
         first_name_seat_pnl.clear();
         last_name_seat_pnl.clear();
@@ -1115,12 +1119,17 @@ public class Controller implements Initializable {
             try {
                 User user = Connection.authenticationAdmin(login_email.getText(), login_pass.getText());
                 if (user != null) {
+
+
+
                     root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("admin/AdminView.fxml")));
                     stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
                     scene = new Scene(root);
                     stage.setTitle("Admin window");
                     stage.setScene(scene);
                     stage.show();
+
+
 
                     memberListView = (ListView<String>) root.lookup("#memberListView");
                     if(memberListView != null)
@@ -1144,6 +1153,8 @@ public class Controller implements Initializable {
                     ticketListView = (ListView<String>) root.lookup("#ticketListView");
                     if(ticketListView != null)
                     {
+
+
                         ArrayList<Book> ticket = Connection.searchTicket();
                         ArrayList<String> temp = new ArrayList<>();
                         for(Book item: ticket)
@@ -1157,7 +1168,7 @@ public class Controller implements Initializable {
                     }
                 } else {
                     error_msg.setText("Wrong email or pass!");
-                    PauseTransition pause = new PauseTransition(Duration.seconds(4));
+                    PauseTransition pause = new PauseTransition(Duration.seconds(2));
                     pause.setOnFinished(a -> error_msg.setText(null));
                     pause.play();
                 }
@@ -1184,6 +1195,7 @@ public class Controller implements Initializable {
         }
         else if(e.getSource() == iconCloseSeat){
             pnlSeat.toBack();
+
             restore_psgr_info();
         }
         else if (e.getSource() == iconFlight) {
@@ -1214,6 +1226,7 @@ public class Controller implements Initializable {
             game_menu_user.setOpacity(0.5);
             support_menu_user.setOpacity(1);
         }
+
     }
 
     /**
@@ -1222,19 +1235,23 @@ public class Controller implements Initializable {
      * @throws IOException
      */
     public void adminDev(ActionEvent e) throws IOException {
-        if(e.getSource() == logoutButton) {
+        if(e.getSource() == logoutButton)
+        {
             switchToLogin(e);
         }
 
-        else if(e.getSource() == flightsBtn) {
+        else if(e.getSource() == flightsBtn)
+        {
             pnlFlights.toFront();
         }
 
-        else if(e.getSource() == ticketsBtn) {
+        else if(e.getSource() == ticketsBtn)
+        {
             pnlTickets.toFront();
         }
 
-        else if(e.getSource() == membersBtn) {
+        else if(e.getSource() == membersBtn)
+        {
             pnlMember.toFront();
         }
 
@@ -1297,8 +1314,8 @@ public class Controller implements Initializable {
                 searchListAppear.setItems(searchAprear);
                 searchListAppear.getSelectionModel().selectedItemProperty().addListener(e ->{
                     search_f_name.setText(searchListAppear.getSelectionModel().getSelectedItem());
-                    searchListAppear.setVisible(false);
-                });
+                        searchListAppear.setVisible(false);
+            });
             }
         }
     }
@@ -1378,9 +1395,6 @@ public class Controller implements Initializable {
 
     //----------------- Support -----------------//
 
-    /**
-     * @param e
-     */
     public void support_event_handler(ActionEvent e){
         support.supportInfo(e);
     }
@@ -1388,9 +1402,6 @@ public class Controller implements Initializable {
     //----------------- History  -----------------//
 
 
-    /**
-     *
-     */
     public void setInfoIntoTableHistorik(){ // the method calls from user dashboard to load everything.
         sremove_btn_historik = (Button) root.lookup("#sremove_btn_historik");
         mremove_btn_historik = (Button) root.lookup("#mremove_btn_historik");
@@ -1512,6 +1523,7 @@ public class Controller implements Initializable {
 
         }
     }
+
 
     //----------------- GETTERS AND SETTERS -----------------//
     public Scene getScene() {
