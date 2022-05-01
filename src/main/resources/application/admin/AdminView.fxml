@@ -20,28 +20,28 @@
                   <Image url="@../image/logout.png" />
                </image>
             </ImageView>
-            <Button fx:id="logoutButton" layoutX="6.0" layoutY="538.0" mnemonicParsing="false" onAction="#adminDev" opacity="0.0" prefHeight="44.0" prefWidth="54.0" text="Logout" />
+            <Button fx:id="logoutButton" layoutX="6.0" layoutY="538.0" mnemonicParsing="false" onAction="#userDev" opacity="0.0" prefHeight="44.0" prefWidth="54.0" text="Logout" />
             <Text fill="WHITE" layoutX="16.0" layoutY="187.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tickets" wrappingWidth="38.0" />
             <ImageView fitHeight="86.0" fitWidth="54.0" layoutX="8.0" layoutY="212.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../image/airplane.png" />
                </image>
             </ImageView>
-            <Button fx:id="flightsBtn" layoutX="22.0" layoutY="216.0" mnemonicParsing="false" onAction="#adminDev" opacity="0.0" prefHeight="44.0" prefWidth="54.0" text="View fligts" />
+            <Button fx:id="flightsBtn" layoutX="22.0" layoutY="216.0" mnemonicParsing="false" onAction="#userDev" opacity="0.0" prefHeight="44.0" prefWidth="54.0" text="View fligts" />
             <Text fill="WHITE" layoutX="14.0" layoutY="289.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Flights" wrappingWidth="38.0" />
             <ImageView fitHeight="54.0" fitWidth="54.0" layoutX="6.0" layoutY="323.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../image/people.png" />
                </image>
             </ImageView>
-            <Button fx:id="membersBtn" layoutX="6.0" layoutY="309.0" mnemonicParsing="false" onAction="#adminDev" opacity="0.0" prefHeight="83.0" prefWidth="54.0" text="View members" />
+            <Button fx:id="membersBtn" layoutX="6.0" layoutY="309.0" mnemonicParsing="false" onAction="#userDev" opacity="0.0" prefHeight="83.0" prefWidth="54.0" text="View members" />
             <Text fill="WHITE" layoutX="6.0" layoutY="404.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Members" wrappingWidth="54.0" />
             <ImageView fitHeight="75.0" fitWidth="65.0" layoutX="3.0" layoutY="103.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../image/seo.png" />
                </image>
             </ImageView>
-            <Button fx:id="ticketsBtn" layoutX="8.0" layoutY="109.0" mnemonicParsing="false" onAction="#adminDev" opacity="0.0" prefHeight="54.0" prefWidth="54.0" style="-fx-background-color: #ff;" text="tikets" />
+            <Button fx:id="ticketsBtn" layoutX="8.0" layoutY="109.0" mnemonicParsing="false" onAction="#userDev" opacity="0.0" prefHeight="54.0" prefWidth="54.0" style="-fx-background-color: #ff;" text="tikets" />
          </children>
       </Pane>
       <Text fill="#0059ff" layoutX="411.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to JetStream AdminView" wrappingWidth="340.39453125">

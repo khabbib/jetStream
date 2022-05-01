@@ -1,15 +1,25 @@
 package application.model;
 
+import application.Controller;
+import javafx.animation.PauseTransition;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.util.Duration;
+
 import java.util.Optional;
 
 /**
  *  This class is used to warn if the user really want to confirm an action.
  */
 public class ConfirmActions {
+    private Controller controller;
+    public ConfirmActions(Controller controller){
+        this.controller = controller;
+    }
     /**
      * The following method will open a confirmation window to the user to confirm an action.
      * @param title // is the conformation windows title
@@ -41,5 +51,20 @@ public class ConfirmActions {
 
 
         return confirm;
+    }
+
+    // user global notification
+    public void notifyError(String msgs) {
+        Label msg = controller.getNotifyDisplay();
+        Pane box = controller.getNotifyBox();
+        box.setVisible(true);
+        msg.setText(msgs);
+        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+        pause.setOnFinished(a -> {
+            box.setVisible(false);
+            msg.setText(null);
+        });
+        pause.play();
+
     }
 }

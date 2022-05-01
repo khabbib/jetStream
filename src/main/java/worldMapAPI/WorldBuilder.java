@@ -1,6 +1,7 @@
 package worldMapAPI;
 
 import application.Controller;
+import application.database.Connection;
 import worldMapAPI.World.Resolution;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
@@ -188,8 +189,8 @@ public class WorldBuilder<B extends WorldBuilder<B>> {
         return (B)this;
     }
 
-    public final World build(Controller controller) {
-        final World CONTROL = new World(resolution,controller);
+    public final World build(Controller controller, Connection connection) {
+        final World CONTROL = new World(resolution,controller, connection);
 
         for (String key : properties.keySet()) {
             if ("prefSize".equals(key)) {

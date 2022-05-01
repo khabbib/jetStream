@@ -1,6 +1,7 @@
 package worldMapAPI;
 
 import application.Controller;
+import application.database.Connection;
 import application.model.Flight;
 import javafx.application.Platform;
 import javafx.beans.DefaultProperty;
@@ -57,6 +58,7 @@ import static javafx.scene.input.MouseEvent.MOUSE_RELEASED;
 
 @DefaultProperty("children")
 public class World extends Region {
+    private Connection connection;
     public enum Resolution { HI_RES, LO_RES };
     private static final StyleablePropertyFactory<World> FACTORY          = new StyleablePropertyFactory<>(Region.getClassCssMetaData());
     private static final String                          HIRES_PROPERTIES = "worldMapAPI/hires.properties";
@@ -115,8 +117,9 @@ public class World extends Region {
 
 
     // ******************** Constructors **************************************
-    public World(final Resolution RESOLUTION,Controller controller) {
+    public World(final Resolution RESOLUTION,Controller controller, Connection connection) {
         this.controller = controller;
+        this.connection = connection;
         if (controller == null) {
             System.out.println("this controller");
         }
@@ -476,20 +479,18 @@ public class World extends Region {
 
 
                     //game.checkAnswer(COUNTRY_NAME);
-                    try {
-                        getFlights(convert(COUNTRY_NAME));
-                        //Controller.setOutput_info(NewScene.showNewScene(COUNTRY_NAME, resor));
-                        //Controller.fyllTable(NewScene.showNewScene(COUNTRY_NAME, resor));
-                        if (controller == null) {
-                            System.out.println("Null controller");
-                        }
+                    flights = connection.seachFlightFromSearchField(convert(COUNTRY_NAME));
+                    if (!flights.isEmpty()){
                         controller.fillFlights(flights);
-
-
-                    } catch (SQLException e) {
-                        e.printStackTrace();
+                    }else {
+                        controller.fillFlights(null);
                     }
                     color = getSelectedColor();
+                    //getFlights(convert(COUNTRY_NAME));
+                    //Controller.setOutput_info(NewScene.showNewScene(COUNTRY_NAME, resor));
+                    //Controller.fyllTable(NewScene.showNewScene(COUNTRY_NAME, resor));
+
+
                 }
                 formerSelectedCountry = getSelectedCountry();
             } else {
@@ -596,47 +597,6 @@ public class World extends Region {
             group.relocate((getWidth() - width) * 0.5, (getHeight() - height) * 0.5);
 
             pane.setCache(false);
-        }
-    }
-
-    public static ArrayList<Flight> getFlights(String country) throws SQLException {
-        Connection con = getDatabaseConnection();
-        Statement stmt = con.createStatement();
-        flights.clear();
-        stmt.executeUpdate("SET search_path TO jetstream;");
-        ResultSet flight = stmt.executeQuery("select * from flight where f_departure_name = '" + country + "';");
-        while (flight.next()){
-            String id_get = flight.getString("f_id");
-            String departure_name_get = flight.getString(("f_departure_name"));
-            String departure_date_get = flight.getString("f_departure_date");
-            String departure_time_get = flight.getString("f_departure_time");
-            String destination_name_get = flight.getString("f_destination_name");
-            String destination_date_get = flight.getString("f_destination_date");
-            String destination_time_get = flight.getString("f_destination_time");
-            String price_get = flight.getString("f_price");
-            //System.out.println("Fetched info: \nid: " + id_get + "\nfrom: " + departure_name_get + "\ndestination: " + destination_name_get);
-            flights.add(new  Flight(id_get,departure_name_get,departure_date_get,departure_time_get, destination_name_get,destination_date_get,destination_time_get,price_get));
-        }
-
-        con.close();
-        stmt.close();
-        return flights;
-    }
-
-    public static Connection getDatabaseConnection() {
-
-        String url = "jdbc:postgresql://pgserver.mau.se:5432/am2510";
-        String user = "am2510";
-        String password = "zyvl0ir7";
-
-        Connection con = null;
-
-        try {
-            con = DriverManager.getConnection(url, user, password);
-            return con;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
         }
     }
 

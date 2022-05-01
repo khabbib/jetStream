@@ -43,7 +43,7 @@
                         <Image url="@../image/user.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="iconProfile" mnemonicParsing="false" onAction="#testDev" opacity="0.0" prefHeight="45.0" prefWidth="44.0">
+                  <Button fx:id="iconProfile" mnemonicParsing="false" onAction="#userDev" opacity="0.0" prefHeight="45.0" prefWidth="44.0">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -62,7 +62,7 @@
                               <ColorAdjust brightness="1.0" />
                            </effect>
                         </ImageView>
-                        <Button fx:id="iconFlight" mnemonicParsing="false" onAction="#testDev" opacity="0.0" prefHeight="45.0" prefWidth="44.0">
+                        <Button fx:id="iconFlight" mnemonicParsing="false" onAction="#userDev" opacity="0.0" prefHeight="45.0" prefWidth="44.0">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -79,7 +79,7 @@
                               <ColorAdjust brightness="1.0" />
                            </effect>
                         </ImageView>
-                        <Button fx:id="iconHistorik" mnemonicParsing="false" onAction="#testDev" opacity="0.0" prefHeight="45.0" prefWidth="44.0">
+                        <Button fx:id="iconHistorik" mnemonicParsing="false" onAction="#userDev" opacity="0.0" prefHeight="45.0" prefWidth="44.0">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -96,7 +96,7 @@
                               <ColorAdjust brightness="1.0" />
                            </effect>
                         </ImageView>
-                        <Button fx:id="iconGame" mnemonicParsing="false" onAction="#testDev" opacity="0.0" prefHeight="45.0" prefWidth="44.0">
+                        <Button fx:id="iconGame" mnemonicParsing="false" onAction="#userDev" opacity="0.0" prefHeight="45.0" prefWidth="44.0">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -113,7 +113,7 @@
                               <ColorAdjust brightness="1.0" />
                            </effect>
                         </ImageView>
-                        <Button fx:id="iconSupport" layoutX="7.0" layoutY="7.0" mnemonicParsing="false" onAction="#testDev" opacity="0.0" prefHeight="45.0" prefWidth="44.0">
+                        <Button fx:id="iconSupport" layoutX="7.0" layoutY="7.0" mnemonicParsing="false" onAction="#userDev" opacity="0.0" prefHeight="45.0" prefWidth="44.0">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -852,7 +852,7 @@
                   <ColorAdjust brightness="-0.05" contrast="0.04" hue="0.16" saturation="0.59" />
                </effect>
             </ImageView>
-            <Button fx:id="iconCloseSeat" layoutX="1076.0" layoutY="19.0" mnemonicParsing="false" onAction="#testDev" opacity="0.0" prefHeight="32.0" prefWidth="28.0" />
+            <Button fx:id="iconCloseSeat" layoutX="1076.0" layoutY="19.0" mnemonicParsing="false" onAction="#userDev" opacity="0.0" prefHeight="32.0" prefWidth="28.0" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="pnlFlight" layoutX="65.0" prefHeight="700.0" prefWidth="1126.0" style="-fx-background-color: #112;">
@@ -918,6 +918,14 @@
                               <Insets />
                            </HBox.margin>
                         </TextField>
+                        <ImageView fx:id="exchange_search_flight" fitHeight="27.0" fitWidth="25.0" onMouseClicked="#change_search_info" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/share.png" />
+                           </image>
+                           <effect>
+                              <ColorAdjust brightness="1.0" contrast="0.21" hue="-0.36" saturation="-0.38" />
+                           </effect>
+                        </ImageView>
                         <TextField fx:id="disc_input_flight" layoutX="10.0" layoutY="10.0" onKeyTyped="#destinationNameAppear" prefHeight="34.0" prefWidth="174.0" promptText="To" style="-fx-background-color: #151D3B; -fx-text-fill: #eee;" />
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                            <children>
@@ -944,7 +952,7 @@
                   </HBox>
                </children>
             </AnchorPane>
-            <CheckBox layoutX="125.0" layoutY="561.0" mnemonicParsing="false" text="Round-trip" textFill="#b9b9b9" />
+            <CheckBox layoutX="125.0" layoutY="561.0" mnemonicParsing="false" stylesheets="@../Styles/checkbox.css" text="Round-trip" textFill="#b9b9b9" />
             <ListView fx:id="searchListAppear2" layoutX="52.0" layoutY="647.0" prefHeight="50.0" prefWidth="299.0" style="-fx-background-color: #151D3B; -fx-background-radius: 5;" visible="false">
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -991,5 +999,11 @@
             </ImageView>
          </children>
       </AnchorPane>
+      <Pane fx:id="msgBox_user_dashboard" layoutX="105.0" layoutY="12.0" prefHeight="48.0" prefWidth="480.0" visible="false">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d62054" height="46.0" layoutY="1.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="480.0" />
+            <Label fx:id="notify_user_dashboard" layoutX="14.0" layoutY="16.0" text="Message" textFill="WHITE" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

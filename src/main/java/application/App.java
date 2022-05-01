@@ -10,7 +10,6 @@ import javafx.stage.Stage;
 
 import java.util.Objects;
 
-import static javafx.application.Application.launch;
 
 /**
  * This class executes the program.

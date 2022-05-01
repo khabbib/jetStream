@@ -1,6 +1,7 @@
 package application.model;
 
 import application.Controller;
+import application.database.Connection;
 import worldMapAPI.*;
 import javafx.scene.paint.Color;
 
@@ -16,7 +17,7 @@ public class CreateWorld {
      * @param controller
      * @return
      */
-    public World init(Controller controller) {
+    public World init(Controller controller, Connection connection) {
         world = WorldBuilder.create()
                 .resolution(World.Resolution.HI_RES)
                 .backgroundColor(Color.web("#0c0c1a"))
@@ -28,7 +29,7 @@ public class CreateWorld {
                 //.selectedColor(Color.MAGENTA)
                 .zoomEnabled(true)
                 .selectionEnabled(true)
-                .build(controller);
+                .build(controller, connection);
 
         return world;
     }

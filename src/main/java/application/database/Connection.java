@@ -1,5 +1,6 @@
 package application.database;
 
+import application.Controller;
 import application.model.*;
 import javafx.scene.image.Image;
 
@@ -10,6 +11,10 @@ import java.util.ArrayList;
  * This class connects java to pgadmin to claim data from database.
  */
 public class Connection {
+    private Controller controller;
+    public Connection(Controller controller) {
+        this.controller = controller;
+    }
 
     /**
      * Get the database connection
@@ -58,7 +63,7 @@ public class Connection {
      * @param user
      * @throws SQLException
      */
-    public static void updateUser(User user) throws SQLException {
+    public  void updateUser(User user) throws SQLException {
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
         stmt.executeUpdate("SET search_path TO jetstream;");
@@ -71,7 +76,7 @@ public class Connection {
      * @param password
      * @return
      */
-    public static User authenticationUser(String email, String password){
+    public  User authenticationUser(String email, String password){
         User user = null;
         try {
             java.sql.Connection con = getDatabaseConnection();
@@ -98,7 +103,7 @@ public class Connection {
      * @param password
      * @return
      */
-    public static User authenticationAdmin(String email, String password){
+    public  User authenticationAdmin(String email, String password){
         User user = null;
         try {
             java.sql.Connection con = getDatabaseConnection();
@@ -119,68 +124,7 @@ public class Connection {
         return user;
     }
 
-    /**
-     * get the user with ID
-     * @param user_id
-     * @return
-     */
-    public static User getUserWithID(int user_id) {
-        User user = null;
-        try {
-            java.sql.Connection con = getDatabaseConnection();
-            Statement stmt = con.createStatement();
-            stmt.executeUpdate("SET search_path TO jetstream;");
-            ResultSet rs = stmt.executeQuery("select * from userr where u_id = '" + user_id +"'");
-            while (rs.next()){
-                user = new User(rs.getString("u_id"), rs.getString("u_l_name"), rs.getString("u_f_name"), rs.getString("u_address"), rs.getString("u_email"), rs.getString("u_phone_nr"), rs.getString("u_password"), rs.getBoolean("u_isAdmin"));
-                System.out.println(rs.getString("u_password") + " from database");
-            }
-            con.close();
-            stmt.close();
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-        return user;
-    }
-
     // ------------------------- SEARCH FLIGHTS ------------------------- //
-
-    /**
-     * @param departure
-     * @param destination
-     * @return
-     */
-    public static ArrayList<Flight> searchFlight(String departure, String destination) {
-        ArrayList<Flight> flights = new ArrayList<>();
-        try {
-
-            java.sql.Connection con = getDatabaseConnection();
-            Statement stmt = con.createStatement();
-            ResultSet flight;
-
-            flights.clear();
-            stmt.executeUpdate("SET search_path TO jetstream;");
-            flight = stmt.executeQuery("select * from flight where f_departure_name = '" + departure + "' and f_destination_name = '" + destination + "';");
-
-            while (flight.next()){
-                String id_get = flight.getString("f_id");
-                String departure_name_get = flight.getString(("f_departure_name"));
-                String departure_date_get = flight.getString("f_departure_date");
-                String departure_time_get = flight.getString("f_departure_time");
-                String destination_name_get = flight.getString("f_destination_name");
-                String destination_date_get = flight.getString("f_destination_date");
-                String destination_time_get = flight.getString("f_destination_time");
-                String price_get = flight.getString("f_price");
-                //System.out.println("Fetched info: \nid: " + id_get + "\nfrom: " + departure_name_get + "\ndestination: " + destination_name_get);
-                flights.add(new Flight(id_get,departure_name_get,departure_date_get,departure_time_get, destination_name_get,destination_date_get,destination_time_get,price_get));
-            }
-            con.close();
-            stmt.close();
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-        return flights;
-    }
 
     /**
      * @param departure
@@ -188,16 +132,19 @@ public class Connection {
      * @param date
      * @return
      */
-    public static ArrayList<Flight> searchFlight(String departure, String destination, String date) {
+    public ArrayList<Flight> searchFlight(String departure, String destination, String date) {
         ArrayList<Flight> flights = new ArrayList<>();
         try {
-
             java.sql.Connection con = getDatabaseConnection();
             Statement stmt = con.createStatement();
-
+            ResultSet flight;
             flights.clear();
             stmt.executeUpdate("SET search_path TO jetstream;");
-            ResultSet flight = stmt.executeQuery("select * from flight where f_departure_name = '" + departure + "' and f_destination_name = '"+destination+"' and f_departure_date = '"+ date+"';");
+            if (date != null){
+                flight = stmt.executeQuery("select * from flight where f_departure_name = '" + departure + "' and f_destination_name = '"+destination+"' and f_departure_date = '"+ date+"';");
+            }else {
+                flight = stmt.executeQuery("select * from flight where f_departure_name = '" + departure + "' and f_destination_name = '"+destination+"';");
+            }
 
             while (flight.next()){
                 String id_get = flight.getString("f_id");
@@ -223,8 +170,9 @@ public class Connection {
      * @param name
      * @return
      */
-    public static ArrayList<Flight> seachFlightFromSearchField(String name) {
+    public ArrayList<Flight> seachFlightFromSearchField(String name) {
         ArrayList<Flight> flights = new ArrayList<>();
+
         try {
             String convert = name.toLowerCase();
             String searchTarget = convert.substring(0, 1).toUpperCase() + convert.substring(1); // convert first character to Uppercase
@@ -262,7 +210,7 @@ public class Connection {
      * @param business
      * @return
      */
-    public static boolean savePurchasedTicket(String u_id, String flight_id, String rfc, String date, String seatNbr, boolean business) {
+    public  boolean savePurchasedTicket(String u_id, String flight_id, String rfc, String date, String seatNbr, boolean business) {
         boolean saved = false;
         try {
             java.sql.Connection con = getDatabaseConnection();
@@ -292,7 +240,7 @@ public class Connection {
      * @return
      * @throws SQLException
      */
-    public static Image getProfilePicture(User user) throws SQLException {
+    public  Image getProfilePicture(User user) throws SQLException {
         Image image = null;
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
@@ -311,7 +259,7 @@ public class Connection {
      * @param user
      * @throws SQLException
      */
-    public static void setProfilePicture(String string, User user) throws SQLException {
+    public  void setProfilePicture(String string, User user) throws SQLException {
         Image image = null;
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
@@ -322,7 +270,7 @@ public class Connection {
     /**
      * @return
      */
-    public static ArrayList<Book> searchTicket() {
+    public  ArrayList<Book> searchTicket() {
         ArrayList<Book> flights = new ArrayList<>();
         try {
 
@@ -353,7 +301,7 @@ public class Connection {
     /**
      * @return
      */
-    public static ArrayList<User> searchMember() {
+    public  ArrayList<User> searchMember() {
         ArrayList<User> members = new ArrayList<>();
         try {
 
@@ -394,7 +342,7 @@ public class Connection {
      * @return
      */
     //////// fyl table history ///////////
-    public static ArrayList<UserHistory> searchDataForTableHistory(int userID) {
+    public ArrayList<UserHistory> searchDataForTableHistory(int userID) {
         ArrayList<UserHistory> flights = new ArrayList<>();
         try {
 
@@ -417,7 +365,6 @@ public class Connection {
                 String date_purchased_ticket = flight.getString("b_date"); // temporary can be the destination date later it should be changed to real date from booked table
                 double price = Double.parseDouble(flight.getString("f_price"));
                 flights.add(new UserHistory(i, compnay, model, referenceNo, f_id, from, to, seat, date_purchased_ticket, price));
-
                 i++;
             }
             con.close();
@@ -432,7 +379,7 @@ public class Connection {
      * @param rfc_col_table_historik
      * @return
      */
-    public static boolean deleteHistoryByRFC(String rfc_col_table_historik) {
+    public boolean deleteHistoryByRFC(String rfc_col_table_historik) {
         boolean deleted = false;
         try {
             java.sql.Connection con = Connection.getDatabaseConnection();
@@ -499,7 +446,7 @@ public class Connection {
      * @param id
      * @return
      */
-    public static int[] getSeatNumber(String id) {
+    public  int[] getSeatNumber(String id) {
         int[] seats = new int[2];
         try {
             java.sql.Connection con = Connection.getDatabaseConnection();
@@ -522,7 +469,7 @@ public class Connection {
         return seats;
     }
 
-    public static ArrayList<String> getBookedSeats(String id) {
+    public  ArrayList<String> getBookedSeats(String id) {
         ArrayList<String> seat = new ArrayList<>();
         try {
             java.sql.Connection con = Connection.getDatabaseConnection();
@@ -541,4 +488,6 @@ public class Connection {
 
         return seat;
     }
+
+
 }

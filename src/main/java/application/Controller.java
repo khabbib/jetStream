@@ -1,4 +1,5 @@
 package application;
+import application.Components.Search;
 import application.components.Support;
 import application.games.Game2048Main;
 import application.games.MPlayer;
@@ -45,13 +46,15 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
+
 /**
  *
  */
 public class Controller implements Initializable {
     //<editor-fold desc="GLOBAL VARIABLES" >
-
+    // error / success message in user dashboard variable
+    @FXML private Label notify_user_dashboard;
+    @FXML private Pane msgBox_user_dashboard;
     // Default variables
     private CreateWorld createWorld;
     private World world;
@@ -104,10 +107,6 @@ public class Controller implements Initializable {
     @FXML private Button flightsBtn, membersBtn, ticketsBtn, logoutButton;
     //</editor-fold>
     //<editor-fold desc="DASHBOARD VARIABLES">
-    private ArrayList<Flight> avalibleFlights = new ArrayList<>();
-    @FXML private TextField from_input_flight,disc_input_flight;
-    @FXML private DatePicker date_input_flight;
-    @FXML private Label no_flight_aval_msg;
 
     // purchase variables
     @FXML private AnchorPane pnlPayment;
@@ -145,9 +144,18 @@ public class Controller implements Initializable {
             seatno_col_table_historik, date_col_table_historik, price_col_table_historik;
     //</editor-fold
     //<editor-fold desc="SEARCH VARIABLES">
-    @FXML private TextField search_f_name;
+    @FXML
+    public TextField search_f_name;
     @FXML private ListView<String> searchListAppear, searchListAppear2, searchListAppear3;
-
+    public ArrayList<Flight> avalibleFlights = new ArrayList<>();
+    @FXML
+    public TextField from_input_flight;
+    @FXML
+    public TextField disc_input_flight;
+    @FXML
+    public DatePicker date_input_flight;
+    @FXML private Label no_flight_aval_msg;
+    @FXML private ImageView exchange_search_flight;
     //</editor-fold
     //<editor-fold desc="REGISTER VARIABLES">
     @FXML private Label registration_error;
@@ -163,10 +171,16 @@ public class Controller implements Initializable {
     //</editor-fold
 
     Support support;
+    Search search;
+    ConfirmActions confirmActions;
+    Connection connection;
 
     //----------------- HOME -----------------//
     public Controller(){
+        connection = new Connection(this);
         support = new Support(this);
+        search = new Search(this, connection);
+        confirmActions = new ConfirmActions(this);
     }
 
     //----------------- HOME -----------------//
@@ -185,27 +199,6 @@ public class Controller implements Initializable {
         stage.setTitle("Home");
         stage.setScene(scene);
         stage.show();
-    }
-
-    /**
-     * @param e
-     * @throws IOException
-     */
-    public void switchToGames (ActionEvent e) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/games/Games.fxml")));
-        stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setTitle("JetStream | Games");
-        stage.setScene(scene);
-        stage.show();
-
-        quizButton = (Button) root.lookup("#quizButton");
-        game1 = (StackPane) root.lookup("#game1");
-        game2 = (StackPane) root.lookup("#game2");
-        ImageView imageView = new ImageView(new Image("application/gamePosters/MusicQuiz.png"));
-        ImageView imageView2 = new ImageView(new Image("application/gamePosters/PONG.png"));
-        game1.getChildren().add(imageView);
-        game2.getChildren().add(imageView2);
     }
 
     /**
@@ -269,7 +262,7 @@ public class Controller implements Initializable {
     public void switchToDashboard(ActionEvent e) throws IOException {
         if (!login_email.getText().isEmpty() || !login_pass.getText().isEmpty()) {
             if (login_email.getText().contains("@") && (login_email.getText().contains("gmail") || login_email.getText().contains("hotmail") || login_email.getText().contains("yahoo") || login_email.getText().contains("outlook"))) {
-                User user = Connection.authenticationUser(login_email.getText(), login_pass.getText());
+                User user = connection.authenticationUser(login_email.getText(), login_pass.getText());
                 if (user != null) {
                     renderDashboard(e, user);
                 } else {
@@ -303,7 +296,7 @@ public class Controller implements Initializable {
 
         initializeFXML(); // look up for elements in javaFX
         createWorld = new CreateWorld();
-        world = createWorld.init(this);
+        world = createWorld.init(this, connection);
 
 
         //seatBox.getChildren().addAll(hboxLR_seat);
@@ -339,6 +332,9 @@ public class Controller implements Initializable {
      */
     public void initializeFXML(){
 
+        // global error message for user dashboard
+        msgBox_user_dashboard = (Pane)root.lookup("#msgBox_user_dashboard");
+        notify_user_dashboard = (Label) root.lookup("#notify_user_dashboard");
         // scrollpane seats
         eco_scrollpane = (ScrollPane) root.lookup("#eco_scrollpane");
         business_scrollpane = (ScrollPane) root.lookup("#business_scrollpane");
@@ -399,7 +395,7 @@ public class Controller implements Initializable {
             profilePassword.setText(user.getPassword());
 
             try {
-                profilePicturePreview.setImage(Connection.getProfilePicture(user));
+                profilePicturePreview.setImage(connection.getProfilePicture(user));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -442,7 +438,7 @@ public class Controller implements Initializable {
 
         if (user != null) {
             try {
-                Image image = Connection.getProfilePicture(user);
+                Image image = connection.getProfilePicture(user);
                 profilePicture.setImage(image);
                 profilePicturePreview.setImage(image);
             } catch (SQLException e) {
@@ -467,7 +463,7 @@ public class Controller implements Initializable {
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         createWorld = new CreateWorld();
-        world = createWorld.init(this);
+        world = createWorld.init(this, connection);
 
         scrollPane.setContent(new StackPane(world));
         scrollPane.setBackground(new Background(new BackgroundFill(world.getBackgroundColor(), CornerRadii.EMPTY, Insets.EMPTY)));
@@ -525,7 +521,7 @@ public class Controller implements Initializable {
                                     if (password_reg.getText().length() >= 8 && password_reg.getText().length() <= 20){
                                         if (password_reg.getText().equals(confirm_password_reg.getText())){
                                             if(emailaddress_reg.getText().contains("@") && (emailaddress_reg.getText().contains("gmail") || emailaddress_reg.getText().contains("hotmail") || emailaddress_reg.getText().contains("yahoo") || emailaddress_reg.getText().contains("outlook"))){
-                                                boolean ok = Connection.saveUser(first_name_reg.getText(), last_name_reg.getText(), address_reg.getText(), emailaddress_reg.getText(), phone_number_reg.getText(), password_reg.getText(), false);
+                                                boolean ok = connection.saveUser(first_name_reg.getText(), last_name_reg.getText(), address_reg.getText(), emailaddress_reg.getText(), phone_number_reg.getText(), password_reg.getText(), false);
                                                 if (ok) {
                                                     renderLoginPage(e, "successfully registered the user!");
                                                 } else {
@@ -623,9 +619,20 @@ public class Controller implements Initializable {
      * @param flights
      */
     public void fillFlights (ArrayList <Flight> flights) {
+        if (flights == null){
+            if (!display_flight.getChildren().isEmpty()){
+                display_flight.getChildren().clear();
+                Label lable = new Label("No flight available!");
+                lable.setStyle("-fx-text-fill: #d62054; -fx-padding: 20px");
+                display_flight.getChildren().add(lable);
+            }else {
+                Label lable = new Label("No flight available!");
+                lable.setStyle("-fx-text-fill: #d62054; -fx-padding: 20px");
+                display_flight.getChildren().add(lable);
+            }
+        }else {
         display_flight.getChildren().clear();
         ArrayList<Flight> compare = new ArrayList<>();
-
         if (flights != null) {
         for (int i = 0; i < flights.size();i++){
 
@@ -758,10 +765,10 @@ public class Controller implements Initializable {
                 compare.add(flights.get(finalI1));
                 // create the seats for chosen flight
                 try {
-                    int[] seatNumbers = Connection.getSeatNumber(flights.get(finalI1).getId());
+                    int[] seatNumbers = connection.getSeatNumber(flights.get(finalI1).getId());
                     boolean buildSucess = chooseSeat(seatNumbers[0], seatNumbers[1]);
                     if(buildSucess){
-                       ArrayList<String> bookedSeats = Connection.getBookedSeats(flights.get(finalI1).getId());
+                       ArrayList<String> bookedSeats = connection.getBookedSeats(flights.get(finalI1).getId());
                        if (!bookedSeats.isEmpty()){
                            for (int c = 0; c < grid_eco.getChildren().size(); c++){
                                for (int bid = 0; bid < bookedSeats.size(); bid++){
@@ -797,6 +804,7 @@ public class Controller implements Initializable {
 
         }else {
             System.out.println("flights list is null");
+        }
         }
     } // the method will show the flights list on the right side of the dashboard when a user choose a country
 
@@ -843,7 +851,7 @@ public class Controller implements Initializable {
             if (edited) {
                 System.out.println("Updating user..");
                 user = editedUser;
-                Connection.updateUser(user);
+                connection.updateUser(user);
             } else {
                 System.out.println("ypoo");
             }
@@ -891,7 +899,7 @@ public class Controller implements Initializable {
             System.out.println(profilePic);
 
             try {
-                Connection.setProfilePicture(profilePic, user);
+                connection.setProfilePicture(profilePic, user);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -1014,7 +1022,7 @@ public class Controller implements Initializable {
             pnlPassager.toFront();
             pnlPayment.toBack();
         }else if(e.getSource() == card_purchase_btn){
-            System.out.println("purchase clicked");
+
             //<editor-fold desc="file">
                 String nbr = card_nbr.getText();
                 String name = card_fname.getText();
@@ -1028,12 +1036,12 @@ public class Controller implements Initializable {
                 boolean validCard = Purchase.purchaseTicket(nbr, name, lname, month, year, cvc);
                 if (validCard){
                     System.out.println("valid card");
-                    StringBuilder rfc = Connection.generateRandomRFC();
+                    StringBuilder rfc = connection.generateRandomRFC();
                     //boolean uniq = Connection.compareRFC(rfc);
                     //if (uniq){
                         System.out.println("Save information");
                         String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                        boolean saveTicket = Connection.savePurchasedTicket(u_id.getText(), flight_nbr_seat_pnl.getText(), String.valueOf(rfc), date, seat_nbr_seat_pnl.getText(), false);
+                        boolean saveTicket = connection.savePurchasedTicket(u_id.getText(), flight_nbr_seat_pnl.getText(), String.valueOf(rfc), date, seat_nbr_seat_pnl.getText(), false);
                         if (saveTicket){
 
                             System.out.println(email_seat_pnl.getText() + " Your email!!!");
@@ -1117,7 +1125,7 @@ public class Controller implements Initializable {
 
         if (!login_pass.getText().isEmpty() && !login_email.getText().isEmpty()) {
             try {
-                User user = Connection.authenticationAdmin(login_email.getText(), login_pass.getText());
+                User user = connection.authenticationAdmin(login_email.getText(), login_pass.getText());
                 if (user != null) {
 
 
@@ -1134,7 +1142,7 @@ public class Controller implements Initializable {
                     memberListView = (ListView<String>) root.lookup("#memberListView");
                     if(memberListView != null)
                     {
-                        ArrayList<User> member = Connection.searchMember();
+                        ArrayList<User> member = connection.searchMember();
                         ArrayList<String> temp = new ArrayList<>();
                         int pageNr = 0;
                         for(User item: member)
@@ -1155,7 +1163,7 @@ public class Controller implements Initializable {
                     {
 
 
-                        ArrayList<Book> ticket = Connection.searchTicket();
+                        ArrayList<Book> ticket = connection.searchTicket();
                         ArrayList<String> temp = new ArrayList<>();
                         for(Book item: ticket)
                         {
@@ -1182,10 +1190,10 @@ public class Controller implements Initializable {
     }
 
     /**
-     * Dev test.
+     * User even handler.
      * @param e
      */
-    public void testDev(ActionEvent e){
+    public void userDev(ActionEvent e){
         if (e.getSource() == iconProfile) {
             pnlProfile.toFront();
             map_menu_user.setOpacity(0.5);
@@ -1263,23 +1271,7 @@ public class Controller implements Initializable {
      * @param e
      */
     public void seachFlights(ActionEvent e) {
-        LocalDate d = date_input_flight.getValue();
-        System.out.println("Date: " +d);
-        if (!(from_input_flight.getText().isEmpty()) && !(disc_input_flight.getText().isEmpty())){
-            if (d != null) {
-                avalibleFlights = Connection.searchFlight(from_input_flight.getText(), disc_input_flight.getText(), String.valueOf(d));
-            } else {
-                avalibleFlights = Connection.searchFlight(from_input_flight.getText(), disc_input_flight.getText());
-            }
-            if (avalibleFlights.isEmpty()){
-                System.out.println("no flights available");
-                fillFlights(null);
-                //no_flight_aval_msg.setText("No flights available!");
-            }else {
-                //no_flight_aval_msg.setText("sf");
-                fillFlights(avalibleFlights);
-            }
-        }
+        search.serachFlight();
     }
 
     //----------------- SEARCH FIELD -----------------//
@@ -1288,16 +1280,22 @@ public class Controller implements Initializable {
      *
      */
     public void searchHit(){
-        if (!search_f_name.getText().isEmpty()){
-            avalibleFlights.clear();
-            avalibleFlights = Connection.seachFlightFromSearchField(search_f_name.getText());
-            if (!avalibleFlights.isEmpty()){
-                fillFlights(avalibleFlights);
-            }else {
-                JOptionPane.showMessageDialog(null, "No flight with: " + search_f_name.getText());
-            }
-        }else
-            JOptionPane.showMessageDialog(null, "empty search field!");
+        search.searchHit();
+
+    }
+
+    public void change_search_info(){
+        if (!from_input_flight.getText().isEmpty() || !disc_input_flight.getText().isEmpty()){
+            String from = from_input_flight.getText();
+            String to = disc_input_flight.getText();
+            from_input_flight.setText(to);
+            disc_input_flight.setText(from);
+            System.out.println("not empty");
+        }else {
+            System.out.println("empty");
+            confirmActions.notifyError("Fill info required!");
+        }
+
     }
 
     /**
@@ -1470,7 +1468,7 @@ public class Controller implements Initializable {
      * it will update the historic table in user dashboard everytime an action happen or user want to navigate to the panel etc.
      */
     public void updateHistoryList(){
-        ArrayList<UserHistory> list = Connection.searchDataForTableHistory(Integer.parseInt(user.getUserId()));
+        ArrayList<UserHistory> list = connection.searchDataForTableHistory(Integer.parseInt(user.getUserId()));
 
         fetchedList = FXCollections.observableArrayList(list);
         table_historik.setItems(fetchedList);
@@ -1490,7 +1488,7 @@ public class Controller implements Initializable {
                     if (confirmed){ // if user confirm the action
                         for (UserHistory item: items){ // loop through all historic items
                             if (item.getSelect_col_table_historik().isSelected()){ // check if the checkbox for one or more item is selected
-                                boolean ok = Connection.deleteHistoryByRFC(item.getRfc_col_table_historik()); // send the actual reference number as an argument to database to compare and delete
+                                boolean ok = connection.deleteHistoryByRFC(item.getRfc_col_table_historik()); // send the actual reference number as an argument to database to compare and delete
                                 if (ok){ // if database succeed to delete the item runs this statement
                                     updateHistoryList(); // historic table updates
                                     System.out.println("Item has been deleted successfully!"); // show a success message for user
@@ -1508,7 +1506,7 @@ public class Controller implements Initializable {
                     boolean confirmed = ConfirmActions.confirmThisAction("Confirm to delete the item", "Do you want to proceed?", items.size() +" items will be deleted.");
                     if (confirmed){ // if user confirm the action
                         for (UserHistory item: items){ // loop through all historic items
-                            boolean ok = Connection.deleteHistoryByRFC(item.getRfc_col_table_historik()); // send the actual reference number as an argument to database to compare and delete
+                            boolean ok = connection.deleteHistoryByRFC(item.getRfc_col_table_historik()); // send the actual reference number as an argument to database to compare and delete
                             if (ok){ // if database succeed to delete the item runs this statement
                                 updateHistoryList(); // historic table updates
                                 System.out.println("Item has been deleted successfully!"); // show a success message for user
@@ -1532,10 +1530,22 @@ public class Controller implements Initializable {
     public void setScene(Scene scene) {
         this.scene = scene;
     }
+    public Stage getStage(){return stage;}
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+    }
+
+
+
+    ///////// notify message in user dashboard
+    public Label getNotifyDisplay() {
+        return notify_user_dashboard;
+    }
+
+    public Pane getNotifyBox() {
+        return msgBox_user_dashboard;
     }
 }
 
