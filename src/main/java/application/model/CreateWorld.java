@@ -2,6 +2,12 @@ package application.model;
 
 import application.Controller;
 import application.database.Connection;
+import javafx.geometry.Insets;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.StackPane;
 import worldMapAPI.*;
 import javafx.scene.paint.Color;
 
@@ -18,6 +24,7 @@ public class CreateWorld {
      * @return
      */
     public World init(Controller controller, Connection connection) {
+        this.controller = controller;
         world = WorldBuilder.create()
                 .resolution(World.Resolution.HI_RES)
                 .backgroundColor(Color.web("#0c0c1a"))
@@ -32,5 +39,19 @@ public class CreateWorld {
                 .build(controller, connection);
 
         return world;
+    }
+
+
+    public void addWorldInMap(ScrollPane scrollPane, User user) {
+        scrollPane.setContent(new StackPane(world));
+        scrollPane.setBackground(new Background(new BackgroundFill(world.getBackgroundColor(), CornerRadii.EMPTY, Insets.EMPTY)));
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setFitToHeight(true);
+        scrollPane.setFitToWidth(true);
+
+        controller.u_name.setText(user.getFirstName());
+        controller.u_id.setText(user.getUserId());
+
     }
 }

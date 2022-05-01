@@ -32,7 +32,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #112;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #112;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
       <Pane layoutY="-2.0" prefHeight="702.0" prefWidth="71.0" style="-fx-background-color: #151D3B;">
          <children>
@@ -678,7 +678,7 @@
             </AnchorPane>
             <AnchorPane fx:id="pnlPassager" layoutX="27.0" layoutY="27.0" prefHeight="647.0" prefWidth="1072.0" style="-fx-background-color: #151D3B; -fx-background-radius: 10;">
                <children>
-                  <VBox layoutX="749.0" layoutY="4.0" spacing="5.0">
+                  <VBox layoutX="596.0" layoutY="34.0" spacing="5.0">
                      <children>
                         <Label text="Business" textFill="WHITE">
                            <font>
@@ -687,7 +687,10 @@
                         </Label>
                         <ScrollPane fx:id="business_scrollpane" prefHeight="212.0" prefWidth="278.0" stylesheets="@../Styles/ScrollStyle.css">
                            <content>
-                              <AnchorPane fx:id="flights_seats_business" prefHeight="212.0" prefWidth="281.0" style="-fx-background-color: #112;" />
+                              <AnchorPane fx:id="flights_seats_business" prefHeight="212.0" prefWidth="281.0" style="-fx-background-color: #112;">
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding></AnchorPane>
                            </content>
                         </ScrollPane>
                         <Label text="Economy" textFill="WHITE">
@@ -697,7 +700,10 @@
                         </Label>
                         <ScrollPane fx:id="eco_scrollpane" prefHeight="318.0" prefWidth="278.0" stylesheets="@../Styles/ScrollStyle.css">
                            <content>
-                              <AnchorPane fx:id="flight_seats_eco" prefHeight="314.0" prefWidth="277.0" style="-fx-background-color: #112;" />
+                              <AnchorPane fx:id="flight_seats_eco" prefHeight="314.0" prefWidth="277.0" style="-fx-background-color: #112;">
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding></AnchorPane>
                            </content>
                         </ScrollPane>
                      </children>
@@ -768,7 +774,7 @@
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
                         </TextField>
-                        <HBox prefHeight="32.0" prefWidth="315.0" style="-fx-background-color: #112;" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <HBox opacity="0.7" prefHeight="32.0" prefWidth="315.0" style="-fx-background-color: #112;" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <children>
                               <Group>
                                  <children>
@@ -789,7 +795,7 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label fx:id="flight_nbr_seat_pnl" prefHeight="27.0" prefWidth="339.0" style="-fx-background-color: #112;" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                        <Label fx:id="flight_nbr_seat_pnl" opacity="0.7" prefHeight="33.0" prefWidth="329.0" style="-fx-background-color: #112;" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -799,14 +805,20 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <Label fx:id="price_seat_pnl" prefHeight="27.0" prefWidth="330.0" style="-fx-background-color: #112;" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="7">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                           <GridPane.margin>
-                              <Insets />
-                           </GridPane.margin>
-                        </Label>
+                        <HBox spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                           <children>
+                              <Label fx:id="price_seat_pnl" contentDisplay="RIGHT" prefHeight="31.0" prefWidth="100.0" textFill="WHITE">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="price_seat_pnl1" prefHeight="31.0" prefWidth="100.0" text="SEK" textFill="WHITE">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
                         <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                      </children>
                   </GridPane>
@@ -828,22 +840,32 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
+                  <ImageView fitHeight="126.0" fitWidth="137.0" layoutX="956.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/seat_guid_icons.PNG" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="966.0" layoutY="34.0" text="Guide" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <VBox layoutX="34.0" layoutY="580.0">
+                     <children>
+                        <Label text="Remining time" textFill="#ffe500">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="card_counter_nbr" text="00:01:59" textFill="#f7bb00">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
                </children>
             </AnchorPane>
-            <VBox layoutX="975.0" layoutY="612.0">
-               <children>
-                  <Label text="Remining time" textFill="#ffe500">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="card_counter_nbr" text="00:01:59" textFill="#f7bb00">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-               </children>
-            </VBox>
             <ImageView fitHeight="25.0" fitWidth="30.0" layoutX="1079.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../image/close.png" />
@@ -883,7 +905,7 @@
                         </Label>
                         <Circle fill="#151d3b" layoutX="790.0" layoutY="39.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" style="-fx-background-color: #151D3B;" />
                         <Circle fill="#30448a" layoutX="790.0" layoutY="39.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" style="-fx-background-color: #151D3B;" />
-                        <Label fx:id="u_id" layoutX="785.0" layoutY="26.0" text="0" textFill="#c7e2ff">
+                        <Label fx:id="u_id" layoutX="780.0" layoutY="26.0" text="0" textFill="#c7e2ff">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -893,17 +915,19 @@
                   </Pane>
                </children>
             </HBox>
-            <Text fill="WHITE" layoutX="45.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #999;" text="Choose your destination:" wrappingWidth="284.953125">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Text>
             <ScrollPane fx:id="scrollPane" layoutX="45.0" layoutY="118.0" prefHeight="420.0" prefWidth="657.0" style="-fx-background: #0E0E1B; -fx-border-color: #112;" />
-            <Text fill="WHITE" layoutX="786.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #999;" text="Available flights">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Text>
+            <Pane layoutX="46.0" layoutY="79.0" prefHeight="39.0" prefWidth="231.0" style="-fx-background-color: #0E0E1B; -fx-background-radius: 10 10 0 0;">
+               <children>
+                  <Text fill="WHITE" layoutX="10.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #999; -fx-background-color: #999;" text="Choose your destination" wrappingWidth="200.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </Pane>
             <Label layoutX="45.0" layoutY="555.0" text="Search" textFill="#f5f5f5">
                <font>
                   <Font size="20.0" />
@@ -980,6 +1004,23 @@
                   </VBox>
                </content>
             </ScrollPane>
+            <Pane layoutX="777.0" layoutY="80.0" prefHeight="39.0" prefWidth="196.0" style="-fx-background-color: #0E0E1B; -fx-background-radius: 10 10 0 0;">
+               <children>
+                  <Text fill="WHITE" layoutX="13.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #999;" text="Available flights:">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Label fx:id="nbr_of_available_flights" layoutX="156.0" layoutY="6.0" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </Pane>
             <ListView fx:id="searchListAppear" layoutX="833.0" layoutY="62.0" prefHeight="169.0" prefWidth="299.0" style="-fx-background-color: #151D3B; -fx-background-radius: 5;" visible="false">
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
