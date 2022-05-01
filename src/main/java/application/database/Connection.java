@@ -43,7 +43,7 @@ public class Connection {
      * @return
      * @throws SQLException
      */
-    public static boolean saveUser(String first_name_reg, String last_name_reg, String address_reg, String email_reg, String phone_number_reg, String password_reg, boolean isAdmin) throws SQLException {
+    public boolean saveUser(String first_name_reg, String last_name_reg, String address_reg, String email_reg, String phone_number_reg, String password_reg, boolean isAdmin) throws SQLException {
         boolean ok = false;
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();

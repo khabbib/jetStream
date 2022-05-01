@@ -1,6 +1,8 @@
 package application;
+import application.Components.Registration;
 import application.Components.Search;
 import application.components.Support;
+import application.config.Config;
 import application.games.Game2048Main;
 import application.games.MPlayer;
 import application.games.Piano;
@@ -37,7 +39,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import worldMapAPI.World;
 
-import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -73,7 +74,8 @@ public class Controller implements Initializable {
     @FXML private ScrollPane scrollFlights;
     @FXML private TextField login_email;
     @FXML private Label error_msg;
-    @FXML private Label success_msg;
+    @FXML
+    public Label success_msg;
     @FXML private Label u_name, u_id;
     @FXML private VBox display_flight;
     @FXML private ImageView profilePicture;
@@ -158,10 +160,37 @@ public class Controller implements Initializable {
     @FXML private ImageView exchange_search_flight;
     //</editor-fold
     //<editor-fold desc="REGISTER VARIABLES">
-    @FXML private Label registration_error;
+    @FXML
+    public Label registration_error;
     // Register a new user
-    @FXML private TextField first_name_reg, last_name_reg, address_reg, emailaddress_reg, phone_number_reg, password_reg, confirm_password_reg;
-    @FXML private Label name_issue_reg, last_name_issue_reg, address_issue_reg,email_issue_reg,phone_number_issue_reg, password_issue_reg, confirm_password_issue_reg;
+    @FXML
+    public TextField first_name_reg;
+    @FXML
+    public TextField last_name_reg;
+    @FXML
+    public TextField address_reg;
+    @FXML
+    public TextField emailaddress_reg;
+    @FXML
+    public TextField phone_number_reg;
+    @FXML
+    public TextField password_reg;
+    @FXML
+    public TextField confirm_password_reg;
+    @FXML
+    public Label name_issue_reg;
+    @FXML
+    public Label last_name_issue_reg;
+    @FXML
+    public Label address_issue_reg;
+    @FXML
+    public Label email_issue_reg;
+    @FXML
+    public Label phone_number_issue_reg;
+    @FXML
+    public Label password_issue_reg;
+    @FXML
+    public Label confirm_password_issue_reg;
     //</editor-fold
     //<editor-fold desc="SUPPORT VARIABLES">
     @FXML public Button issue_btn_sup, feedback_btn_sup, contact_btn_sup, send_fb_btn_sup, send_issue_btn_sup, send_contact_btn_sup;
@@ -174,13 +203,17 @@ public class Controller implements Initializable {
     Search search;
     ConfirmActions confirmActions;
     Connection connection;
+    Config config;
+    Registration registration;
 
     //----------------- HOME -----------------//
     public Controller(){
         connection = new Connection(this);
+        config = new Config(this, root, stage);
         support = new Support(this);
         search = new Search(this, connection);
         confirmActions = new ConfirmActions(this);
+        registration = new Registration(this, connection, config);
     }
 
     //----------------- HOME -----------------//
@@ -190,15 +223,8 @@ public class Controller implements Initializable {
      * @param e
      * @throws IOException
      */
-    public void switchToHome(ActionEvent e) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Home.fxml")));
-        stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        //stage.initStyle(StageStyle.TRANSPARENT);
-        //MoveScreen.moveScreen(root,stage);
-        stage.setTitle("Home");
-        stage.setScene(scene);
-        stage.show();
+    public void switchToHome(ActionEvent e) {
+        config.render(e,"Home", "Home window");
     }
 
     /**
@@ -264,6 +290,7 @@ public class Controller implements Initializable {
             if (login_email.getText().contains("@") && (login_email.getText().contains("gmail") || login_email.getText().contains("hotmail") || login_email.getText().contains("yahoo") || login_email.getText().contains("outlook"))) {
                 User user = connection.authenticationUser(login_email.getText(), login_pass.getText());
                 if (user != null) {
+
                     renderDashboard(e, user);
                 } else {
                     error_msg.setText("Wrong email or password!");
@@ -291,10 +318,11 @@ public class Controller implements Initializable {
      * @throws IOException
      */
     public void renderDashboard(ActionEvent e, User user) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/Dashboard.fxml")));
+        root = config.render(e,"user/Dashboard", "User Dashboard");
+        //root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/Dashboard.fxml")));
         this.user = user;
 
-        initializeFXML(); // look up for elements in javaFX
+        userInitializeFXML(); // look up for elements in javaFX
         createWorld = new CreateWorld();
         world = createWorld.init(this, connection);
 
@@ -311,30 +339,24 @@ public class Controller implements Initializable {
 
         u_name.setText(user.getFirstName());
         u_id.setText(user.getUserId());
-        stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        //MoveScreen.moveScreen(root,stage);
-        stage.setTitle("JetStream | Dashboard");
-        stage.setScene(scene);
-        stage.show();
 
         lookUpForTable();
         // Fyl historic table
         setInfoIntoTableHistorik();
     } // the method will render dashboard page for user
-
     private void lookUpForTable() {
 
     }
-
     /**
      *
      */
-    public void initializeFXML(){
+    public void userInitializeFXML(){
 
         // global error message for user dashboard
         msgBox_user_dashboard = (Pane)root.lookup("#msgBox_user_dashboard");
         notify_user_dashboard = (Label) root.lookup("#notify_user_dashboard");
+        // login success message
+        //
         // scrollpane seats
         eco_scrollpane = (ScrollPane) root.lookup("#eco_scrollpane");
         business_scrollpane = (ScrollPane) root.lookup("#business_scrollpane");
@@ -453,7 +475,7 @@ public class Controller implements Initializable {
      */
     public void noLoginRequired(ActionEvent e) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/Dashboard.fxml")));
-        initializeFXML();
+        userInitializeFXML();
         scrollFlights = (ScrollPane) root.lookup("#scrollFlights");
         scrollFlights.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         pnlSeat = (AnchorPane) root.lookup("#pnlSeat");
@@ -484,26 +506,8 @@ public class Controller implements Initializable {
      * @param e
      * @throws IOException
      */
-    public void switchToChecking(ActionEvent e) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/Checking.fxml")));
-        stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setTitle("Checking window");
-        stage.setScene(scene);
-        stage.show();
-    }// the method will switch the user to the checking page
-
-    /**
-     * @param e
-     * @throws IOException
-     */
-    public void switchToRegistration(ActionEvent e) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/Registration.fxml")));
-        stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setTitle("Registration window");
-        stage.setScene(scene);
-        stage.show();
+    public void switchToRegistration(ActionEvent e) {
+        this.root = config.render(e, "user/Registration", "Registration window");
     }// the method will switch the user to the registration page
 
     /**
@@ -511,82 +515,11 @@ public class Controller implements Initializable {
      * @throws SQLException
      * @throws IOException
      */
-    public void registeruser(ActionEvent e) throws SQLException, IOException {
-        if (!first_name_reg.getText().isEmpty() && !last_name_reg.getText().isEmpty() && !address_reg.getText().isEmpty() && !emailaddress_reg.getText().isEmpty() && !phone_number_reg.getText().isEmpty() && !password_reg.getText().isEmpty() && !confirm_password_reg.getText().isEmpty()){
-            if ((first_name_reg.getText().length() >= 3 && first_name_reg.getText().length() <= 30)){
-                if ((last_name_reg.getText().length() >= 3 && last_name_reg.getText().length() <= 30)){
-                    if ((address_reg.getText().length() >= 5 && address_reg.getText().length() <= 60)){
-                        if((emailaddress_reg.getText().length() >= 6 && emailaddress_reg.getText().length() <= 30)){
-                            if ((phone_number_reg.getText().length() == 12)){
-                                    if (password_reg.getText().length() >= 8 && password_reg.getText().length() <= 20){
-                                        if (password_reg.getText().equals(confirm_password_reg.getText())){
-                                            if(emailaddress_reg.getText().contains("@") && (emailaddress_reg.getText().contains("gmail") || emailaddress_reg.getText().contains("hotmail") || emailaddress_reg.getText().contains("yahoo") || emailaddress_reg.getText().contains("outlook"))){
-                                                boolean ok = connection.saveUser(first_name_reg.getText(), last_name_reg.getText(), address_reg.getText(), emailaddress_reg.getText(), phone_number_reg.getText(), password_reg.getText(), false);
-                                                if (ok) {
-                                                    renderLoginPage(e, "successfully registered the user!");
-                                                } else {
-                                                    registration_error.setText("Couldn't register the information");
-                                                    PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                                                    pause.setOnFinished(a -> registration_error.setText(null));
-                                                    pause.play();
-                                                }
-                                            }else {
-                                                System.out.println("Email type issue");
-                                                email_issue_reg.setText("Type issue [email]");
-                                            }
-                                        }else {
-                                            System.out.println("confirm password not much the actual password");
-                                            confirm_password_issue_reg.setText("Much issue [confirm password]");
-                                            PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                                            pause.setOnFinished(a -> confirm_password_issue_reg.setText(null));
-                                            pause.play();
-                                        }
-                                    }else {
-                                        System.out.println("password issue");
-                                        password_issue_reg.setText("Size issue 8-20");
-                                        PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                                        pause.setOnFinished(a -> password_issue_reg.setText(null));
-                                        pause.play();
-                                    }
-                            }else {
-                                System.out.println("phone number issue");
-                                phone_number_issue_reg.setText("size issue 12 digit");
-                                PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                                pause.setOnFinished(a -> phone_number_issue_reg.setText(null));
-                                pause.play();
-                            }
-                        } else {
-                            System.out.println("email address issue");
-                            email_issue_reg.setText("size issue 6-30");
-                            PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                            pause.setOnFinished(a -> email_issue_reg.setText(null));
-                            pause.play();
-                        }
-                    }else {
-                        System.out.println("address issue");
-                        address_issue_reg.setText("size issue 5-60");
-                        PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                        pause.setOnFinished(a -> address_issue_reg.setText(null));
-                        pause.play();
-                    }
-                } else {
-                    System.out.println("last name issue");
-                    last_name_issue_reg.setText("Size issue 3-30");
-                    PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                    pause.setOnFinished(a -> last_name_issue_reg.setText(null));
-                    pause.play();
-                }
-            } else {
-                name_issue_reg.setText("Size issue 3-30");
-                PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                pause.setOnFinished(a -> name_issue_reg.setText(null));
-                pause.play();
-            }
-        }else {
-            registration_error.setText("Empty field issue");
-            PauseTransition pause = new PauseTransition(Duration.seconds(2));
-            pause.setOnFinished(x -> registration_error.setText(null));
-            pause.play();
+    public void registerUser(ActionEvent e) throws SQLException {
+        boolean ok = registration.registerUser(e);
+        if (ok){
+            confirmActions.displayMessage(success_msg, "User successfully registered!");
+
         }
     }// the method will register the user and return to the login page
 
@@ -594,25 +527,11 @@ public class Controller implements Initializable {
      * @param e
      * @throws IOException
      */
-    public void switchToLogin(ActionEvent e) throws IOException {
-        renderLoginPage(e, null);
-    }// the method will switch the user to the login page
+    public void switchToLogin(ActionEvent e) {
+        this.root = config.render(e, "user/Login", "Login window");
+        success_msg = (Label) root.lookup("#sucess_msg");
 
-    /**
-     * @param e
-     * @param msg
-     * @throws IOException
-     */
-    public void renderLoginPage(ActionEvent e, String msg) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/Login.fxml")));
-        success_msg = (Label) root.lookup("#success_msg");
-        stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setTitle("Login window");
-        stage.setScene(scene);
-        success_msg.setText(msg);
-        stage.show();
-    }// render login page
+    }// the method will switch the user to the login page
 
     /**
      * flight lists dashboard

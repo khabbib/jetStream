@@ -67,4 +67,15 @@ public class ConfirmActions {
         pause.play();
 
     }
+
+    public void displayMessage(Label success_msg, String s) {
+        if (success_msg != null){
+            success_msg.setText(s);
+            PauseTransition pause = new PauseTransition(Duration.seconds(2));
+            pause.setOnFinished(a -> success_msg.setText(null));
+            pause.play();
+        }else {
+            System.out.println("SUCESS REGISTRATION! display msg on screen!");
+        }
+    }
 }
