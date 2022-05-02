@@ -5,6 +5,7 @@ import application.database.Connection;
 import application.model.User;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -37,6 +38,8 @@ public class InitializeFXM {
             controller.profilePicturePreview = (ImageView) root.lookup("#profilePicturePreview");
             controller.profileSelector = (GridPane) root.lookup("#profileSelector");
             controller.btnEditProfile = (Button) root.lookup("#btnEditProfile");
+
+            controller.pfp_display_msg = (Label) root.lookup("#pfp_edit_error_msg");
 
             controller.profileFirstName.setText(user.getFirstName());
             controller.profileLastName.setText(user.getLastName());

@@ -17,8 +17,9 @@ public class Connection {
     }
 
     /**
-     * Get the database connection
-     * @return
+     * Get the database connection.
+     * @return connection of the database.
+     * @author Sossio.
      */
     public static java.sql.Connection getDatabaseConnection() {
 
@@ -38,10 +39,11 @@ public class Connection {
     }
 
     /**
-     * register new user
+     * Register new user
      * @param
      * @return
      * @throws SQLException
+     * @author Khabib.
      */
     public boolean saveUser(String first_name_reg, String last_name_reg, String address_reg, String email_reg, String phone_number_reg, String password_reg, boolean isAdmin) throws SQLException {
         boolean ok = false;
@@ -60,14 +62,52 @@ public class Connection {
     }
 
     /**
-     * @param user
-     * @throws SQLException
+     * @param user takes as a parameter to edit user information.
+     * @throws SQLException if any sql issue occurs.
+     * @author Kasper. Developed by Sossio.
      */
-    public  void updateUser(User user) throws SQLException {
+    public boolean updateUser(User user) throws SQLException {
+        boolean uniqueEmail = true;
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
         stmt.executeUpdate("SET search_path TO jetstream;");
-        stmt.executeUpdate("UPDATE userr SET u_f_name = '" + user.getFirstName() + "', u_l_name = '" + user.getLastName() + "', u_address = '" + user.getAddress() + "', u_email = '" + user.getEmail() + "', u_phone_nr = '" + user.getPhoneNumber() + "', u_password = '" + user.getPassword() + "'  WHERE u_id = " + user.getUserId() + ";");
+        ResultSet rs = stmt.executeQuery("select u_email from userr");
+
+        while(rs.next()) {
+            if(rs.getString("u_email").equals(user.getEmail())) {
+                System.out.println("Email found!");
+                uniqueEmail = false;
+                break;
+            } else{
+                System.out.println("Email not found!");
+            }
+        }
+
+        if(uniqueEmail) {
+            stmt.executeUpdate("UPDATE userr SET u_f_name = '" + user.getFirstName() + "', u_l_name = '" + user.getLastName() + "', u_address = '" + user.getAddress() + "', u_email = '" + user.getEmail() + "', u_phone_nr = '" + user.getPhoneNumber() + "', u_password = '" + user.getPassword() + "'  WHERE u_id = " + user.getUserId() + ";");
+        } //else { System.out.println("Error message! Email is not unique!");}
+
+        return uniqueEmail;
+    }
+
+    /**
+     * @param u_id gets userId from user.
+     * @return 'old' email.
+     * @throws SQLException if any sql issue occurs.
+     * @author Sossio.
+     */
+    public String getUserEmail(String u_id) throws SQLException {
+        java.sql.Connection con = getDatabaseConnection();
+        Statement stmt = con.createStatement();
+        stmt.executeUpdate("SET search_path TO jetstream;");
+
+        String email = null;
+        ResultSet rs = stmt.executeQuery("select u_email from userr where u_id = " + u_id + ";");
+        while(rs.next()) {
+            email = rs.getString(("u_email"));
+            return email;
+        }
+        return email;
     }
 
     /**
