@@ -223,6 +223,7 @@ public class Controller implements Initializable {
     @FXML public Label nbr_of_available_flights;
     @FXML public DatePicker date_input_flight;
     @FXML public TextField from_input_flight;
+    @FXML public CheckBox turR_checkBox_flight;
     @FXML public TextField disc_input_flight;
     @FXML private Label no_flight_aval_msg;
     @FXML public TextField search_f_name;
