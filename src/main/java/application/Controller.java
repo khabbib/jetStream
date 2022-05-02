@@ -116,7 +116,7 @@ public class Controller implements Initializable {
     private final GridPane gridB = new GridPane(); //Layout
 
     // toggle options
-    @FXML private Button iconProfile, iconFlight, iconHistorik, iconGame, iconSupport, iconCloseSeat;
+    @FXML private Button iconProfile, iconFlight, iconHistorik, iconGame, iconSupport, iconCloseSeat, iconCloseSeat1;
     @FXML private AnchorPane pnlProfile, pnlHistorik, pnlFlight, pnlGame, pnlSupport;
 
     //Admin panels
@@ -268,6 +268,9 @@ public class Controller implements Initializable {
     @FXML public AnchorPane issue_panel_sup, contact_panel_sup, feedback_panel_sup;
     //</editor-fold
 
+    // Edit profile
+    @FXML public Label pfp_display_msg;
+
     //<editor-fold desc="instance initialize">
     application.Components.Support support;
     Search search;
@@ -366,13 +369,13 @@ public class Controller implements Initializable {
                 if (user != null) {
                     renderDashboard(e, user);
                 } else {
-                    confirmActions.displayMessage(error_msg, "Wrong email or password!");
+                    confirmActions.displayMessage(error_msg, "Wrong email or password!", true);
                 }
             } else {
-                confirmActions.displayMessage(error_msg, "Email has wrong format!");
+                confirmActions.displayMessage(error_msg, "Email has wrong format!", true);
             }
         } else {
-            confirmActions.displayMessage(error_msg, "Email or password is empty, please fill in fields!");
+            confirmActions.displayMessage(error_msg, "Email or password is empty, please fill in fields!", true);
         }
     }
 
@@ -441,7 +444,7 @@ public class Controller implements Initializable {
     public void registerUser(ActionEvent e) throws SQLException {
         boolean ok = registration.registerUser(e);
         if (ok){
-            confirmActions.displayMessage(success_msg, "User successfully registered!");
+            confirmActions.displayMessage(success_msg, "User successfully registered!", false);
         }
     }// the method will register the user and return to the login page
 
@@ -694,7 +697,15 @@ public class Controller implements Initializable {
             if (edited) {
                 System.out.println("Updating user..");
                 user = editedUser;
-                connection.updateUser(user);
+
+                boolean okToEditProfile = connection.updateUser(user);
+
+                if(okToEditProfile) {
+                    confirmActions.displayMessage(pfp_display_msg, "Profile is updated!", false);
+                } else {
+                    confirmActions.displayMessage(pfp_display_msg, "New email is taken!", true);
+                    profileEmail.setText(connection.getUserEmail(user.getUserId()));
+                }
             } else {
                 System.out.println("ypoo");
             }
@@ -1109,7 +1120,7 @@ public class Controller implements Initializable {
             game_menu_user.setOpacity(0.5);
             support_menu_user.setOpacity(0.5);
         }
-        else if(e.getSource() == iconCloseSeat){
+        else if(e.getSource() == iconCloseSeat || e.getSource() == iconCloseSeat1){
             pnlSeat.toBack();
 
             restore_psgr_info();
