@@ -469,7 +469,7 @@ public class Connection {
         return seats;
     }
 
-    public  ArrayList<String> getBookedSeats(String id) {
+    public ArrayList<String> getBookedSeats(String id) {
         ArrayList<String> seat = new ArrayList<>();
         try {
             java.sql.Connection con = Connection.getDatabaseConnection();

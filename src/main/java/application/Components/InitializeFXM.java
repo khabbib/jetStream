@@ -25,6 +25,7 @@ public class InitializeFXM {
     public void initializeProfile(Parent root, User user){
         //Profile info
         if (user != null) {
+
             controller.profilePicture = (ImageView) root.lookup("#profilePicture");
             controller.profilePicturePreview = (ImageView) root.lookup("#profilePicturePreview");
             controller.profileFirstName = (TextField) root.lookup("#profileFirstName");

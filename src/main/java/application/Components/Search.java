@@ -11,6 +11,7 @@ public class Search {
     private Connection connection;
     public Search(Controller controller, Connection connection){
         this.controller = controller;
+        this.connection = connection;
     }
 
 
@@ -27,10 +28,7 @@ public class Search {
             }
             if (controller.avalibleFlights.isEmpty()){
                 controller.fillFlights(null);
-                //no_flight_aval_msg.setText("No flights available!");
             }else {
-
-                //no_flight_aval_msg.setText("sf");
                 controller.fillFlights(controller.avalibleFlights);
             }
         }

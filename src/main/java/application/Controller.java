@@ -1,8 +1,5 @@
 package application;
-import application.Components.DashboardController;
-import application.Components.InitializeFXM;
-import application.Components.Registration;
-import application.Components.Search;
+import application.Components.*;
 import application.config.Config;
 import application.games.Game2048Main;
 import application.games.MPlayer;
@@ -115,8 +112,8 @@ public class Controller implements Initializable {
 
 
     // Seat
-    private final GridPane grid_eco = new GridPane(); //Layout
-    private final GridPane grid_business = new GridPane(); //Layout
+    private final GridPane gridE = new GridPane(); //Layout
+    private final GridPane gridB = new GridPane(); //Layout
 
     // toggle options
     @FXML private Button iconProfile, iconFlight, iconHistorik, iconGame, iconSupport, iconCloseSeat;
@@ -195,7 +192,8 @@ public class Controller implements Initializable {
 
     //</editor-fold>
     //<editor-fold desc="SEAT VARIABLES"
-    private ArrayList<String> takenSeat = new ArrayList<>();
+    private ArrayList<String> takenSeatE = new ArrayList<>();
+    private ArrayList<String> takenSeatB = new ArrayList<>();
     //</editor-fold>
     //<editor-fold desc="HISTORY VARIABLES">
     ObservableList<UserHistory> fetchedList;
@@ -267,7 +265,7 @@ public class Controller implements Initializable {
     @FXML public AnchorPane issue_panel_sup, contact_panel_sup, feedback_panel_sup;
     //</editor-fold
 
-    application.components.Support support;
+    application.Components.Support support;
     Search search;
     ConfirmActions confirmActions;
     DashboardController dashboardController;
@@ -279,7 +277,7 @@ public class Controller implements Initializable {
     public Controller(){
         connection = new Connection(this);
         config = new Config(this, root, stage);
-        support = new application.components.Support(this);
+        support = new Support(this);
         search = new Search(this, connection);
         confirmActions = new ConfirmActions(this);
         registration = new Registration(this, connection, config);
@@ -382,15 +380,12 @@ public class Controller implements Initializable {
         this.user = user;
         root = config.render(e,"user/Dashboard", "User Dashboard");
         dashboardController.userInitializeFXML(root, user);
+        initializeFXM.initializeProfile(root, user);
         createWorld = new CreateWorld();
         world = createWorld.init(this, connection);
         createWorld.addWorldInMap(scrollPane, user);
         setInfoIntoTableHistorik();
     } // the method will render dashboard page for user
-
-    /**
-     *
-     */
 
     /**
      * @param e
@@ -442,7 +437,6 @@ public class Controller implements Initializable {
         boolean ok = registration.registerUser(e);
         if (ok){
             confirmActions.displayMessage(success_msg, "User successfully registered!");
-
         }
     }// the method will register the user and return to the login page
 
@@ -576,17 +570,19 @@ public class Controller implements Initializable {
                 // to click
                 hbox.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
 
-                    takenSeat.clear();
-                    grid_eco.getChildren().clear();
+                    takenSeatE.clear();
+                    takenSeatB.clear();
+                    gridE.getChildren().clear();
+                    gridB.getChildren().clear();
                     // Seat window
                     HBox hboxLR_seat = new HBox();
-                    hboxLR_seat.getChildren().addAll(grid_eco);
-                    grid_eco.setHgap(5);
-                    grid_eco.setVgap(5);
-                    grid_business.setHgap(5);
-                    grid_business.setVgap(5);
+                    hboxLR_seat.getChildren().addAll(gridE);
+                    gridE.setHgap(5);
+                    gridE.setVgap(5);
+                    gridB.setHgap(5);
+                    gridB.setVgap(5);
                     HBox hboxTLR_seat = new HBox();
-                    hboxTLR_seat.getChildren().add(grid_business);
+                    hboxTLR_seat.getChildren().add(gridB);
                     hboxTLR_seat.setAlignment(Pos.TOP_CENTER);
                     flight_seats_eco.getChildren().add(hboxLR_seat);
                     flights_seats_business.getChildren().add(hboxTLR_seat);
@@ -596,31 +592,28 @@ public class Controller implements Initializable {
                     }
 
                     // chosen flight from flight list will get an opacity of 0.8
+
                     display_flight.getChildren().get(finalI1).setOpacity(0.95);
                     for (int m = 0; m < display_flight.getChildren().size(); m++){
                         if (display_flight.getChildren().get(m) != display_flight.getChildren().get(finalI1)) {
                             display_flight.getChildren().get(m).setOpacity(1);
                         }
                     }
-                    // the chosen flight will be added inside an arraylist
-                    // create the seats for chosen flight
+
                     try {
-                        int[] seatNumbers = connection.getSeatNumber(flights.get(finalI1).getId());
-                        boolean buildSucess = chooseSeat(seatNumbers[0], seatNumbers[1]);
-                        if(buildSucess){
-                           ArrayList<String> bookedSeats = connection.getBookedSeats(flights.get(finalI1).getId());
-                           if (!bookedSeats.isEmpty()){
-                               for (int c = 0; c < grid_eco.getChildren().size(); c++){
-                                   for (int bid = 0; bid < bookedSeats.size(); bid++){
-                                       System.out.println(grid_eco.getChildren().get(c).getId() + " grid id");
-                                       System.out.println(bookedSeats.get(bid) + " bookedSeat");
-                                       if (bookedSeats.get(bid).contains(grid_eco.getChildren().get(c).getId())){
-                                           takenSeat.add(grid_eco.getChildren().get(c).getId());
-                                           grid_eco.getChildren().get(c).setOpacity(0.5);
-                                           grid_eco.getChildren().get(c).setDisable(true);
-                                           grid_eco.getChildren().get(c).setStyle("-fx-background-color: #909090; -fx-background-radius: 5;");
-                                           break;
-                                       }
+                        int[] amountSeats = connection.getSeatNumber(flights.get(finalI1).getId());
+                        boolean buildSeatsSuccess = chooseSeat(amountSeats[0], amountSeats[1]);
+                        if(buildSeatsSuccess){
+                           ArrayList<String> bookedS = connection.getBookedSeats(flights.get(finalI1).getId());
+                           if (!bookedS.isEmpty()){
+                               for (String seat : bookedS){
+                                   if (seat.contains("E")){
+                                       takenSeatE.add(seat);
+                                       showTakenS(seat, gridE);
+                                   }
+                                   if(seat.contains("B")){
+                                       takenSeatB.add(seat);
+                                       showTakenS(seat, gridB);
                                    }
                                }
                            }
@@ -632,7 +625,6 @@ public class Controller implements Initializable {
                     flight_nbr_seat_pnl.setText(flights.get(finalI1).getId());
                     // flights seat panel will be shown
                     pnlSeat.toFront();
-
                 });
                 // to hover
                 hbox.addEventFilter(MouseEvent.MOUSE_ENTERED, e -> {
@@ -644,6 +636,17 @@ public class Controller implements Initializable {
             }
         }
     } // the method will show the flights list on the right side of the dashboard when a user choose a country
+
+    private void showTakenS(String seats, GridPane grid) {
+        System.out.println(seats + " booked");
+        for (int c = 0; c < grid.getChildren().size(); c++){
+            if (seats.contains(grid.getChildren().get(c).getId())) {
+                grid.getChildren().get(c).setDisable(true);
+                grid.getChildren().get(c).setStyle("-fx-background-color: #909090; -fx-background-radius: 5; -fx-opacity: 0.5;");
+                break;
+            }
+        }
+    }
 
     public void editProfile() throws SQLException {
         if (editingProfile == false) {
@@ -754,17 +757,24 @@ public class Controller implements Initializable {
      * @param businessSeats
      */
     public boolean chooseSeat(int econonySeats, int businessSeats) throws InterruptedException {
-        grid_eco.getChildren().removeAll();
-        grid_business.getChildren().removeAll();
+        gridE.getChildren().removeAll();
+        gridB.getChildren().removeAll();
         // 72/6 = 12
         // 12 row
         // 6 column
-        boolean business = false;
         //
         if (econonySeats%6 == 0){
             for(int row = 0;row < econonySeats/6; row++){ // cal
                 for(int col = 0;col < 6; col++){ // row
-                    build_eco_seats(row,col, business); // business is false for now
+                    build_eco_seats(row,col, false); // business is false for now
+                }
+            }
+        }
+
+        if (businessSeats%6 == 0){
+            for(int row = 0;row < businessSeats/6; row++){ // cal
+                for(int col = 0;col < 6; col++){ // row
+                    build_eco_seats(row,col, true); // business is false for now
                 }
             }
         }
@@ -802,48 +812,112 @@ public class Controller implements Initializable {
         }
             */
        if(!business) {
-           Label label = new Label();
-           label.setMinWidth(30);
-           label.setMinHeight(30);
-           label.setText(label.getId());
-           label.setBackground(new Background(new BackgroundFill(Color.rgb(174, 255, 71), new CornerRadii(5), Insets.EMPTY)));
-           label.setBorder(new Border(new BorderStroke(Color.rgb(174, 255, 71), BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(0))));
+           //<editor-fold desc="short">
+
+           Label label = createSeatItem();
            label.setId("E" + rowIndex+ columnIndex);
 
-           System.out.println(grid_eco.getColumnCount() + " count col");
-           System.out.println(grid_eco.getRowCount() + " count row");
-            if (grid_eco.getColumnCount() == 2 && grid_eco.getRowCount() == 1){
+           System.out.println(gridE.getColumnCount() + " count col");
+           System.out.println(gridE.getRowCount() + " count row");
+            if (gridE.getColumnCount() == 2 && gridE.getRowCount() == 1){
                 System.out.println("column 3");
-                grid_eco.add(label, columnIndex, rowIndex);
-                grid_eco.setMargin(label, new Insets(0, 20, 0, 0));
-            } else if (grid_eco.getColumnCount() == 3 && grid_eco.getRowCount() > 1) {
+                gridE.add(label, columnIndex, rowIndex);
+                gridE.setMargin(label, new Insets(0, 20, 0, 0));
+            } else if (gridE.getColumnCount() == 3 && gridE.getRowCount() > 1) {
                 System.out.println("column 4");
-                grid_eco.setMargin(label, new Insets(0, 0, 0, 20));
-                grid_eco.add(label, columnIndex, rowIndex);
+                gridE.setMargin(label, new Insets(0, 0, 0, 20));
+                gridE.add(label, columnIndex, rowIndex);
             }
             else {
-                grid_eco.add(label, columnIndex, rowIndex);
+                gridE.add(label, columnIndex, rowIndex);
             }
-
+           //</editor-fold>
            //grid_left.getColumnCount();
            label.setOnMouseClicked(e ->{
                seat_nbr_seat_pnl.setText(label.getId());
+               toggleSeatColor(); // restore seats
                // seat color change
-               for (int i = 0; i < grid_eco.getChildren().size(); i++){
-                   grid_eco.getChildren().get(i).setOpacity(1);
-                   grid_eco.getChildren().get(i).setStyle("-fx-background-color: #FF8000; -fx-background-radius: 5;");
-                   if (!Objects.equals(grid_eco.getChildren().get(i).getId(), label.getId())){
-                       grid_eco.getChildren().get(i).setOpacity(0.5);
-                       grid_eco.getChildren().get(i).setStyle("-fx-background-color: #AEFF47; -fx-background-radius: 5;");
-                       for (String taken : takenSeat){
-                           if (taken.equals(grid_eco.getChildren().get(i).getId())){
-                                grid_eco.getChildren().get(i).setStyle("-fx-background-color: #909090; -fx-background-radius: 5;");
+               for (int i = 0; i < gridE.getChildren().size(); i++){
+                   gridE.getChildren().get(i).setOpacity(1);
+                   gridE.getChildren().get(i).setStyle("-fx-background-color: #FF8000; -fx-background-radius: 5;");
+                   if (!Objects.equals(gridE.getChildren().get(i).getId(), label.getId())){
+                       gridE.getChildren().get(i).setOpacity(0.5);
+                       gridE.getChildren().get(i).setStyle("-fx-background-color: #AEFF47; -fx-background-radius: 5;");
+                       for (String taken : takenSeatE){
+                           if (taken.equals(gridE.getChildren().get(i).getId())){
+                                gridE.getChildren().get(i).setStyle("-fx-background-color: #909090; -fx-background-radius: 5;");
                            }
                        }
                    }
                }
            });
+        }else {
+
+           //<editor-fold desc="short">
+
+
+           Label label = createSeatItem();
+           label.setId("B" + rowIndex+ columnIndex);
+           if (gridB.getColumnCount() == 2 && gridB.getRowCount() == 1){
+               System.out.println("column 3");
+               gridB.add(label, columnIndex, rowIndex);
+               gridB.setMargin(label, new Insets(0, 20, 0, 0));
+           } else if (gridB.getColumnCount() == 3 && gridB.getRowCount() > 1) {
+               System.out.println("column 4");
+               gridB.setMargin(label, new Insets(0, 0, 0, 20));
+               gridB.add(label, columnIndex, rowIndex);
+           }
+           else {
+               gridB.add(label, columnIndex, rowIndex);
+           }
+           //</editor-fold>
+           label.setOnMouseClicked(e ->{
+               System.out.println(e.getSource() + " src");
+               System.out.println("label id: " + label.getId());
+               seat_nbr_seat_pnl.setText(label.getId());
+               toggleSeatColor(); // restore seats
+
+
+               // seat color change
+               for (int i = 0; i < gridB.getChildren().size(); i++){
+                   gridB.getChildren().get(i).setOpacity(1);
+                   gridB.getChildren().get(i).setStyle("-fx-background-color: #FF8000; -fx-background-radius: 5;");
+                   if (!Objects.equals(gridB.getChildren().get(i).getId(), label.getId())){
+                       gridB.getChildren().get(i).setOpacity(0.5);
+                       gridB.getChildren().get(i).setStyle("-fx-background-color: #AEFF47; -fx-background-radius: 5;");
+                       for (String taken : takenSeatB){
+                           if (taken.equals(gridB.getChildren().get(i).getId())){
+                               gridB.getChildren().get(i).setStyle("-fx-background-color: #909090; -fx-background-radius: 5;");
+                           }
+                       }
+                   }
+               }
+           });
+       }
+
+    }
+
+    private void toggleSeatColor() {
+        for (int ge = 0; ge < gridE.getChildren().size(); ge++){ // ge store for grid-economy
+            if (!takenSeatE.contains(gridE.getChildren().get(ge).getId())){
+                gridE.getChildren().get(ge).setStyle("-fx-background-color: #AEFF47; -fx-background-radius: 5; -fx-opacity: 1;"); // restore all seats
+            }
         }
+        for (int gb = 0; gb < gridB.getChildren().size(); gb++){ // gb stor for grid-business
+            if (!takenSeatB.contains(gridB.getChildren().get(gb).getId())){
+                gridB.getChildren().get(gb).setStyle("-fx-background-color: #AEFF47; -fx-background-radius: 5; -fx-opacity: 1;"); // restore all seats
+            }
+        }
+    }
+
+    public Label createSeatItem(){
+        Label label = new Label();
+        label.setMinWidth(30);
+        label.setMinHeight(30);
+        label.setText(label.getId());
+        label.setBackground(new Background(new BackgroundFill(Color.rgb(174, 255, 71), new CornerRadii(5), Insets.EMPTY)));
+        label.setBorder(new Border(new BorderStroke(Color.rgb(174, 255, 71), BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(0))));
+        return label;
     }
 
     /**
