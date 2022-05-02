@@ -246,7 +246,6 @@ public class Connection {
         Statement stmt = con.createStatement();
         stmt.executeUpdate("SET search_path TO jetstream;");
         ResultSet result = stmt.executeQuery("select picture from profile_picture where u_id = " + user.getUserId() + ";");
-
         while (result.next()) {
             System.out.println(result.getString("picture"));
             image = new Image(result.getString("picture"));

@@ -196,6 +196,7 @@ public class Controller implements Initializable {
     //<editor-fold desc="SEAT VARIABLES"
     private ArrayList<String> takenSeatE = new ArrayList<>();
     private ArrayList<String> takenSeatB = new ArrayList<>();
+    private double price = 0.0;
     //</editor-fold>
     //<editor-fold desc="HISTORY VARIABLES">
     ObservableList<UserHistory> fetchedList;
@@ -541,20 +542,9 @@ public class Controller implements Initializable {
                 landingBox.setAlignment(Pos.CENTER_LEFT);
                 landingBox.getChildren().addAll(landingIcon,desTime, titleD);
 
-                Button btn = new Button("Book");
-                btn.setStyle("-fx-background-color:  #ff8000; -fx-text-fill: #333; -fx-padding: 10; ");
-
-                btn.setOnAction(e -> {
-                    // the for loop is going to restore the seat opacity
-                    System.out.println("Book clicked");
-                });
-
                 hboxChildCenter.getChildren().addAll(boardingBox, pathIcon, landingBox);
                 hboxChildCenter.setSpacing(15);
                 hboxChildCenter.setAlignment(Pos.CENTER_LEFT);
-
-                hboxChildRight.getChildren().add(btn);
-                hboxChildRight.setAlignment(Pos.CENTER_RIGHT);
 
                 /***************  main box to hold the list  *********************/
                 hbox.setBackground(new Background(new BackgroundFill(Color.valueOf("#151D3B"), CornerRadii.EMPTY, Insets.EMPTY)));
@@ -626,8 +616,7 @@ public class Controller implements Initializable {
                         ex.printStackTrace();
                     }
 
-                    double price = Double.parseDouble(flights.get(finalI1).getPrice());
-                    price_seat_pnl.setText(String.valueOf(price));
+
                     try {
                         pgr_prf_seat_pnl = (ImageView) root.lookup("#pgr_prf_seat_pnl");
                         pgr_prf_seat_pnl.setImage(connection.getProfilePicture(user));
@@ -636,6 +625,8 @@ public class Controller implements Initializable {
                     }
                     flight_nbr_seat_pnl.setText(flights.get(finalI1).getId());
                     // flights seat panel will be shown
+                    price = Double.parseDouble(flights.get(finalI1).getPrice());
+                    price_seat_pnl.setText(String.valueOf(price));
                     pnlSeat.toFront();
                 });
                 // to hover
@@ -654,7 +645,7 @@ public class Controller implements Initializable {
         for (int c = 0; c < grid.getChildren().size(); c++){
             if (seats.contains(grid.getChildren().get(c).getId())) {
                 grid.getChildren().get(c).setDisable(true);
-                grid.getChildren().get(c).setStyle("-fx-background-color: #909090; -fx-background-radius: 5; -fx-opacity: 0.5;");
+                grid.getChildren().get(c).setStyle("-fx-background-color: #FF8000; -fx-background-radius: 5; -fx-opacity: 1;");
                 break;
             }
         }
@@ -824,7 +815,6 @@ public class Controller implements Initializable {
             */
        if(!business) {
            //<editor-fold desc="short">
-
            Label label = createSeatItem();
            label.setId("E" + rowIndex+ columnIndex);
 
@@ -845,18 +835,18 @@ public class Controller implements Initializable {
            //</editor-fold>
            //grid_left.getColumnCount();
            label.setOnMouseClicked(e ->{
+               price_seat_pnl.setText(String.valueOf(price));
+
                seat_nbr_seat_pnl.setText(label.getId());
                toggleSeatColor(); // restore seats
                // seat color change
                for (int i = 0; i < gridE.getChildren().size(); i++){
                    gridE.getChildren().get(i).setOpacity(1);
-                   gridE.getChildren().get(i).setStyle("-fx-background-color: #FF8000; -fx-background-radius: 5;");
                    if (!Objects.equals(gridE.getChildren().get(i).getId(), label.getId())){
                        gridE.getChildren().get(i).setOpacity(0.5);
-                       gridE.getChildren().get(i).setStyle("-fx-background-color: #AEFF47; -fx-background-radius: 5;");
                        for (String taken : takenSeatE){
                            if (taken.equals(gridE.getChildren().get(i).getId())){
-                                gridE.getChildren().get(i).setStyle("-fx-background-color: #909090; -fx-background-radius: 5;");
+                                gridE.getChildren().get(i).setStyle("-fx-background-color: #FF8000; -fx-background-radius: 5;");
                            }
                        }
                    }
@@ -865,8 +855,6 @@ public class Controller implements Initializable {
         }else {
 
            //<editor-fold desc="short">
-
-
            Label label = createSeatItem();
            label.setId("B" + rowIndex+ columnIndex);
            if (gridB.getColumnCount() == 2 && gridB.getRowCount() == 1){
@@ -883,8 +871,8 @@ public class Controller implements Initializable {
            }
            //</editor-fold>
            label.setOnMouseClicked(e ->{
-               System.out.println(e.getSource() + " src");
-               System.out.println("label id: " + label.getId());
+
+               price_seat_pnl.setText(String.valueOf(price * 1.1));
                seat_nbr_seat_pnl.setText(label.getId());
                toggleSeatColor(); // restore seats
 
@@ -892,13 +880,12 @@ public class Controller implements Initializable {
                // seat color change
                for (int i = 0; i < gridB.getChildren().size(); i++){
                    gridB.getChildren().get(i).setOpacity(1);
-                   gridB.getChildren().get(i).setStyle("-fx-background-color: #FF8000; -fx-background-radius: 5;");
                    if (!Objects.equals(gridB.getChildren().get(i).getId(), label.getId())){
                        gridB.getChildren().get(i).setOpacity(0.5);
-                       gridB.getChildren().get(i).setStyle("-fx-background-color: #AEFF47; -fx-background-radius: 5;");
                        for (String taken : takenSeatB){
                            if (taken.equals(gridB.getChildren().get(i).getId())){
-                               gridB.getChildren().get(i).setStyle("-fx-background-color: #909090; -fx-background-radius: 5;");
+                               System.out.println("business taken seats exist");
+                               gridB.getChildren().get(i).setStyle("-fx-background-color: #FF8000; -fx-background-radius: 5;");
                            }
                        }
                    }
@@ -911,12 +898,14 @@ public class Controller implements Initializable {
     private void toggleSeatColor() {
         for (int ge = 0; ge < gridE.getChildren().size(); ge++){ // ge store for grid-economy
             if (!takenSeatE.contains(gridE.getChildren().get(ge).getId())){
-                gridE.getChildren().get(ge).setStyle("-fx-background-color: #AEFF47; -fx-background-radius: 5; -fx-opacity: 1;"); // restore all seats
+                gridE.getChildren().get(ge).setOpacity(1);
+                //gridE.getChildren().get(ge).setStyle("-fx-background-color: #AEFF47; -fx-background-radius: 5; -fx-opacity: 1;"); // restore all seats
             }
         }
         for (int gb = 0; gb < gridB.getChildren().size(); gb++){ // gb stor for grid-business
             if (!takenSeatB.contains(gridB.getChildren().get(gb).getId())){
-                gridB.getChildren().get(gb).setStyle("-fx-background-color: #AEFF47; -fx-background-radius: 5; -fx-opacity: 1;"); // restore all seats
+                gridB.getChildren().get(gb).setOpacity(1);
+                //gridB.getChildren().get(gb).setStyle("-fx-background-color: #AEFF47; -fx-background-radius: 5; -fx-opacity: 1;"); // restore all seats
             }
         }
     }
@@ -926,8 +915,8 @@ public class Controller implements Initializable {
         label.setMinWidth(30);
         label.setMinHeight(30);
         label.setText(label.getId());
-        label.setBackground(new Background(new BackgroundFill(Color.rgb(174, 255, 71), new CornerRadii(5), Insets.EMPTY)));
-        label.setBorder(new Border(new BorderStroke(Color.rgb(174, 255, 71), BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(0))));
+        label.setBackground(new Background(new BackgroundFill(Color.WHITE, new CornerRadii(5), Insets.EMPTY)));
+        label.setBorder(new Border(new BorderStroke(Color.WHITE, BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(0))));
         return label;
     }
 

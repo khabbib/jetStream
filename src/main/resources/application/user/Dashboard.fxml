@@ -678,7 +678,7 @@
             </AnchorPane>
             <AnchorPane fx:id="pnlPassager" layoutX="27.0" layoutY="27.0" prefHeight="647.0" prefWidth="1072.0" style="-fx-background-color: #151D3B; -fx-background-radius: 10;">
                <children>
-                  <Pane layoutX="576.0" layoutY="-2.0" prefHeight="646.0" prefWidth="319.0" style="-fx-background-color: #112;">
+                  <Pane layoutX="576.0" layoutY="-7.0" prefHeight="654.0" prefWidth="319.0" style="-fx-background-color: #112;">
                      <children>
                         <VBox layoutX="21.0" layoutY="20.0">
                            <children>
@@ -832,7 +832,7 @@
                         </Label>
                         <HBox spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                            <children>
-                              <Label fx:id="price_seat_pnl" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="31.0" prefWidth="72.0" textFill="WHITE">
+                              <Label fx:id="price_seat_pnl" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="35.0" prefWidth="83.0" textFill="WHITE">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -864,16 +864,11 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Pane layoutX="927.0" layoutY="414.0" prefHeight="230.0" prefWidth="139.0" style="-fx-background-color: #1122;">
+                  <Pane layoutX="895.0" layoutY="373.0" prefHeight="271.0" prefWidth="171.0">
                      <children>
-                        <VBox layoutX="14.0" layoutY="14.0" spacing="10.0">
+                        <VBox layoutX="14.0" layoutY="14.0" prefHeight="254.0" prefWidth="154.0" spacing="10.0">
                            <children>
-                              <Label text="Guide" textFill="WHITE">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Label>
-                              <ImageView fitHeight="126.0" fitWidth="137.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="253.0" fitWidth="153.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../image/seat_guid_icons.PNG" />
                                  </image>

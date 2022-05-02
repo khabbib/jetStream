@@ -66,10 +66,13 @@ public class ConfirmActions {
 
     }
 
+
+
+    // display error on screen by its tag
     public void displayMessage(Label success_msg, String s) {
         if (success_msg != null){
             success_msg.setText(s);
-            PauseTransition pause = new PauseTransition(Duration.seconds(2));
+            PauseTransition pause = new PauseTransition(Duration.seconds(3));
             pause.setOnFinished(a -> success_msg.setText(null));
             pause.play();
         }else {
