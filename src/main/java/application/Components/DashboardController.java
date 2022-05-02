@@ -86,7 +86,7 @@ public class DashboardController {
 
         // look up for global variables
         controller.u_name = (Label) root.lookup("#u_name");
-        controller.u_id = (Label) root.lookup("#u_id");
+        //controller.u_id = (Label) root.lookup("#u_id");
         controller.searchListAppear = (ListView<String>) root.lookup("#searchListAprear");
         controller.searchListAppear2 = (ListView<String>) root.lookup("#searchListAprear2");
         controller.searchListAppear3 = (ListView<String>) root.lookup("#searchListAprear3");

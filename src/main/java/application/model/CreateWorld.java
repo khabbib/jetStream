@@ -51,7 +51,7 @@ public class CreateWorld {
         scrollPane.setFitToWidth(true);
 
         controller.u_name.setText(user.getFirstName());
-        controller.u_id.setText(user.getUserId());
+        //controller.u_id.setText(user.getUserId());
 
     }
 }
