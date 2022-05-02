@@ -32,7 +32,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #112;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #112;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
       <Pane layoutY="-2.0" prefHeight="702.0" prefWidth="71.0" style="-fx-background-color: #151D3B;">
          <children>
@@ -678,7 +678,7 @@
             </AnchorPane>
             <AnchorPane fx:id="pnlPassager" layoutX="27.0" layoutY="27.0" prefHeight="647.0" prefWidth="1072.0" style="-fx-background-color: #151D3B; -fx-background-radius: 10;">
                <children>
-                  <Pane layoutX="576.0" layoutY="-2.0" prefHeight="646.0" prefWidth="319.0" style="-fx-background-color: #1122;">
+                  <Pane layoutX="576.0" layoutY="-2.0" prefHeight="646.0" prefWidth="319.0" style="-fx-background-color: #112;">
                      <children>
                         <VBox layoutX="21.0" layoutY="20.0">
                            <children>
