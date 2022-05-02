@@ -413,32 +413,6 @@ public class Connection {
     }
 
     // not used
-    private static StringBuilder rfc = new StringBuilder();
-    public static boolean compareRFC(StringBuilder s) {
-        boolean isUnique = false;
-        rfc = generateRandomRFC();
-        try {
-            java.sql.Connection con = Connection.getDatabaseConnection();
-            Statement stmt = con.createStatement();
-            stmt.executeUpdate("SET search_path TO jetstream;");
-            ResultSet rs = stmt.executeQuery("select b_rfc from booked;");
-            while (rs.next()){
-                if (rs.getString("b_rfc").contains(s)){
-                    System.out.println("rfc comparation");
-                    //rfc = generateRandomRFC();
-                    isUnique = false;
-                    break;
-                }
-                isUnique = true;
-            }
-            con.close();
-            stmt.close();
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-
-        return isUnique;
-    }
 
     /**
      * To fetch seats number
