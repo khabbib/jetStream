@@ -81,8 +81,6 @@ public class Controller implements Initializable {
     @FXML
     public Label u_name;
     @FXML
-    public Label u_id;
-    @FXML
     public VBox display_flight;
     @FXML
     public ImageView profilePicture;
@@ -118,6 +116,7 @@ public class Controller implements Initializable {
     // toggle options
     @FXML private Button iconProfile, iconFlight, iconHistorik, iconGame, iconSupport, iconCloseSeat, iconCloseSeat1;
     @FXML private AnchorPane pnlProfile, pnlHistorik, pnlFlight, pnlGame, pnlSupport;
+    @FXML private Pane lgtF_menu_user, lgtH_menu_user, lgtG_menu_user, lgtS_menu_user;
 
     //Admin panels
     @FXML private ListView<String> ticketListView, memberListView;
@@ -418,9 +417,7 @@ public class Controller implements Initializable {
         scrollPane.setBackground(new Background(new BackgroundFill(world.getBackgroundColor(), CornerRadii.EMPTY, Insets.EMPTY)));
 
         u_name = (Label) root.lookup("#u_name");
-        u_id = (Label) root.lookup("#u_id");
         u_name.setText(null);
-        u_id.setText(null);
         stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         scene = new Scene(root);
         MoveScreen.moveScreen(root,stage);
@@ -964,7 +961,7 @@ public class Controller implements Initializable {
                     //if (uniq){
                         System.out.println("Save information");
                         String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                        boolean saveTicket = connection.savePurchasedTicket(u_id.getText(), flight_nbr_seat_pnl.getText(), String.valueOf(rfc), date, seat_nbr_seat_pnl.getText(), false);
+                        boolean saveTicket = connection.savePurchasedTicket(user.getUserId(), flight_nbr_seat_pnl.getText(), String.valueOf(rfc), date, seat_nbr_seat_pnl.getText(), false);
                         if (saveTicket){
 
                             System.out.println(email_seat_pnl.getText() + " Your email!!!");
@@ -1116,45 +1113,50 @@ public class Controller implements Initializable {
     public void userDev(ActionEvent e){
         if (e.getSource() == iconProfile) {
             pnlProfile.toFront();
-            map_menu_user.setOpacity(0.5);
-            historik_menu_user.setOpacity(0.5);
-            game_menu_user.setOpacity(0.5);
-            support_menu_user.setOpacity(0.5);
+            toggleMenuColor();
         }
         else if(e.getSource() == iconCloseSeat || e.getSource() == iconCloseSeat1){
             pnlSeat.toBack();
-
             restore_psgr_info();
         }
         else if (e.getSource() == iconFlight) {
             pnlFlight.toFront();
+            toggleMenuColor();
+            lgtF_menu_user.setVisible(true);
             map_menu_user.setOpacity(1);
-            historik_menu_user.setOpacity(0.5);
-            game_menu_user.setOpacity(0.5);
-            support_menu_user.setOpacity(0.5);
         }
         else if (e.getSource() == iconHistorik) {
             pnlHistorik.toFront();
-            map_menu_user.setOpacity(0.5);
+            toggleMenuColor();
+            lgtH_menu_user.setVisible(true);
             historik_menu_user.setOpacity(1);
-            game_menu_user.setOpacity(0.5);
-            support_menu_user.setOpacity(0.5);
         }
         else if (e.getSource() == iconGame) {
             pnlGame.toFront();
-            map_menu_user.setOpacity(0.5);
-            historik_menu_user.setOpacity(0.5);
+            toggleMenuColor();
+            lgtG_menu_user.setVisible(true);
             game_menu_user.setOpacity(1);
-            support_menu_user.setOpacity(0.5);
+
         }
         else if(e.getSource() == iconSupport){
             pnlSupport.toFront();
-            map_menu_user.setOpacity(0.5);
-            historik_menu_user.setOpacity(0.5);
-            game_menu_user.setOpacity(0.5);
+            toggleMenuColor();
+            lgtS_menu_user.setVisible(true);
             support_menu_user.setOpacity(1);
         }
 
+    }
+
+    private void toggleMenuColor() {
+        lgtF_menu_user.setVisible(false);
+        lgtH_menu_user.setVisible(false);
+        lgtG_menu_user.setVisible(false);
+        lgtS_menu_user.setVisible(false);
+
+        map_menu_user.setOpacity(0.5);
+        historik_menu_user.setOpacity(0.5);
+        game_menu_user.setOpacity(0.5);
+        support_menu_user.setOpacity(0.5);
     }
 
     /**
