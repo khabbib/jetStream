@@ -157,6 +157,8 @@ public class Controller implements Initializable {
     @FXML
     public AnchorPane pnlSeat;
     @FXML
+    public ImageView pgr_prf_seat_pnl;
+    @FXML
     public AnchorPane pnlPassager;
     @FXML
     public TextField first_name_seat_pnl;
@@ -265,6 +267,7 @@ public class Controller implements Initializable {
     @FXML public AnchorPane issue_panel_sup, contact_panel_sup, feedback_panel_sup;
     //</editor-fold
 
+    //<editor-fold desc="instance initialize">
     application.Components.Support support;
     Search search;
     ConfirmActions confirmActions;
@@ -273,6 +276,7 @@ public class Controller implements Initializable {
     Config config;
     Registration registration;
     InitializeFXM initializeFXM;
+    //</editor-fold>
     //----------------- HOME -----------------//
     public Controller(){
         connection = new Connection(this);
@@ -621,7 +625,15 @@ public class Controller implements Initializable {
                     } catch (InterruptedException ex) {
                         ex.printStackTrace();
                     }
-                    price_seat_pnl.setText(flights.get(finalI1).getPrice());
+
+                    double price = Double.parseDouble(flights.get(finalI1).getPrice());
+                    price_seat_pnl.setText(String.valueOf(price));
+                    try {
+                        pgr_prf_seat_pnl = (ImageView) root.lookup("#pgr_prf_seat_pnl");
+                        pgr_prf_seat_pnl.setImage(connection.getProfilePicture(user));
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
                     flight_nbr_seat_pnl.setText(flights.get(finalI1).getId());
                     // flights seat panel will be shown
                     pnlSeat.toFront();
@@ -708,7 +720,6 @@ public class Controller implements Initializable {
     }
 
     public void changeImage() {
-
         profileSelector.setVisible(true);
         dir = new File("src/main/resources/application/profiles/64x64");
         files = dir.listFiles();
@@ -1178,8 +1189,8 @@ public class Controller implements Initializable {
     /**
      * @param e
      */
-    public void seachFlights(ActionEvent e) {
-        search.serachFlight();
+    public void searchFlight(ActionEvent e) {
+        search.searchFlight();
     }
 
     //----------------- SEARCH FIELD -----------------//
@@ -1189,7 +1200,6 @@ public class Controller implements Initializable {
      */
     public void searchHit(){
         search.searchHit();
-
     }
 
     public void change_search_info(){
@@ -1198,10 +1208,8 @@ public class Controller implements Initializable {
             String to = disc_input_flight.getText();
             from_input_flight.setText(to);
             disc_input_flight.setText(from);
-            System.out.println("not empty");
         }else {
-            System.out.println("empty");
-            confirmActions.notifyError("Fill info required!");
+            confirmActions.notifyError(msgBox_user_dashboard, notify_user_dashboard, "Search fields are empty!");
         }
 
     }
@@ -1443,17 +1451,6 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-    }
-
-
-
-    ///////// notify message in user dashboard
-    public Label getNotifyDisplay() {
-        return notify_user_dashboard;
-    }
-
-    public Pane getNotifyBox() {
-        return msgBox_user_dashboard;
     }
 }
 

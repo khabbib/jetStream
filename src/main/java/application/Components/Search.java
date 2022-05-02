@@ -15,7 +15,7 @@ public class Search {
     }
 
 
-    public void serachFlight() {
+    public void searchFlight() {
         LocalDate d = controller.date_input_flight.getValue();
         if (!(controller.from_input_flight.getText().isEmpty()) && !(controller.disc_input_flight.getText().isEmpty())){
             if (d == null) {
