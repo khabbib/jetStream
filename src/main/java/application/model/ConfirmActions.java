@@ -54,15 +54,13 @@ public class ConfirmActions {
     }
 
     // user global notification
-    public void notifyError(String msgs) {
-        Label msg = controller.getNotifyDisplay();
-        Pane box = controller.getNotifyBox();
+    public void notifyError(Pane box, Label label, String msg) {
         box.setVisible(true);
-        msg.setText(msgs);
+        label.setText(msg);
         PauseTransition pause = new PauseTransition(Duration.seconds(2));
         pause.setOnFinished(a -> {
             box.setVisible(false);
-            msg.setText(null);
+            label.setText(null);
         });
         pause.play();
 
