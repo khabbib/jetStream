@@ -27,7 +27,7 @@ public class ConfirmActions {
      * @param content // is more detail information about the actual action
      * @return // return a status of true or false which means if the user confirm the action or not.
      */
-    public static boolean confirmThisAction(String title, String message, String content){
+    public boolean confirmThisAction(String title, String message, String content){
         boolean confirm = false;
         if (title != null && message != null && content != null){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

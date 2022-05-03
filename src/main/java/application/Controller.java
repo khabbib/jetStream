@@ -221,7 +221,10 @@ public class Controller implements Initializable {
     @FXML private ImageView exchange_search_flight;
     @FXML public Label nbr_of_available_flights;
     @FXML public DatePicker date_input_flight;
+    @FXML public DatePicker dateR_input_flight;
     @FXML public TextField from_input_flight;
+    @FXML public HBox rtur_date_pick;
+
     @FXML public CheckBox turR_checkBox_flight;
     @FXML public TextField disc_input_flight;
     @FXML private Label no_flight_aval_msg;
@@ -286,8 +289,8 @@ public class Controller implements Initializable {
         connection = new Connection(this);
         config = new Config(this, root, stage);
         support = new Support(this);
-        search = new Search(this, connection);
         confirmActions = new ConfirmActions(this);
+        search = new Search(this, connection, confirmActions);
         registration = new Registration(this, connection, config);
         dashboardController = new DashboardController(this, root, connection);
         initializeFXM = new InitializeFXM(this,connection);
@@ -386,7 +389,7 @@ public class Controller implements Initializable {
      */
     public void renderDashboard(ActionEvent e, User user) {
         this.user = user;
-        root = config.render(e,"user/Dashboard", "User Dashboard");
+        this.root = config.render(e,"user/Dashboard", "User Dashboard");
         dashboardController.userInitializeFXML(root, user);
         initializeFXM.initializeProfile(root, user);
         createWorld = new CreateWorld();
@@ -476,6 +479,7 @@ public class Controller implements Initializable {
             for (int i = 0; i < flights.size();i++){
 
                 // fill up some info in the dashboard.
+
                 StackPane stackholer = new StackPane();
                 HBox hbox = new HBox(1);
                 HBox hboxChildCenter = new HBox(1);
@@ -499,6 +503,11 @@ public class Controller implements Initializable {
                 pathIcon.setFitHeight(30);
                 pathIcon.setStyle("-fx-margin: 0 40 0 40; -fx-opacity: 0.5");
 
+                Label prices = new Label(flights.get(i).getPrice() + " SEK");
+
+                VBox imageHolder = new VBox();
+                imageHolder.getChildren().addAll(pathIcon, prices);
+
                 Image landing = new Image("/application/image/landing.png");
                 ImageView landingIcon = new ImageView(landing);
                 landingIcon.setOpacity(0.5);
@@ -515,12 +524,15 @@ public class Controller implements Initializable {
                 String[] sorted = tmp.split(":");
                 String s = sorted[0] + ": " + sorted[1];
                 depTime.setText(s);
+                Text depDate = new Text(flights.get(i).getDeparture_date());
+
                 depTime.setFill(Color.valueOf("#eee"));
                 depTime.setStyle("-fx-font-weight: bold");
                 Text desTime = new Text();
                 String tmp1 = flights.get(i).getDestination_time();
                 String[] sorted1 = tmp1.split(":");
                 String s1 = sorted1[0] + ": " + sorted1[1];
+                Text desDate = new Text(flights.get(i).getDestination_date());
                 desTime.setText(s1); // calculate arriving time
                 desTime.setStyle("-fx-font-weight: bold");
                 desTime.setFill(Color.valueOf("#eee"));
@@ -531,19 +543,21 @@ public class Controller implements Initializable {
                 titleD.setText(flights.get(i).getDestination_name());
                 titleD.setStyle("-fx-text-fill: #999;");
 
+                if (flights.get(i).isrTur()){
 
+                }
                 Label date = new Label();
                 date.setText(flights.get(i).getDestination_time());
                 // box holderx
                 VBox boardingBox = new VBox();
                 boardingBox.setAlignment(Pos.CENTER_LEFT);
-                boardingBox.getChildren().addAll(onboardIcon, depTime, titleF);
+                boardingBox.getChildren().addAll(onboardIcon, depTime, depDate, titleF);
                 // box holder
                 VBox landingBox = new VBox();
                 landingBox.setAlignment(Pos.CENTER_LEFT);
-                landingBox.getChildren().addAll(landingIcon,desTime, titleD);
+                landingBox.getChildren().addAll(landingIcon,desTime, desDate, titleD);
 
-                hboxChildCenter.getChildren().addAll(boardingBox, pathIcon, landingBox);
+                hboxChildCenter.getChildren().addAll(boardingBox, imageHolder, landingBox);
                 hboxChildCenter.setSpacing(15);
                 hboxChildCenter.setAlignment(Pos.CENTER_LEFT);
 
@@ -569,6 +583,9 @@ public class Controller implements Initializable {
                     takenSeatB.clear();
                     gridE.getChildren().clear();
                     gridB.getChildren().clear();
+                    first_name_seat_pnl.setText(user.getFirstName());
+                    last_name_seat_pnl.setText(user.getLastName());
+                    email_seat_pnl.setText(user.getEmail());
                     // Seat window
                     HBox hboxLR_seat = new HBox();
                     hboxLR_seat.getChildren().addAll(gridE);
@@ -619,7 +636,7 @@ public class Controller implements Initializable {
 
 
                     try {
-                        pgr_prf_seat_pnl = (ImageView) root.lookup("#pgr_prf_seat_pnl");
+
                         pgr_prf_seat_pnl.setImage(connection.getProfilePicture(user));
                     } catch (SQLException ex) {
                         ex.printStackTrace();
@@ -1195,7 +1212,9 @@ public class Controller implements Initializable {
     public void searchFlight(ActionEvent e) {
         search.searchFlight();
     }
-
+    public void checkboxEvent(ActionEvent e){
+        search.checkboxEvent(e);
+    }
     //----------------- SEARCH FIELD -----------------//
 
     /**
@@ -1403,7 +1422,7 @@ public class Controller implements Initializable {
                 items = table_historik.getItems(); // get the whole tables items into an observable list to compare.
                 if (items != null){ // if observable items has item
                     // show a confirmation message to user
-                    boolean confirmed = ConfirmActions.confirmThisAction("Confirm to delete selected item", "Do you want to proceed?", "The selected items will be deleted!");
+                    boolean confirmed = confirmActions.confirmThisAction("Confirm to delete selected item", "Do you want to proceed?", "The selected items will be deleted!");
                     if (confirmed){ // if user confirm the action
                         for (UserHistory item: items){ // loop through all historic items
                             if (item.getSelect_col_table_historik().isSelected()){ // check if the checkbox for one or more item is selected
@@ -1422,7 +1441,7 @@ public class Controller implements Initializable {
                 items = table_historik.getItems(); // get the whole tables items into an observable list to compare.
                 if (items != null){ // if observable items has item
                     // show a confirmation message to user
-                    boolean confirmed = ConfirmActions.confirmThisAction("Confirm to delete the item", "Do you want to proceed?", items.size() +" items will be deleted.");
+                    boolean confirmed = confirmActions.confirmThisAction("Confirm to delete the item", "Do you want to proceed?", items.size() +" items will be deleted.");
                     if (confirmed){ // if user confirm the action
                         for (UserHistory item: items){ // loop through all historic items
                             boolean ok = connection.deleteHistoryByRFC(item.getRfc_col_table_historik()); // send the actual reference number as an argument to database to compare and delete
