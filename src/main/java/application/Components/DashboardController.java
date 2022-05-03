@@ -7,10 +7,9 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import org.w3c.dom.Text;
+
 import java.sql.SQLException;
 
 public class DashboardController {
@@ -86,7 +85,11 @@ public class DashboardController {
 
         // look up for global variables
         controller.u_name = (Label) root.lookup("#u_name");
+        controller.first_name_seat_pnl = (TextField) root.lookup("#first_name_seat_pnl");
+        controller.last_name_seat_pnl = (TextField) root.lookup("#last_name_seat_pnl");
+        controller.email_seat_pnl = (TextField) root.lookup("#email_seat_pnl");
         //controller.u_id = (Label) root.lookup("#u_id");
+        controller.rtur_date_pick = (HBox)root.lookup("rtur_date_pick");
         controller.searchListAppear = (ListView<String>) root.lookup("#searchListAprear");
         controller.searchListAppear2 = (ListView<String>) root.lookup("#searchListAprear2");
         controller.searchListAppear3 = (ListView<String>) root.lookup("#searchListAprear3");
@@ -99,6 +102,7 @@ public class DashboardController {
         controller.display_flight = (VBox) controller.scrollFlights.getContent();
         controller.scrollPane = (ScrollPane) root.lookup("#scrollPane");
         controller.search_f_name = (TextField) root.lookup("#search_f_name");
+        controller.pgr_prf_seat_pnl = (ImageView) root.lookup("#pgr_prf_seat_pnl");
 
     }
 

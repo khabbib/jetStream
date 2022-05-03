@@ -172,31 +172,57 @@ public class Connection {
      * @param date
      * @return
      */
-    public ArrayList<Flight> searchFlight(String departure, String destination, String date) {
+    public ArrayList<Flight> searchFlight(String departure, String destination, String date, String dateR) {
         ArrayList<Flight> flights = new ArrayList<>();
+        boolean rTur = false;
         try {
             java.sql.Connection con = getDatabaseConnection();
             Statement stmt = con.createStatement();
-            ResultSet flight;
+            Statement stmt1 = con.createStatement();
+            ResultSet flight = null;
+            ResultSet flightReturn = null;
             flights.clear();
             stmt.executeUpdate("SET search_path TO jetstream;");
-            if (date != null){
+            if (date != null && dateR != null){
+                System.out.println("not null date");
                 flight = stmt.executeQuery("select * from flight where f_departure_name = '" + departure + "' and f_destination_name = '"+destination+"' and f_departure_date = '"+ date+"';");
-            }else {
+                flightReturn = stmt1.executeQuery("select * from flight where f_departure_name = '" + destination + "' and f_destination_name = '"+departure+"' and f_departure_date = '"+ dateR+"';");
+                rTur = true;
+            }else if (date != null){
+                flight = stmt.executeQuery("select * from flight where f_departure_name = '" + departure + "' and f_destination_name = '"+destination+"' and f_departure_date = '"+ date+"';");
+                System.out.println("not null dateR");
+            }
+            else {
+                System.out.println("no date provided");
                 flight = stmt.executeQuery("select * from flight where f_departure_name = '" + departure + "' and f_destination_name = '"+destination+"';");
             }
-
-            while (flight.next()){
-                String id_get = flight.getString("f_id");
-                String departure_name_get = flight.getString(("f_departure_name"));
-                String departure_date_get = flight.getString("f_departure_date");
-                String departure_time_get = flight.getString("f_departure_time");
-                String destination_name_get = flight.getString("f_destination_name");
-                String destination_date_get = flight.getString("f_destination_date");
-                String destination_time_get = flight.getString("f_destination_time");
-                String price_get = flight.getString("f_price");
-                //System.out.println("Fetched info: \nid: " + id_get + "\nfrom: " + departure_name_get + "\ndestination: " + destination_name_get);
-                flights.add(new Flight(id_get,departure_name_get,departure_date_get,departure_time_get, destination_name_get,destination_date_get,destination_time_get,price_get));
+            if (flight != null){
+                while (flight.next()){
+                    String id_get = flight.getString("f_id");
+                    String departure_name_get = flight.getString(("f_departure_name"));
+                    String departure_date_get = flight.getString("f_departure_date");
+                    String departure_time_get = flight.getString("f_departure_time");
+                    String destination_name_get = flight.getString("f_destination_name");
+                    String destination_date_get = flight.getString("f_destination_date");
+                    String destination_time_get = flight.getString("f_destination_time");
+                    String price_get = flight.getString("f_price");
+                    System.out.println("id: " + id_get + ", departure: " +departure_name_get+ ", destination: " + destination_name_get);
+                    flights.add(new Flight(id_get,departure_name_get,departure_date_get,departure_time_get, destination_name_get,destination_date_get,destination_time_get,price_get, false));
+                }
+            }
+            if (rTur && flightReturn != null){
+                while (flightReturn.next()){
+                    String id_get = flightReturn.getString("f_id");
+                    String departure_name_get = flightReturn.getString(("f_departure_name"));
+                    String departure_date_get = flightReturn.getString("f_departure_date");
+                    String departure_time_get = flightReturn.getString("f_departure_time");
+                    String destination_name_get = flightReturn.getString("f_destination_name");
+                    String destination_date_get = flightReturn.getString("f_destination_date");
+                    String destination_time_get = flightReturn.getString("f_destination_time");
+                    String price_get = flightReturn.getString("f_price");
+                    System.out.println("id: " + id_get + ", departure: " +departure_name_get+ ", destination: " + destination_name_get);
+                    flights.add(new Flight(id_get,departure_name_get,departure_date_get,departure_time_get, destination_name_get,destination_date_get,destination_time_get,price_get, true));
+                }
             }
             con.close();
             stmt.close();
@@ -231,7 +257,7 @@ public class Connection {
                 String destination_time_get = flight.getString("f_destination_time");
                 String price_get = flight.getString("f_price");
                 //System.out.println("Fetched info: \nid: " + id_get + "\nfrom: " + departure_name_get + "\ndestination: " + destination_name_get);
-                flights.add(new Flight(id_get,departure_name_get,departure_date_get,departure_time_get, destination_name_get,destination_date_get,destination_time_get,price_get));
+                flights.add(new Flight(id_get,departure_name_get,departure_date_get,departure_time_get, destination_name_get,destination_date_get,destination_time_get,price_get, false));
             }
 
             con.close();
