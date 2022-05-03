@@ -200,7 +200,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <PasswordField fx:id="password_reg_admin_admin" prefHeight="26.0" prefWidth="314.0" promptText="password">
+                  <PasswordField fx:id="password_reg_admin" prefHeight="26.0" prefWidth="314.0" promptText="password">
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
@@ -259,7 +259,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="pnlTickets" layoutX="76.0" layoutY="-4.0" prefHeight="706.0" prefWidth="1124.0" style="-fx-background-color: #112;" visible="false">
+      <AnchorPane fx:id="pnlTickets" layoutX="76.0" layoutY="-4.0" prefHeight="706.0" prefWidth="1124.0" style="-fx-background-color: #112;">
          <children>
             <ListView fx:id="ticketListView" layoutX="130.0" layoutY="118.0" prefHeight="471.0" prefWidth="864.0" />
             <Label layoutX="433.0" layoutY="51.0" prefHeight="39.0" prefWidth="258.0" text="List of booked tickets" textFill="WHITE">
@@ -275,7 +275,7 @@
             <Button fx:id="deleteTicketBtn" layoutX="527.0" layoutY="600.0" mnemonicParsing="false" opacity="0.0" prefHeight="65.0" prefWidth="65.0" text="Delete ticket" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="pnlMember" layoutX="93.0" prefHeight="700.0" prefWidth="1104.0" style="-fx-background-color: #112;" visible="false">
+      <AnchorPane fx:id="pnlMember" layoutX="93.0" prefHeight="700.0" prefWidth="1104.0" style="-fx-background-color: #112;">
          <children>
             <ListView fx:id="memberListView" layoutX="14.0" layoutY="89.0" prefHeight="447.0" prefWidth="1037.0" />
             <Label layoutX="14.0" layoutY="55.0" prefHeight="34.0" prefWidth="166.0" text="List of Members" textFill="WHITE">
@@ -286,7 +286,7 @@
             <Button fx:id="registerMemberBtn_admin" layoutX="20.0" layoutY="563.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="155.0" style="-fx-background-color: #f87000;" text="Register" textFill="WHITE" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="pnlFlights" layoutX="76.0" layoutY="-1.0" prefHeight="700.0" prefWidth="1124.0" style="-fx-background-color: #112;" visible="false">
+      <AnchorPane fx:id="pnlFlights" layoutX="76.0" layoutY="-1.0" prefHeight="700.0" prefWidth="1124.0" style="-fx-background-color: #112;">
          <children>
             <ListView fx:id="flightListView" layoutX="191.0" layoutY="114.0" prefHeight="425.0" prefWidth="720.0" />
             <Label layoutX="463.0" layoutY="47.0" prefHeight="45.0" prefWidth="176.0" text="List of flights" textFill="WHITE">

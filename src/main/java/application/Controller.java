@@ -106,10 +106,13 @@ public class Controller implements Initializable {
     @FXML private AnchorPane pnlProfile, pnlHistorik, pnlFlight, pnlGame, pnlSupport;
     @FXML private Pane lgtF_menu_user, lgtH_menu_user, lgtG_menu_user, lgtS_menu_user;
 
-    //Admin panels
+   //</editor-fold>
+
+    //<editor-fold desc="ADMIN VARIABLES">
     @FXML private ListView<String> ticketListView, memberListView;
     @FXML private AnchorPane pnlFlights, pnlTickets, pnlMember, registerAnchorPane;
     @FXML private Button flightsBtn, membersBtn, ticketsBtn, logoutButton, registerCommitBtn_admin, registerMemberBtn_admin, returnToMemberListBtn_admin;
+
     //</editor-fold>
     //<editor-fold desc="DASHBOARD VARIABLES">
 
@@ -215,8 +218,8 @@ public class Controller implements Initializable {
     @FXML public TextField address_reg_admin;
     @FXML public TextField emailaddress_reg_admin;
     @FXML public TextField phone_number_reg_admin;
-    @FXML public TextField password_reg_admin;
-    @FXML public TextField confirm_password_reg_admin;
+    @FXML public PasswordField password_reg_admin;
+    @FXML public PasswordField confirm_password_reg_admin;
     @FXML public Label name_issue_reg_admin;
     @FXML public Label last_name_issue_reg_admin;
     @FXML public Label address_issue_reg_admin;
@@ -416,7 +419,10 @@ public class Controller implements Initializable {
     public void registerUserAdmin(ActionEvent e) throws SQLException {
         boolean ok = registerAdmin.registerUserAdmin(e);
         if (ok){
-            confirmActions.displayMessage(success_msg, "User successfully registered!", false);
+            pnlMember.toFront();
+            confirmActions.displayMessage(registration_error_admin, "User successfully registered!", false);
+        }else {
+            confirmActions.displayMessage(registration_error_admin, "User could not registered!", true);
         }
     }
 
@@ -1122,7 +1128,8 @@ public class Controller implements Initializable {
                         {
                             pageNr++;
                             StringBuilder temp2 = new StringBuilder();
-                            temp2.append(pageNr).append(" Member[ id. ").append(item.getUserId()).append(", First Name: ").append(item.getFirstName()).append(", List Name: ").append(item.getLastName()).append(", Adress: ").append(item.getAddress()).append(", Email: ").append(item.getEmail()).append(", Number: ").append(item.getPhoneNumber()).append(", Password: ").append(item.getPassword()).append(", isAdmin").append(item.isAdmin()).append(" ]");
+                            System.out.println(item.isAdmin() + " Obedddddd ");
+                            temp2.append(pageNr).append(" Member[ id. ").append(item.getUserId()).append(", First Name: ").append(item.getFirstName()).append(", List Name: ").append(item.getLastName()).append(", Adress: ").append(item.getAddress()).append(", Email: ").append(item.getEmail()).append(", Number: ").append(item.getPhoneNumber()).append(", Password: ").append(item.getPassword()).append(", isAdmin: ").append(item.isAdmin()).append(" ]");
                             temp.add(temp2.toString());
                         }
 
