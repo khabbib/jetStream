@@ -1,5 +1,6 @@
 package application;
 import application.Components.*;
+import application.Components.AdminComponents.RegisterAdmin;
 import application.config.Config;
 import application.games.Game2048Main;
 import application.games.MPlayer;
@@ -107,8 +108,8 @@ public class Controller implements Initializable {
 
     //Admin panels
     @FXML private ListView<String> ticketListView, memberListView;
-    @FXML private AnchorPane pnlFlights, pnlTickets, pnlMember;
-    @FXML private Button flightsBtn, membersBtn, ticketsBtn, logoutButton;
+    @FXML private AnchorPane pnlFlights, pnlTickets, pnlMember, registerAnchorPane;
+    @FXML private Button flightsBtn, membersBtn, ticketsBtn, logoutButton, registerCommitBtn_admin, registerMemberBtn_admin, returnToMemberListBtn_admin;
     //</editor-fold>
     //<editor-fold desc="DASHBOARD VARIABLES">
 
@@ -204,6 +205,26 @@ public class Controller implements Initializable {
     @FXML public Label phone_number_issue_reg;
     @FXML public Label password_issue_reg;
     @FXML public Label confirm_password_issue_reg;
+
+    //Register user/admin in MemberPanel
+
+    // Register a new user
+    @FXML public CheckBox isAdminCheckbox;
+    @FXML public TextField first_name_reg_admin;
+    @FXML public TextField last_name_reg_admin;
+    @FXML public TextField address_reg_admin;
+    @FXML public TextField emailaddress_reg_admin;
+    @FXML public TextField phone_number_reg_admin;
+    @FXML public TextField password_reg_admin;
+    @FXML public TextField confirm_password_reg_admin;
+    @FXML public Label name_issue_reg_admin;
+    @FXML public Label last_name_issue_reg_admin;
+    @FXML public Label address_issue_reg_admin;
+    @FXML public Label email_issue_reg_admin;
+    @FXML public Label phone_number_issue_reg_admin;
+    @FXML public Label password_issue_reg_admin;
+    @FXML public Label confirm_password_issue_reg_admin;
+    @FXML public Label registration_error_admin;
     //</editor-fold
     //<editor-fold desc="SUPPORT VARIABLES">
     @FXML public Button issue_btn_sup, feedback_btn_sup, contact_btn_sup, send_fb_btn_sup, send_issue_btn_sup, send_contact_btn_sup;
@@ -222,7 +243,8 @@ public class Controller implements Initializable {
     DashboardController dashboardController;
     Connection connection;
     Config config;
-    Registration registration;
+    RegistrationUser registrationUser;
+    RegisterAdmin registerAdmin;
     InitializeFXM initializeFXM;
     //</editor-fold>
     //----------------- HOME -----------------//
@@ -232,7 +254,8 @@ public class Controller implements Initializable {
         support = new Support(this);
         confirmActions = new ConfirmActions(this);
         search = new Search(this, connection, confirmActions);
-        registration = new Registration(this, connection, config);
+        registrationUser = new RegistrationUser(this, connection, config);
+        registerAdmin = new RegisterAdmin(this, connection, config);
         dashboardController = new DashboardController(this, root, connection);
         initializeFXM = new InitializeFXM(this,connection);
     }
@@ -384,11 +407,18 @@ public class Controller implements Initializable {
      * @throws IOException
      */
     public void registerUser(ActionEvent e) throws SQLException {
-        boolean ok = registration.registerUser(e);
+        boolean ok = registrationUser.registerUser(e);
         if (ok){
             confirmActions.displayMessage(success_msg, "User successfully registered!", false);
         }
     }// the method will register the user and return to the login page
+
+    public void registerUserAdmin(ActionEvent e) throws SQLException {
+        boolean ok = registerAdmin.registerUserAdmin(e);
+        if (ok){
+            confirmActions.displayMessage(success_msg, "User successfully registered!", false);
+        }
+    }
 
     /**
      * @param e
@@ -1198,6 +1228,16 @@ public class Controller implements Initializable {
         if(e.getSource() == logoutButton)
         {
             switchToLogin(e);
+        }
+
+        else if(e.getSource() == returnToMemberListBtn_admin)
+        {
+            pnlMember.toFront();
+        }
+
+        else if(e.getSource() == registerMemberBtn_admin)
+        {
+            registerAnchorPane.toFront();
         }
 
         else if(e.getSource() == flightsBtn)

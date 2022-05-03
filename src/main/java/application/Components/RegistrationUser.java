@@ -13,7 +13,7 @@ import java.sql.SQLException;
 /**
  * This class registers users and handles errors.
  */
-public class Registration {
+public class RegistrationUser {
     private Controller controller;
     private Config config;
     private Connection connection;
@@ -25,7 +25,7 @@ public class Registration {
      * @param connection
      * @param config
      */
-    public Registration(Controller controller, Connection connection, Config config){
+    public RegistrationUser(Controller controller, Connection connection, Config config){
         this.controller = controller;
         this.connection = connection;
         this.config = config;
