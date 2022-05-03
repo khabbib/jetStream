@@ -3,22 +3,41 @@ package application.Components;
 import application.Controller;
 import application.config.Config;
 import application.database.Connection;
+import application.model.ConfirmActions;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.util.Duration;
 
 import java.sql.SQLException;
 
+/**
+ * This class registers users and handles errors.
+ */
 public class Registration {
     private Controller controller;
     private Config config;
     private Connection connection;
+
+    private ConfirmActions confirmActions;
+
+    /**
+     * @param controller
+     * @param connection
+     * @param config
+     */
     public Registration(Controller controller, Connection connection, Config config){
         this.controller = controller;
         this.connection = connection;
         this.config = config;
+        confirmActions = new ConfirmActions(controller);
     }
 
+    /**
+     * @param e action event.
+     * @return boolean.
+     * @throws SQLException if any sql issue occur.
+     * @author Khabib and Sossio. Developed by Sossio.
+     */
     public boolean registerUser(ActionEvent e) throws SQLException {
         boolean registered = false;
         if (!controller.first_name_reg.getText().isEmpty() && !controller.last_name_reg.getText().isEmpty() && !controller.address_reg.getText().isEmpty() && !controller.emailaddress_reg.getText().isEmpty() && !controller.phone_number_reg.getText().isEmpty() && !controller.password_reg.getText().isEmpty() && !controller.confirm_password_reg.getText().isEmpty()){
@@ -35,76 +54,42 @@ public class Registration {
                                                 registered = true;
                                                 config.render(e, "user/Login", "Login window");
                                                 if (controller.success_msg != null){
-                                                    controller.success_msg.setText("successfully registered the user!");
+                                                    System.out.println("user registered");
+                                                    confirmActions.displayMessage(controller.success_msg, "successfully registered the user!", false);
                                                 }else {
-                                                    System.out.println("");
+                                                    System.out.println("error occured somewhere");
                                                 }
 
                                             } else {
-                                                controller.registration_error.setText("Couldn't register the information");
-                                                PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                                                pause.setOnFinished(a -> controller.registration_error.setText(null));
-                                                pause.play();
+                                                confirmActions.displayMessage(controller.registration_error, "Couldn't register the information", true);
                                             }
                                         }else {
-                                            System.out.println("Email type issue");
-                                            controller.email_issue_reg.setText("Type issue [email]");
+                                            confirmActions.displayMessage(controller.email_issue_reg, "Type issue [email]", true);
                                         }
                                     }else {
-                                        System.out.println("confirm password not much the actual password");
-                                        controller.confirm_password_issue_reg.setText("Much issue [confirm password]");
-                                        PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                                        pause.setOnFinished(a -> controller.confirm_password_issue_reg.setText(null));
-                                        pause.play();
+                                        confirmActions.displayMessage(controller.confirm_password_issue_reg, "Mach issue [confirm password]", true);
                                     }
                                 }else {
-                                    System.out.println("password issue");
-                                    controller.password_issue_reg.setText("Size issue 8-20");
-                                    PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                                    pause.setOnFinished(a -> controller.password_issue_reg.setText(null));
-                                    pause.play();
+                                    confirmActions.displayMessage(controller.password_issue_reg, "Size issue 8-20", true);
                                 }
                             }else {
-                                controller.phone_number_issue_reg.setText("size issue 12 digit");
-                                PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                                pause.setOnFinished(a -> controller.phone_number_issue_reg.setText(null));
-                                pause.play();
+                                confirmActions.displayMessage(controller.phone_number_issue_reg, "Size issue 12 digit", true);
                             }
                         } else {
-                            System.out.println("email address issue");
-                            controller.email_issue_reg.setText("size issue 6-30");
-                            PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                            pause.setOnFinished(a -> controller.email_issue_reg.setText(null));
-                            pause.play();
+                            confirmActions.displayMessage(controller.email_issue_reg, "Size issue 6-30", true);
                         }
                     }else {
-                        System.out.println("address issue");
-                        controller.address_issue_reg.setText("size issue 5-60");
-                        PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                        pause.setOnFinished(a -> controller.address_issue_reg.setText(null));
-                        pause.play();
+                        confirmActions.displayMessage(controller.address_issue_reg, "Size issue 5-60", true);
                     }
                 } else {
-                    System.out.println("last name issue");
-                    controller.last_name_issue_reg.setText("Size issue 3-30");
-                    PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                    pause.setOnFinished(a -> controller.last_name_issue_reg.setText(null));
-                    pause.play();
+                    confirmActions.displayMessage(controller.last_name_issue_reg, "Size issue 3-30", true);
                 }
             } else {
-                controller.name_issue_reg.setText("Size issue 3-30");
-                PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                pause.setOnFinished(a -> controller.name_issue_reg.setText(null));
-                pause.play();
+                confirmActions.displayMessage(controller.name_issue_reg, "Size issue 3-30", true);
             }
         }else {
-            controller.registration_error.setText("Empty field issue");
-            PauseTransition pause = new PauseTransition(Duration.seconds(2));
-            pause.setOnFinished(x -> controller.registration_error.setText(null));
-            pause.play();
+            confirmActions.displayMessage(controller.registration_error, "Empty field issue", true);
         }
         return registered;
     }
-
-
 }

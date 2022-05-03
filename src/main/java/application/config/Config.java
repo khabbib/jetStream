@@ -10,21 +10,34 @@ import javafx.stage.Stage;
 
 import java.util.Objects;
 
+/**
+ * This class ... configurates?
+ */
 public class Config {
     private Controller controller;
     private Stage stage;
     private Scene scene;
     private Parent root;
 
-
+    /**
+     * @param controller
+     * @param root
+     * @param stage
+     */
     public Config(Controller controller,Parent root,Stage stage ){
         this.controller = controller;
         this.root = root;
         this.stage = stage;
     }
 
-
-    //////// FXML RENDER //////////
+    /**
+     * //////// FXML RENDER //////////
+     * @param e
+     * @param name
+     * @param title
+     * @return
+     * @author Khabib.
+     */
     public Parent render(ActionEvent e, String name, String title){
         try {
             this.root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/application/"+name +".fxml")));
@@ -42,6 +55,9 @@ public class Config {
         return root;
     }
 
+    /**
+     * @return
+     */
     public Parent getRoot() {
         return this.root;
     }

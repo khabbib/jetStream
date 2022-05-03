@@ -66,7 +66,7 @@ public class Connection {
      * @throws SQLException if any sql issue occurs.
      * @author Kasper. Developed by Sossio.
      */
-    public boolean updateUser(User user) throws SQLException {
+    public boolean updateUser(User user, String dbEmail) throws SQLException {
         boolean uniqueEmail = true;
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
@@ -74,7 +74,7 @@ public class Connection {
         ResultSet rs = stmt.executeQuery("select u_email from userr");
 
         while(rs.next()) {
-            if(rs.getString("u_email").equals(user.getEmail())) {
+            if(rs.getString("u_email").equals(user.getEmail()) && !rs.getString("u_email").equals(dbEmail)) {
                 System.out.println("Email found!");
                 uniqueEmail = false;
                 break;
@@ -91,12 +91,69 @@ public class Connection {
     }
 
     /**
+     * @param u_id
+     * @return
+     * @throws SQLException
+     * @author Sossio.
+     */
+    public String getUserDatabaseFirstName(String u_id) throws SQLException {
+        java.sql.Connection con = getDatabaseConnection();
+        Statement stmt = con.createStatement();
+        stmt.executeUpdate("SET search_path TO jetstream;");
+
+        String firstName = null;
+        ResultSet rs = stmt.executeQuery("select u_f_name from userr where u_id = " + u_id + ";");
+        while(rs.next()) {
+            firstName = rs.getString(("u_f_name"));
+        }
+        return firstName;
+    }
+
+    /**
+     * @param u_id
+     * @return
+     * @throws SQLException
+     * @author Sossio.
+     */
+    public String getUserDatabaseLastName(String u_id) throws SQLException {
+        java.sql.Connection con = getDatabaseConnection();
+        Statement stmt = con.createStatement();
+        stmt.executeUpdate("SET search_path TO jetstream;");
+
+        String lastName = null;
+        ResultSet rs = stmt.executeQuery("select u_l_name from userr where u_id = " + u_id + ";");
+        while(rs.next()) {
+            lastName = rs.getString(("u_l_name"));
+        }
+        return lastName;
+    }
+
+    /**
+     * @param u_id
+     * @return
+     * @throws SQLException
+     * @author Sossio.
+     */
+    public String getUserDatabaseAddress(String u_id) throws SQLException {
+        java.sql.Connection con = getDatabaseConnection();
+        Statement stmt = con.createStatement();
+        stmt.executeUpdate("SET search_path TO jetstream;");
+
+        String address = null;
+        ResultSet rs = stmt.executeQuery("select u_address from userr where u_id = " + u_id + ";");
+        while(rs.next()) {
+            address = rs.getString(("u_address"));
+        }
+        return address;
+    }
+
+    /**
      * @param u_id gets userId from user.
      * @return 'old' email.
      * @throws SQLException if any sql issue occurs.
      * @author Sossio.
      */
-    public String getUserEmail(String u_id) throws SQLException {
+    public String getUserDatabaseEmail(String u_id) throws SQLException {
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
         stmt.executeUpdate("SET search_path TO jetstream;");
@@ -105,9 +162,46 @@ public class Connection {
         ResultSet rs = stmt.executeQuery("select u_email from userr where u_id = " + u_id + ";");
         while(rs.next()) {
             email = rs.getString(("u_email"));
-            return email;
         }
         return email;
+    }
+
+    /**
+     * @param u_id
+     * @return
+     * @throws SQLException
+     * @author Sossio.
+     */
+    public String getUserDatabasePhoneNumber(String u_id) throws SQLException {
+        java.sql.Connection con = getDatabaseConnection();
+        Statement stmt = con.createStatement();
+        stmt.executeUpdate("SET search_path TO jetstream;");
+
+        String phoneNumber = null;
+        ResultSet rs = stmt.executeQuery("select u_phone_nr from userr where u_id = " + u_id + ";");
+        while(rs.next()) {
+            phoneNumber = rs.getString(("u_phone_nr"));
+        }
+        return phoneNumber;
+    }
+
+    /**
+     * @param u_id
+     * @return
+     * @throws SQLException
+     * @author Sossio.
+     */
+    public String getUserDatabasePassword(String u_id) throws SQLException {
+        java.sql.Connection con = getDatabaseConnection();
+        Statement stmt = con.createStatement();
+        stmt.executeUpdate("SET search_path TO jetstream;");
+
+        String password = null;
+        ResultSet rs = stmt.executeQuery("select u_password from userr where u_id = " + u_id + ";");
+        while(rs.next()) {
+            password = rs.getString(("u_password"));
+        }
+        return password;
     }
 
     /**
@@ -527,6 +621,5 @@ public class Connection {
 
         return seat;
     }
-
 
 }

@@ -70,44 +70,31 @@ public class Controller implements Initializable {
     // FXML variables
     @FXML private ButtonBar logout;
     @FXML private TextField login_pass;
-    @FXML
-    public ScrollPane scrollPane;
-    @FXML
-    public ScrollPane scrollFlights;
+    @FXML public ScrollPane scrollPane;
+    @FXML public ScrollPane scrollFlights;
     @FXML private TextField login_email;
     @FXML private Label error_msg;
-    @FXML
-    public Label success_msg;
-    @FXML
-    public Label u_name;
-    @FXML
-    public VBox display_flight;
-    @FXML
-    public ImageView profilePicture;
-    @FXML
-    public ImageView profilePicturePreview;
-    @FXML
-    public TextField profileFirstName;
-    @FXML
-    public TextField profileLastName;
-    @FXML
-    public TextField profileEmail;
-    @FXML
-    public TextField profileAdress;
-    @FXML
-    public TextField profileNumber;
-    @FXML
-    public GridPane profileSelector;
-    @FXML
-    public PasswordField profilePassword;
-    @FXML
-    public Button btnEditProfile;
+    @FXML public Label success_msg;
+    @FXML public Label u_name;
+    @FXML public VBox display_flight;
+    @FXML public ImageView profilePicture;
+    @FXML public ImageView profilePicturePreview;
+    @FXML public TextField profileFirstName;
+    @FXML public TextField profileLastName;
+    @FXML public TextField profileEmail;
+    @FXML public TextField profileAdress;
+    @FXML public TextField profilePhoneNumber;
+    @FXML public GridPane profileSelector;
+    @FXML public PasswordField profilePassword;
+    @FXML public Button btnEditProfile;
+
+    // Issue labels for editing profile!
+    @FXML public Label edit_pfp_fname_issue, edit_pfp_lname_issue, edit_pfp_address_issue, edit_pfp_email_issue, edit_pfp_phone_issue, edit_pfp_pwd_issue;
 
     // From game
     @FXML private StackPane game1;
     @FXML private StackPane game2;
     @FXML private Button quizButton;
-
 
     // Seat
     private final GridPane gridE = new GridPane(); //Layout
@@ -127,69 +114,42 @@ public class Controller implements Initializable {
 
     // purchase variables
     @FXML private AnchorPane pnlPayment;
-    @FXML
-    public TextField card_nbr;
-    @FXML
-    public TextField card_fname;
-    @FXML
-    public TextField card_lname;
-    @FXML
-    public TextField card_month;
-    @FXML
-    public TextField card_year;
-    @FXML
-    public TextField card_cvc;
+    @FXML public TextField card_nbr;
+    @FXML public TextField card_fname;
+    @FXML public TextField card_lname;
+    @FXML public TextField card_month;
+    @FXML public TextField card_year;
+    @FXML public TextField card_cvc;
     @FXML private Button card_prev_btn, card_purchase_btn, seat_next_btn;
-    @FXML
-    public Label card_counter_nbr;
+    @FXML public Label card_counter_nbr;
 
     // scrollpane seats
-    @FXML
-    public ScrollPane business_scrollpane;
-    @FXML
-    public ScrollPane eco_scrollpane;
+    @FXML public ScrollPane business_scrollpane;
+    @FXML public ScrollPane eco_scrollpane;
 
     @FXML private AnchorPane pnl_success_purchase;
     @FXML private Button redirect_to_dash_btn, print_ticket_purchase_btn;
 
     // From seat
-    @FXML
-    public AnchorPane pnlSeat;
-    @FXML
-    public ImageView pgr_prf_seat_pnl;
-    @FXML
-    public AnchorPane pnlPassager;
-    @FXML
-    public TextField first_name_seat_pnl;
-    @FXML
-    public TextField last_name_seat_pnl;
-    @FXML
-    public TextField four_digit_seat_pnl;
-    @FXML
-    public TextField email_seat_pnl;
-    @FXML
-    public AnchorPane flight_seats_eco;
-    @FXML
-    public AnchorPane flights_seats_business;
-    @FXML
-    public Label seat_nbr_seat_pnl;
-    @FXML
-    public Label msg_seat_pnl;
-    @FXML
-    public Label flight_nbr_seat_pnl;
-    @FXML
-    public Label price_seat_pnl;
+    @FXML public AnchorPane pnlSeat;
+    @FXML public ImageView pgr_prf_seat_pnl;
+    @FXML public AnchorPane pnlPassager;
+    @FXML public TextField first_name_seat_pnl;
+    @FXML public TextField last_name_seat_pnl;
+    @FXML public TextField four_digit_seat_pnl;
+    @FXML public TextField email_seat_pnl;
+    @FXML public AnchorPane flight_seats_eco;
+    @FXML public AnchorPane flights_seats_business;
+    @FXML public Label seat_nbr_seat_pnl;
+    @FXML public Label msg_seat_pnl;
+    @FXML public Label flight_nbr_seat_pnl;
+    @FXML public Label price_seat_pnl;
 
     // menu images
-    @FXML
-    public ImageView map_menu_user;
-    @FXML
-    public ImageView historik_menu_user;
-    @FXML
-    public ImageView game_menu_user;
-    @FXML
-    public ImageView support_menu_user;
-
+    @FXML public ImageView map_menu_user;
+    @FXML public ImageView historik_menu_user;
+    @FXML public ImageView game_menu_user;
+    @FXML public ImageView support_menu_user;
 
     //</editor-fold>
     //<editor-fold desc="SEAT VARIABLES"
@@ -201,8 +161,7 @@ public class Controller implements Initializable {
     ObservableList<UserHistory> fetchedList;
     ObservableList<UserHistory> items;
     @FXML private TableView<UserHistory> table_historik;
-    @FXML
-    public Label rfc_no_sucesspnl;
+    @FXML public Label rfc_no_sucesspnl;
     @FXML private Button mremove_btn_historik, sremove_btn_historik;
     @FXML private CheckBox select_all_box_historik;
     @FXML private TableColumn<Book, String>
@@ -212,12 +171,9 @@ public class Controller implements Initializable {
     //</editor-fold
     //<editor-fold desc="SEARCH VARIABLES">
     public ArrayList<Flight> avalibleFlights = new ArrayList<>();
-    @FXML
-    public ListView<String> searchListAppear;
-    @FXML
-    public ListView<String> searchListAppear2;
-    @FXML
-    public ListView<String> searchListAppear3;
+    @FXML public ListView<String> searchListAppear;
+    @FXML public ListView<String> searchListAppear2;
+    @FXML public ListView<String> searchListAppear3;
     @FXML private ImageView exchange_search_flight;
     @FXML public Label nbr_of_available_flights;
     @FXML public DatePicker date_input_flight;
@@ -232,37 +188,22 @@ public class Controller implements Initializable {
 
     //</editor-fold
     //<editor-fold desc="REGISTER VARIABLES">
-    @FXML
-    public Label registration_error;
+    @FXML public Label registration_error;
     // Register a new user
-    @FXML
-    public TextField first_name_reg;
-    @FXML
-    public TextField last_name_reg;
-    @FXML
-    public TextField address_reg;
-    @FXML
-    public TextField emailaddress_reg;
-    @FXML
-    public TextField phone_number_reg;
-    @FXML
-    public TextField password_reg;
-    @FXML
-    public TextField confirm_password_reg;
-    @FXML
-    public Label name_issue_reg;
-    @FXML
-    public Label last_name_issue_reg;
-    @FXML
-    public Label address_issue_reg;
-    @FXML
-    public Label email_issue_reg;
-    @FXML
-    public Label phone_number_issue_reg;
-    @FXML
-    public Label password_issue_reg;
-    @FXML
-    public Label confirm_password_issue_reg;
+    @FXML public TextField first_name_reg;
+    @FXML public TextField last_name_reg;
+    @FXML public TextField address_reg;
+    @FXML public TextField emailaddress_reg;
+    @FXML public TextField phone_number_reg;
+    @FXML public TextField password_reg;
+    @FXML public TextField confirm_password_reg;
+    @FXML public Label name_issue_reg;
+    @FXML public Label last_name_issue_reg;
+    @FXML public Label address_issue_reg;
+    @FXML public Label email_issue_reg;
+    @FXML public Label phone_number_issue_reg;
+    @FXML public Label password_issue_reg;
+    @FXML public Label confirm_password_issue_reg;
     //</editor-fold
     //<editor-fold desc="SUPPORT VARIABLES">
     @FXML public Button issue_btn_sup, feedback_btn_sup, contact_btn_sup, send_fb_btn_sup, send_issue_btn_sup, send_contact_btn_sup;
@@ -658,6 +599,10 @@ public class Controller implements Initializable {
         }
     } // the method will show the flights list on the right side of the dashboard when a user choose a country
 
+    /**
+     * @param seats
+     * @param grid
+     */
     private void showTakenS(String seats, GridPane grid) {
         System.out.println(seats + " booked");
         for (int c = 0; c < grid.getChildren().size(); c++){
@@ -669,73 +614,133 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * @throws SQLException
+     * @author Kasper. Modified and developed by Sossio.
+     */
     public void editProfile() throws SQLException {
         if (editingProfile == false) {
             profileFirstName.setDisable(false);
             profileLastName.setDisable(false);
-            profileEmail.setDisable(false);
             profileAdress.setDisable(false);
-            profileNumber.setDisable(false);
+            profileEmail.setDisable(false);
+            profilePhoneNumber.setDisable(false);
             profilePassword.setDisable(false);
             btnEditProfile.setText("Confirm");
             editingProfile = true;
         } else {
 
             User editedUser = user;
-            Boolean edited = false;
 
-            if (!profileFirstName.getText().isEmpty()) {
+            boolean editProfileFirstName, editProfileLastName, editProfileAddress, editProfileEmail, editProfilePhoneNumber, editProfilePassword;
+
+            if (!profileFirstName.getText().isEmpty() && (profileFirstName.getText().length() >= 3 && profileFirstName.getText().length() <= 30)) {
                 editedUser.setFirstName(profileFirstName.getText());
-                edited = true;
+                editProfileFirstName = true;
+            } else {
+                editProfileFirstName = false;
             }
-            if(!profileLastName.getText().isEmpty()) {
+
+            if(!profileLastName.getText().isEmpty() && (profileLastName.getText().length() >= 3 && profileLastName.getText().length() <= 30)) {
                 editedUser.setLastName(profileLastName.getText());
-                edited = true;
+                editProfileLastName = true;
+            } else {
+                editProfileLastName = false;
             }
-            if (!profileEmail.getText().isEmpty()) {
-                editedUser.setEmail(profileEmail.getText());
-                edited = true;
-            }
-            if (!profileAdress.getText().isEmpty()){
+
+            if (!profileAdress.getText().isEmpty() && (profileAdress.getText().length() >= 5 && profileAdress.getText().length() <= 60)){
                 editedUser.setAddress(profileAdress.getText());
-                edited = true;
+                editProfileAddress = true;
+            } else {
+                editProfileAddress = false;
             }
-            if (!profileNumber.getText().isEmpty()){
-                editedUser.setPhoneNumber(profileNumber.getText());
-                edited = true;
+
+            if (!profileEmail.getText().isEmpty() && (profileEmail.getText().length() >= 6 && profileEmail.getText().length() <= 30)) {
+                editedUser.setEmail(profileEmail.getText());
+                editProfileEmail = true;
+            } else {
+                editProfileEmail = false;
             }
-            if (!profilePassword.getText().isEmpty()){
+
+            if (!profilePhoneNumber.getText().isEmpty() && profilePhoneNumber.getText().length() == 12){
+                editedUser.setPhoneNumber(profilePhoneNumber.getText());
+                editProfilePhoneNumber = true;
+            } else {
+                editProfilePhoneNumber = false;
+            }
+
+            if (!profilePassword.getText().isEmpty() && (profilePassword.getText().length() >= 8 && profilePassword.getText().length() <= 20)){
                 editedUser.setPassword(profilePassword.getText());
-                edited = true;
+                editProfilePassword = true;
+            } else {
+                editProfilePassword = false;
             }
 
-            if (edited) {
-                System.out.println("Updating user..");
-                user = editedUser;
+            if (editProfileFirstName) {
+                if(editProfileLastName) {
+                   if(editProfileAddress) {
+                       if(editProfileEmail) {
+                           if(editProfilePhoneNumber) {
+                               if(editProfilePassword){
 
-                boolean okToEditProfile = connection.updateUser(user);
+                                   System.out.println("Updating user okay!");
+                                   user = editedUser;
 
-                if(okToEditProfile) {
-                    confirmActions.displayMessage(pfp_display_msg, "Profile is updated!", false);
+                                   boolean okToEditProfile = connection.updateUser(user, connection.getUserDatabaseEmail(user.getUserId()));
+
+                                   if(okToEditProfile) {
+                                       confirmActions.displayMessage(pfp_display_msg, "Profile is updated!", false);
+                                   } else {
+                                       confirmActions.displayMessage(edit_pfp_email_issue, "New email is taken!", true);
+                                       profileEmail.setText(connection.getUserDatabaseEmail(user.getUserId()));
+                                   }
+
+                               } else {
+                                   System.out.println("Password issue!");
+                                   confirmActions.displayMessage(edit_pfp_pwd_issue, "Size issue 8-20!", true);
+                                   profilePassword.setText(connection.getUserDatabasePassword(user.getUserId()));
+                               }
+                           } else {
+                               System.out.println("Phone number issue!");
+                               confirmActions.displayMessage(edit_pfp_phone_issue, "Size issue 12!", true);
+                               profilePhoneNumber.setText(connection.getUserDatabasePhoneNumber(user.getUserId()));
+                           }
+                       } else {
+                           System.out.println("Email issue!");
+                           confirmActions.displayMessage(edit_pfp_email_issue, "Size issue 6-30!", true);
+                           profileEmail.setText(connection.getUserDatabaseEmail(user.getUserId()));
+                       }
+                   } else{
+                       System.out.println("Address issue!");
+                       confirmActions.displayMessage(edit_pfp_address_issue, "Size issue 5-60!", true);
+                       profileAdress.setText(connection.getUserDatabaseAddress(user.getUserId()));
+                   }
                 } else {
-                    confirmActions.displayMessage(pfp_display_msg, "New email is taken!", true);
-                    profileEmail.setText(connection.getUserEmail(user.getUserId()));
+                    System.out.println("Lastname issue!");
+                    confirmActions.displayMessage(edit_pfp_lname_issue, "Size issue 3-30!", true);
+                    //profileLastName.setText(connection.getUserDatabaseLastName(user.getUserId()));
                 }
             } else {
-                System.out.println("ypoo");
+                System.out.println("Firstname issue!");
+                confirmActions.displayMessage(edit_pfp_fname_issue, "Size issue 3-30!", true);
+                //profileFirstName.setText(connection.getUserDatabaseFirstName(user.getFirstName()));
             }
 
             profileFirstName.setDisable(true);
             profileLastName.setDisable(true);
-            profileEmail.setDisable(true);
             profileAdress.setDisable(true);
-            profileNumber.setDisable(true);
+            profileEmail.setDisable(true);
+            profilePhoneNumber.setDisable(true);
             profilePassword.setDisable(true);
             editingProfile = false;
             btnEditProfile.setText("Edit");
         }
     }
 
+    /**
+     *
+     * @author Kasper.
+     */
     public void changeImage() {
         profileSelector.setVisible(true);
         dir = new File("src/main/resources/application/profiles/64x64");
@@ -749,6 +754,9 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * @param event
+     */
     public void clickGrid(javafx.scene.input.MouseEvent event) {
         Node clickedNode = event.getPickResult().getIntersectedNode();
         if (clickedNode != profileSelector) {
@@ -921,6 +929,9 @@ public class Controller implements Initializable {
 
     }
 
+    /**
+     *
+     */
     private void toggleSeatColor() {
         for (int ge = 0; ge < gridE.getChildren().size(); ge++){ // ge store for grid-economy
             if (!takenSeatE.contains(gridE.getChildren().get(ge).getId())){
@@ -936,6 +947,9 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * @return
+     */
     public Label createSeatItem(){
         Label label = new Label();
         label.setMinWidth(30);
@@ -945,11 +959,6 @@ public class Controller implements Initializable {
         label.setBorder(new Border(new BorderStroke(Color.WHITE, BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(0))));
         return label;
     }
-
-    /**
-     * Purchase  ticket.
-     * @param e
-     */
 
     /**
      * @param e
@@ -1035,6 +1044,9 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     *
+     */
     public void restore_psgr_info(){
         first_name_seat_pnl.clear();
         last_name_seat_pnl.clear();
@@ -1054,6 +1066,7 @@ public class Controller implements Initializable {
     /**
      * Navigate to admin pages.
      * @param e
+     * @author Obed.
      */
     public void switchToAdminView(ActionEvent e) {
 
@@ -1062,16 +1075,12 @@ public class Controller implements Initializable {
                 User user = connection.authenticationAdmin(login_email.getText(), login_pass.getText());
                 if (user != null) {
 
-
-
                     root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("admin/AdminView.fxml")));
                     stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
                     scene = new Scene(root);
                     stage.setTitle("Admin window");
                     stage.setScene(scene);
                     stage.show();
-
-
 
                     memberListView = (ListView<String>) root.lookup("#memberListView");
                     if(memberListView != null)
@@ -1164,6 +1173,9 @@ public class Controller implements Initializable {
 
     }
 
+    /**
+     *
+     */
     private void toggleMenuColor() {
         lgtF_menu_user.setVisible(false);
         lgtH_menu_user.setVisible(false);
@@ -1180,6 +1192,7 @@ public class Controller implements Initializable {
      * Administrator dev.
      * @param e
      * @throws IOException
+     * @autor Obed.
      */
     public void adminDev(ActionEvent e) throws IOException {
         if(e.getSource() == logoutButton)
@@ -1331,6 +1344,9 @@ public class Controller implements Initializable {
 
     //----------------- Support -----------------//
 
+    /**
+     * @param e
+     */
     public void support_event_handler(ActionEvent e){
         support.supportInfo(e);
     }
@@ -1338,6 +1354,9 @@ public class Controller implements Initializable {
     //----------------- History  -----------------//
 
 
+    /**
+     *
+     */
     public void setInfoIntoTableHistorik(){ // the method calls from user dashboard to load everything.
         sremove_btn_historik = (Button) root.lookup("#sremove_btn_historik");
         mremove_btn_historik = (Button) root.lookup("#mremove_btn_historik");
