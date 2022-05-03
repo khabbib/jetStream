@@ -15,7 +15,7 @@
             <Font size="25.0" />
          </font></Text>
 
-      <Button fx:id="login" layoutX="1100.0" layoutY="35.0" mnemonicParsing="false" onAction="#switchToLogin" style="-fx-background-color: #ff8000;" text="Login">
+      <Button fx:id="login" layoutX="1106.0" layoutY="34.0" mnemonicParsing="false" onAction="#switchToLogin" style="-fx-background-color: #ff8000;" text="Login">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
@@ -33,7 +33,7 @@
          </padding>
       </Button>
 
-      <Text fill="#949494" layoutX="543.0" layoutY="661.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Version 0.9.6">
+      <Text fill="#949494" layoutX="543.0" layoutY="661.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Version 0.9.8">
          <font>
             <Font size="16.0" />
          </font>

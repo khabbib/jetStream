@@ -17,10 +17,10 @@ import java.sql.SQLException;
 public class InitializeFXM {
     private Controller controller;
     private Connection connection;
+
     public InitializeFXM(Controller controller, Connection connection){
         this.controller = controller;
         this.connection = connection;
-
     }
 
     public void initializeProfile(Parent root, User user){
@@ -33,7 +33,7 @@ public class InitializeFXM {
             controller.profileLastName = (TextField) root.lookup("#profileLastName");
             controller.profileEmail = (TextField) root.lookup("#profileEmail");
             controller.profileAdress = (TextField) root.lookup("#profileAdress");
-            controller.profileNumber = (TextField) root.lookup("#profileNumber");
+            controller.profilePhoneNumber = (TextField) root.lookup("#profilePhoneNumber");
             controller.profilePassword = (PasswordField) root.lookup("#profilePassword");
             controller.profilePicturePreview = (ImageView) root.lookup("#profilePicturePreview");
             controller.profileSelector = (GridPane) root.lookup("#profileSelector");
@@ -41,11 +41,18 @@ public class InitializeFXM {
 
             controller.pfp_display_msg = (Label) root.lookup("#pfp_edit_error_msg");
 
+            controller.edit_pfp_fname_issue = (Label) root.lookup("#edit_pfp_fname_issue");
+            controller.edit_pfp_lname_issue = (Label) root.lookup("#edit_pfp_lname_issue");
+            controller.edit_pfp_address_issue = (Label) root.lookup("#edit_pfp_address_issue");
+            controller.edit_pfp_email_issue = (Label) root.lookup("#edit_pfp_email_issue");
+            controller.edit_pfp_phone_issue = (Label) root.lookup("#edit_pfp_phone_issue");
+            controller.edit_pfp_pwd_issue = (Label) root.lookup("#edit_pfp_pwd_issue");
+
             controller.profileFirstName.setText(user.getFirstName());
             controller.profileLastName.setText(user.getLastName());
             controller.profileEmail.setText(user.getEmail());
             controller.profileAdress.setText(user.getAddress());
-            controller.profileNumber.setText(user.getPhoneNumber());
+            controller.profilePhoneNumber.setText(user.getPhoneNumber());
             controller.profilePassword.setText(user.getPassword());
 
             try {
@@ -61,7 +68,7 @@ public class InitializeFXM {
             controller.profileLastName.setDisable(true);
             controller.profileEmail.setDisable(true);
             controller.profileAdress.setDisable(true);
-            controller.profileNumber.setDisable(true);
+            controller.profilePhoneNumber.setDisable(true);
             controller.profilePassword.setDisable(true);
         }
     }

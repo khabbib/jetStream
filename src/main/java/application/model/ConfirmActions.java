@@ -17,9 +17,14 @@ import java.util.Optional;
  */
 public class ConfirmActions {
     private Controller controller;
+
+    /**
+     * @param controller
+     */
     public ConfirmActions(Controller controller){
         this.controller = controller;
     }
+
     /**
      * The following method will open a confirmation window to the user to confirm an action.
      * @param title // is the conformation windows title
@@ -49,11 +54,16 @@ public class ConfirmActions {
             }
         }
 
-
         return confirm;
     }
 
-    // user global notification
+    /**
+     * User global notification
+     * @param box
+     * @param label
+     * @param msg
+     * @author Khabib.
+     */
     public void notifyError(Pane box, Label label, String msg) {
         box.setVisible(true);
         label.setText(msg);
@@ -66,9 +76,13 @@ public class ConfirmActions {
 
     }
 
-
-
-    // display error on screen by its tag
+    /**
+     * Display error on screen by its tag
+     * @param label
+     * @param msg
+     * @param isError
+     * @author Khabib. Developed by Sossio and Khabib.
+     */
     public void displayMessage(Label label, String msg, boolean isError) {
         if (label != null){
             if(isError){
