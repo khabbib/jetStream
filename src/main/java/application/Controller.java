@@ -40,6 +40,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import worldMapAPI.World;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -72,10 +73,8 @@ public class Controller implements Initializable {
 
     // FXML variables
     @FXML private ButtonBar logout;
-    @FXML private TextField login_pass;
     @FXML public ScrollPane scrollPane;
     @FXML public ScrollPane scrollFlights;
-    @FXML private TextField login_email;
     @FXML private Label error_msg;
     @FXML public Label success_msg;
     @FXML public Label u_name;
@@ -248,8 +247,15 @@ public class Controller implements Initializable {
     @FXML public AnchorPane issue_panel_sup, contact_panel_sup, feedback_panel_sup;
     //</editor-fold
 
-    public Pane pane;
+    //<editor-fold desc"LOGIN VARIABLES">
+    @FXML private CheckBox show_pasword_login;
+    @FXML private Button forgot_password_login;
+    @FXML private TextField login_pass;
+    @FXML private TextField login_email;
+    @FXML private TextField show_password_field_login;
 
+    //</editor-fold>
+    public Pane pane;
     // Edit profile
     @FXML public Label pfp_display_msg;
 
@@ -301,6 +307,25 @@ public class Controller implements Initializable {
     }
 
 
+    /////// login operation (show password )
+    public void showPassword(ActionEvent e){
+        if (e.getSource() == show_pasword_login){
+            System.out.println(login_pass.getText() + " password");
+            login_pass.setVisible(true);
+
+
+        }
+    }
+
+    public void syncPassowordShow(){
+        show_password_field_login.setVisible(true);
+        String operation = login_pass.getText();
+        if (operation.length() >= 10){
+                String end = operation.substring(0, operation.length()-1);
+                show_password_field_login.setText(end);
+                login_pass.setText(end);
+            }
+    }
     /**
      *
      */
