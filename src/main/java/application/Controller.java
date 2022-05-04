@@ -10,7 +10,7 @@ import application.model.*;
 import application.auth.Purchase;
 import application.database.Connection;
 import application.moveScreen.MoveScreen;
-import javafx.animation.PauseTransition;
+import javafx.animation.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -32,6 +32,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
@@ -59,7 +61,7 @@ public class Controller implements Initializable {
     public Pane msgBox_user_dashboard;
     // Default variables
     private CreateWorld createWorld;
-    private World world;
+    public static World world;
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -103,7 +105,7 @@ public class Controller implements Initializable {
 
     // toggle options
     @FXML private Button iconProfile, iconFlight, iconHistorik, iconGame, iconSupport, iconCloseSeat, iconCloseSeat1;
-    @FXML private AnchorPane pnlProfile, pnlHistorik, pnlFlight, pnlGame, pnlSupport;
+    @FXML public AnchorPane pnlProfile, pnlHistorik, pnlFlight, pnlGame, pnlSupport;
     @FXML private Pane lgtF_menu_user, lgtH_menu_user, lgtG_menu_user, lgtS_menu_user;
 
    //</editor-fold>
@@ -164,14 +166,24 @@ public class Controller implements Initializable {
     //<editor-fold desc="HISTORY VARIABLES">
     ObservableList<UserHistory> fetchedList;
     ObservableList<UserHistory> items;
-    @FXML private TableView<UserHistory> table_historik;
+    @FXML
+    public TableView<UserHistory> table_historik;
     @FXML public Label rfc_no_sucesspnl;
     @FXML private Button mremove_btn_historik, sremove_btn_historik;
     @FXML private CheckBox select_all_box_historik;
     @FXML private TableColumn<Book, String>
-            no_col_table_historik, company_col_table_historik,model_col_table_historik, rfc_col_table_historik,
-            flightid_col_table_historik,from_col_table_historik, to_col_table_historik,
-            seatno_col_table_historik, date_col_table_historik, price_col_table_historik;
+            no_col_table_historik;
+    @FXML private TableColumn<Book, String> company_col_table_historik;
+    @FXML private TableColumn<Book, String> model_col_table_historik;
+    @FXML private TableColumn<Book, String> rfc_col_table_historik;
+    @FXML private TableColumn<Book, String> flightid_col_table_historik;
+    @FXML
+    public TableColumn<Book, String> from_col_table_historik;
+    @FXML
+    public TableColumn<Book, String> to_col_table_historik;
+    @FXML private TableColumn<Book, String> seatno_col_table_historik;
+    @FXML private TableColumn<Book, String> date_col_table_historik;
+    @FXML private TableColumn<Book, String> price_col_table_historik;
     //</editor-fold
     //<editor-fold desc="SEARCH VARIABLES">
     public ArrayList<Flight> avalibleFlights = new ArrayList<>();
@@ -236,6 +248,8 @@ public class Controller implements Initializable {
     @FXML public AnchorPane issue_panel_sup, contact_panel_sup, feedback_panel_sup;
     //</editor-fold
 
+    public Pane pane;
+
     // Edit profile
     @FXML public Label pfp_display_msg;
 
@@ -246,6 +260,11 @@ public class Controller implements Initializable {
     DashboardController dashboardController;
     Connection connection;
     Config config;
+
+    Registration registration;
+
+    FlightPaths flightPaths;
+=======
     RegistrationUser registrationUser;
     RegisterAdmin registerAdmin;
     InitializeFXM initializeFXM;
@@ -261,6 +280,7 @@ public class Controller implements Initializable {
         registerAdmin = new RegisterAdmin(this, connection, config);
         dashboardController = new DashboardController(this, root, connection);
         initializeFXM = new InitializeFXM(this,connection);
+        flightPaths = new FlightPaths(this);
     }
 
     //----------------- HOME -----------------//
@@ -273,6 +293,32 @@ public class Controller implements Initializable {
     public void switchToHome(ActionEvent e) {
         config.render(e,"Home", "Home window");
     }
+
+    /***
+     * Creates and animates flightpaths on world map.
+     * Author: Kasper
+     */
+    public void displayFlightPaths() {
+        flightPaths.start();
+    }
+
+    /*public void testCoordinates(){
+        boolean bool = false;
+        for (int i = 0; i < 20; i++) {
+            Circle circle = new Circle(410,i*20,5);
+            if (!bool){
+            circle.setFill(Color.RED);
+            world.getChildren().add(circle);
+            bool = true;
+            }
+            else if (bool){
+                circle.setFill(Color.GREEN);
+                world.getChildren().add(circle);
+                bool = false;
+            }
+        }
+    }*/
+
 
     /**
      *
@@ -362,6 +408,7 @@ public class Controller implements Initializable {
         createWorld = new CreateWorld();
         world = createWorld.init(this, connection);
         createWorld.addWorldInMap(scrollPane, user);
+        //testCoordinates();
         setInfoIntoTableHistorik();
     } // the method will render dashboard page for user
 
@@ -793,7 +840,7 @@ public class Controller implements Initializable {
     /**
      * @param event
      */
-    public void clickGrid(javafx.scene.input.MouseEvent event) {
+    public void clickGrid(MouseEvent event) {
         Node clickedNode = event.getPickResult().getIntersectedNode();
         if (clickedNode != profileSelector) {
             Integer colIndex = GridPane.getColumnIndex(clickedNode);
