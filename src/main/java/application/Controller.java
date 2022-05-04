@@ -300,23 +300,6 @@ public class Controller implements Initializable {
         flightPaths.start();
     }
 
-    /*public void testCoordinates(){
-        boolean bool = false;
-        for (int i = 0; i < 20; i++) {
-            Circle circle = new Circle(410,i*20,5);
-            if (!bool){
-            circle.setFill(Color.RED);
-            world.getChildren().add(circle);
-            bool = true;
-            }
-            else if (bool){
-                circle.setFill(Color.GREEN);
-                world.getChildren().add(circle);
-                bool = false;
-            }
-        }
-    }*/
-
 
     /**
      *
@@ -406,9 +389,18 @@ public class Controller implements Initializable {
         createWorld = new CreateWorld();
         world = createWorld.init(this, connection);
         createWorld.addWorldInMap(scrollPane, user);
-        //testCoordinates();
+        //coordinates();
         setInfoIntoTableHistorik();
     } // the method will render dashboard page for user
+
+    public void coordinates(){
+        for (int i = 0; i < 20; i++) {
+            Circle circle = new Circle(560,i*20,4);
+            if (i%2 == 0) {circle.setFill(Color.RED);
+            } else {circle.setFill(Color.GREEN);}
+            world.getChildren().add(circle);
+        }
+    }
 
     /**
      * @param e
