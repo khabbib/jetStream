@@ -261,10 +261,8 @@ public class Controller implements Initializable {
     Connection connection;
     Config config;
 
-    Registration registration;
 
     FlightPaths flightPaths;
-=======
     RegistrationUser registrationUser;
     RegisterAdmin registerAdmin;
     InitializeFXM initializeFXM;
