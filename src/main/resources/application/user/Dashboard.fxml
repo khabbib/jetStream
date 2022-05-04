@@ -962,7 +962,9 @@
                               <CheckBox fx:id="turR_checkBox_flight" mnemonicParsing="false" onAction="#checkboxEvent" stylesheets="@../Styles/checkbox.css" text="Round-trip" textFill="#b9b9b9">
                                  <HBox.margin>
                                     <Insets top="8.0" />
-                                 </HBox.margin></CheckBox>
+                                 </HBox.margin>
+                              </CheckBox>
+                              <Button mnemonicParsing="false" onAction="#resetSearchFromTo" style="-fx-background-color: #112;" text="Reset search" textFill="WHITE" />
                            </children>
                            <padding>
                               <Insets left="10.0" top="10.0" />
@@ -1059,6 +1061,7 @@
                   </Text>
                </children>
             </Pane>
+            <Button layoutX="765.0" layoutY="502.0" mnemonicParsing="false" onAction="#resetSearchCountry" style="-fx-background-color: #112;" text="Reset search" textFill="WHITE" />
          </children>
       </AnchorPane>
       <Pane fx:id="msgBox_user_dashboard" layoutX="385.0" layoutY="12.0" prefHeight="48.0" prefWidth="480.0" visible="false">

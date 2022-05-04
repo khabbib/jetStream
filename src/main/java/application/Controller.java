@@ -377,6 +377,23 @@ public class Controller implements Initializable {
     }
 
     /**
+     * Resets the text in textfield from-to.
+     * @author Sossio.
+     */
+    public void resetSearchFromTo() {
+        from_input_flight.setText("");
+        disc_input_flight.setText("");
+    }
+
+    /**
+     * Resets the text in textfield country name.
+     * @author Sossio.
+     */
+    public void resetSearchCountry() {
+        search_f_name.setText("");
+    }
+
+    /**
      * @param e
      * @param user
      * @throws IOException
