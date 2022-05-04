@@ -39,31 +39,47 @@ public class Connection {
     }
 
     /**
-     * Register new user
+     * Registers a new user.
      * @param
      * @return
      * @throws SQLException
-     * @author Khabib.
+     * @author Khabib. Developed by Sossio.
      */
     public boolean saveUser(String first_name_reg, String last_name_reg, String address_reg, String email_reg, String phone_number_reg, String password_reg, boolean isAdmin){
-        boolean ok = false;
+        boolean okToSaveUser = false;
+        boolean notFoundEmail = true;
         System.out.println(isAdmin + " check admin arg");
         try {
             java.sql.Connection con = getDatabaseConnection();
             Statement stmt = con.createStatement();
             stmt.executeUpdate("SET search_path TO jetstream;");
-            stmt.executeUpdate("insert into userr(u_f_name, u_l_name, u_address, u_email, u_phone_nr, u_password, u_isAdmin) values('" + first_name_reg + "' , '" + last_name_reg + "' , '" + address_reg+ "' , '" + email_reg +"' , '" + phone_number_reg + "', '" + password_reg +"', '" + isAdmin + "')");
-            ResultSet rs = stmt.executeQuery("select * from userr where u_email = '" + email_reg +"'");
-            while (rs.next()){
-                System.out.println();
-                ok= true;
+
+            ResultSet rsEmail = stmt.executeQuery("select u_email from userr");
+            while(rsEmail.next()) {
+                if(rsEmail.getString("u_email").equals(email_reg)) {
+                    System.out.println("Email found!");
+                    notFoundEmail = false;
+                    break;
+                } else{
+                    System.out.println("Email not found!");
+                }
             }
+
+            if(notFoundEmail) {
+                stmt.executeUpdate("insert into userr(u_f_name, u_l_name, u_address, u_email, u_phone_nr, u_password, u_isAdmin) values('" + first_name_reg + "' , '" + last_name_reg + "' , '" + address_reg+ "' , '" + email_reg +"' , '" + phone_number_reg + "', '" + password_reg +"', '" + isAdmin + "')");
+                ResultSet rs = stmt.executeQuery("select * from userr where u_email = '" + email_reg +"'");
+                while (rs.next()){
+                    System.out.println();
+                    okToSaveUser = true;
+                }
+            }
+
             con.close();
             stmt.close();
         }catch (Exception e){
-            ok = false;
+            okToSaveUser = false;
         }
-        return ok;
+        return okToSaveUser;
     }
 
     /**

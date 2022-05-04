@@ -442,17 +442,27 @@ public class Controller implements Initializable {
     }// the method will switch the user to the registration page
 
     /**
+     * The method will register the user and return to the login page
      * @param e
      * @throws SQLException
      * @throws IOException
      */
-    public void registerUser(ActionEvent e) throws SQLException {
-        boolean ok = registrationUser.registerUser(e);
+    public void registerUser(ActionEvent e) {
+        boolean ok = registrationUser.registerUser();
+        System.out.println("Kommer in i if-satsen!");
         if (ok){
+            root = config.render(e, "user/Login", "Login window");
+            success_msg = (Label) root.lookup("#success_msg");
             confirmActions.displayMessage(success_msg, "User successfully registered!", false);
+        } else {
+            confirmActions.displayMessage(success_msg, "Error", true);
         }
-    }// the method will register the user and return to the login page
+    }
 
+    /**
+     * @param e
+     * @throws SQLException
+     */
     public void registerUserAdmin(ActionEvent e) throws SQLException {
         boolean ok = registerAdmin.registerUserAdmin(e);
         if (ok){
@@ -466,20 +476,18 @@ public class Controller implements Initializable {
             phone_number_reg_admin.setText("");
             password_reg_admin.setText("");
             confirm_password_reg_admin.setText("");
-        }else {
-            confirmActions.displayMessage(registration_error_admin, "User could not registered!", true);
         }
     }
 
     /**
+     * the method will switch the user to the login page
      * @param e
      * @throws IOException
      */
     public void switchToLogin(ActionEvent e) {
         this.root = config.render(e, "user/Login", "Login window");
         success_msg = (Label) root.lookup("#sucess_msg");
-
-    }// the method will switch the user to the login page
+    }
 
     /**
      * flight lists dashboard
@@ -743,7 +751,7 @@ public class Controller implements Initializable {
                 editProfileEmail = false;
             }
 
-            if (!profilePhoneNumber.getText().isEmpty() && profilePhoneNumber.getText().length() == 12){
+            if (!profilePhoneNumber.getText().isEmpty() && profilePhoneNumber.getText().length() == 10){
                 editedUser.setPhoneNumber(profilePhoneNumber.getText());
                 editProfilePhoneNumber = true;
             } else {
@@ -783,7 +791,7 @@ public class Controller implements Initializable {
                                }
                            } else {
                                System.out.println("Phone number issue!");
-                               confirmActions.displayMessage(edit_pfp_phone_issue, "Size issue 12!", true);
+                               confirmActions.displayMessage(edit_pfp_phone_issue, "Size issue 10!", true);
                                profilePhoneNumber.setText(connection.getUserDatabasePhoneNumber(user.getUserId()));
                            }
                        } else {
