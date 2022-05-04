@@ -162,7 +162,7 @@ public class Coordinates {
             case "Mauritius": coordinates = setCoordinates(560,260); break;
             case "Maldives": coordinates = setCoordinates(560,260); break;
             case "Malawi": coordinates = setCoordinates(0,0); break;
-            case "Mexico": coordinates = setCoordinates(130,260); break;
+            case "Mexico": coordinates = setCoordinates(140,260); break;
             case "Malaysia": coordinates = setCoordinates(500,290); break;
             case "Mozambique": coordinates = setCoordinates(380,320); break;
             case "Namibia": coordinates = setCoordinates(340,330); break;
