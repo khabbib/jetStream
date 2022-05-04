@@ -169,7 +169,7 @@ public class Controller implements Initializable {
     @FXML
     public TableView<UserHistory> table_historik;
     @FXML public Label rfc_no_sucesspnl;
-    @FXML private Button mremove_btn_historik, sremove_btn_historik;
+    @FXML private Button mremove_btn_historik, sremove_btn_historik, flightPathBtn;
     @FXML private CheckBox select_all_box_historik;
     @FXML private TableColumn<Book, String>
             no_col_table_historik;
@@ -1451,6 +1451,7 @@ public class Controller implements Initializable {
      */
     public void setInfoIntoTableHistorik(){ // the method calls from user dashboard to load everything.
         sremove_btn_historik = (Button) root.lookup("#sremove_btn_historik");
+        flightPathBtn = (Button) root.lookup("#flightPathBtn");
         mremove_btn_historik = (Button) root.lookup("#mremove_btn_historik");
         table_historik = (TableView<UserHistory>) root.lookup("#table_historik");
         select_all_box_historik = (CheckBox) root.lookup("#select_all_box_historik");
@@ -1478,6 +1479,8 @@ public class Controller implements Initializable {
                 System.out.println("selected item: " + newValue.getCompany_col_table_historik() + " value: " + newValue.getSelect_col_table_historik().isSelected());
              }
             sremove_btn_historik.setDisable(false);
+            flightPathBtn.setDisable(false);
+
         });
         updateHistoryList();
         select_all_box_historik.selectedProperty().addListener(new ChangeListener<Boolean>() {
