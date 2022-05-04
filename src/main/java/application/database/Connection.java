@@ -434,7 +434,7 @@ public class Connection {
     /**
      * @return
      */
-    public  ArrayList<Book> searchTicket() {
+    public ArrayList<Book> searchTicket() {
         ArrayList<Book> flights = new ArrayList<>();
         try {
 
@@ -627,5 +627,59 @@ public class Connection {
         return seat;
     }
 
+
+    public ArrayList<String> getFlightList(String id){
+        ArrayList<String> flights = new ArrayList<>();
+        try {
+
+            java.sql.Connection con = Connection.getDatabaseConnection();
+            Statement stmt = con.createStatement();
+            ResultSet flight;
+
+            flights.clear();
+            stmt.executeUpdate("SET search_path TO jetstream;");
+            flight = stmt.executeQuery("select * from flight");
+
+            while (flight.next()){
+                String f_id = flight.getString("f_id");
+                String f_departure = flight.getString(("f_departure_name"));
+                String f_departure_date = flight.getString("f_departure_date");
+                String f_departure_time = flight.getString("f_departure_time");
+                String f_destination_name = flight.getString("f_destination_name");
+                String f_destination_date = flight.getString("f_destination_date");
+                String f_destination_time  = flight.getString(" f_destination_time" );
+                String f_price = flight.getString(" f_price");
+                String p_id = flight.getString("p_id");
+
+
+            //    flights.add(new Book(f_id, u_id, b_seat, false));
+
+            }
+            con.close();
+            stmt.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return flights;
+
+//        return flights;
+}
+
+    public boolean deleteMember(String userid)
+    {
+       boolean deleted = false;
+        try {
+            java.sql.Connection con = Connection.getDatabaseConnection();
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate("SET search_path TO jetstream;");
+            stmt.executeQuery("delete u_id where u_id =" + userid + "'");
+            deleted = true;
+            con.close();
+            stmt.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    return deleted;
+    }
 
 }

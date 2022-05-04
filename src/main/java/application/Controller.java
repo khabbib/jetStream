@@ -111,9 +111,9 @@ public class Controller implements Initializable {
    //</editor-fold>
 
     //<editor-fold desc="ADMIN VARIABLES">
-    @FXML private ListView<String> ticketListView, memberListView;
+    @FXML private ListView<String> ticketListView, memberListView, flightListView;
     @FXML private AnchorPane pnlFlights, pnlTickets, pnlMember, registerAnchorPane;
-    @FXML private Button flightsBtn, membersBtn, ticketsBtn, logoutButton, registerCommitBtn_admin, registerMemberBtn_admin, returnToMemberListBtn_admin;
+    @FXML private Button flightsBtn, membersBtn, ticketsBtn, logoutButton, registerCommitBtn_admin, registerMemberBtn_admin, returnToMemberListBtn_admin, refreshMembersBtn_admin, deleteMemberBtn_admin;
 
     //</editor-fold>
     //<editor-fold desc="DASHBOARD VARIABLES">
@@ -1289,7 +1289,7 @@ public class Controller implements Initializable {
         {
             switchToLogin(e);
         }
-
+        
         else if(e.getSource() == returnToMemberListBtn_admin)
         {
             pnlMember.toFront();
@@ -1409,6 +1409,9 @@ public class Controller implements Initializable {
         }
     }
 
+    
+   
+    
     /**
      * @param srch
      * @return
