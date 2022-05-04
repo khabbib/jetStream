@@ -466,6 +466,14 @@ public class Controller implements Initializable {
         if (ok){
             pnlMember.toFront();
             confirmActions.displayMessage(registration_error_admin, "User successfully registered!", false);
+            first_name_reg_admin.setText("");
+            last_name_reg_admin.setText("");
+            first_name_reg_admin.setText("");
+            address_reg_admin.setText("");
+            emailaddress_reg_admin.setText("");
+            phone_number_reg_admin.setText("");
+            password_reg_admin.setText("");
+            confirm_password_reg_admin.setText("");
         }else {
             confirmActions.displayMessage(registration_error_admin, "User could not registered!", true);
         }

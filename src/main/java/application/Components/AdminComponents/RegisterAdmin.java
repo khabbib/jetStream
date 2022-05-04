@@ -85,6 +85,5 @@ public class RegisterAdmin
             confirmActions.displayMessage(controller.registration_error_admin, "Empty field issue", true);
         }
         return registered;
-
     }
 }
