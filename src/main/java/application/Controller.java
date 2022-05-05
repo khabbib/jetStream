@@ -310,7 +310,6 @@ public class Controller implements Initializable {
     /////// login operation (show password )
     public void showPassword(ActionEvent e){
         if (e.getSource() == show_pasword_login){
-            System.out.println(login_pass.getText() + " password");
             login_pass.setVisible(true);
 
 
@@ -318,14 +317,38 @@ public class Controller implements Initializable {
     }
 
     public void syncPassowordShow(){
-        show_password_field_login.setVisible(true);
-        String operation = login_pass.getText();
-        if (operation.length() >= 10){
-                String end = operation.substring(0, operation.length()-1);
-                show_password_field_login.setText(end);
-                login_pass.setText(end);
+        int maxLength = 15;
+        if (show_pasword_login.isSelected()){
+            show_password_field_login.setDisable(false);
+            show_password_field_login.setOpacity(1);
+            show_password_field_login.setText(login_pass.getText());
+            System.out.println("Select");
+
+        }else{
+            show_password_field_login.setDisable(true);
+            show_password_field_login.setText(null);
+            show_password_field_login.setOpacity(0);
+        }
+        login_pass.textProperty().addListener(new ChangeListener<String>() {
+            private boolean validating = false;
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!validating) {
+                    validating = true;
+                    String newText = newValue;
+                    if (newText.length() > maxLength) {
+                        newText = newText.substring(0, maxLength);
+                    }
+                    show_password_field_login.setText(newText);
+                    login_pass.setText(newText);
+
+                    validating = false;
+                }
             }
+        });
     }
+
+
     /**
      *
      */
