@@ -964,7 +964,6 @@
                                     <Insets top="8.0" />
                                  </HBox.margin>
                               </CheckBox>
-                              <Button mnemonicParsing="false" onAction="#resetSearchFromTo" style="-fx-background-color: #112;" text="Reset search" textFill="WHITE" />
                            </children>
                            <padding>
                               <Insets left="10.0" top="10.0" />
@@ -1009,6 +1008,19 @@
                         <URL value="@../Styles/ScrollStyle.css" />
                      </stylesheets>
                   </ListView>
+                  <StackPane layoutX="582.0" layoutY="13.0" prefHeight="27.0" prefWidth="25.0" style="-fx-background-color: #eee; -fx-background-radius: 10;">
+                     <children>
+                        <ImageView fitHeight="12.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/close.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </StackPane>
+                  <Button layoutX="584.0" layoutY="12.0" mnemonicParsing="false" onAction="#resetSearchFromTo" opacity="0.0" prefHeight="23.0" prefWidth="24.0" style="-fx-background-color: #112;" text="0" textFill="WHITE" />
                </children>
             </AnchorPane>
             <Group layoutX="678.0" layoutY="32.0">
@@ -1061,7 +1073,19 @@
                   </Text>
                </children>
             </Pane>
-            <Button layoutX="765.0" layoutY="502.0" mnemonicParsing="false" onAction="#resetSearchCountry" style="-fx-background-color: #112;" text="Reset search" textFill="WHITE" />
+            <StackPane layoutX="746.0" layoutY="500.0" prefHeight="19.0" prefWidth="18.0" style="-fx-background-color: #eee; -fx-background-radius: 10;">
+               <children>
+                  <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/close.png" />
+                     </image>
+                  </ImageView>
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </StackPane>
+            <Button layoutX="748.0" layoutY="502.0" mnemonicParsing="false" onAction="#resetSearchCountry" opacity="0.0" style="-fx-background-color: #112;" text="1" textFill="WHITE" />
          </children>
       </AnchorPane>
       <Pane fx:id="msgBox_user_dashboard" layoutX="385.0" layoutY="12.0" prefHeight="48.0" prefWidth="480.0" visible="false">

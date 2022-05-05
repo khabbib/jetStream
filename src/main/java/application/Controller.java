@@ -431,6 +431,9 @@ public class Controller implements Initializable {
     public void resetSearchFromTo() {
         from_input_flight.setText("");
         disc_input_flight.setText("");
+        searchListAppear2.setVisible(false);
+        searchListAppear3.setVisible(false);
+
     }
 
     /**
@@ -439,6 +442,7 @@ public class Controller implements Initializable {
      */
     public void resetSearchCountry() {
         search_f_name.setText("");
+        searchListAppear.setVisible(false);
     }
 
     /**
@@ -1415,9 +1419,10 @@ public class Controller implements Initializable {
     }
 
     /**
-     *
+     * On key pressed search and show name.
+     * @author Khabib.
      */
-    public void searchAppear(){ // on key pressed search and show name
+    public void searchAppear(){
         if (search_f_name != null){
             ObservableList<String> searchAprear = FXCollections.observableList(propareSearchTerm(search_f_name.getText().toLowerCase()));
             if (!searchAprear.isEmpty()){
@@ -1432,12 +1437,15 @@ public class Controller implements Initializable {
             });
             }
         }
+
+        hidePopupSearch(search_f_name.getText(), searchListAppear);
     }
 
     /**
-     *
+     * On key pressed search and show name.
+     * @author Khabib.
      */
-    public void departureNameAppear(){// on key pressed search and show name
+    public void departureNameAppear(){
         if (from_input_flight != null){
             ObservableList<String> searchAprear = FXCollections.observableList(propareSearchTerm(from_input_flight.getText().toLowerCase()));
             if (!searchAprear.isEmpty()){
@@ -1452,12 +1460,15 @@ public class Controller implements Initializable {
             });
             }
         }
+
+        hidePopupSearch(from_input_flight.getText(), searchListAppear2);
     }
 
     /**
-     *
+     * On key pressed search and show name.
+     * @author Khabib.
      */
-    public void destinationNameAppear(){// on key pressed search and show name
+    public void destinationNameAppear(){
         if (disc_input_flight != null){
             ObservableList<String> searchAprear = FXCollections.observableList(propareSearchTerm(disc_input_flight.getText().toLowerCase()));
             if (!searchAprear.isEmpty()){
@@ -1471,6 +1482,19 @@ public class Controller implements Initializable {
                         searchListAppear3.setVisible(false);
             });
             }
+        }
+
+        hidePopupSearch(disc_input_flight.getText(), searchListAppear3);
+    }
+
+    /**
+     * @param text
+     * @param popupWindow
+     * @author Khabib and Sossio.
+     */
+    public void hidePopupSearch(String text, ListView popupWindow) {
+        if(text == "") {
+            popupWindow.setVisible(false);
         }
     }
 
