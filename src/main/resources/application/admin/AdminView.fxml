@@ -257,22 +257,21 @@
             </Label>
             <Button fx:id="registerMemberBtn_admin" layoutX="20.0" layoutY="563.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="155.0" style="-fx-background-color: #f87000;" text="Register" textFill="WHITE" />
             <Button fx:id="refreshMembersBtn_admin" layoutX="977.0" layoutY="554.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="74.0" style="-fx-background-color: #f87000;" text="Refresh" textFill="WHITE" />
-            <Button fx:id="deleteMemberBtn_admin" layoutX="198.0" layoutY="563.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="155.0" style="-fx-background-color: #f87000;" text="Delete Selected Member" textFill="WHITE" />
+            <Button fx:id="delet_btn_mbr_admin" layoutX="198.0" layoutY="563.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="155.0" style="-fx-background-color: #f87000;" text="Delete all" textFill="WHITE" />
             <Group layoutX="259.0" layoutY="20.0" />
-            <TableView fx:id="table_member_admin" layoutX="28.0" layoutY="118.0" prefHeight="398.0" prefWidth="1008.0">
+            <TableView fx:id="table_member_admin" layoutX="28.0" layoutY="118.0" prefHeight="398.0" prefWidth="1036.0">
                <columns>
-                  <TableColumn prefWidth="47.0" text="Numb" />
-                  <TableColumn fx:id="no_col_table_historik1" prefWidth="83.0" text="User ID" />
-                  <TableColumn fx:id="company_col_table_historik1" prefWidth="92.0" text="First Name" />
-                  <TableColumn fx:id="model_col_table_historik1" prefWidth="106.0" text="Last Name" />
-                  <TableColumn fx:id="rfc_col_table_historik1" prefWidth="116.0" text="Address" />
-                  <TableColumn fx:id="flightid_col_table_historik1" prefWidth="184.0" text="Email" />
-                  <TableColumn fx:id="from_col_table_historik1" prefWidth="145.0" text="Phone Number" />
-                  <TableColumn fx:id="to_col_table_historik1" prefWidth="148.0" text="Password" />
-                  <TableColumn fx:id="seatno_col_table_historik" prefWidth="102.0" text="IsAdmin" />
-                  <TableColumn fx:id="select_col_table_historik1" prefWidth="49.0">
+                  <TableColumn fx:id="no_col_mbr_admin" prefWidth="29.0" text="No" />
+                  <TableColumn fx:id="id_col_mbr_admin" prefWidth="83.0" text="User ID" />
+                  <TableColumn fx:id="fname_col_mbr_admin" prefWidth="126.0" text="First Name" />
+                  <TableColumn fx:id="lname_col_mbr_admin" prefWidth="127.0" text="Last Name" />
+                  <TableColumn fx:id="address_col_mbr_admin" prefWidth="216.0" text="Address" />
+                  <TableColumn fx:id="email_col_mbr_admin" prefWidth="207.0" text="Email" />
+                  <TableColumn fx:id="phonenr_col_mbr_admin" prefWidth="126.0" text="Phone Number" />
+                  <TableColumn fx:id="status_col_mbr_admin" prefWidth="70.0" text="IsAdmin" />
+                  <TableColumn fx:id="select_col_table_historik1" prefWidth="39.0">
                      <graphic>
-                        <CheckBox fx:id="select_all_box_historik1" mnemonicParsing="false" />
+                        <CheckBox fx:id="select_col_mbr_admin" mnemonicParsing="false" />
                      </graphic>
                   </TableColumn>
                </columns>
@@ -281,9 +280,10 @@
                   <URL value="@../Styles/ScrollStyle.css" />
                </stylesheets>
             </TableView>
+            <Button fx:id="deletS_btn_mbr_admin" layoutX="373.0" layoutY="563.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="155.0" style="-fx-background-color: #f87000;" text="single delete" textFill="WHITE" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="pnlFlights" layoutX="76.0" layoutY="-1.0" prefHeight="700.0" prefWidth="1124.0" style="-fx-background-color: #112;">
+      <AnchorPane fx:id="pnlFlights" layoutX="76.0" layoutY="-1.0" prefHeight="700.0" prefWidth="1124.0" style="-fx-background-color: #112;" visible="false">
          <children>
             <Label layoutX="26.0" layoutY="54.0" prefHeight="45.0" prefWidth="176.0" text="List of flights" textFill="WHITE">
                <font>
@@ -316,7 +316,7 @@
             </TableView>
          </children>
       </AnchorPane>
-      <Pane prefHeight="700.0" prefWidth="1073.0">
+      <Pane prefHeight="700.0" prefWidth="105.0">
          <children>
             <ImageView fitHeight="37.0" fitWidth="36.0" layoutX="20.0" layoutY="643.0" pickOnBounds="true" preserveRatio="true">
                <image>

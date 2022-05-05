@@ -1,11 +1,15 @@
 package application.model;
 
+import javafx.scene.control.CheckBox;
+
 /**
  * This class saves data to a user.
  */
 public class User {
+    private int size = 1;
     private String firstName, lastName, address, email, phoneNumber, password, userId;
-    private boolean isAdmin;
+    private boolean isadmin;
+    private CheckBox box;
 
     /**
      * @param userId
@@ -17,7 +21,8 @@ public class User {
      * @param password
      * @param isAdmin
      */
-    public User(String userId, String firstName, String lastName, String address, String email, String phoneNumber, String password, boolean isAdmin){
+    public User(String userId, String firstName, String lastName, String address, String email, String phoneNumber, String password, boolean isAdmin, int size){
+        this.size = size;
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -25,10 +30,12 @@ public class User {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.password = password;
-        this.isAdmin = isAdmin;
+        this.isadmin = isAdmin;
+        this.box = new CheckBox();
     }
 
     // ----- GETTER AND SETTERS ----- //
+    public int getSize(){return size;}
     public String getUserId() {
         return userId;
     }
@@ -50,9 +57,13 @@ public class User {
     public String getPassword() {
         return this.password;
     }
-    public boolean isAdmin() {
-        return isAdmin;
+    public boolean isIsadmin() {
+        return isadmin;
     }
+    public CheckBox getBox(){
+        return box;
+    }
+
 
     public void setFirstName(String firstName) {this.firstName = firstName;}
     public void setLastName(String lastName) {this.lastName = lastName;}

@@ -1,5 +1,6 @@
 package application;
 import application.Components.*;
+import application.Components.AdminComponents.AdminControl;
 import application.Components.AdminComponents.RegisterAdmin;
 import application.config.Config;
 import application.games.Game2048Main;
@@ -33,14 +34,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import worldMapAPI.World;
 
-import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -247,6 +246,18 @@ public class Controller implements Initializable {
     @FXML public AnchorPane issue_panel_sup, contact_panel_sup, feedback_panel_sup;
     //</editor-fold
 
+    //<editor-fold desc="ADMIN TABLE VARIABLES">
+
+    // members table variables
+    public ObservableList<User> fetchedList_admin;
+    public ObservableList<User> items_admin;
+    @FXML public Button delet_btn_mbr_admin, deletS_btn_mbr_admin;
+    @FXML public TableView<User> table_member_admin;
+    @FXML public CheckBox select_col_mbr_admin;
+
+
+
+    //</editor-fold>
     //<editor-fold desc"LOGIN VARIABLES">
     @FXML private CheckBox show_pasword_login;
     @FXML private Button forgot_password_login;
@@ -272,6 +283,7 @@ public class Controller implements Initializable {
     RegistrationUser registrationUser;
     RegisterAdmin registerAdmin;
     InitializeFXM initializeFXM;
+    AdminControl adminControl;
     //</editor-fold>
     //----------------- HOME -----------------//
     public Controller(){
@@ -285,6 +297,8 @@ public class Controller implements Initializable {
         dashboardController = new DashboardController(this, root, connection);
         initializeFXM = new InitializeFXM(this,connection);
         flightPaths = new FlightPaths(this);
+        adminControl = new AdminControl(this, connection);
+
     }
 
     //----------------- HOME -----------------//
@@ -311,8 +325,6 @@ public class Controller implements Initializable {
     public void showPassword(ActionEvent e){
         if (e.getSource() == show_pasword_login){
             login_pass.setVisible(true);
-
-
         }
     }
 
@@ -535,6 +547,7 @@ public class Controller implements Initializable {
     public void registerUserAdmin(ActionEvent e) throws SQLException {
         boolean ok = registerAdmin.registerUserAdmin(e);
         if (ok){
+            adminControl.updateMemberTable();
             pnlMember.toFront();
             confirmActions.displayMessage(registration_error_admin, "User successfully registered!", false);
             first_name_reg_admin.setText("");
@@ -1240,18 +1253,20 @@ public class Controller implements Initializable {
                     stage.setScene(scene);
                     stage.show();
 
+
+                    fillMemmbersTable(root);
                     memberListView = (ListView<String>) root.lookup("#memberListView");
                     if(memberListView != null)
                     {
-                        ArrayList<User> member = connection.searchMember();
+                        ArrayList<User> member = connection.getAllUsers();
                         ArrayList<String> temp = new ArrayList<>();
                         int pageNr = 0;
                         for(User item: member)
                         {
                             pageNr++;
                             StringBuilder temp2 = new StringBuilder();
-                            System.out.println(item.isAdmin() + " Obedddddd ");
-                            temp2.append(pageNr).append(" Member[ id. ").append(item.getUserId()).append(", First Name: ").append(item.getFirstName()).append(", List Name: ").append(item.getLastName()).append(", Adress: ").append(item.getAddress()).append(", Email: ").append(item.getEmail()).append(", Number: ").append(item.getPhoneNumber()).append(", Password: ").append(item.getPassword()).append(", isAdmin: ").append(item.isAdmin()).append(" ]");
+                            System.out.println(item.isIsadmin() + " Obedddddd ");
+                            temp2.append(pageNr).append(" Member[ id. ").append(item.getUserId()).append(", First Name: ").append(item.getFirstName()).append(", List Name: ").append(item.getLastName()).append(", Adress: ").append(item.getAddress()).append(", Email: ").append(item.getEmail()).append(", Number: ").append(item.getPhoneNumber()).append(", Password: ").append(item.getPassword()).append(", isAdmin: ").append(item.isIsadmin()).append(" ]");
                             temp.add(temp2.toString());
                         }
 
@@ -1284,6 +1299,8 @@ public class Controller implements Initializable {
                 }
             }catch (IOException io){
                 io.printStackTrace();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
             }
         } else {
             error_msg.setText("Fill the field!");
@@ -1353,12 +1370,17 @@ public class Controller implements Initializable {
      * @throws IOException
      * @autor Obed.
      */
-    public void adminDev(ActionEvent e) throws IOException {
+    public void adminDev(ActionEvent e) throws SQLException {
         if(e.getSource() == logoutButton)
         {
             switchToLogin(e);
         }
-        
+        else if(e.getSource() == refreshMembersBtn_admin){
+            adminControl.updateMemberTable();
+        }else if(e.getSource() == deletS_btn_mbr_admin){
+            // delete a member here
+            adminControl.updateMemberTable();
+        }
         else if(e.getSource() == returnToMemberListBtn_admin)
         {
             pnlMember.toFront();
@@ -1541,6 +1563,11 @@ public class Controller implements Initializable {
      */
     public void support_event_handler(ActionEvent e){
         support.supportInfo(e);
+    }
+
+    //----------------- Amdin Tables  -----------------//
+    public void fillMemmbersTable(Parent root) throws SQLException {
+        adminControl.fillMemmbersTable(root);
     }
 
     //----------------- History  -----------------//
