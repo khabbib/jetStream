@@ -39,31 +39,47 @@ public class Connection {
     }
 
     /**
-     * Register new user
+     * Registers a new user.
      * @param
      * @return
      * @throws SQLException
-     * @author Khabib.
+     * @author Khabib. Developed by Sossio.
      */
     public boolean saveUser(String first_name_reg, String last_name_reg, String address_reg, String email_reg, String phone_number_reg, String password_reg, boolean isAdmin){
-        boolean ok = false;
+        boolean okToSaveUser = false;
+        boolean notFoundEmail = true;
         System.out.println(isAdmin + " check admin arg");
         try {
             java.sql.Connection con = getDatabaseConnection();
             Statement stmt = con.createStatement();
             stmt.executeUpdate("SET search_path TO jetstream;");
-            stmt.executeUpdate("insert into userr(u_f_name, u_l_name, u_address, u_email, u_phone_nr, u_password, u_isAdmin) values('" + first_name_reg + "' , '" + last_name_reg + "' , '" + address_reg+ "' , '" + email_reg +"' , '" + phone_number_reg + "', '" + password_reg +"', '" + isAdmin + "')");
-            ResultSet rs = stmt.executeQuery("select * from userr where u_email = '" + email_reg +"'");
-            while (rs.next()){
-                System.out.println();
-                ok= true;
+
+            ResultSet rsEmail = stmt.executeQuery("select u_email from userr");
+            while(rsEmail.next()) {
+                if(rsEmail.getString("u_email").equals(email_reg)) {
+                    System.out.println("Email found!");
+                    notFoundEmail = false;
+                    break;
+                } else{
+                    System.out.println("Email not found!");
+                }
             }
+
+            if(notFoundEmail) {
+                stmt.executeUpdate("insert into userr(u_f_name, u_l_name, u_address, u_email, u_phone_nr, u_password, u_isAdmin) values('" + first_name_reg + "' , '" + last_name_reg + "' , '" + address_reg+ "' , '" + email_reg +"' , '" + phone_number_reg + "', '" + password_reg +"', '" + isAdmin + "')");
+                ResultSet rs = stmt.executeQuery("select * from userr where u_email = '" + email_reg +"'");
+                while (rs.next()){
+                    System.out.println();
+                    okToSaveUser = true;
+                }
+            }
+
             con.close();
             stmt.close();
         }catch (Exception e){
-            ok = false;
+            okToSaveUser = false;
         }
-        return ok;
+        return okToSaveUser;
     }
 
     /**
@@ -434,7 +450,7 @@ public class Connection {
     /**
      * @return
      */
-    public  ArrayList<Book> searchTicket() {
+    public ArrayList<Book> searchTicket() {
         ArrayList<Book> flights = new ArrayList<>();
         try {
 
@@ -627,5 +643,59 @@ public class Connection {
         return seat;
     }
 
+
+    public ArrayList<String> getFlightList(String id){
+        ArrayList<String> flights = new ArrayList<>();
+        try {
+
+            java.sql.Connection con = Connection.getDatabaseConnection();
+            Statement stmt = con.createStatement();
+            ResultSet flight;
+
+            flights.clear();
+            stmt.executeUpdate("SET search_path TO jetstream;");
+            flight = stmt.executeQuery("select * from flight");
+
+            while (flight.next()){
+                String f_id = flight.getString("f_id");
+                String f_departure = flight.getString(("f_departure_name"));
+                String f_departure_date = flight.getString("f_departure_date");
+                String f_departure_time = flight.getString("f_departure_time");
+                String f_destination_name = flight.getString("f_destination_name");
+                String f_destination_date = flight.getString("f_destination_date");
+                String f_destination_time  = flight.getString(" f_destination_time" );
+                String f_price = flight.getString(" f_price");
+                String p_id = flight.getString("p_id");
+
+
+            //    flights.add(new Book(f_id, u_id, b_seat, false));
+
+            }
+            con.close();
+            stmt.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return flights;
+
+//        return flights;
+}
+
+    public boolean deleteMember(String userid)
+    {
+       boolean deleted = false;
+        try {
+            java.sql.Connection con = Connection.getDatabaseConnection();
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate("SET search_path TO jetstream;");
+            stmt.executeQuery("delete u_id where u_id =" + userid + "'");
+            deleted = true;
+            con.close();
+            stmt.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    return deleted;
+    }
 
 }

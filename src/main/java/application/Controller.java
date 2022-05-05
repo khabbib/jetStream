@@ -40,6 +40,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import worldMapAPI.World;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -72,10 +73,8 @@ public class Controller implements Initializable {
 
     // FXML variables
     @FXML private ButtonBar logout;
-    @FXML private TextField login_pass;
     @FXML public ScrollPane scrollPane;
     @FXML public ScrollPane scrollFlights;
-    @FXML private TextField login_email;
     @FXML private Label error_msg;
     @FXML public Label success_msg;
     @FXML public Label u_name;
@@ -111,9 +110,9 @@ public class Controller implements Initializable {
    //</editor-fold>
 
     //<editor-fold desc="ADMIN VARIABLES">
-    @FXML private ListView<String> ticketListView, memberListView;
+    @FXML private ListView<String> ticketListView, memberListView, flightListView;
     @FXML private AnchorPane pnlFlights, pnlTickets, pnlMember, registerAnchorPane;
-    @FXML private Button flightsBtn, membersBtn, ticketsBtn, logoutButton, registerCommitBtn_admin, registerMemberBtn_admin, returnToMemberListBtn_admin;
+    @FXML private Button flightsBtn, membersBtn, ticketsBtn, logoutButton, registerCommitBtn_admin, registerMemberBtn_admin, returnToMemberListBtn_admin, refreshMembersBtn_admin, deleteMemberBtn_admin;
 
     //</editor-fold>
     //<editor-fold desc="DASHBOARD VARIABLES">
@@ -248,8 +247,15 @@ public class Controller implements Initializable {
     @FXML public AnchorPane issue_panel_sup, contact_panel_sup, feedback_panel_sup;
     //</editor-fold
 
-    public Pane pane;
+    //<editor-fold desc"LOGIN VARIABLES">
+    @FXML private CheckBox show_pasword_login;
+    @FXML private Button forgot_password_login;
+    @FXML private TextField login_pass;
+    @FXML private TextField login_email;
+    @FXML private TextField show_password_field_login;
 
+    //</editor-fold>
+    public Pane pane;
     // Edit profile
     @FXML public Label pfp_display_msg;
 
@@ -300,22 +306,47 @@ public class Controller implements Initializable {
         flightPaths.start();
     }
 
-    /*public void testCoordinates(){
-        boolean bool = false;
-        for (int i = 0; i < 20; i++) {
-            Circle circle = new Circle(410,i*20,5);
-            if (!bool){
-            circle.setFill(Color.RED);
-            world.getChildren().add(circle);
-            bool = true;
-            }
-            else if (bool){
-                circle.setFill(Color.GREEN);
-                world.getChildren().add(circle);
-                bool = false;
-            }
+
+    /////// login operation (show password )
+    public void showPassword(ActionEvent e){
+        if (e.getSource() == show_pasword_login){
+            login_pass.setVisible(true);
+
+
         }
-    }*/
+    }
+
+    public void syncPassowordShow(){
+        int maxLength = 15;
+        if (show_pasword_login.isSelected()){
+            show_password_field_login.setDisable(false);
+            show_password_field_login.setOpacity(1);
+            show_password_field_login.setText(login_pass.getText());
+            System.out.println("Select");
+
+        }else{
+            show_password_field_login.setDisable(true);
+            show_password_field_login.setText(null);
+            show_password_field_login.setOpacity(0);
+        }
+        login_pass.textProperty().addListener(new ChangeListener<String>() {
+            private boolean validating = false;
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!validating) {
+                    validating = true;
+                    String newText = newValue;
+                    if (newText.length() > maxLength) {
+                        newText = newText.substring(0, maxLength);
+                    }
+                    show_password_field_login.setText(newText);
+                    login_pass.setText(newText);
+
+                    validating = false;
+                }
+            }
+        });
+    }
 
 
     /**
@@ -427,9 +458,18 @@ public class Controller implements Initializable {
         createWorld = new CreateWorld();
         world = createWorld.init(this, connection);
         createWorld.addWorldInMap(scrollPane, user);
-        //testCoordinates();
+        //coordinates();
         setInfoIntoTableHistorik();
     } // the method will render dashboard page for user
+
+    public void coordinates(){
+        for (int i = 0; i < 20; i++) {
+            Circle circle = new Circle(560,i*20,4);
+            if (i%2 == 0) {circle.setFill(Color.RED);
+            } else {circle.setFill(Color.GREEN);}
+            world.getChildren().add(circle);
+        }
+    }
 
     /**
      * @param e
@@ -471,17 +511,27 @@ public class Controller implements Initializable {
     }// the method will switch the user to the registration page
 
     /**
+     * The method will register the user and return to the login page
      * @param e
      * @throws SQLException
      * @throws IOException
      */
-    public void registerUser(ActionEvent e) throws SQLException {
-        boolean ok = registrationUser.registerUser(e);
+    public void registerUser(ActionEvent e) {
+        boolean ok = registrationUser.registerUser();
+        System.out.println("Kommer in i if-satsen!");
         if (ok){
+            root = config.render(e, "user/Login", "Login window");
+            success_msg = (Label) root.lookup("#success_msg");
             confirmActions.displayMessage(success_msg, "User successfully registered!", false);
+        } else {
+            confirmActions.displayMessage(success_msg, "Error", true);
         }
-    }// the method will register the user and return to the login page
+    }
 
+    /**
+     * @param e
+     * @throws SQLException
+     */
     public void registerUserAdmin(ActionEvent e) throws SQLException {
         boolean ok = registerAdmin.registerUserAdmin(e);
         if (ok){
@@ -495,20 +545,18 @@ public class Controller implements Initializable {
             phone_number_reg_admin.setText("");
             password_reg_admin.setText("");
             confirm_password_reg_admin.setText("");
-        }else {
-            confirmActions.displayMessage(registration_error_admin, "User could not registered!", true);
         }
     }
 
     /**
+     * the method will switch the user to the login page
      * @param e
      * @throws IOException
      */
     public void switchToLogin(ActionEvent e) {
         this.root = config.render(e, "user/Login", "Login window");
         success_msg = (Label) root.lookup("#sucess_msg");
-
-    }// the method will switch the user to the login page
+    }
 
     /**
      * flight lists dashboard
@@ -772,7 +820,7 @@ public class Controller implements Initializable {
                 editProfileEmail = false;
             }
 
-            if (!profilePhoneNumber.getText().isEmpty() && profilePhoneNumber.getText().length() == 12){
+            if (!profilePhoneNumber.getText().isEmpty() && profilePhoneNumber.getText().length() == 10){
                 editedUser.setPhoneNumber(profilePhoneNumber.getText());
                 editProfilePhoneNumber = true;
             } else {
@@ -812,7 +860,7 @@ public class Controller implements Initializable {
                                }
                            } else {
                                System.out.println("Phone number issue!");
-                               confirmActions.displayMessage(edit_pfp_phone_issue, "Size issue 12!", true);
+                               confirmActions.displayMessage(edit_pfp_phone_issue, "Size issue 10!", true);
                                profilePhoneNumber.setText(connection.getUserDatabasePhoneNumber(user.getUserId()));
                            }
                        } else {
@@ -1310,7 +1358,7 @@ public class Controller implements Initializable {
         {
             switchToLogin(e);
         }
-
+        
         else if(e.getSource() == returnToMemberListBtn_admin)
         {
             pnlMember.toFront();
@@ -1450,6 +1498,9 @@ public class Controller implements Initializable {
         }
     }
 
+    
+   
+    
     /**
      * @param srch
      * @return

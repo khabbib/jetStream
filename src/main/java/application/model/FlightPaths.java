@@ -102,7 +102,7 @@ public class FlightPaths {
             departureCircle.setFill(Color.DARKORANGE);
             destinationCircle.setFill(Color.DARKORANGE);
 
-            Line line = new Line(from[0], from[1], to[0], to[1]);
+            Line line = new Line(to[0], to[1],from[0], from[1]);
             line.getStrokeDashArray().addAll(2d);
             line.setStroke(Color.DARKORANGE);
             line.setOpacity(0.5);

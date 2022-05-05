@@ -43,20 +43,25 @@ public class RegisterAdmin
                 if ((controller.last_name_reg_admin.getText().length() >= 3 && controller.last_name_reg_admin.getText().length() <= 30)){
                     if ((controller.address_reg_admin.getText().length() >= 5 && controller.address_reg_admin.getText().length() <= 60)){
                         if((controller.emailaddress_reg_admin.getText().length() >= 6 && controller.emailaddress_reg_admin.getText().length() <= 30)){
-                            if ((controller.phone_number_reg_admin.getText().length() == 12)){
+                            if ((controller.phone_number_reg_admin.getText().length() == 10)){
                                 if (controller.password_reg_admin.getText().length() >= 8 && controller.password_reg_admin.getText().length() <= 20){
                                     if (controller.password_reg_admin.getText().equals(controller.confirm_password_reg_admin.getText())){
                                         if(controller.emailaddress_reg_admin.getText().contains("@") && (controller.emailaddress_reg_admin.getText().contains("gmail") || controller.emailaddress_reg_admin.getText().contains("hotmail") || controller.emailaddress_reg_admin.getText().contains("yahoo") || controller.emailaddress_reg_admin.getText().contains("outlook"))){
-                                            if(controller.isAdminCheckbox.isSelected())
-                                            {
-                                                System.out.println(controller.isAdminCheckbox.isSelected() + " box");
-                                                registered = connection.saveUser(controller.first_name_reg_admin.getText(), controller.last_name_reg_admin.getText(), controller.address_reg_admin.getText(), controller.emailaddress_reg_admin.getText(), controller.phone_number_reg_admin.getText(), controller.password_reg_admin.getText(), true);
+                                            if(controller.isAdminCheckbox.isSelected()) {
+                                                boolean ok1 = connection.saveUser(controller.first_name_reg_admin.getText(), controller.last_name_reg_admin.getText(), controller.address_reg_admin.getText(), controller.emailaddress_reg_admin.getText(), controller.phone_number_reg_admin.getText(), controller.password_reg_admin.getText(), true);
+                                                if(ok1) {
+                                                    registered = true;
+                                                } else {
+                                                    confirmActions.displayMessage(controller.registration_error_admin, "Not registered! (Email exists!)", true);
+                                                }
+                                            } else{
+                                                boolean ok2 = connection.saveUser(controller.first_name_reg_admin.getText(), controller.last_name_reg_admin.getText(), controller.address_reg_admin.getText(), controller.emailaddress_reg_admin.getText(), controller.phone_number_reg_admin.getText(), controller.password_reg_admin.getText(), false);
+                                                if(ok2) {
+                                                    registered = true;
+                                                } else {
+                                                    confirmActions.displayMessage(controller.registration_error_admin, "Not registered! (Email exists!)", true);
+                                                }
                                             }
-                                         else{
-                                                System.out.println(controller.isAdminCheckbox.isSelected() + " box");
-                                                registered = connection.saveUser(controller.first_name_reg_admin.getText(), controller.last_name_reg_admin.getText(), controller.address_reg_admin.getText(), controller.emailaddress_reg_admin.getText(), controller.phone_number_reg_admin.getText(), controller.password_reg_admin.getText(), false);
-                                            }
-
                                         }else {
                                             confirmActions.displayMessage(controller.email_issue_reg_admin, "Type issue [email]", true);
                                         }
@@ -67,7 +72,7 @@ public class RegisterAdmin
                                     confirmActions.displayMessage(controller.password_issue_reg_admin, "Size issue 8-20", true);
                                 }
                             }else {
-                                confirmActions.displayMessage(controller.phone_number_issue_reg_admin, "Size issue 12 digit", true);
+                                confirmActions.displayMessage(controller.phone_number_issue_reg_admin, "Size issue 10 digit", true);
                             }
                         } else {
                             confirmActions.displayMessage(controller.email_issue_reg_admin, "Size issue 6-30", true);
