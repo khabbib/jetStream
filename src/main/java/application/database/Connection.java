@@ -111,23 +111,27 @@ public class Connection {
         return uniqueEmail;
     }
 
-    /**
-     * @param u_id
-     * @return
-     * @throws SQLException
-     * @author Sossio.
-     */
-    public String getUserDatabaseFirstName(String u_id) throws SQLException {
+
+    public ArrayList<User>  getAllUsers() throws SQLException {
+        ArrayList<User> userlist = new ArrayList<>();
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
+        int counter = 1;
         stmt.executeUpdate("SET search_path TO jetstream;");
-
-        String firstName = null;
-        ResultSet rs = stmt.executeQuery("select u_f_name from userr where u_id = " + u_id + ";");
+        ResultSet rs = stmt.executeQuery("select * from userr;");
         while(rs.next()) {
-            firstName = rs.getString(("u_f_name"));
+            String id = rs.getString(("u_id"));
+            String firstName = rs.getString(("u_f_name"));
+            String lname = rs.getString(("u_l_name"));
+            String address = rs.getString(("u_address"));
+            String email = rs.getString(("u_email"));
+            String phonenbr = rs.getString(("u_phone_nr"));
+            boolean isAdmin = rs.getBoolean(("u_isadmin"));
+            userlist.add(new User(id, firstName, lname, address,email,phonenbr,null,isAdmin, counter));
+            counter++;
+
         }
-        return firstName;
+        return userlist;
     }
 
     /**
@@ -240,7 +244,7 @@ public class Connection {
             ResultSet rs = stmt.executeQuery("select * from userr where u_email = '" + email +"' and u_password = '"+ password+ "'");
             while (rs.next()){
                 if (rs.getString("u_email").equals(email) && rs.getString("u_password").equals(password)){
-                    user = new User(rs.getString("u_id"), rs.getString("u_l_name"), rs.getString("u_f_name"), rs.getString("u_address"), rs.getString("u_email"), rs.getString("u_phone_nr"), rs.getString("u_password"), rs.getBoolean("u_isAdmin"));
+                    user = new User(rs.getString("u_id"), rs.getString("u_l_name"), rs.getString("u_f_name"), rs.getString("u_address"), rs.getString("u_email"), rs.getString("u_phone_nr"), rs.getString("u_password"), rs.getBoolean("u_isAdmin"), 0);
                     System.out.println("[Is User]");
                 }
             }
@@ -267,7 +271,7 @@ public class Connection {
             ResultSet rs = stmt.executeQuery("select * from userr where u_email = '" + email +"' and u_password = '"+ password+ "'");
             while (rs.next()){
                 if (rs.getString("u_email").equals(email) && rs.getString("u_password").equals(password) && rs.getBoolean("u_isAdmin")){
-                    user = new User(rs.getString("u_id"), rs.getString("u_l_name"), rs.getString("u_f_name"), rs.getString("u_address"), rs.getString("u_email"), rs.getString("u_phone_nr"), rs.getString("u_password"), rs.getBoolean("u_isAdmin"));
+                    user = new User(rs.getString("u_id"), rs.getString("u_l_name"), rs.getString("u_f_name"), rs.getString("u_address"), rs.getString("u_email"), rs.getString("u_phone_nr"), rs.getString("u_password"), rs.getBoolean("u_isAdmin"), 0);
                     System.out.println("[Is User]");
                 }
             }
@@ -478,43 +482,6 @@ public class Connection {
         return flights;
     }
 
-    /**
-     * @return
-     */
-    public  ArrayList<User> searchMember() {
-        ArrayList<User> members = new ArrayList<>();
-        try {
-
-            java.sql.Connection con = Connection.getDatabaseConnection();
-            Statement stmt = con.createStatement();
-            ResultSet user;
-
-            members.clear();
-            stmt.executeUpdate("SET search_path TO jetstream;");
-            user = stmt.executeQuery("select * from userr");
-
-            while (user.next()){
-
-                String u_id = user.getString(("u_id"));
-                String u_f_name = user.getString(("u_f_name"));
-                String u_l_name = user.getString(("u_l_name"));
-                String u_address = user.getString(("u_address"));
-                String u_password = user.getString(("u_password"));
-                String u_email = user.getString(("u_email"));
-                String u_phone_nr = user.getString(("u_phone_nr"));
-                boolean u_isAdmin = user.getBoolean(("u_isadmin"));
-
-
-                members.add(new User(u_id, u_f_name, u_l_name,  u_address, u_email, u_phone_nr, u_password,u_isAdmin));
-
-            }
-            con.close();
-            stmt.close();
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-        return members;
-    }
 
 
     /**
