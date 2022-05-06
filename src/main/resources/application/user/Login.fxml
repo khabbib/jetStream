@@ -46,9 +46,9 @@
       </VBox>
       <HBox alignment="CENTER" layoutX="44.0" layoutY="20.0" spacing="5.0">
          <children>
-            <ImageView fx:id="logo" fitHeight="44.0" fitWidth="36.0" onMouseClicked="#switchToHome" preserveRatio="true">
+            <ImageView fx:id="logo" fitHeight="58.0" fitWidth="118.0" onMouseClicked="#switchToHome" preserveRatio="true">
                <image>
-                  <Image url="@../image/jetStream.png" />
+                  <Image url="@../image/animated/animated.gif" />
                </image>
             </ImageView>
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="JetStream">
