@@ -40,6 +40,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import worldMapAPI.World;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -59,6 +60,8 @@ public class Controller implements Initializable {
     public Label notify_user_dashboard;
     @FXML
     public Pane msgBox_user_dashboard;
+
+
     // Default variables
     private CreateWorld createWorld;
     public static World world;
@@ -247,6 +250,15 @@ public class Controller implements Initializable {
     //</editor-fold
 
     //<editor-fold desc="ADMIN TABLE VARIABLES">
+
+    // ticket tabel variables
+    public ObservableList<UserHistory> fetchedList_ticket_admin;
+    public ObservableList<UserHistory> items_ticket_admin;
+    @FXML public Button addTicketBtn_ticket_admin, deleteTicketBtn_ticket_admin, refreshTicketsBtn_ticket_admin;
+    @FXML public TableView<UserHistory> table_tickets;
+    @FXML public CheckBox select_col_ticket_admin;
+
+
 
     // members table variables
     public ObservableList<User> fetchedList_admin;
@@ -1255,6 +1267,9 @@ public class Controller implements Initializable {
 
 
                     fillMemmbersTable(root);
+                    adminControl.fillTicketTable(root);
+
+
                     memberListView = (ListView<String>) root.lookup("#memberListView");
                     if(memberListView != null)
                     {
@@ -1568,8 +1583,11 @@ public class Controller implements Initializable {
     //----------------- Amdin Tables  -----------------//
     public void fillMemmbersTable(Parent root) throws SQLException {
         adminControl.fillMemmbersTable(root);
-    }
 
+    }
+    public void fillTicketTable(Parent root) throws SQLException {
+        adminControl.fillTicketTable(root);
+    }
     //----------------- History  -----------------//
 
 
@@ -1647,7 +1665,7 @@ public class Controller implements Initializable {
      * it will update the historic table in user dashboard everytime an action happen or user want to navigate to the panel etc.
      */
     public void updateHistoryList(){
-        ArrayList<UserHistory> list = connection.searchDataForTableHistory(Integer.parseInt(user.getUserId()));
+        ArrayList<UserHistory> list = connection.searchDataForTableHistory(Integer.parseInt(user.getUserId()), false);
 
         fetchedList = FXCollections.observableArrayList(list);
         table_historik.setItems(fetchedList);
