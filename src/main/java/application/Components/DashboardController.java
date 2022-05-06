@@ -50,6 +50,11 @@ public class DashboardController {
         // Success page
         controller.rfc_no_sucesspnl = (Label) root.lookup("#rfc_no_sucesspnl");
 
+        // Support page
+        controller.sup_report_error_msg = (Label) root.lookup("#sup_report_error_msg");
+        controller.sup_contact_error_msg = (Label) root.lookup("#sup_contact_error_msg");
+        controller.sup_feedback_error_msg = (Label) root.lookup("#sup_feedback_error_msg");
+
         //registration page
         controller.name_issue_reg = (Label) root.lookup("#name_issue_reg");
         controller.last_name_issue_reg = (Label) root.lookup("#last_name_issue_reg");
@@ -59,7 +64,6 @@ public class DashboardController {
         controller.password_issue_reg = (Label) root.lookup("#password_issue_reg");
         controller.confirm_password_issue_reg = (Label) root.lookup("#confirm_password_issue_reg");
 
-
         // Purchase info
         controller.card_nbr = (TextField) root.lookup("#card_nbr");
         controller.card_fname = (TextField) root.lookup("#card_fname");
@@ -68,8 +72,6 @@ public class DashboardController {
         controller.card_year = (TextField) root.lookup("#card_year");
         controller.card_cvc = (TextField) root.lookup("#card_cvc");
         controller.card_counter_nbr = (Label) root.lookup("#card_counter_nbr");
-
-
 
         // Config scrollbar
 
