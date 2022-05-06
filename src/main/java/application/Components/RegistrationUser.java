@@ -4,6 +4,7 @@ import application.Controller;
 import application.config.Config;
 import application.database.Connection;
 import application.model.ConfirmActions;
+import application.model.User;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
@@ -12,7 +13,7 @@ import javafx.util.Duration;
 import java.sql.SQLException;
 
 /**
- * This class registers users and handles errors.
+ * This class registers users and handles errors. Only users!
  */
 public class RegistrationUser {
     private Controller controller;
@@ -51,6 +52,11 @@ public class RegistrationUser {
                                         if(controller.emailaddress_reg.getText().contains("@") && (controller.emailaddress_reg.getText().contains("gmail") || controller.emailaddress_reg.getText().contains("hotmail") || controller.emailaddress_reg.getText().contains("yahoo") || controller.emailaddress_reg.getText().contains("outlook"))){
                                             boolean ok = connection.saveUser(controller.first_name_reg.getText(), controller.last_name_reg.getText(), controller.address_reg.getText(), controller.emailaddress_reg.getText(), controller.phone_number_reg.getText(), controller.password_reg.getText(), false);
                                             if (ok) {
+                                                try {
+                                                    connection.setProfilePicture("application/profiles/user.png", controller.emailaddress_reg.getText());
+                                                } catch (SQLException ex) {
+                                                    ex.printStackTrace();
+                                                }
                                                 registered = true;
                                             } else {
                                                 confirmActions.displayMessage(controller.registration_error, "Not registered! (Email exists!)", true);

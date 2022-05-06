@@ -18,7 +18,7 @@
       <VBox layoutX="420.0" layoutY="169.0" prefHeight="320.0" prefWidth="368.0" spacing="10.0">
          <children>
             <TextField fx:id="login_email" prefHeight="36.0" prefWidth="260.0" promptText="email" text="jetstream@gmail.com" />
-            <PasswordField fx:id="login_pass" onKeyTyped="#syncPassowordShow" prefHeight="36.0" prefWidth="260.0" promptText="password" text="jetstream09" />
+            <PasswordField fx:id="login_pass" onKeyTyped="#syncPasswordShow" prefHeight="36.0" prefWidth="260.0" promptText="password" text="jetstream09" />
             <TextField fx:id="show_password_field_login" editable="false" prefHeight="16.0" prefWidth="368.0" style="-fx-background-color: #112; -fx-text-fill: #f87000 #f87000;">
                <font>
                   <Font size="18.0" />
@@ -26,7 +26,7 @@
             </TextField>
             <HBox alignment="CENTER_LEFT" spacing="70.0">
                <children>
-                  <CheckBox fx:id="show_pasword_login" mnemonicParsing="false" onAction="#syncPassowordShow" stylesheets="@../Styles/checkbox.css" text="Show password" textFill="WHITE" />
+                  <CheckBox fx:id="show_pasword_login" mnemonicParsing="false" onAction="#syncPasswordShow" stylesheets="@../Styles/checkbox.css" text="Show password" textFill="WHITE" />
                   <Button fx:id="forgot_password_login" mnemonicParsing="false" onAction="#showPassword" style="-fx-background-color: #112;" text="Forget your password?" textFill="WHITE" />
                </children>
             </HBox>

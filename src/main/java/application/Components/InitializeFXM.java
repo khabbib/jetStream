@@ -26,7 +26,6 @@ public class InitializeFXM {
     public void initializeProfile(Parent root, User user){
         //Profile info
         if (user != null) {
-
             controller.profilePicture = (ImageView) root.lookup("#profilePicture");
             controller.profilePicturePreview = (ImageView) root.lookup("#profilePicturePreview");
             controller.profileFirstName = (TextField) root.lookup("#profileFirstName");
@@ -34,7 +33,9 @@ public class InitializeFXM {
             controller.profileEmail = (TextField) root.lookup("#profileEmail");
             controller.profileAdress = (TextField) root.lookup("#profileAdress");
             controller.profilePhoneNumber = (TextField) root.lookup("#profilePhoneNumber");
-            controller.profilePassword = (PasswordField) root.lookup("#profilePassword");
+            controller.profileOldPassword = (PasswordField) root.lookup("#profileOldPassword");
+            controller.profileNewPassword = (PasswordField) root.lookup("#profileNewPassword");
+            controller.profileNewPasswordConfirm = (PasswordField) root.lookup("#profileNewPasswordConfirm");
             controller.profilePicturePreview = (ImageView) root.lookup("#profilePicturePreview");
             controller.profileSelector = (GridPane) root.lookup("#profileSelector");
             controller.btnEditProfile = (Button) root.lookup("#btnEditProfile");
@@ -46,14 +47,15 @@ public class InitializeFXM {
             controller.edit_pfp_address_issue = (Label) root.lookup("#edit_pfp_address_issue");
             controller.edit_pfp_email_issue = (Label) root.lookup("#edit_pfp_email_issue");
             controller.edit_pfp_phone_issue = (Label) root.lookup("#edit_pfp_phone_issue");
-            controller.edit_pfp_pwd_issue = (Label) root.lookup("#edit_pfp_pwd_issue");
+            controller.edit_pfp_old_pwd_issue = (Label) root.lookup("#edit_pfp_old_pwd_issue");
+            controller.edit_pfp_new_pwd_issue = (Label) root.lookup("#edit_pfp_new_pwd_issue");
+            controller.edit_pfp_new_c_pwd_issue = (Label) root.lookup("#edit_pfp_new_c_pwd_issue");
 
-            controller.profileFirstName.setText(user.getFirstName());
-            controller.profileLastName.setText(user.getLastName());
+            controller.profileFirstName.setText(user.getLastName()); // DO NOT EDIT, IT SHOULD BE LIKE THAT! /Sossio
+            controller.profileLastName.setText(user.getFirstName()); // DO NOT EDIT, IT SHOULD BE LIKE THAT! /Sossio
             controller.profileEmail.setText(user.getEmail());
             controller.profileAdress.setText(user.getAddress());
             controller.profilePhoneNumber.setText(user.getPhoneNumber());
-            controller.profilePassword.setText(user.getPassword());
 
             try {
                 Image image = connection.getProfilePicture(user);
@@ -69,11 +71,10 @@ public class InitializeFXM {
             controller.profileEmail.setDisable(true);
             controller.profileAdress.setDisable(true);
             controller.profilePhoneNumber.setDisable(true);
-            controller.profilePassword.setDisable(true);
+                //controller.profilePassword.setDisable(true);
+                controller.profileOldPassword.setDisable(true);
+                controller.profileNewPassword.setDisable(true);
+                controller.profileNewPasswordConfirm.setDisable(true);
         }
     }
-
-
-
-
 }

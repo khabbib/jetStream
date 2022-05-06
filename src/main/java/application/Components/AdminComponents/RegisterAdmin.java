@@ -8,8 +8,10 @@ import javafx.event.ActionEvent;
 
 import java.sql.SQLException;
 
-public class RegisterAdmin
-{
+/**
+ * This class registers users and handles errors. Users and admins!
+ */
+public class RegisterAdmin {
     private Controller controller;
     private Config config;
     private Connection connection;
@@ -28,6 +30,12 @@ public class RegisterAdmin
         confirmActions = new ConfirmActions(controller);
     }
 
+    /**
+     * @param e
+     * @return
+     * @throws SQLException
+     * @author Khabib and Obed. Developed by Sossio.
+     */
     public boolean registerUserAdmin(ActionEvent e) throws SQLException {
 
         boolean registered = false;
@@ -50,6 +58,11 @@ public class RegisterAdmin
                                             if(controller.isAdminCheckbox.isSelected()) {
                                                 boolean ok1 = connection.saveUser(controller.first_name_reg_admin.getText(), controller.last_name_reg_admin.getText(), controller.address_reg_admin.getText(), controller.emailaddress_reg_admin.getText(), controller.phone_number_reg_admin.getText(), controller.password_reg_admin.getText(), true);
                                                 if(ok1) {
+                                                    try {
+                                                        connection.setProfilePicture("application/profiles/user.png", controller.emailaddress_reg.getText());
+                                                    } catch (SQLException ex) {
+                                                        ex.printStackTrace();
+                                                    }
                                                     registered = true;
                                                 } else {
                                                     confirmActions.displayMessage(controller.registration_error_admin, "Not registered! (Email exists!)", true);
@@ -57,6 +70,11 @@ public class RegisterAdmin
                                             } else{
                                                 boolean ok2 = connection.saveUser(controller.first_name_reg_admin.getText(), controller.last_name_reg_admin.getText(), controller.address_reg_admin.getText(), controller.emailaddress_reg_admin.getText(), controller.phone_number_reg_admin.getText(), controller.password_reg_admin.getText(), false);
                                                 if(ok2) {
+                                                    try {
+                                                        connection.setProfilePicture("application/profiles/user.png", controller.emailaddress_reg.getText());
+                                                    } catch (SQLException ex) {
+                                                        ex.printStackTrace();
+                                                    }
                                                     registered = true;
                                                 } else {
                                                     confirmActions.displayMessage(controller.registration_error_admin, "Not registered! (Email exists!)", true);
