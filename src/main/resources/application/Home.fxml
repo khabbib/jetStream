@@ -25,7 +25,7 @@
       </Button>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="514.0" layoutY="213.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@image/jetStream.png" />
+            <Image url="@image/animated/animated.gif" />
          </image></ImageView>
       <Button layoutX="533.0" layoutY="484.0" mnemonicParsing="false" onAction="#noLoginRequired" style="-fx-background-color: #ff8000 #ff8000;" text="Explore" textFill="WHITE">
          <padding>
