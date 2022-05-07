@@ -224,20 +224,24 @@
                   <Font size="27.0" />
                </font>
             </Label>
-            <Button fx:id="refreshTicketsBtn_admin" layoutX="1002.0" layoutY="603.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="97.0" style="-fx-background-color: #f87000;" text="Refresh" textFill="WHITE" />
-            <Button fx:id="deleteTicketBtn_admin" layoutX="183.0" layoutY="603.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="136.0" style="-fx-background-color: #f87000;" text="Delete Selected Ticket" textFill="WHITE" />
-            <Button fx:id="addTicketBtn_admin" layoutX="32.0" layoutY="603.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="97.0" style="-fx-background-color: #f87000;" text="Add Ticket" textFill="WHITE" />
+            <Button fx:id="refreshTicketsBtn_ticket_admin" layoutX="969.0" layoutY="558.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="97.0" style="-fx-background-color: #f87000;" text="Refresh" textFill="WHITE" />
+            <Button fx:id="deleteAllTicketBtn_ticket_admin" layoutX="794.0" layoutY="558.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="155.0" style="-fx-background-color: #f87000;" text="Delete all selected ticket" textFill="WHITE" />
+            <Button fx:id="addTicketBtn_ticket_admin" layoutX="58.0" layoutY="558.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="97.0" style="-fx-background-color: #f87000;" text="Add Ticket" textFill="WHITE" />
             <TableView fx:id="table_tickets" layoutX="58.0" layoutY="138.0" prefHeight="398.0" prefWidth="1008.0">
                <columns>
-                  <TableColumn prefWidth="75.0" text="No" />
-                  <TableColumn fx:id="no_col_table_historik2" prefWidth="117.0" text="User ID" />
-                  <TableColumn fx:id="company_col_table_historik2" prefWidth="173.0" text="Flight ID" />
-                  <TableColumn fx:id="model_col_table_historik2" minWidth="5.0" prefWidth="250.0" text="Reference number" />
-                  <TableColumn fx:id="rfc_col_table_historik2" minWidth="0.0" prefWidth="167.0" text="Date" />
-                  <TableColumn fx:id="flightid_col_table_historik2" prefWidth="205.0" text="Seat" />
-                  <TableColumn fx:id="select_col_table_historik2" prefWidth="71.0">
+                  <TableColumn fx:id="nr_col_ticket_admin" prefWidth="75.0" text="No" />
+                  <TableColumn fx:id="airline_col_ticket_admin" prefWidth="75.0" text="Airline" />
+                  <TableColumn fx:id="model_col_ticket_admin" prefWidth="117.0" text="Model" />
+                  <TableColumn fx:id="ref_col_ticket_admin" minWidth="5.0" prefWidth="97.0" text="RFC no" />
+                  <TableColumn fx:id="flightid_col_ticket_admin" prefWidth="121.0" text="Flight ID" />
+                  <TableColumn fx:id="from_col_ticket_admin" prefWidth="120.0" text="From" />
+                  <TableColumn fx:id="to_col_ticket_admin" prefWidth="85.0" text="To" />
+                  <TableColumn fx:id="seat_col_ticket_admin" prefWidth="68.0" text="Seat" />
+                  <TableColumn fx:id="paurchasedDate_col_ticket_admin" prefWidth="117.0" text="Paurchased Date" />
+                  <TableColumn fx:id="price_col_ticket_admin" minWidth="0.0" prefWidth="98.0" text="Price" />
+                  <TableColumn fx:id="checkbox_col_ticket_admin" prefWidth="25.0">
                      <graphic>
-                        <CheckBox fx:id="select_all_box_historik2" mnemonicParsing="false" />
+                        <CheckBox fx:id="select_col_ticket_admin" mnemonicParsing="false" />
                      </graphic>
                   </TableColumn>
                </columns>
@@ -246,6 +250,7 @@
                   <URL value="@../Styles/ScrollStyle.css" />
                </stylesheets>
             </TableView>
+            <Button fx:id="deleteTicketBtn_ticket_admin" layoutX="640.0" layoutY="558.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="136.0" style="-fx-background-color: #f87000;" text="Delete selected ticket" textFill="WHITE" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="pnlMember" layoutX="93.0" prefHeight="700.0" prefWidth="1104.0" style="-fx-background-color: #112;">
@@ -283,7 +288,7 @@
             <Button fx:id="deletS_btn_mbr_admin" layoutX="373.0" layoutY="563.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="155.0" style="-fx-background-color: #f87000;" text="single delete" textFill="WHITE" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="pnlFlights" layoutX="76.0" layoutY="-1.0" prefHeight="700.0" prefWidth="1124.0" style="-fx-background-color: #112;" visible="false">
+      <AnchorPane fx:id="pnlFlights" layoutX="76.0" layoutY="-1.0" prefHeight="700.0" prefWidth="1124.0" style="-fx-background-color: #112;">
          <children>
             <Label layoutX="26.0" layoutY="54.0" prefHeight="45.0" prefWidth="176.0" text="List of flights" textFill="WHITE">
                <font>

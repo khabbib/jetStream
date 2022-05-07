@@ -8,6 +8,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * This class connects java to pgadmin to claim data from database.
@@ -317,6 +318,31 @@ public class Connection {
         return userlist;
     }
 
+        public ArrayList<Book> getAllTickets() throws SQLException {
+            ArrayList<Book> ticketlist = new ArrayList<>();
+            java.sql.Connection con = getDatabaseConnection();
+            Statement stmt = con.createStatement();
+            int counter = 1;
+            stmt.executeUpdate("SET search_path TO jetstream;");
+            ResultSet rs = stmt.executeQuery("select * from history;");
+            while (rs.next()) {
+                String id = rs.getString(("u_id"));
+                String flight_id = rs.getString(("f_id"));
+                String refNr = rs.getString(("b_rfc"));
+                String date = rs.getString(("b_date"));
+                boolean seats = rs.getBoolean(("b_seat"));
+                ticketlist.add(new Book(id, flight_id, refNr, date, seats, counter));
+                counter++;
+            }
+            return ticketlist;
+        }
+    /**
+     * @param u_id
+     * @return
+     * @throws SQLException
+     * @author Sossio.
+     */
+
     public String getUserDatabaseFirstName(String u_id) throws SQLException {
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
@@ -329,6 +355,7 @@ public class Connection {
         }
         return firstName;
     }
+
 
     public String getUserDatabaseLastName(String u_id) throws SQLException {
         java.sql.Connection con = getDatabaseConnection();
@@ -623,7 +650,7 @@ public class Connection {
                 String u_id = flight.getString(("u_id"));
                 String b_seat = flight.getString("b_seat");
 
-                flights.add(new Book(f_id, u_id, b_seat, false));
+                flights.add(new Book(f_id, u_id, b_seat, null, false, 0));
 
             }
             con.close();
@@ -641,7 +668,7 @@ public class Connection {
      * @return
      */
     //////// fyl table history ///////////
-    public ArrayList<UserHistory> searchDataForTableHistory(int userID) {
+    public ArrayList<UserHistory> searchDataForTableHistory(int userID, boolean isAdmin) {
         ArrayList<UserHistory> flights = new ArrayList<>();
         try {
 
@@ -651,7 +678,13 @@ public class Connection {
 
             flights.clear();
             stmt.executeUpdate("SET search_path TO jetstream;");
-            flight = stmt.executeQuery("select * from History where u_id = '"+ userID +"';");
+            if(isAdmin)
+            {
+                flight = stmt.executeQuery("select * from History");
+            }
+            else{
+                flight = stmt.executeQuery("select * from History where u_id = '"+ userID +"';");
+            }
             int i = 1;
             while (flight.next()){
                 String compnay = flight.getString("p_company");
@@ -762,43 +795,6 @@ public class Connection {
         return seat;
     }
 
-
-    public ArrayList<String> getFlightList(String id){
-        ArrayList<String> flights = new ArrayList<>();
-        try {
-
-            java.sql.Connection con = Connection.getDatabaseConnection();
-            Statement stmt = con.createStatement();
-            ResultSet flight;
-
-            flights.clear();
-            stmt.executeUpdate("SET search_path TO jetstream;");
-            flight = stmt.executeQuery("select * from flight");
-
-            while (flight.next()){
-                String f_id = flight.getString("f_id");
-                String f_departure = flight.getString(("f_departure_name"));
-                String f_departure_date = flight.getString("f_departure_date");
-                String f_departure_time = flight.getString("f_departure_time");
-                String f_destination_name = flight.getString("f_destination_name");
-                String f_destination_date = flight.getString("f_destination_date");
-                String f_destination_time  = flight.getString(" f_destination_time" );
-                String f_price = flight.getString(" f_price");
-                String p_id = flight.getString("p_id");
-
-
-            //    flights.add(new Book(f_id, u_id, b_seat, false));
-
-            }
-            con.close();
-            stmt.close();
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-        return flights;
-
-//        return flights;
-}
 
     public boolean deleteMember(String userid)
     {
