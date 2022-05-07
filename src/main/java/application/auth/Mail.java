@@ -1,4 +1,4 @@
-package application;
+package application.auth;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;

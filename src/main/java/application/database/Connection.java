@@ -4,6 +4,8 @@ import application.Controller;
 import application.model.*;
 import javafx.scene.image.Image;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,6 +42,80 @@ public class Connection {
     }
 
     /**
+     * Main point is to encrypt and save in db.
+     * To compare password, same algorithm is provided to use, because it's not possible to decrypt it --> main point of hash password.
+     * @param password is taken as a plain-text password.
+     * @return encrypted password using MD5.
+     * @author Sossio.
+     */
+    public String hashPassword(String password) {
+        /* Plain-text password initialization. */
+        String encryptedpassword = null;
+        try{
+
+            MessageDigest m = MessageDigest.getInstance("MD5");
+
+            /* Add plain-text password bytes to digest using MD5 update() method. */
+            m.update(password.getBytes());
+
+            /* Convert the hash value into bytes */
+            byte[] bytes = m.digest();
+
+            /* The bytes array has bytes in decimal form. Converting it into hexadecimal format. */
+            StringBuilder s = new StringBuilder();
+            for(int i = 0; i < bytes.length ; i++) {
+                s.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+
+            /* Complete hashed password in hexadecimal format */
+            encryptedpassword = s.toString();
+        }
+        catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        /* Display the unencrypted and encrypted passwords. */
+        //System.out.println("Plain-text password: " + password);
+        //System.out.println("Encrypted password using MD5: " + encryptedpassword);
+
+        return encryptedpassword;
+    }
+
+    /**
+     * A test method. This method is used to check hashed password!
+     * @param email  email
+     * @param password password
+     * @return true or false
+     */
+    public boolean hashAuthTest(String email, String password) {
+        boolean ok = false;
+
+        try {
+            java.sql.Connection con = getDatabaseConnection();
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate("SET search_path TO jetstream;");
+            ResultSet rs = stmt.executeQuery("select * from test_user_password_hash where email = '" + email +"' and pwd = '"+ hashPassword(password) + "'");
+
+            while (rs.next()){
+                //System.out.println(hashPassword(password));
+                if (rs.getString("email").equals(email) && rs.getString("pwd").equals(hashPassword(password))) {
+                    System.out.println("User registered!");
+                    ok = true;
+                } else {
+                    System.out.println("Not registeed!");
+                    //System.out.println(hashPassword(password));
+                }
+            }
+            con.close();
+            stmt.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return ok;
+    }
+
+    /**
      * Registers a new user.
      * @param
      * @return
@@ -67,9 +143,16 @@ public class Connection {
             }
 
             if(notFoundEmail) {
-                stmt.executeUpdate("insert into userr(u_f_name, u_l_name, u_address, u_email, u_phone_nr, u_password, u_isAdmin) values('" + first_name_reg + "' , '" + last_name_reg + "' , '" + address_reg+ "' , '" + email_reg +"' , '" + phone_number_reg + "', '" + password_reg +"', '" + isAdmin + "')");
+                User user;
+                stmt.executeUpdate("insert into userr(u_f_name, u_l_name, u_address, u_email, u_phone_nr, u_password, u_isAdmin) values('" + first_name_reg + "' , '" + last_name_reg + "' , '" + address_reg+ "' , '" + email_reg +"' , '" + phone_number_reg + "', '" + hashPassword(password_reg) +"', '" + isAdmin + "')");
                 ResultSet rs = stmt.executeQuery("select * from userr where u_email = '" + email_reg +"'");
                 while (rs.next()){
+                    user = new User(rs.getString("u_id"), rs.getString("u_l_name"), rs.getString("u_f_name"), rs.getString("u_address"), rs.getString("u_email"), rs.getString("u_phone_nr"), rs.getString("u_password"), rs.getBoolean("u_isAdmin"), 0);
+                    try {
+                        setProfilePictureIdk("resources/application/image/user.png", user);
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
                     System.out.println();
                     okToSaveUser = true;
                 }
@@ -84,11 +167,37 @@ public class Connection {
     }
 
     /**
+     * // Old one --> stmt.executeUpdate("UPDATE userr SET u_f_name = '" + user.getFirstName() + "', u_l_name = '" + user.getLastName() + "', u_address = '" + user.getAddress() + "', u_email = '" + user.getEmail() + "', u_phone_nr = '" + user.getPhoneNumber() + "', u_password = '" + user.getPassword() + "'  WHERE u_id = " + user.getUserId() + ";");
      * @param user takes as a parameter to edit user information.
      * @throws SQLException if any sql issue occurs.
      * @author Kasper. Developed by Sossio.
      */
-    public boolean updateUser(User user, String dbEmail) throws SQLException {
+    public void updateUserFirstName(User user) throws SQLException {
+        java.sql.Connection con = getDatabaseConnection();
+        Statement stmt = con.createStatement();
+        stmt.executeUpdate("SET search_path TO jetstream;");
+        stmt.executeUpdate("UPDATE userr SET u_f_name = '" + user.getFirstName() + "' where u_id = " + user.getUserId() + ";");
+        con.close();
+        stmt.close();
+    }
+    public void updateUserLastName(User user) throws SQLException {
+        java.sql.Connection con = getDatabaseConnection();
+        Statement stmt = con.createStatement();
+        stmt.executeUpdate("SET search_path TO jetstream;");
+        stmt.executeUpdate("UPDATE userr SET u_l_name = '" + user.getLastName() + "' where u_id = " + user.getUserId() + ";");
+        con.close();
+        stmt.close();
+    }
+    public void updateUserAddress(User user) throws SQLException {
+        java.sql.Connection con = getDatabaseConnection();
+        Statement stmt = con.createStatement();
+        stmt.executeUpdate("SET search_path TO jetstream;");
+        stmt.executeUpdate("UPDATE userr SET u_address = '" + user.getAddress() + "' where u_id = " + user.getUserId() + ";");
+        con.close();
+        stmt.close();
+    }
+    // ====== LET BE !
+    public boolean updateUserEmail(User user, String dbEmail) throws SQLException {
         boolean uniqueEmail = true;
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
@@ -106,14 +215,88 @@ public class Connection {
         }
 
         if(uniqueEmail) {
-            stmt.executeUpdate("UPDATE userr SET u_f_name = '" + user.getFirstName() + "', u_l_name = '" + user.getLastName() + "', u_address = '" + user.getAddress() + "', u_email = '" + user.getEmail() + "', u_phone_nr = '" + user.getPhoneNumber() + "', u_password = '" + user.getPassword() + "'  WHERE u_id = " + user.getUserId() + ";");
+            stmt.executeUpdate("UPDATE userr SET u_email = '" + user.getEmail() + "' where u_id = " + user.getUserId() + ";");
         } //else { System.out.println("Error message! Email is not unique!");}
 
         return uniqueEmail;
     }
+    public void updateUserPhoneNumber(User user) throws SQLException {
+        java.sql.Connection con = getDatabaseConnection();
+        Statement stmt = con.createStatement();
+        stmt.executeUpdate("SET search_path TO jetstream;");
+        stmt.executeUpdate("UPDATE userr SET u_phone_nr = '" + user.getPhoneNumber() + "' where u_id = " + user.getUserId() + ";");
+        con.close();
+        stmt.close();
+    }
+    public void updateUserPassword(User user) throws SQLException {
+        java.sql.Connection con = getDatabaseConnection();
+        Statement stmt = con.createStatement();
+        stmt.executeUpdate("SET search_path TO jetstream;");
+        stmt.executeUpdate("UPDATE userr SET u_password = '" + hashPassword(user.getPassword()) + "' where u_id = " + user.getUserId() + ";");
+        con.close();
+        stmt.close();
+    }
 
+    /**
+     * authenticate the USER with email and password.
+     * @param email
+     * @param password
+     * @return
+     */
+    public User authenticationUser(String email, String password){
+        User user = null;
+        try {
+            java.sql.Connection con = getDatabaseConnection();
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate("SET search_path TO jetstream;");
+            ResultSet rs = stmt.executeQuery("select * from userr where u_email = '" + email +"' and u_password = '"+ hashPassword(password) + "'");
+            while (rs.next()){
+                if (rs.getString("u_email").equals(email) && rs.getString("u_password").equals(hashPassword(password))){
+                    user = new User(rs.getString("u_id"), rs.getString("u_l_name"), rs.getString("u_f_name"), rs.getString("u_address"), rs.getString("u_email"), rs.getString("u_phone_nr"), rs.getString("u_password"), rs.getBoolean("u_isAdmin"), 0);
+                    System.out.println("[Is User]");
+                }
+            }
+            con.close();
+            stmt.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return user;
+    }
 
-    public ArrayList<User>  getAllUsers() throws SQLException {
+    /**
+     * Authenticate the ADMIN with email and password
+     * @param email
+     * @param password
+     * @return
+     */
+    public  User authenticationAdmin(String email, String password){
+        User user = null;
+        try {
+            java.sql.Connection con = getDatabaseConnection();
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate("SET search_path TO jetstream;");
+            ResultSet rs = stmt.executeQuery("select * from userr where u_email = '" + email +"' and u_password = '"+ hashPassword(password) + "'");
+            while (rs.next()){
+                if (rs.getString("u_email").equals(email) && rs.getString("u_password").equals(hashPassword(password)) && rs.getBoolean("u_isAdmin")){
+                    user = new User(rs.getString("u_id"), rs.getString("u_l_name"), rs.getString("u_f_name"), rs.getString("u_address"), rs.getString("u_email"), rs.getString("u_phone_nr"), rs.getString("u_password"), rs.getBoolean("u_isAdmin"), 0);
+                    System.out.println("[Is User]");
+                }
+            }
+            con.close();
+            stmt.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+    /**
+     * @return
+     * @throws SQLException
+     * @autor Khabib and Obed.
+     */
+    public ArrayList<User> getAllUsers() throws SQLException {
         ArrayList<User> userlist = new ArrayList<>();
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
@@ -159,6 +342,21 @@ public class Connection {
      * @throws SQLException
      * @author Sossio.
      */
+
+    public String getUserDatabaseFirstName(String u_id) throws SQLException {
+        java.sql.Connection con = getDatabaseConnection();
+        Statement stmt = con.createStatement();
+        stmt.executeUpdate("SET search_path TO jetstream;");
+
+        String firstName = null;
+        ResultSet rs = stmt.executeQuery("select u_f_name from userr where u_id = " + u_id + ";");
+        while(rs.next()) {
+            firstName = rs.getString(("u_f_name"));
+        }
+        return firstName;
+    }
+
+
     public String getUserDatabaseLastName(String u_id) throws SQLException {
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
@@ -246,60 +444,6 @@ public class Connection {
             password = rs.getString(("u_password"));
         }
         return password;
-    }
-
-    /**
-     * authenticate the USER with email and password
-     * @param email
-     * @param password
-     * @return
-     */
-    public  User authenticationUser(String email, String password){
-        User user = null;
-        try {
-            java.sql.Connection con = getDatabaseConnection();
-            Statement stmt = con.createStatement();
-            stmt.executeUpdate("SET search_path TO jetstream;");
-            ResultSet rs = stmt.executeQuery("select * from userr where u_email = '" + email +"' and u_password = '"+ password+ "'");
-            while (rs.next()){
-                if (rs.getString("u_email").equals(email) && rs.getString("u_password").equals(password)){
-                    user = new User(rs.getString("u_id"), rs.getString("u_l_name"), rs.getString("u_f_name"), rs.getString("u_address"), rs.getString("u_email"), rs.getString("u_phone_nr"), rs.getString("u_password"), rs.getBoolean("u_isAdmin"), 0);
-                    System.out.println("[Is User]");
-                }
-            }
-            con.close();
-            stmt.close();
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-        return user;
-    }
-
-    /**
-     * Authenticate the ADMIN with email and password
-     * @param email
-     * @param password
-     * @return
-     */
-    public  User authenticationAdmin(String email, String password){
-        User user = null;
-        try {
-            java.sql.Connection con = getDatabaseConnection();
-            Statement stmt = con.createStatement();
-            stmt.executeUpdate("SET search_path TO jetstream;");
-            ResultSet rs = stmt.executeQuery("select * from userr where u_email = '" + email +"' and u_password = '"+ password+ "'");
-            while (rs.next()){
-                if (rs.getString("u_email").equals(email) && rs.getString("u_password").equals(password) && rs.getBoolean("u_isAdmin")){
-                    user = new User(rs.getString("u_id"), rs.getString("u_l_name"), rs.getString("u_f_name"), rs.getString("u_address"), rs.getString("u_email"), rs.getString("u_phone_nr"), rs.getString("u_password"), rs.getBoolean("u_isAdmin"), 0);
-                    System.out.println("[Is User]");
-                }
-            }
-            con.close();
-            stmt.close();
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-        return user;
     }
 
     // ------------------------- SEARCH FLIGHTS ------------------------- //
@@ -444,7 +588,7 @@ public class Connection {
      * @return
      * @throws SQLException
      */
-    public  Image getProfilePicture(User user) throws SQLException {
+    public Image getProfilePicture(User user) throws SQLException {
         Image image = null;
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
@@ -454,20 +598,36 @@ public class Connection {
             System.out.println(result.getString("picture"));
             image = new Image(result.getString("picture"));
         }
+        System.out.println("=== Gets profile picture!");
         return image;
     }
 
     /**
-     * @param string
+     * @param src
      * @param user
      * @throws SQLException
      */
-    public  void setProfilePicture(String string, User user) throws SQLException {
+    public void setProfilePictureIdk(String src, User user) throws SQLException {
         Image image = null;
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
         stmt.executeUpdate("SET search_path TO jetstream;");
-        stmt.executeUpdate("UPDATE profile_picture SET picture = '" + string + "' WHERE u_id = " + user.getUserId() + ";");
+        stmt.executeUpdate("UPDATE profile_picture SET picture = '" + src + "' WHERE u_id = " + user.getUserId() + ";");
+        System.out.println("=== Sets default image to user!");
+    }
+
+    /**
+     * @param pfpImageSrc
+     * @param email
+     * @throws SQLException
+     */
+    public void setProfilePicture(String pfpImageSrc, String email) throws SQLException {
+        Image image = null;
+        java.sql.Connection con = getDatabaseConnection();
+        Statement stmt = con.createStatement();
+        stmt.executeUpdate("SET search_path TO jetstream;");
+        String userId = "select u_id from userr where u_email = '" + email + "'";
+        stmt.executeUpdate("INSERT INTO profile_picture(u_id, picture) values((" + userId + "), '" + pfpImageSrc + "');");
     }
 
     /**

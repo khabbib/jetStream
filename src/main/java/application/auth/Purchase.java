@@ -97,6 +97,105 @@ public class Purchase {
     }
 
     /**
+     * This class is for support!
+     * @param sender
+     * @param title
+     * @param msg
+     * @return
+     */
+    public static boolean sendSupportEmail(String sender, String title, String msg) {
+        String receiver = "jetstream.oksh@gmail.com";
+        String password = "jetstreamemail";
+        String template = buildSupportTemplate(sender, title, msg);
+        try {
+            Properties prop = new Properties();
+            prop.put("mail.smtp.auth", true);
+            prop.put("mail.smtp.starttls.enable", "true");
+            prop.put("mail.smtp.host", "smtp.gmail.com");
+            prop.put("mail.smtp.port", 587);
+            prop.put("mail.transport.protocol", "smtp");
+
+            Session session = Session.getInstance(prop, new Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(receiver, password);
+                }
+            });
+
+            Message message = new MimeMessage(session);
+
+            message.setFrom(new InternetAddress(sender));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receiver));
+
+            MimeBodyPart mimeBodyPart = new MimeBodyPart();
+            mimeBodyPart.setText(template);
+
+            Multipart multipart = new MimeMultipart();
+            mimeBodyPart.setContent(template, "text/html; charset=utf-8");
+
+            multipart.addBodyPart(mimeBodyPart);
+
+            message.setContent(multipart);
+
+            Transport.send(message);
+            System.out.println("Email sent!");
+
+            return true;
+
+        } catch (MessagingException ex) {
+            ex.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public static boolean sendAutoConfirmEmailSupport(String sender) {
+        String receiver = "jetstream.oksh@gmail.com";
+        String password = "jetstreamemail";
+        String template = autoConfimationMsgSupport();
+        try {
+            Properties prop = new Properties();
+            prop.put("mail.smtp.auth", true);
+            prop.put("mail.smtp.starttls.enable", "true");
+            prop.put("mail.smtp.host", "smtp.gmail.com");
+            prop.put("mail.smtp.port", 587);
+            prop.put("mail.transport.protocol", "smtp");
+
+            Session session = Session.getInstance(prop, new Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(receiver, password);
+                }
+            });
+
+            Message message = new MimeMessage(session);
+
+            message.setFrom(new InternetAddress(sender));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(sender));
+
+            MimeBodyPart mimeBodyPart = new MimeBodyPart();
+            mimeBodyPart.setText(template);
+
+            Multipart multipart = new MimeMultipart();
+            mimeBodyPart.setContent(template, "text/html; charset=utf-8");
+
+            multipart.addBodyPart(mimeBodyPart);
+
+            message.setContent(multipart);
+
+            Transport.send(message);
+            System.out.println("Email sent!");
+
+            return true;
+
+        } catch (MessagingException ex) {
+            ex.printStackTrace();
+        }
+
+        return false;
+    }
+
+    /**
      * @param user
      * @param flightnbr
      * @param seatnbr
@@ -115,6 +214,23 @@ public class Purchase {
                 "<button>Check in</button> \n" +
                 "\n" +
                 "<h4>Best wish</h4>"
+        );
+    }
+
+    private static String buildSupportTemplate(String sender, String title, String msg) {
+        return (
+                "<h1>New Support Message!</h1>\n" +
+                "<p>" + title + "</p> \n" +
+                "<p>" + sender + "</p> \n" +
+                "<h2>More details:</h2>\n" +
+                "<p>Message: "+  msg + "</p>\n"
+        );
+    }
+
+    private static String autoConfimationMsgSupport() {
+        return (
+                "<h1>Support Confirmation!</h1>\n" +
+                "<p> Thanks for contacting JetStream! We will be back in one hour. </p> \n"
         );
     }
 

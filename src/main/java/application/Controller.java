@@ -56,12 +56,9 @@ import java.util.*;
 public class Controller implements Initializable {
     //<editor-fold desc="GLOBAL VARIABLES" >
     // error / success message in user dashboard variable
-    @FXML
-    public Label notify_user_dashboard;
-    @FXML
-    public Pane msgBox_user_dashboard;
 
-
+    @FXML public Label notify_user_dashboard;
+    @FXML public Pane msgBox_user_dashboard;
     // Default variables
     private CreateWorld createWorld;
     public static World world;
@@ -81,21 +78,21 @@ public class Controller implements Initializable {
     @FXML public Label success_msg;
     @FXML public Label u_name;
     @FXML public VBox display_flight;
+
+    // ===== PROFILE EDITING =====
+    // General
     @FXML public ImageView profilePicture;
     @FXML public ImageView profilePicturePreview;
-    @FXML public TextField profileFirstName;
-    @FXML public TextField profileLastName;
-    @FXML public TextField profileEmail;
-    @FXML public TextField profileAdress;
-    @FXML public TextField profilePhoneNumber;
+    @FXML public TextField profileFirstName, profileLastName, profileEmail, profileAdress, profilePhoneNumber;
     @FXML public GridPane profileSelector;
-    @FXML public PasswordField profilePassword;
+    @FXML public PasswordField profileOldPassword, profileNewPassword, profileNewPasswordConfirm;
     @FXML public Button btnEditProfile;
 
-    // Issue labels for editing profile!
-    @FXML public Label edit_pfp_fname_issue, edit_pfp_lname_issue, edit_pfp_address_issue, edit_pfp_email_issue, edit_pfp_phone_issue, edit_pfp_pwd_issue;
+    // Issues
+    @FXML public Label edit_pfp_fname_issue, edit_pfp_lname_issue, edit_pfp_address_issue, edit_pfp_email_issue, edit_pfp_phone_issue;
+    @FXML public Label edit_pfp_old_pwd_issue, edit_pfp_new_pwd_issue, edit_pfp_new_c_pwd_issue;
 
-    // From game
+    // ===== MINI GAMES =====
     @FXML private StackPane game1;
     @FXML private StackPane game2;
     @FXML private Button quizButton;
@@ -167,8 +164,7 @@ public class Controller implements Initializable {
     //<editor-fold desc="HISTORY VARIABLES">
     ObservableList<UserHistory> fetchedList;
     ObservableList<UserHistory> items;
-    @FXML
-    public TableView<UserHistory> table_historik;
+    @FXML public TableView<UserHistory> table_historik;
     @FXML public Label rfc_no_sucesspnl;
     @FXML private Button mremove_btn_historik, sremove_btn_historik, flightPathBtn;
     @FXML private CheckBox select_all_box_historik;
@@ -178,10 +174,8 @@ public class Controller implements Initializable {
     @FXML private TableColumn<Book, String> model_col_table_historik;
     @FXML private TableColumn<Book, String> rfc_col_table_historik;
     @FXML private TableColumn<Book, String> flightid_col_table_historik;
-    @FXML
-    public TableColumn<Book, String> from_col_table_historik;
-    @FXML
-    public TableColumn<Book, String> to_col_table_historik;
+    @FXML public TableColumn<Book, String> from_col_table_historik;
+    @FXML public TableColumn<Book, String> to_col_table_historik;
     @FXML private TableColumn<Book, String> seatno_col_table_historik;
     @FXML private TableColumn<Book, String> date_col_table_historik;
     @FXML private TableColumn<Book, String> price_col_table_historik;
@@ -244,9 +238,11 @@ public class Controller implements Initializable {
     //</editor-fold
     //<editor-fold desc="SUPPORT VARIABLES">
     @FXML public Button issue_btn_sup, feedback_btn_sup, contact_btn_sup, send_fb_btn_sup, send_issue_btn_sup, send_contact_btn_sup;
-    @FXML private TextField subject_fb_txt_sup,email_fb_txt_sup, subject_contact_txt_sup, email_contact_txt_sup,title_issue_txt_sup, email_issue_txt_sup;
-    @FXML private TextFlow msgcontent_fb_txt_sup,msgcontent_contact_txt_sup,msgcontent_issue_txt_sup;
+    @FXML public TextField subject_fb_txt_sup, email_fb_txt_sup, subject_contact_txt_sup, email_contact_txt_sup, title_issue_txt_sup, email_issue_txt_sup;
+    //@FXML private TextFlow msgcontent_fb_txt_sup,msgcontent_contact_txt_sup,msgcontent_issue_txt_sup;
+    @FXML public Label sup_report_error_msg, sup_contact_error_msg, sup_feedback_error_msg;
     @FXML public AnchorPane issue_panel_sup, contact_panel_sup, feedback_panel_sup;
+    @FXML public TextArea msg_issue_txt_sup, msg_fb_txt_sup, msg_contact_txt_sup;
     //</editor-fold
 
     //<editor-fold desc="ADMIN TABLE VARIABLES">
@@ -278,6 +274,7 @@ public class Controller implements Initializable {
     @FXML private TextField show_password_field_login;
 
     //</editor-fold>
+
     public Pane pane;
     // Edit profile
     @FXML public Label pfp_display_msg;
@@ -297,6 +294,7 @@ public class Controller implements Initializable {
     InitializeFXM initializeFXM;
     AdminControl adminControl;
     //</editor-fold>
+
     //----------------- HOME -----------------//
     public Controller(){
         connection = new Connection(this);
@@ -310,7 +308,6 @@ public class Controller implements Initializable {
         initializeFXM = new InitializeFXM(this,connection);
         flightPaths = new FlightPaths(this);
         adminControl = new AdminControl(this, connection);
-
     }
 
     //----------------- HOME -----------------//
@@ -333,14 +330,21 @@ public class Controller implements Initializable {
     }
 
 
-    /////// login operation (show password )
+    /**
+     * Login operation (show password )
+     * @param e
+     * @author Khabib.
+     */
     public void showPassword(ActionEvent e){
         if (e.getSource() == show_pasword_login){
             login_pass.setVisible(true);
         }
     }
 
-    public void syncPassowordShow(){
+    /**
+     * @author Khabib.
+     */
+    public void syncPasswordShow(){
         int maxLength = 15;
         if (show_pasword_login.isSelected()){
             show_password_field_login.setDisable(false);
@@ -374,7 +378,8 @@ public class Controller implements Initializable {
 
 
     /**
-     *
+     * Start minigames!
+     * @author Kasper
      */
     public void playPong(){
         Pong pong = new Pong();
@@ -385,10 +390,6 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
     }
-
-    /**
-     *
-     */
     public void playQuiz(){
         MPlayer mPlayer = new MPlayer();
         try {
@@ -398,10 +399,6 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
     }
-
-    /**
-     *
-     */
     public void playPiano(){
         Piano piano = new Piano();
         try {
@@ -411,10 +408,6 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
     }
-
-    /**
-     *
-     */
     public void play2048(){
         Game2048Main game2048Main = new Game2048Main();
         try {
@@ -437,6 +430,11 @@ public class Controller implements Initializable {
                 User user = connection.authenticationUser(login_email.getText(), login_pass.getText());
                 if (user != null) {
                     renderDashboard(e, user);
+                    try {
+                        profilePicturePreview.setImage(connection.getProfilePicture(user));
+                    } catch (SQLException ei) {
+                        ei.printStackTrace();
+                    }
                 } else {
                     confirmActions.displayMessage(error_msg, "Wrong email or password!", true);
                 }
@@ -457,7 +455,6 @@ public class Controller implements Initializable {
         disc_input_flight.setText("");
         searchListAppear2.setVisible(false);
         searchListAppear3.setVisible(false);
-
     }
 
     /**
@@ -758,9 +755,7 @@ public class Controller implements Initializable {
                         ex.printStackTrace();
                     }
 
-
                     try {
-
                         pgr_prf_seat_pnl.setImage(connection.getProfilePicture(user));
                     } catch (SQLException ex) {
                         ex.printStackTrace();
@@ -799,129 +794,160 @@ public class Controller implements Initializable {
 
     /**
      * @throws SQLException
-     * @author Kasper. Modified and developed by Sossio.
+     * @author Kasper. Huge modified and developed by Sossio.
      */
     public void editProfile() throws SQLException {
         if (editingProfile == false) {
             profileFirstName.setDisable(false);
             profileLastName.setDisable(false);
             profileAdress.setDisable(false);
-            profileEmail.setDisable(false);
+            profileEmail.setDisable(true); // Let be false cause an error will occur!
             profilePhoneNumber.setDisable(false);
-            profilePassword.setDisable(false);
+                //profilePassword.setDisable(false);
+                profileOldPassword.setDisable(false);
+                profileNewPassword.setDisable(false);
+                profileNewPasswordConfirm.setDisable(false);
             btnEditProfile.setText("Confirm");
             editingProfile = true;
         } else {
 
             User editedUser = user;
 
-            boolean editProfileFirstName, editProfileLastName, editProfileAddress, editProfileEmail, editProfilePhoneNumber, editProfilePassword;
-
+            // Edit Firstname
             if (!profileFirstName.getText().isEmpty() && (profileFirstName.getText().length() >= 3 && profileFirstName.getText().length() <= 30)) {
                 editedUser.setFirstName(profileFirstName.getText());
-                editProfileFirstName = true;
-            } else {
-                editProfileFirstName = false;
-            }
 
-            if(!profileLastName.getText().isEmpty() && (profileLastName.getText().length() >= 3 && profileLastName.getText().length() <= 30)) {
-                editedUser.setLastName(profileLastName.getText());
-                editProfileLastName = true;
-            } else {
-                editProfileLastName = false;
-            }
+                System.out.println("Updating user firstname...");
+                user = editedUser;
 
-            if (!profileAdress.getText().isEmpty() && (profileAdress.getText().length() >= 5 && profileAdress.getText().length() <= 60)){
-                editedUser.setAddress(profileAdress.getText());
-                editProfileAddress = true;
-            } else {
-                editProfileAddress = false;
-            }
+                connection.updateUserFirstName(user);
+                confirmActions.displayMessage(pfp_display_msg, "Profile is updated!", false);
 
-            if (!profileEmail.getText().isEmpty() && (profileEmail.getText().length() >= 6 && profileEmail.getText().length() <= 30)) {
-                editedUser.setEmail(profileEmail.getText());
-                editProfileEmail = true;
-            } else {
-                editProfileEmail = false;
-            }
-
-            if (!profilePhoneNumber.getText().isEmpty() && profilePhoneNumber.getText().length() == 10){
-                editedUser.setPhoneNumber(profilePhoneNumber.getText());
-                editProfilePhoneNumber = true;
-            } else {
-                editProfilePhoneNumber = false;
-            }
-
-            if (!profilePassword.getText().isEmpty() && (profilePassword.getText().length() >= 8 && profilePassword.getText().length() <= 20)){
-                editedUser.setPassword(profilePassword.getText());
-                editProfilePassword = true;
-            } else {
-                editProfilePassword = false;
-            }
-
-            if (editProfileFirstName) {
-                if(editProfileLastName) {
-                   if(editProfileAddress) {
-                       if(editProfileEmail) {
-                           if(editProfilePhoneNumber) {
-                               if(editProfilePassword){
-
-                                   System.out.println("Updating user okay!");
-                                   user = editedUser;
-
-                                   boolean okToEditProfile = connection.updateUser(user, connection.getUserDatabaseEmail(user.getUserId()));
-
-                                   if(okToEditProfile) {
-                                       confirmActions.displayMessage(pfp_display_msg, "Profile is updated!", false);
-                                   } else {
-                                       confirmActions.displayMessage(edit_pfp_email_issue, "New email is taken!", true);
-                                       profileEmail.setText(connection.getUserDatabaseEmail(user.getUserId()));
-                                   }
-
-                               } else {
-                                   System.out.println("Password issue!");
-                                   confirmActions.displayMessage(edit_pfp_pwd_issue, "Size issue 8-20!", true);
-                                   profilePassword.setText(connection.getUserDatabasePassword(user.getUserId()));
-                               }
-                           } else {
-                               System.out.println("Phone number issue!");
-                               confirmActions.displayMessage(edit_pfp_phone_issue, "Size issue 10!", true);
-                               profilePhoneNumber.setText(connection.getUserDatabasePhoneNumber(user.getUserId()));
-                           }
-                       } else {
-                           System.out.println("Email issue!");
-                           confirmActions.displayMessage(edit_pfp_email_issue, "Size issue 6-30!", true);
-                           profileEmail.setText(connection.getUserDatabaseEmail(user.getUserId()));
-                       }
-                   } else{
-                       System.out.println("Address issue!");
-                       confirmActions.displayMessage(edit_pfp_address_issue, "Size issue 5-60!", true);
-                       profileAdress.setText(connection.getUserDatabaseAddress(user.getUserId()));
-                   }
-                } else {
-                    System.out.println("Lastname issue!");
-                    confirmActions.displayMessage(edit_pfp_lname_issue, "Size issue 3-30!", true);
-                    //profileLastName.setText(connection.getUserDatabaseLastName(user.getUserId()));
-                }
             } else {
                 System.out.println("Firstname issue!");
                 confirmActions.displayMessage(edit_pfp_fname_issue, "Size issue 3-30!", true);
-                //profileFirstName.setText(connection.getUserDatabaseFirstName(user.getFirstName()));
+                profileFirstName.setText(connection.getUserDatabaseFirstName(user.getUserId()));
             }
 
+            // Edit Lastname
+            if(!profileLastName.getText().isEmpty() && (profileLastName.getText().length() >= 3 && profileLastName.getText().length() <= 30)) {
+                editedUser.setLastName(profileLastName.getText());
+
+                System.out.println("Updating lastname...");
+                user = editedUser;
+
+                connection.updateUserLastName(user);
+                confirmActions.displayMessage(pfp_display_msg, "Profile is updated!", false);
+            } else {
+                System.out.println("Lastname issue!");
+                confirmActions.displayMessage(edit_pfp_lname_issue, "Size issue 3-30!", true);
+                profileLastName.setText(connection.getUserDatabaseLastName(user.getUserId()));
+            }
+
+            // Edit Address
+            if (!profileAdress.getText().isEmpty() && (profileAdress.getText().length() >= 5 && profileAdress.getText().length() <= 60)){
+                editedUser.setAddress(profileAdress.getText());
+
+                System.out.println("Updating address...");
+                user = editedUser;
+
+                connection.updateUserAddress(user);
+                confirmActions.displayMessage(pfp_display_msg, "Profile is updated!", false);
+            } else {
+                System.out.println("Address issue!");
+                confirmActions.displayMessage(edit_pfp_address_issue, "Size issue 5-60!", true);
+                profileAdress.setText(connection.getUserDatabaseAddress(user.getUserId()));
+            }
+
+            // Edit Email (LET BE!)
+//            if (!profileEmail.getText().isEmpty() && (profileEmail.getText().length() >= 6 && profileEmail.getText().length() <= 30)) {
+//                editedUser.setEmail(profileEmail.getText());
+//
+//                System.out.println("Updating user okay!");
+//                user = editedUser;
+//
+//                boolean okToEditProfile = connection.updateUserPersonData(user, connection.getUserDatabaseEmail(user.getUserId()));
+//                if(okToEditProfile) {
+//                    confirmActions.displayMessage(pfp_display_msg, "Profile is updated!", false);
+//                } else {
+//                    confirmActions.displayMessage(edit_pfp_email_issue, "New email is taken!", true);
+//                    profileEmail.setText(connection.getUserDatabaseEmail(user.getUserId()));
+//                }
+//
+//            } else {
+//                System.out.println("Email issue!");
+//                confirmActions.displayMessage(edit_pfp_email_issue, "Size issue 6-30!", true);
+//                profileEmail.setText(connection.getUserDatabaseEmail(user.getUserId()));
+//            }
+
+            // Edit Phone Number
+            if (!profilePhoneNumber.getText().isEmpty() && profilePhoneNumber.getText().length() == 10){
+                editedUser.setPhoneNumber(profilePhoneNumber.getText());
+
+                System.out.println("Updating phone number...");
+                user = editedUser;
+
+                connection.updateUserPhoneNumber(user);
+                confirmActions.displayMessage(pfp_display_msg, "Profile is updated!", false);
+            } else {
+                System.out.println("Phone number issue!");
+                confirmActions.displayMessage(edit_pfp_phone_issue, "Size issue 10!", true);
+                profilePhoneNumber.setText(connection.getUserDatabasePhoneNumber(user.getUserId()));
+            }
+
+            // Edit Password (Special design)
+            if (!profileOldPassword.getText().isEmpty() && !profileNewPassword.getText().isEmpty() && !profileNewPasswordConfirm.getText().isEmpty()){
+
+                if(connection.hashPassword(profileOldPassword.getText()).equals(connection.getUserDatabasePassword(user.getUserId()))) {
+
+                    if(profileNewPassword.getText().length() >= 8 && profileNewPassword.getText().length() <= 20) {
+
+                        if(profileNewPasswordConfirm.getText().equals(profileNewPassword.getText())) {
+                            editedUser.setPassword(profileNewPassword.getText());
+
+                            System.out.println("Updating new password...");
+                            user = editedUser;
+
+                            connection.updateUserPassword(user);
+                            confirmActions.displayMessage(pfp_display_msg, "Profile is updated!", false);
+                        } else {
+                            confirmActions.displayMessage(edit_pfp_new_c_pwd_issue, "Mach issue!", true);
+                        }
+
+                    } else {
+                        confirmActions.displayMessage(edit_pfp_new_pwd_issue, "Size issue 8-20!", true);
+                    }
+
+                } else {
+                    confirmActions.displayMessage(edit_pfp_old_pwd_issue, "Wrong password!", true);
+                }
+
+            } else {
+                System.out.println("To change pwd, fill all!");
+
+                confirmActions.displayMessage(edit_pfp_old_pwd_issue, "To change pwd, fill all!", false);
+            }
+
+            // Reset password fields
+            profileOldPassword.setText("");
+            profileNewPassword.setText("");
+            profileNewPasswordConfirm.setText("");
+
+            // Make text fields disabled
             profileFirstName.setDisable(true);
             profileLastName.setDisable(true);
             profileAdress.setDisable(true);
             profileEmail.setDisable(true);
             profilePhoneNumber.setDisable(true);
-            profilePassword.setDisable(true);
+            profileOldPassword.setDisable(true);
+            profileNewPassword.setDisable(true);
+            profileNewPasswordConfirm.setDisable(true);
             editingProfile = false;
             btnEditProfile.setText("Edit");
         }
     }
 
     /**
-     *
      * @author Kasper.
      */
     public void changeImage() {
@@ -958,12 +984,10 @@ public class Controller implements Initializable {
             System.out.println(profilePic);
 
             try {
-                connection.setProfilePicture(profilePic, user);
+                connection.setProfilePictureIdk(profilePic, user);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
-
 
             profileSelector.setVisible(false);
             System.out.println("Mouse clicked cell: " + colIndex + " And: " + rowIndex);
@@ -1443,6 +1467,9 @@ public class Controller implements Initializable {
         search.searchHit();
     }
 
+    /**
+     *
+     */
     public void change_search_info(){
         if (!from_input_flight.getText().isEmpty() || !disc_input_flight.getText().isEmpty()){
             String from = from_input_flight.getText();
@@ -1535,9 +1562,6 @@ public class Controller implements Initializable {
         }
     }
 
-    
-   
-    
     /**
      * @param srch
      * @return
@@ -1569,8 +1593,6 @@ public class Controller implements Initializable {
         return obs;
     }
 
-
-
     //----------------- Support -----------------//
 
     /**
@@ -1589,7 +1611,6 @@ public class Controller implements Initializable {
         adminControl.fillTicketTable(root);
     }
     //----------------- History  -----------------//
-
 
     /**
      *
@@ -1719,7 +1740,6 @@ public class Controller implements Initializable {
         }
     }
 
-
     //----------------- GETTERS AND SETTERS -----------------//
     public Scene getScene() {
         return scene;
@@ -1734,19 +1754,3 @@ public class Controller implements Initializable {
 
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

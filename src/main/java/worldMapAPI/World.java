@@ -187,10 +187,16 @@ public class World extends Region {
         zoomEnabled          = new BooleanPropertyBase(false) {
             @Override protected void invalidated() {
                 if (null == getScene()) return;
+                System.out.println("Scholl goes here!");
                 if (get()) {
-                    getScene().addEventFilter(ScrollEvent.ANY, _scrollEventHandler);
+                    System.out.println("Scholl goes here!");
+                    assert controller != null;
+                    controller.scrollPane.addEventFilter(ScrollEvent.ANY, _scrollEventHandler);
+                    System.out.println("Scholl goes here!");
                 } else {
-                    getScene().removeEventFilter(ScrollEvent.ANY, _scrollEventHandler);
+                    assert controller != null;
+                    System.out.println("Scholl goes here!");
+                    controller.scrollPane.removeEventFilter(ScrollEvent.ANY, _scrollEventHandler);
                 }
             }
             @Override public Object getBean() { return World.this; }
