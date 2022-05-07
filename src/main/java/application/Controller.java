@@ -144,10 +144,12 @@ public class Controller implements Initializable {
     @FXML public TextField email_seat_pnl;
     @FXML public AnchorPane flight_seats_eco;
     @FXML public AnchorPane flights_seats_business;
-    @FXML public Label seat_nbr_seat_pnl;
-    @FXML public Label msg_seat_pnl;
-    @FXML public Label flight_nbr_seat_pnl;
-    @FXML public Label price_seat_pnl;
+    @FXML public Label seat_nbr_seat_pnl,msg_seat_pnl,flight_nbr_seat_pnl, rtur_seat_nbr_seat_pnl,
+            price_seat_pnl,from_info_seat_pnl, to_info_seat_pnl,
+            from_d_info_seat_pnl, to_d_info_seat_pnl, isTur_seat_pnl;
+    @FXML public VBox tur_info_seat_panel;
+    private String valdeSeat;
+
 
     // menu images
     @FXML public ImageView map_menu_user;
@@ -585,186 +587,43 @@ public class Controller implements Initializable {
      * @param flights
      */
     public void fillFlights (ArrayList <Flight> flights) {
-        if (flights == null){
-            Label lable = new Label("No flight available!");
-            lable.setStyle("-fx-text-fill: #999; -fx-padding: 20px");
-            if (!display_flight.getChildren().isEmpty()){
-                display_flight.getChildren().clear();
-                display_flight.getChildren().add(lable);
-            }else {
-                display_flight.getChildren().add(lable);
-            }
-        }else {
+        boolean isFlight = checkFlightExistans(flights);
+        if (isFlight){
             display_flight.getChildren().clear();
             nbr_of_available_flights.setText(String.valueOf(flights.size()));
+            try {
+                pgr_prf_seat_pnl.setImage(connection.getProfilePicture(user));
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            } // update profile picture
+
             for (int i = 0; i < flights.size();i++){
-
-                // fill up some info in the dashboard.
-
+                HBox hbox = createFlightsContent(flights, i);
                 StackPane stackholer = new StackPane();
-                HBox hbox = new HBox(1);
-                HBox hboxChildCenter = new HBox(1);
-                HBox hboxChildRight = new HBox(1);
-
-                Image img = new Image("/application/image/jetStream.png");
-                ImageView image = new ImageView(img);
-                image.setFitWidth(30);
-                image.setFitHeight(40);
-
-                // flight icons
-                Image onboard = new Image("/application/image/onboard.png");
-                ImageView onboardIcon = new ImageView(onboard);
-                onboardIcon.setFitWidth(30);
-                onboardIcon.setOpacity(0.5);
-                onboardIcon.setFitHeight(30);
-
-                Image path = new Image("/application/image/path.png");
-                ImageView pathIcon = new ImageView(path);
-                pathIcon.setFitWidth(70);
-                pathIcon.setFitHeight(30);
-                pathIcon.setStyle("-fx-margin: 0 40 0 40; -fx-opacity: 0.5");
-
-                Label prices = new Label(flights.get(i).getPrice() + " SEK");
-
-                VBox imageHolder = new VBox();
-                imageHolder.getChildren().addAll(pathIcon, prices);
-
-                Image landing = new Image("/application/image/landing.png");
-                ImageView landingIcon = new ImageView(landing);
-                landingIcon.setOpacity(0.5);
-                landingIcon.setFitWidth(25);
-                landingIcon.setFitHeight(25);
-
-                Label titleF = new Label();
-                titleF.setMaxSize(50,40);
-                titleF.setStyle("-fx-text-fill: #999;");
-                titleF.setText(flights.get(i).getDeparture_name());
-
-                Text depTime = new Text();
-                String tmp = flights.get(i).getDeparture_time();
-                String[] sorted = tmp.split(":");
-                String s = sorted[0] + ": " + sorted[1];
-                depTime.setText(s);
-                Text depDate = new Text(flights.get(i).getDeparture_date());
-
-                depTime.setFill(Color.valueOf("#eee"));
-                depTime.setStyle("-fx-font-weight: bold");
-                Text desTime = new Text();
-                String tmp1 = flights.get(i).getDestination_time();
-                String[] sorted1 = tmp1.split(":");
-                String s1 = sorted1[0] + ": " + sorted1[1];
-                Text desDate = new Text(flights.get(i).getDestination_date());
-                desTime.setText(s1); // calculate arriving time
-                desTime.setStyle("-fx-font-weight: bold");
-                desTime.setFill(Color.valueOf("#eee"));
-
-
-                Label titleD = new Label();
-                titleD.setMaxSize(50,40);
-                titleD.setText(flights.get(i).getDestination_name());
-                titleD.setStyle("-fx-text-fill: #999;");
-
-                if (flights.get(i).isrTur()){
-
-                }
-                Label date = new Label();
-                date.setText(flights.get(i).getDestination_time());
-                // box holderx
-                VBox boardingBox = new VBox();
-                boardingBox.setAlignment(Pos.CENTER_LEFT);
-                boardingBox.getChildren().addAll(onboardIcon, depTime, depDate, titleF);
-                // box holder
-                VBox landingBox = new VBox();
-                landingBox.setAlignment(Pos.CENTER_LEFT);
-                landingBox.getChildren().addAll(landingIcon,desTime, desDate, titleD);
-
-                hboxChildCenter.getChildren().addAll(boardingBox, imageHolder, landingBox);
-                hboxChildCenter.setSpacing(15);
-                hboxChildCenter.setAlignment(Pos.CENTER_LEFT);
-
-                /***************  main box to hold the list  *********************/
-                hbox.setBackground(new Background(new BackgroundFill(Color.valueOf("#151D3B"), CornerRadii.EMPTY, Insets.EMPTY)));
-                hbox.getChildren().addAll(hboxChildCenter, hboxChildRight);
-                hbox.setHgrow(hboxChildCenter, Priority.ALWAYS);
-                hbox.setPadding(new Insets(5));
-                hbox.setEffect(new DropShadow(2.0, Color.BLACK));
-                hbox.setAlignment(Pos.TOP_LEFT);
-                hbox.setSpacing(30);
-
                 stackholer.getChildren().add(hbox);
                 stackholer.setAlignment(Pos.TOP_LEFT);
-                display_flight.getChildren().addAll(stackholer); // the box
+                display_flight.getChildren().addAll(hbox); // the box
                 display_flight.setAlignment(Pos.TOP_LEFT);
+
 
                 int finalI1 = i;
                 // to click
                 hbox.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+                   boolean ready = preperBeforeCreatingSeats();
+                   if (ready){
+                        if (flights.get(finalI1).isrTur()){ // chose two-way
+                            fillInfoSeatPnlTur(flights, finalI1);
+                            createThisSeat(flights, finalI1);
 
-                    takenSeatE.clear();
-                    takenSeatB.clear();
-                    gridE.getChildren().clear();
-                    gridB.getChildren().clear();
-                    first_name_seat_pnl.setText(user.getFirstName());
-                    last_name_seat_pnl.setText(user.getLastName());
-                    email_seat_pnl.setText(user.getEmail());
-                    // Seat window
-                    HBox hboxLR_seat = new HBox();
-                    hboxLR_seat.getChildren().addAll(gridE);
-                    gridE.setHgap(5);
-                    gridE.setVgap(5);
-                    gridB.setHgap(5);
-                    gridB.setVgap(5);
-                    HBox hboxTLR_seat = new HBox();
-                    hboxTLR_seat.getChildren().add(gridB);
-                    hboxTLR_seat.setAlignment(Pos.TOP_CENTER);
-                    flight_seats_eco.getChildren().add(hboxLR_seat);
-                    flights_seats_business.getChildren().add(hboxTLR_seat);
-
-                    for (int g = 0; g < display_flight.getChildren().size(); g++){
-                        display_flight.getChildren().get(g).setOpacity(1);
-                    }
-
-                    // chosen flight from flight list will get an opacity of 0.8
-
-                    display_flight.getChildren().get(finalI1).setOpacity(0.95);
-                    for (int m = 0; m < display_flight.getChildren().size(); m++){
-                        if (display_flight.getChildren().get(m) != display_flight.getChildren().get(finalI1)) {
-                            display_flight.getChildren().get(m).setOpacity(1);
+                        }else { // chose one-way
+                            fillInfoSeatPnl(flights, finalI1);
+                            createThisSeat(flights, finalI1);
                         }
-                    }
 
-                    try {
-                        int[] amountSeats = connection.getSeatNumber(flights.get(finalI1).getId());
-                        boolean buildSeatsSuccess = chooseSeat(amountSeats[0], amountSeats[1]);
-                        if(buildSeatsSuccess){
-                           ArrayList<String> bookedS = connection.getBookedSeats(flights.get(finalI1).getId());
-                           if (!bookedS.isEmpty()){
-                               for (String seat : bookedS){
-                                   if (seat.contains("E")){
-                                       takenSeatE.add(seat);
-                                       showTakenS(seat, gridE);
-                                   }
-                                   if(seat.contains("B")){
-                                       takenSeatB.add(seat);
-                                       showTakenS(seat, gridB);
-                                   }
-                               }
-                           }
-                        }
-                    } catch (InterruptedException ex) {
-                        ex.printStackTrace();
-                    }
+                        // flights seat panel will be shown
 
-                    try {
-                        pgr_prf_seat_pnl.setImage(connection.getProfilePicture(user));
-                    } catch (SQLException ex) {
-                        ex.printStackTrace();
-                    }
-                    flight_nbr_seat_pnl.setText(flights.get(finalI1).getId());
-                    // flights seat panel will be shown
-                    price = Double.parseDouble(flights.get(finalI1).getPrice());
-                    price_seat_pnl.setText(String.valueOf(price));
-                    pnlSeat.toFront();
+                        pnlSeat.toFront();
+                   }
                 });
                 // to hover
                 hbox.addEventFilter(MouseEvent.MOUSE_ENTERED, e -> {
@@ -776,6 +635,212 @@ public class Controller implements Initializable {
             }
         }
     } // the method will show the flights list on the right side of the dashboard when a user choose a country
+
+    private void createThisSeat(ArrayList<Flight> flights, int finalI1) {
+        try {
+            int[] amountSeats = connection.getSeatNumber(flights.get(finalI1).getId());
+            boolean buildSeatsSuccess = chooseSeat(amountSeats[0], amountSeats[1]);
+            if(buildSeatsSuccess){
+                ArrayList<String> bookedS = connection.getBookedSeats(flights.get(finalI1).getId());
+                if (!bookedS.isEmpty()){
+                    for (String seat : bookedS){
+                        if (seat.contains("E")){
+                            takenSeatE.add(seat);
+                            showTakenS(seat, gridE);
+                        }
+                        if(seat.contains("B")){
+                            takenSeatB.add(seat);
+                            showTakenS(seat, gridB);
+                        }
+                    }
+                }
+            }
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private boolean preperBeforeCreatingSeats() {
+        takenSeatE.clear();
+        takenSeatB.clear();
+        gridE.getChildren().clear();
+        gridB.getChildren().clear();
+
+        // Seat window
+        HBox hboxLR_seat = new HBox();
+        hboxLR_seat.getChildren().addAll(gridE);
+        gridE.setHgap(5);
+        gridE.setVgap(5);
+        gridB.setHgap(5);
+        gridB.setVgap(5);
+        HBox hboxTLR_seat = new HBox();
+        hboxTLR_seat.getChildren().add(gridB);
+        hboxTLR_seat.setAlignment(Pos.TOP_CENTER);
+        flight_seats_eco.getChildren().add(hboxLR_seat);
+        flights_seats_business.getChildren().add(hboxTLR_seat);
+
+        return true;
+    }
+
+
+
+    // check if there is any flight for searched name
+    private boolean checkFlightExistans(ArrayList<Flight> flights) {
+        boolean flight = false;
+        if (flights == null){
+            Label lable = new Label("No flight available!");
+            lable.setStyle("-fx-text-fill: #999; -fx-padding: 20px");
+            if (!display_flight.getChildren().isEmpty()){
+                display_flight.getChildren().clear();
+                display_flight.getChildren().add(lable);
+            }else {
+                display_flight.getChildren().add(lable);
+            }
+        }else
+            flight = true;
+
+        return flight;
+    }
+
+    // create content of the flights list
+    private HBox createFlightsContent(ArrayList<Flight> flights, int i) {
+        HBox hbox = new HBox(1);
+        HBox hboxChildCenter = new HBox(1);
+        HBox hboxChildRight = new HBox(1);
+
+        Image img = new Image("/application/image/jetStream.png");
+        ImageView image = new ImageView(img);
+        image.setFitWidth(30);
+        image.setFitHeight(40);
+
+        // flight icons
+        Image onboard = new Image("/application/image/onboard.png");
+        ImageView onboardIcon = new ImageView(onboard);
+        onboardIcon.setFitWidth(30);
+        onboardIcon.setOpacity(0.5);
+        onboardIcon.setFitHeight(30);
+
+        Image path = new Image("/application/image/path.png");
+        ImageView pathIcon = new ImageView(path);
+        pathIcon.setFitWidth(70);
+        pathIcon.setFitHeight(30);
+        pathIcon.setStyle("-fx-margin: 0 40 0 40; -fx-opacity: 0.5");
+
+        Label prices = new Label(flights.get(i).getPrice() + " SEK");
+
+        VBox imageHolder = new VBox();
+        imageHolder.getChildren().addAll(pathIcon, prices);
+
+        Image landing = new Image("/application/image/landing.png");
+        ImageView landingIcon = new ImageView(landing);
+        landingIcon.setOpacity(0.5);
+        landingIcon.setFitWidth(25);
+        landingIcon.setFitHeight(25);
+
+        Label titleF = new Label();
+        titleF.setMaxSize(50,40);
+        titleF.setStyle("-fx-text-fill: #999;");
+        titleF.setText(flights.get(i).getDeparture_name());
+
+        Text depTime = new Text();
+        String tmp = flights.get(i).getDeparture_time();
+        String[] sorted = tmp.split(":");
+        String s = sorted[0] + ": " + sorted[1];
+        depTime.setText(s);
+        Text depDate = new Text(flights.get(i).getDeparture_date());
+
+        depTime.setFill(Color.valueOf("#eee"));
+        depTime.setStyle("-fx-font-weight: bold");
+        Text desTime = new Text();
+        String tmp1 = flights.get(i).getDestination_time();
+        String[] sorted1 = tmp1.split(":");
+        String s1 = sorted1[0] + ": " + sorted1[1];
+        Text desDate = new Text(flights.get(i).getDestination_date());
+        desTime.setText(s1); // calculate arriving time
+        desTime.setStyle("-fx-font-weight: bold");
+        desTime.setFill(Color.valueOf("#eee"));
+
+
+        Label titleD = new Label();
+        titleD.setMaxSize(50,40);
+        titleD.setText(flights.get(i).getDestination_name());
+        titleD.setStyle("-fx-text-fill: #999;");
+
+        Label date = new Label();
+        date.setText(flights.get(i).getDestination_time());
+        // box holderx
+        VBox boardingBox = new VBox();
+        boardingBox.setAlignment(Pos.CENTER_LEFT);
+        boardingBox.getChildren().addAll(onboardIcon, depTime, depDate, titleF);
+        // box holder
+        VBox landingBox = new VBox();
+        landingBox.setAlignment(Pos.CENTER_LEFT);
+        landingBox.getChildren().addAll(landingIcon,desTime, desDate, titleD);
+
+        hboxChildCenter.getChildren().addAll(boardingBox, imageHolder, landingBox);
+        hboxChildCenter.setSpacing(15);
+        hboxChildCenter.setAlignment(Pos.CENTER_LEFT);
+
+
+        // if flight is return flight tho change rotate f icon 190 deg
+        if (flights.get(i).isrTur()){
+            pathIcon.setRotate(180);
+        }
+                /* // match tur and return flights
+
+                // Change tur and return flights to a different color
+                for (Flight flight : flights) {
+                    if (flights.get(i).getDeparture_name().equals(flight.getDestination_name())) {
+                        hbox.setBackground(new Background(new BackgroundFill(Color.valueOf("#fb3584"), CornerRadii.EMPTY, Insets.EMPTY)));
+                    }else {
+                        hbox.setBackground(new Background(new BackgroundFill(Color.valueOf("#151D3B"), CornerRadii.EMPTY, Insets.EMPTY)));
+                    }
+                }
+                 */ // match tur and return flights
+
+        hbox.getChildren().addAll(hboxChildCenter, hboxChildRight);
+        hbox.setHgrow(hboxChildCenter, Priority.ALWAYS);
+        hbox.setPadding(new Insets(5));
+        hbox.setEffect(new DropShadow(2.0, Color.BLACK));
+        hbox.setAlignment(Pos.TOP_LEFT);
+        hbox.setSpacing(30);
+
+        return hbox;
+    }
+
+    private void fillInfoSeatPnlTur(ArrayList<Flight> flights, int finalI1) {
+        from_info_seat_pnl.setText(flights.get(finalI1).getDeparture_name());
+        to_info_seat_pnl.setText(flights.get(finalI1).getDestination_name());
+        from_d_info_seat_pnl.setText(flights.get(finalI1).getDeparture_date());
+        to_d_info_seat_pnl.setText(flights.get(finalI1).getDestination_date());
+        isTur_seat_pnl.setText(String.valueOf(flights.get(finalI1).isrTur()));
+        flight_nbr_seat_pnl.setText(flights.get(finalI1).getId());
+
+        price = Double.parseDouble(flights.get(finalI1).getPrice());
+        price_seat_pnl.setText(String.valueOf(price));
+    }
+    // fill information to seat pnl.
+    private void fillInfoSeatPnl(ArrayList<Flight> flights, int finalI1) {
+        first_name_seat_pnl.setText(user.getFirstName());
+        last_name_seat_pnl.setText(user.getLastName());
+        email_seat_pnl.setText(user.getEmail());
+        from_info_seat_pnl.setText(flights.get(finalI1).getDeparture_name());
+        to_info_seat_pnl.setText(flights.get(finalI1).getDestination_name());
+        from_d_info_seat_pnl.setText(flights.get(finalI1).getDeparture_date());
+        to_d_info_seat_pnl.setText(flights.get(finalI1).getDestination_date());
+        flight_nbr_seat_pnl.setText(flights.get(finalI1).getId());
+        price = Double.parseDouble(flights.get(finalI1).getPrice());
+        isTur_seat_pnl.setText(String.valueOf(flights.get(finalI1).isrTur()));
+        price_seat_pnl.setText(String.valueOf(price));
+        // profile picture
+
+        // chosen flights color
+        for (int g = 0; g < display_flight.getChildren().size(); g++){
+            display_flight.getChildren().get(g).setOpacity(1);
+        }
+        display_flight.getChildren().get(finalI1).setOpacity(0.95);
+
+    }
 
     /**
      * @param seats
@@ -1232,16 +1297,28 @@ public class Controller implements Initializable {
                 String lname_s = last_name_seat_pnl.getText();
                 String fourdigit = four_digit_seat_pnl.getText();
                 String email = email_seat_pnl.getText();
-                String seatnbr = seat_nbr_seat_pnl.getText();
+                valdeSeat = seat_nbr_seat_pnl.getText();
+                String isTur = isTur_seat_pnl.getText();
             //</editor-fold>
-           if (!name_s.isEmpty() && !lname_s.isEmpty() && !fourdigit.isEmpty() && !email.isEmpty() && !seatnbr.isEmpty()){
-                pnlPayment.toFront();
-            }else {
-               msg_seat_pnl.setText("Empty field issue!");
-               PauseTransition pause = new PauseTransition(Duration.seconds(2));
-               pause.setOnFinished(a -> msg_seat_pnl.setText(null));
-               pause.play();
-            }
+
+                if (!name_s.isEmpty() && !lname_s.isEmpty() && !fourdigit.isEmpty() && !email.isEmpty() && !valdeSeat.isEmpty()){
+                    if(isTur.equals("true")){
+
+                        // CONTINUE...
+                        // create the seat if there is a tur and return flight
+
+                        System.out.println(valdeSeat + " is chosed for first flight!");
+                        seat_nbr_seat_pnl.setText(null);
+
+                    }else {
+                        pnlPayment.toFront();
+                    }
+                }else {
+                    msg_seat_pnl.setText("Empty field issue!");
+                    PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                    pause.setOnFinished(a -> msg_seat_pnl.setText(null));
+                    pause.play();
+                }
         }else if(e.getSource() == redirect_to_dash_btn){
             updateHistoryList();
             pnlFlight.toFront();

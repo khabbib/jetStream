@@ -81,9 +81,15 @@ public class DashboardController {
         controller.four_digit_seat_pnl = (TextField) root.lookup("#fourdigit_seat_pnl");
         controller.email_seat_pnl = (TextField) root.lookup("#email_seat_pnl");
         controller.seat_nbr_seat_pnl = (Label) root.lookup("#seat_nbr_seat_pnl");
+        controller.rtur_seat_nbr_seat_pnl = (Label) root.lookup("#rtur_seat_nbr_seat_pnl");
         controller.msg_seat_pnl = (Label) root.lookup("#msg_seat_pnl");
         controller.flight_nbr_seat_pnl = (Label) root.lookup("#flight_nbr_seat_pnl");
         controller.price_seat_pnl = (Label) root.lookup("#price_seat_pnl");
+        controller.from_info_seat_pnl = (Label) root.lookup("#from_info_seat_pnl");
+        controller.from_d_info_seat_pnl = (Label) root.lookup("#from_d_info_seat_pnl");
+        controller.to_info_seat_pnl = (Label) root.lookup("#to_info_seat_pnl");
+        controller.to_d_info_seat_pnl = (Label) root.lookup("#to_d_info_seat_pnl");
+        controller.isTur_seat_pnl = (Label) root.lookup("#isTur_seat_pnl");
 
         // look up for global variables
         controller.u_name = (Label) root.lookup("#u_name");
@@ -95,7 +101,6 @@ public class DashboardController {
         controller.searchListAppear = (ListView<String>) root.lookup("#searchListAprear");
         controller.searchListAppear2 = (ListView<String>) root.lookup("#searchListAprear2");
         controller.searchListAppear3 = (ListView<String>) root.lookup("#searchListAprear3");
-        controller.seat_nbr_seat_pnl = (Label) root.lookup("#seat_nbr_seat_pnl");
 
         controller.pnlSeat = (AnchorPane) root.lookup("#pnlSeat");
         controller.pnlPassager = (AnchorPane) root.lookup("#pnlPassanger");
