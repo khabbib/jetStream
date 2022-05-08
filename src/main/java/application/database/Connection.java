@@ -506,7 +506,7 @@ public class Connection {
                     String destination_time_get = flightTur.getString("f_destination_time");
                     String price_get = flightTur.getString("f_price");
                     System.out.println("id: " + id_get + ", departure: " +departure_name_get+ ", destination: " + destination_name_get);
-                    flights.add(new Flight(id_get,departure_name_get,departure_date_get,departure_time_get, destination_name_get,destination_date_get,destination_time_get,price_get, false));
+                    flights.add(new Flight(id_get,departure_name_get,departure_date_get,departure_time_get, destination_name_get,destination_date_get,destination_time_get,price_get, true));
                 }
             }
 
@@ -579,6 +579,7 @@ public class Connection {
     public  boolean savePurchasedTicket(String u_id, String flight_id, String rfc, String date, String seatNbr, boolean business) {
         boolean saved = false;
         try {
+
             java.sql.Connection con = getDatabaseConnection();
             Statement stmt = con.createStatement();
             stmt.executeUpdate("SET search_path TO jetstream;");
