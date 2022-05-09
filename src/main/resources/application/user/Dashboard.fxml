@@ -316,7 +316,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button graphicTextGap="6.0" mnemonicParsing="false" onAction="#editProfileCancel" prefHeight="43.0" prefWidth="135.0" style="-fx-background-color: #ff7000;" text="Cancel" textFill="WHITE">
+                  <Button fx:id="edit_pfp_cancel_btn" graphicTextGap="6.0" mnemonicParsing="false" onAction="#editProfileCancel" prefHeight="43.0" prefWidth="135.0" style="-fx-background-color: #ff7000;" text="Cancel" textFill="WHITE">
                      <padding>
                         <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
                      </padding>
@@ -385,7 +385,7 @@
                            <children>
                               <HBox spacing="10.0">
                                  <children>
-                                    <Label text="New Password" textFill="WHITE">
+                                    <Label text="New password" textFill="WHITE">
                                        <font>
                                           <Font size="16.0" />
                                        </font>
