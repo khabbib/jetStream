@@ -112,8 +112,8 @@ public class DashboardController {
         controller.pgr_prf_seat_pnl = (ImageView) root.lookup("#pgr_prf_seat_pnl");
 
         // loader in login
-        controller.login_loader_flight = (ImageView) root.lookup("#login_loader_flight");
-        controller.login_loader_flight.setVisible(false); // set loader to false
+        //controller.login_loader_flight = (ImageView) root.lookup("#login_loader_flight");
+        //controller.login_loader_flight.setVisible(false); // set loader to false
 
     }
 
