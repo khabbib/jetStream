@@ -22,8 +22,8 @@ Java support javaFX as a tool that build desktop, mobile and other platform appl
 </p>
 
 <p>
-  <img src="https://user-images.githubusercontent.com/51061202/167398611-ccf7bb47-8415-4f81-97a1-d4a3ba1fd1af.png" width="500" />
-  <img src="https://user-images.githubusercontent.com/51061202/167398617-65542117-df06-483b-b519-8cbb2fff5c5c.png" width="500" /> 
+  <img src="https://user-images.githubusercontent.com/51061202/167398611-ccf7bb47-8415-4f81-97a1-d4a3ba1fd1af.png" width="400" />
+  <img src="https://user-images.githubusercontent.com/51061202/167398617-65542117-df06-483b-b519-8cbb2fff5c5c.png" width="400" /> 
 </p>
 
 <h1>How to start with application </h1>
