@@ -48,7 +48,7 @@ public class Coordinates {
             case "Switzerland": coordinates = setCoordinates(330,200); break;
             case "Cote_D’Ivoire": coordinates = setCoordinates(300,275); break;
             case "Cook_Islands": coordinates = setCoordinates(560,260); break;
-            case "Chile": coordinates = setCoordinates(180,380); break;
+            case "Chile": coordinates = setCoordinates(185,380); break;
             case "Cameroon": coordinates = setCoordinates(340,275); break;
             case "China": coordinates = setCoordinates(500,220); break;
             case "Colombia": coordinates = setCoordinates(180,300); break;
