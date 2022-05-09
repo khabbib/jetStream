@@ -32,17 +32,17 @@ public class Support {
 
         if (e.getSource() == controller.issue_btn_sup){
             activeBtn();
-            controller.issue_btn_sup.setStyle("-fx-background-color: #eee; -fx-text-fill: #112");
+            controller.issue_btn_sup.setStyle("-fx-background-color: #ff7000; -fx-text-fill: #fff");
             controller.issue_panel_sup.toFront();
 
         }else if(e.getSource() == controller.feedback_btn_sup){
             activeBtn();
-            controller.feedback_btn_sup.setStyle("-fx-background-color: #eee; -fx-text-fill: #112");
+            controller.feedback_btn_sup.setStyle("-fx-background-color: #ff7000; -fx-text-fill: #fff");
             controller.feedback_panel_sup.toFront();
 
         }else if(e.getSource() == controller.contact_btn_sup){
             activeBtn();
-            controller.contact_btn_sup.setStyle("-fx-background-color: #eee; -fx-text-fill: #112");
+            controller.contact_btn_sup.setStyle("-fx-background-color: #ff7000; -fx-text-fill: #fff");
             controller.contact_panel_sup.toFront();
         } else if(e.getSource() == controller.send_issue_btn_sup) {
 
@@ -96,9 +96,9 @@ public class Support {
     }
 
     private void activeBtn() {
-        controller.issue_btn_sup.setStyle("-fx-background-color: #333; -fx-text-fill: #112");
-        controller.feedback_btn_sup.setStyle("-fx-background-color: #333; -fx-text-fill: #112");
-        controller.contact_btn_sup.setStyle("-fx-background-color: #333; -fx-text-fill: #112");
+        controller.issue_btn_sup.setStyle("-fx-background-color: #333; -fx-text-fill: #fff");
+        controller.feedback_btn_sup.setStyle("-fx-background-color: #333; -fx-text-fill: #fff");
+        controller.contact_btn_sup.setStyle("-fx-background-color: #333; -fx-text-fill: #fff");
     }
 
     private boolean checkFields(String title, String email, String msg) {
