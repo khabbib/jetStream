@@ -13,8 +13,8 @@ Java support javaFX as a tool that build desktop, mobile and other platform appl
 <h1>Sample:</h1>
 <p>
     
-  <img src="https://i.gyazo.com/667fc3e73cc475cb4c8ac2d6ef24dfd6.gif" width="400" />
-  <img src="https://user-images.githubusercontent.com/51061202/167398091-aaec4b4f-b48b-4e59-98c2-5caf35d9c8a7.png" width="400" />
+  <img src="https://i.gyazo.com/667fc3e73cc475cb4c8ac2d6ef24dfd6.gif" width="500" />
+  <img src="https://user-images.githubusercontent.com/51061202/167398091-aaec4b4f-b48b-4e59-98c2-5caf35d9c8a7.png" width="500" />
 </p>
 <p>
   <img src="https://user-images.githubusercontent.com/51061202/167398259-b492cf16-8523-45f7-9a60-aed9cdfe828e.png" width="500" />
