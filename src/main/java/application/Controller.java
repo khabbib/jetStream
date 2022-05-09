@@ -603,6 +603,7 @@ public class Controller implements Initializable {
         boolean isFlight = checkFlightExistans(flights);
         if (isFlight){
             display_flight.getChildren().clear();
+            scrollFlights.setVvalue(0);
             nbr_of_available_flights.setText(String.valueOf(flights.size()));
             try {
                 pgr_prf_seat_pnl.setImage(connection.getProfilePicture(user));
