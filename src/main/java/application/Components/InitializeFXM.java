@@ -4,15 +4,13 @@ import application.Controller;
 import application.database.Connection;
 import application.model.User;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class InitializeFXM {
     private Controller controller;
@@ -71,10 +69,15 @@ public class InitializeFXM {
             controller.profileEmail.setDisable(true);
             controller.profileAdress.setDisable(true);
             controller.profilePhoneNumber.setDisable(true);
-                //controller.profilePassword.setDisable(true);
-                controller.profileOldPassword.setDisable(true);
-                controller.profileNewPassword.setDisable(true);
-                controller.profileNewPasswordConfirm.setDisable(true);
+            //controller.profilePassword.setDisable(true);
+            controller.profileOldPassword.setDisable(true);
+            controller.profileNewPassword.setDisable(true);
+            controller.profileNewPasswordConfirm.setDisable(true);
+            LocalDate date = LocalDate.now();
+            controller.date_input_flight = (DatePicker) root.lookup("#date_input_flight");
+            controller.dateR_input_flight = (DatePicker) root.lookup("#dateR_input_flight");
+            controller.date_input_flight.setValue(date);
+            controller.dateR_input_flight.setValue(date.plusWeeks(1));
         }
     }
 }

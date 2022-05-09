@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -28,6 +29,9 @@ public class App extends Application {
             //MoveScreen.moveScreen(root, stage); // move windows by clicking on the stage
             stage.setScene(scene);
             stage.setResizable(false);
+            Image img = new Image("./application/image/officialLogo.png");
+            stage.getIcons().add(img);
+            
             //stage.initStyle(StageStyle.UNDECORATED); // to remove windows border
             stage.setTitle("Home");
             stage.show();

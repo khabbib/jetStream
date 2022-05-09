@@ -189,11 +189,14 @@ public class Controller implements Initializable {
     @FXML public ListView<String> searchListAppear2;
     @FXML public ListView<String> searchListAppear3;
     @FXML private ImageView exchange_search_flight;
-    @FXML public Label nbr_of_available_flights;
-    @FXML public DatePicker date_input_flight;
-    @FXML public DatePicker dateR_input_flight;
+    @FXML public Label nbr_of_available_flights, err_search_flight;
+    @FXML public DatePicker date_input_flight,dateR_input_flight;
     @FXML public TextField from_input_flight;
     @FXML public HBox rtur_date_pick;
+
+
+    @FXML public Button prev_tur_date_flight, next_tur_date_flight, prev_rtur_date_flight, next_rtur_date_flight;
+
 
     @FXML public CheckBox turR_checkBox_flight;
     @FXML public TextField disc_input_flight;
@@ -239,6 +242,7 @@ public class Controller implements Initializable {
     @FXML public Label confirm_password_issue_reg_admin;
     @FXML public Label registration_error_admin;
     //</editor-fold
+
     //<editor-fold desc="SUPPORT VARIABLES">
     @FXML public Button issue_btn_sup, feedback_btn_sup, contact_btn_sup, send_fb_btn_sup, send_issue_btn_sup, send_contact_btn_sup;
     @FXML public TextField subject_fb_txt_sup, email_fb_txt_sup, subject_contact_txt_sup, email_contact_txt_sup, title_issue_txt_sup, email_issue_txt_sup;
@@ -246,6 +250,8 @@ public class Controller implements Initializable {
     @FXML public Label sup_report_error_msg, sup_contact_error_msg, sup_feedback_error_msg;
     @FXML public AnchorPane issue_panel_sup, contact_panel_sup, feedback_panel_sup;
     @FXML public TextArea msg_issue_txt_sup, msg_fb_txt_sup, msg_contact_txt_sup;
+    //</editor-fold
+    //<editor-fold desc="SERCH VARIABLES">
     //</editor-fold
 
     //<editor-fold desc="ADMIN TABLE VARIABLES">
@@ -619,8 +625,10 @@ public class Controller implements Initializable {
                             System.out.println("A tur flight from event handler");
                             fillInfoSeatPnl(flights, finalI1);
                             createThisSeat(flights, finalI1);
-                            turAndReturnFlights.remove(finalI1); // remove one-way flight
-                            hasReturnFlight = true; // set to true if there is more flight
+                            if(!turAndReturnFlights.isEmpty()){
+                                turAndReturnFlights.remove(finalI1); // remove one-way flight
+                                hasReturnFlight = true; // set to true if there is more flight
+                            }
                         }else { // chose one-way
                             fillInfoSeatPnl(flights, finalI1);
                             createThisSeat(flights, finalI1);
@@ -1291,9 +1299,10 @@ public class Controller implements Initializable {
                 String fourdigit = four_digit_seat_pnl.getText();
                 String email = email_seat_pnl.getText();
                 String isTur = isTur_seat_pnl.getText();
+                String seat = seat_nbr_seat_pnl.getText();
             //</editor-fold>
 
-                if (!name_s.isEmpty() && !lname_s.isEmpty() && !fourdigit.isEmpty() && !email.isEmpty() && !seat_nbr_seat_pnl.getText().isEmpty()){
+                if (!name_s.isEmpty() && !lname_s.isEmpty() && !fourdigit.isEmpty() && !email.isEmpty() && !seat.isEmpty()){
                     if (turAndReturnFlights.size() == 1){
                         System.out.println("Active tur");
                         turSeat = seat_nbr_seat_pnl.getText();
@@ -1499,6 +1508,49 @@ public class Controller implements Initializable {
             lgtS_menu_user.setVisible(true);
             support_menu_user.setOpacity(1);
         }
+
+        // navigating av
+        else if(e.getSource() == prev_tur_date_flight){
+            System.out.println("NOOOO");
+            if (date_input_flight.getValue() == null){
+                System.out.println("Nulll value");
+                LocalDate date = LocalDate.now();
+                date_input_flight.setValue(date);
+                date_input_flight.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+                    System.out.println("Not null 1");
+                        System.out.println(date);
+                        // do something
+                        System.out.println(oldValue + " old");
+                        System.out.println(newValue + " new");
+                        date_input_flight.setValue(date);
+
+                });
+            }
+            if (date_input_flight.getValue() != null){
+                date_input_flight.setValue(date_input_flight.getValue().minusDays(1));
+            }else {
+                confirmActions.displayMessage(err_search_flight, "Date is not initialized!", true);
+            }
+        }
+        else if(e.getSource() == next_tur_date_flight){
+            if (date_input_flight.getValue() != null){
+                date_input_flight.setValue(date_input_flight.getValue().plusDays(1));
+            }else
+                confirmActions.displayMessage(err_search_flight, "Date is not initialized!", true);
+        }
+        else if(e.getSource() == prev_rtur_date_flight){
+            if (dateR_input_flight.getValue() != null){
+                dateR_input_flight.setValue(dateR_input_flight.getValue().plusDays(1));
+            }else
+                confirmActions.displayMessage(err_search_flight, "Date is not initialized!", true);
+        }
+        else if(e.getSource() == next_rtur_date_flight){
+            if (dateR_input_flight.getValue() != null){
+                dateR_input_flight.setValue(dateR_input_flight.getValue().plusDays(1));
+            }else
+                confirmActions.displayMessage(err_search_flight, "Date is not initialized!", true);
+        }
+
 
     }
 

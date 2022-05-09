@@ -20,8 +20,12 @@ public class Search {
     public void checkboxEvent(ActionEvent e){
         if (controller.turR_checkBox_flight.isSelected()){
             controller.rtur_date_pick.setDisable(false);
+            controller.next_rtur_date_flight.setDisable(false);
+            controller.prev_rtur_date_flight.setDisable(false);
         }else {
             controller.rtur_date_pick.setDisable(true);
+            controller.next_rtur_date_flight.setDisable(true);
+            controller.prev_rtur_date_flight.setDisable(true);
         }
 
     }

@@ -2,11 +2,12 @@
 	-fx-primary-color: #ff8000;
 	-fx-secondary-color: #ff7000;
 	-fx-light-grey-color: #112;
-
 	-fx-focus-color: -fx-secondary-color;
 }
 
-
+.date_picker {
+    -fx-background-color: -fx-primary-color;
+}
 .date-picker .arrow-button {
 	-fx-background-color: -fx-primary-color;
 	-fx-background-radius: 0;
@@ -49,4 +50,9 @@
 .date-picker-popup .spinner .button .left-arrow,
 .date-picker-popup .spinner .button .right-arrow {
 	-fx-background-color: white;
+}
+
+.date-picker .text-field {
+    -fx-control-inner-background:  #151D3B;
+    -fx-control-inner-border: 0;
 }
