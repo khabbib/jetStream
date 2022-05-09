@@ -35,7 +35,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #112;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #112;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
       <AnchorPane fx:id="pnlSupport" layoutX="105.0" prefHeight="693.0" prefWidth="1089.0" style="-fx-background-color: #112;">
          <children>
@@ -1338,7 +1338,7 @@
                         </VBox>
                      </content>
                   </ScrollPane>
-                  <Pane prefHeight="39.0" prefWidth="196.0" style="-fx-background-color: #151D3B; -fx-background-radius: 10 10 0 0;">
+                  <Pane layoutY="1.0" prefHeight="39.0" prefWidth="196.0" style="-fx-background-color: #151D3B; -fx-background-radius: 10 10 0 0;">
                      <children>
                         <Text fill="WHITE" layoutX="13.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #eee;" text="Available flights:">
                            <font>
