@@ -231,8 +231,8 @@ public class World extends Region {
             scale           = clamp( 1, 10, scale);
             double factor   = (scale / oldScale) - 1;
             if (Double.compare(1, getScaleFactor()) == 0) {
-                zoomSceneX = evt.getSceneX();
-                zoomSceneY = evt.getSceneY();
+                zoomSceneX = evt.getX();
+                zoomSceneY = evt.getY();
                 resetZoom();
             }
             double deltaX = (zoomSceneX - (getBoundsInParent().getWidth() / 2 + getBoundsInParent().getMinX()));

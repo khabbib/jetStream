@@ -43,7 +43,9 @@ public class CreateWorld {
 
 
     public void addWorldInMap(ScrollPane scrollPane, User user) {
-        scrollPane.setContent(new StackPane(world));
+        StackPane stackPane = new StackPane(world);
+        stackPane.setStyle("-fx-background-color: #0E0E1B;");
+        scrollPane.setContent(stackPane);
         scrollPane.setBackground(new Background(new BackgroundFill(world.getBackgroundColor(), CornerRadii.EMPTY, Insets.EMPTY)));
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);

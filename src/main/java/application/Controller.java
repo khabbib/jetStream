@@ -495,8 +495,8 @@ public class Controller implements Initializable {
         createWorld = new CreateWorld();
         world = createWorld.init(this, connection);
         createWorld.addWorldInMap(scrollPane, user);
-        scrollPane.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-insets: 1; -fx-background-color:transparent;");
-        world.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent;");
+        scrollPane.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color:  #0E0E1B;");
+        world.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color:  #0E0E1B;");
         //coordinates();
         setInfoIntoTableHistorik();
     } // the method will render dashboard page for user
