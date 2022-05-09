@@ -35,12 +35,10 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import worldMapAPI.World;
 
-import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -148,7 +146,6 @@ public class Controller implements Initializable {
             price_seat_pnl,from_info_seat_pnl, to_info_seat_pnl,
             from_d_info_seat_pnl, to_d_info_seat_pnl, isTur_seat_pnl;
     @FXML public VBox tur_info_seat_panel;
-    private String valdeSeat;
 
 
     // menu images
@@ -162,6 +159,10 @@ public class Controller implements Initializable {
     private ArrayList<String> takenSeatE = new ArrayList<>();
     private ArrayList<String> takenSeatB = new ArrayList<>();
     private double price = 0.0;
+    private ArrayList<Flight> turAndReturnFlights = new ArrayList<>();
+    private boolean hasReturnFlight = false;
+    private String turSeat, turFlight_nbr_seat_pnl, rTurSeat;
+
     //</editor-fold>
     //<editor-fold desc="HISTORY VARIABLES">
     ObservableList<UserHistory> fetchedList;
@@ -188,11 +189,14 @@ public class Controller implements Initializable {
     @FXML public ListView<String> searchListAppear2;
     @FXML public ListView<String> searchListAppear3;
     @FXML private ImageView exchange_search_flight;
-    @FXML public Label nbr_of_available_flights;
-    @FXML public DatePicker date_input_flight;
-    @FXML public DatePicker dateR_input_flight;
+    @FXML public Label nbr_of_available_flights, err_search_flight;
+    @FXML public DatePicker date_input_flight,dateR_input_flight;
     @FXML public TextField from_input_flight;
     @FXML public HBox rtur_date_pick;
+
+
+    @FXML public Button prev_tur_date_flight, next_tur_date_flight, prev_rtur_date_flight, next_rtur_date_flight;
+
 
     @FXML public CheckBox turR_checkBox_flight;
     @FXML public TextField disc_input_flight;
@@ -238,6 +242,7 @@ public class Controller implements Initializable {
     @FXML public Label confirm_password_issue_reg_admin;
     @FXML public Label registration_error_admin;
     //</editor-fold
+
     //<editor-fold desc="SUPPORT VARIABLES">
     @FXML public Button issue_btn_sup, feedback_btn_sup, contact_btn_sup, send_fb_btn_sup, send_issue_btn_sup, send_contact_btn_sup;
     @FXML public TextField subject_fb_txt_sup, email_fb_txt_sup, subject_contact_txt_sup, email_contact_txt_sup, title_issue_txt_sup, email_issue_txt_sup;
@@ -245,6 +250,8 @@ public class Controller implements Initializable {
     @FXML public Label sup_report_error_msg, sup_contact_error_msg, sup_feedback_error_msg;
     @FXML public AnchorPane issue_panel_sup, contact_panel_sup, feedback_panel_sup;
     @FXML public TextArea msg_issue_txt_sup, msg_fb_txt_sup, msg_contact_txt_sup;
+    //</editor-fold
+    //<editor-fold desc="SERCH VARIABLES">
     //</editor-fold
 
     //<editor-fold desc="ADMIN TABLE VARIABLES">
@@ -604,6 +611,9 @@ public class Controller implements Initializable {
                 stackholer.setAlignment(Pos.TOP_LEFT);
                 display_flight.getChildren().addAll(hbox); // the box
                 display_flight.setAlignment(Pos.TOP_LEFT);
+                if (flights.get(i).isrTur()){
+                    turAndReturnFlights.add(flights.get(i));
+                }
 
 
                 int finalI1 = i;
@@ -612,9 +622,13 @@ public class Controller implements Initializable {
                    boolean ready = preperBeforeCreatingSeats();
                    if (ready){
                         if (flights.get(finalI1).isrTur()){ // chose two-way
-                            fillInfoSeatPnlTur(flights, finalI1);
+                            System.out.println("A tur flight from event handler");
+                            fillInfoSeatPnl(flights, finalI1);
                             createThisSeat(flights, finalI1);
-
+                            if(!turAndReturnFlights.isEmpty()){
+                                turAndReturnFlights.remove(finalI1); // remove one-way flight
+                                hasReturnFlight = true; // set to true if there is more flight
+                            }
                         }else { // chose one-way
                             fillInfoSeatPnl(flights, finalI1);
                             createThisSeat(flights, finalI1);
@@ -667,18 +681,17 @@ public class Controller implements Initializable {
         gridB.getChildren().clear();
 
         // Seat window
-        HBox hboxLR_seat = new HBox();
-        hboxLR_seat.getChildren().addAll(gridE);
         gridE.setHgap(5);
         gridE.setVgap(5);
         gridB.setHgap(5);
         gridB.setVgap(5);
+        HBox hboxLR_seat = new HBox();
+        hboxLR_seat.getChildren().addAll(gridE);
         HBox hboxTLR_seat = new HBox();
         hboxTLR_seat.getChildren().add(gridB);
         hboxTLR_seat.setAlignment(Pos.TOP_CENTER);
         flight_seats_eco.getChildren().add(hboxLR_seat);
         flights_seats_business.getChildren().add(hboxTLR_seat);
-
         return true;
     }
 
@@ -808,17 +821,6 @@ public class Controller implements Initializable {
         return hbox;
     }
 
-    private void fillInfoSeatPnlTur(ArrayList<Flight> flights, int finalI1) {
-        from_info_seat_pnl.setText(flights.get(finalI1).getDeparture_name());
-        to_info_seat_pnl.setText(flights.get(finalI1).getDestination_name());
-        from_d_info_seat_pnl.setText(flights.get(finalI1).getDeparture_date());
-        to_d_info_seat_pnl.setText(flights.get(finalI1).getDestination_date());
-        isTur_seat_pnl.setText(String.valueOf(flights.get(finalI1).isrTur()));
-        flight_nbr_seat_pnl.setText(flights.get(finalI1).getId());
-
-        price = Double.parseDouble(flights.get(finalI1).getPrice());
-        price_seat_pnl.setText(String.valueOf(price));
-    }
     // fill information to seat pnl.
     private void fillInfoSeatPnl(ArrayList<Flight> flights, int finalI1) {
         first_name_seat_pnl.setText(user.getFirstName());
@@ -1123,11 +1125,7 @@ public class Controller implements Initializable {
            //<editor-fold desc="short">
            Label label = createSeatItem();
            label.setId("E" + rowIndex+ columnIndex);
-
-           System.out.println(gridE.getColumnCount() + " count col");
-           System.out.println(gridE.getRowCount() + " count row");
             if (gridE.getColumnCount() == 2 && gridE.getRowCount() == 1){
-                System.out.println("column 3");
                 gridE.add(label, columnIndex, rowIndex);
                 gridE.setMargin(label, new Insets(0, 20, 0, 0));
             } else if (gridE.getColumnCount() == 3 && gridE.getRowCount() > 1) {
@@ -1250,74 +1248,89 @@ public class Controller implements Initializable {
                 String cvc = card_cvc.getText();
             //</editor-fold>
 
-            if (!card_nbr.getText().isEmpty()){
-                boolean validCard = Purchase.purchaseTicket(nbr, name, lname, month, year, cvc);
-                if (validCard){
-                    System.out.println("valid card");
-                    StringBuilder rfc = connection.generateRandomRFC();
-                    //boolean uniq = Connection.compareRFC(rfc);
-                    //if (uniq){
-                        System.out.println("Save information");
-                        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                        boolean saveTicket = connection.savePurchasedTicket(user.getUserId(), flight_nbr_seat_pnl.getText(), String.valueOf(rfc), date, seat_nbr_seat_pnl.getText(), false);
-                        if (saveTicket){
+                if (!card_nbr.getText().isEmpty()){
+                    boolean validCard = Purchase.purchaseTicket(nbr, name, lname, month, year, cvc);
+                    if (validCard){
+                        System.out.println("Card is valid!");
 
-                            System.out.println(email_seat_pnl.getText() + " Your email!!!");
-                            if (!email_seat_pnl.getText().isEmpty()){
-                                boolean sentMail = Purchase.sendEmail(email_seat_pnl.getText(), first_name_seat_pnl.getText(), flight_nbr_seat_pnl.getText(), seat_nbr_seat_pnl.getText(), price_seat_pnl.getText());
-                                if (sentMail){
-                                    System.out.println("Email successfully sent!");
-                                    rfc_no_sucesspnl.setText(rfc.toString());
-                                    pnl_success_purchase.toFront();
+
+                        for (int i = 0; i <= 1; i++){
+                            System.out.println("Loop is running...");
+                            if (turSeat != null && turFlight_nbr_seat_pnl != null){ // saving tur flight
+                                System.out.println("First condition");
+                                StringBuilder rfc = connection.generateRandomRFC();
+                                String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+                                boolean saveTicket = connection.savePurchasedTicket(user.getUserId(), turFlight_nbr_seat_pnl, String.valueOf(rfc), date, turSeat, false);
+                                if (saveTicket){
+                                    confirmPurchase(String.valueOf(rfc));
+                                }
+                                turSeat = null;
+                                turFlight_nbr_seat_pnl = null;
+                            }else {
+                                System.out.println("Second condition");
+                                StringBuilder rfc = connection.generateRandomRFC();
+                                String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+                                boolean saveTicket = connection.savePurchasedTicket(user.getUserId(), flight_nbr_seat_pnl.getText(), String.valueOf(rfc), date, seat_nbr_seat_pnl.getText(), false);
+                                if (saveTicket){
+                                    confirmPurchase(String.valueOf(rfc));
                                 }else {
-                                    System.out.println("The email addrss is not correct");
-                                    //JOptionPane.showMessageDialog(null, "The email address is not correct!");
+                                    System.out.println("Did not saved the purchase in database");
+                                    //JOptionPane.showMessageDialog(null, "Did not saved the purchase in database");
                                 }
                             }
-                            System.out.println("saved information in database");
-                        }else {
-                            System.out.println("Did not saved the purchase in database");
-                            //JOptionPane.showMessageDialog(null, "Did not saved the purchase in database");
                         }
-                    //}else {
-                    //    System.out.println("Try again! not unique tho generate new rfc");
-                    //}
 
+
+                    }else {
+                        System.out.println("Card not valid");
+                        //JOptionPane.showMessageDialog(null, "Card is not valid");
+                    }
                 }else {
-                    System.out.println("Card not valid");
-                    //JOptionPane.showMessageDialog(null, "Card is not valid");
+                    System.out.println("Purchase successfully done!");
+                    //JOptionPane.showMessageDialog(null, "Purchase successfully done!");
                 }
-            }else {
-                System.out.println("Purchase successfully done!");
-                //JOptionPane.showMessageDialog(null, "Purchase successfully done!");
-            }
+
         }else if(e.getSource() == seat_next_btn){
             //<editor-fold desc="file">
                 String name_s = first_name_seat_pnl.getText();
                 String lname_s = last_name_seat_pnl.getText();
                 String fourdigit = four_digit_seat_pnl.getText();
                 String email = email_seat_pnl.getText();
-                valdeSeat = seat_nbr_seat_pnl.getText();
                 String isTur = isTur_seat_pnl.getText();
+                String seat = seat_nbr_seat_pnl.getText();
             //</editor-fold>
 
-                if (!name_s.isEmpty() && !lname_s.isEmpty() && !fourdigit.isEmpty() && !email.isEmpty() && !valdeSeat.isEmpty()){
-                    if(isTur.equals("true")){
+                if (!name_s.isEmpty() && !lname_s.isEmpty() && !fourdigit.isEmpty() && !email.isEmpty() && !seat.isEmpty()){
+                    if (turAndReturnFlights.size() == 1){
+                        System.out.println("Active tur");
+                        turSeat = seat_nbr_seat_pnl.getText();
+                        turFlight_nbr_seat_pnl = flight_nbr_seat_pnl.getText();
 
-                        // CONTINUE...
-                        // create the seat if there is a tur and return flight
-
-                        System.out.println(valdeSeat + " is chosed for first flight!");
+                        flight_nbr_seat_pnl.setText(null);
                         seat_nbr_seat_pnl.setText(null);
+                        price_seat_pnl.setText(null);
 
-                    }else {
+                        // clear the operation - preperBeforeCreatingSeats
+                        boolean build = preperBeforeCreatingSeats();
+                        if (build){
+                            from_info_seat_pnl.setText(turAndReturnFlights.get(0).getDeparture_name());
+                            to_info_seat_pnl.setText(turAndReturnFlights.get(0).getDestination_name());
+                            from_d_info_seat_pnl.setText(turAndReturnFlights.get(0).getDeparture_date());
+                            to_d_info_seat_pnl.setText(turAndReturnFlights.get(0).getDestination_date());
+                            flight_nbr_seat_pnl.setText(turAndReturnFlights.get(0).getId());
+                            price = Double.parseDouble(turAndReturnFlights.get(0).getPrice());
+                            price_seat_pnl.setText(String.valueOf(price));
+                            createThisSeat(turAndReturnFlights, 0);
+                            turAndReturnFlights.clear();
+                        }
+                    } else {
+                        System.out.println("To front");
                         pnlPayment.toFront();
                     }
                 }else {
-                    msg_seat_pnl.setText("Empty field issue!");
-                    PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                    pause.setOnFinished(a -> msg_seat_pnl.setText(null));
-                    pause.play();
+                    confirmActions.displayMessage(msg_seat_pnl, "Empty field issue!", true);
                 }
         }else if(e.getSource() == redirect_to_dash_btn){
             updateHistoryList();
@@ -1325,7 +1338,32 @@ public class Controller implements Initializable {
             restore_psgr_info();
             pnl_success_purchase.toBack();
             pnlPayment.toBack();
+
         }
+    }
+
+    private void confirmPurchase(String rfc) {
+        System.out.println(email_seat_pnl.getText() + " Your email!!!");
+        if (!email_seat_pnl.getText().isEmpty()){
+            boolean sentMail = Purchase.sendEmail(email_seat_pnl.getText(), first_name_seat_pnl.getText(), flight_nbr_seat_pnl.getText(), seat_nbr_seat_pnl.getText(), price_seat_pnl.getText());
+            if (sentMail){
+                if (turSeat != null){
+                    System.out.println("Tur is reached here");
+                    rfc_no_sucesspnl.setText(rfc.toString());
+                    pnl_success_purchase.toFront();
+                    turSeat = null;
+                    System.out.println("Email successfully sent!");
+                }else {
+                    System.out.println("Returne has been reached here");
+                    rfc_no_sucesspnl.setText(rfc.toString());
+                    pnl_success_purchase.toFront();
+                }
+            }else {
+                System.out.println("The email addrss is not correct");
+                //JOptionPane.showMessageDialog(null, "The email address is not correct!");
+            }
+        }
+        System.out.println("saved information in database");
     }
 
     /**
@@ -1345,6 +1383,14 @@ public class Controller implements Initializable {
         card_month.clear();
         card_year.clear();
         card_cvc.clear();
+        takenSeatE.clear();
+        takenSeatB.clear();
+        gridE.getChildren().clear();
+        gridB.getChildren().clear();
+        turAndReturnFlights.clear();
+        turSeat = null;
+        turFlight_nbr_seat_pnl = null;
+
     }
 
     /**
@@ -1462,6 +1508,49 @@ public class Controller implements Initializable {
             lgtS_menu_user.setVisible(true);
             support_menu_user.setOpacity(1);
         }
+
+        // navigating av
+        else if(e.getSource() == prev_tur_date_flight){
+            System.out.println("NOOOO");
+            if (date_input_flight.getValue() == null){
+                System.out.println("Nulll value");
+                LocalDate date = LocalDate.now();
+                date_input_flight.setValue(date);
+                date_input_flight.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+                    System.out.println("Not null 1");
+                        System.out.println(date);
+                        // do something
+                        System.out.println(oldValue + " old");
+                        System.out.println(newValue + " new");
+                        date_input_flight.setValue(date);
+
+                });
+            }
+            if (date_input_flight.getValue() != null){
+                date_input_flight.setValue(date_input_flight.getValue().minusDays(1));
+            }else {
+                confirmActions.displayMessage(err_search_flight, "Date is not initialized!", true);
+            }
+        }
+        else if(e.getSource() == next_tur_date_flight){
+            if (date_input_flight.getValue() != null){
+                date_input_flight.setValue(date_input_flight.getValue().plusDays(1));
+            }else
+                confirmActions.displayMessage(err_search_flight, "Date is not initialized!", true);
+        }
+        else if(e.getSource() == prev_rtur_date_flight){
+            if (dateR_input_flight.getValue() != null){
+                dateR_input_flight.setValue(dateR_input_flight.getValue().plusDays(1));
+            }else
+                confirmActions.displayMessage(err_search_flight, "Date is not initialized!", true);
+        }
+        else if(e.getSource() == next_rtur_date_flight){
+            if (dateR_input_flight.getValue() != null){
+                dateR_input_flight.setValue(dateR_input_flight.getValue().plusDays(1));
+            }else
+                confirmActions.displayMessage(err_search_flight, "Date is not initialized!", true);
+        }
+
 
     }
 
