@@ -648,6 +648,8 @@ public class Controller implements Initializable {
                     hbox.setBackground(new Background(new BackgroundFill(Color.valueOf("#151D3B"), CornerRadii.EMPTY, Insets.EMPTY)));
                 });
             }
+        }else {
+            nbr_of_available_flights.setText("0");
         }
     } // the method will show the flights list on the right side of the dashboard when a user choose a country
 
@@ -1046,7 +1048,7 @@ public class Controller implements Initializable {
      */
     public void changeImage() {
         profileSelector.setVisible(true);
-        dir = new File("src/main/resources/application/profiles/64x64");
+        dir = new File("./application/profiles/64x64");
         files = dir.listFiles();
         int b = 0;
         for (int i = 0; i < 3; i++) {
