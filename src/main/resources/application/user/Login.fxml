@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -78,5 +79,13 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
+      <ImageView fx:id="login_loader_flight" fitHeight="115.0" fitWidth="258.0" layoutX="475.0" layoutY="506.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/loader/loader%20(2).gif" />
+         </image>
+         <effect>
+            <ColorAdjust brightness="-0.22" contrast="1.0" hue="-1.0" saturation="1.0" />
+         </effect>
+      </ImageView>
    </children>
 </AnchorPane>

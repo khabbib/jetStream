@@ -111,6 +111,10 @@ public class DashboardController {
         controller.search_f_name = (TextField) root.lookup("#search_f_name");
         controller.pgr_prf_seat_pnl = (ImageView) root.lookup("#pgr_prf_seat_pnl");
 
+        // loader in login
+        controller.login_loader_flight = (ImageView) root.lookup("#login_loader_flight");
+        controller.login_loader_flight.setVisible(false); // set loader to false
+
     }
 
 }
