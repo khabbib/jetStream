@@ -5,12 +5,8 @@ import application.database.Connection;
 import application.model.User;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import org.w3c.dom.Text;
-
-import java.sql.SQLException;
 
 public class DashboardController {
     private Controller controller;
@@ -51,9 +47,9 @@ public class DashboardController {
         controller.rfc_no_sucesspnl = (Label) root.lookup("#rfc_no_sucesspnl");
 
         // Support page
-        controller.sup_report_error_msg = (Label) root.lookup("#sup_report_error_msg");
-        controller.sup_contact_error_msg = (Label) root.lookup("#sup_contact_error_msg");
-        controller.sup_feedback_error_msg = (Label) root.lookup("#sup_feedback_error_msg");
+        controller.sup_report_display_msg = (Label) root.lookup("#sup_report_error_msg");
+        controller.sup_contact_display_msg = (Label) root.lookup("#sup_contact_error_msg");
+        controller.sup_feedback_display_msg = (Label) root.lookup("#sup_feedback_error_msg");
 
         //registration page
         controller.name_issue_reg = (Label) root.lookup("#name_issue_reg");
