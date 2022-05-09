@@ -85,6 +85,7 @@ public class Controller implements Initializable {
     @FXML public ImageView profilePicture;
     @FXML public ImageView profilePicturePreview;
     @FXML public TextField profileFirstName, profileLastName, profileEmail, profileAdress, profilePhoneNumber;
+    @FXML public Button edit_pfp_cancel_btn;
     @FXML public GridPane profileSelector;
     @FXML public PasswordField profileOldPassword;
     @FXML public TextField profileNewPassword, profileNewPasswordConfirm;
@@ -831,11 +832,14 @@ public class Controller implements Initializable {
     }
 
     /**
-     * @throws SQLException
+     * This method edits profile information to later save in the database.
+     * @throws SQLException if any error occurs.
      * @author Kasper. Huge modified and developed by Sossio.
      */
     public void editProfile() throws SQLException {
         if (editingProfile == false) {
+            edit_pfp_cancel_btn.setDisable(false);
+
             profileFirstName.setDisable(false);
             profileLastName.setDisable(false);
             profileAdress.setDisable(false);
@@ -850,6 +854,8 @@ public class Controller implements Initializable {
 
             User editedUser = user;
 
+            boolean successMessage = true;
+
             // Edit Firstname
             if (!profileFirstName.getText().isEmpty() && (profileFirstName.getText().length() >= 3 && profileFirstName.getText().length() <= 30)) {
                 editedUser.setFirstName(profileFirstName.getText());
@@ -858,12 +864,13 @@ public class Controller implements Initializable {
                 user = editedUser;
 
                 connection.updateUserFirstName(user);
-                confirmActions.displayMessage(pfp_display_msg, "Profile is updated!", false);
 
             } else {
                 System.out.println("Firstname issue!");
                 confirmActions.displayMessage(edit_pfp_fname_issue, "Size issue 3-30!", true);
                 profileFirstName.setText(connection.getUserDatabaseFirstName(user.getUserId()));
+
+                successMessage = false;
             }
 
             // Edit Lastname
@@ -874,11 +881,12 @@ public class Controller implements Initializable {
                 user = editedUser;
 
                 connection.updateUserLastName(user);
-                confirmActions.displayMessage(pfp_display_msg, "Profile is updated!", false);
             } else {
                 System.out.println("Lastname issue!");
                 confirmActions.displayMessage(edit_pfp_lname_issue, "Size issue 3-30!", true);
                 profileLastName.setText(connection.getUserDatabaseLastName(user.getUserId()));
+
+                successMessage = false;
             }
 
             // Edit Address
@@ -889,11 +897,12 @@ public class Controller implements Initializable {
                 user = editedUser;
 
                 connection.updateUserAddress(user);
-                confirmActions.displayMessage(pfp_display_msg, "Profile is updated!", false);
             } else {
                 System.out.println("Address issue!");
                 confirmActions.displayMessage(edit_pfp_address_issue, "Size issue 5-60!", true);
                 profileAdress.setText(connection.getUserDatabaseAddress(user.getUserId()));
+
+                successMessage = false;
             }
 
             // Edit Email (LET BE!)
@@ -925,11 +934,12 @@ public class Controller implements Initializable {
                 user = editedUser;
 
                 connection.updateUserPhoneNumber(user);
-                confirmActions.displayMessage(pfp_display_msg, "Profile is updated!", false);
             } else {
                 System.out.println("Phone number issue!");
                 confirmActions.displayMessage(edit_pfp_phone_issue, "Size issue 10!", true);
                 profilePhoneNumber.setText(connection.getUserDatabasePhoneNumber(user.getUserId()));
+
+                successMessage = false;
             }
 
             // Edit Password (Special design)
@@ -946,23 +956,29 @@ public class Controller implements Initializable {
                             user = editedUser;
 
                             connection.updateUserPassword(user);
-                            confirmActions.displayMessage(pfp_display_msg, "Profile is updated!", false);
                         } else {
                             confirmActions.displayMessage(edit_pfp_new_c_pwd_issue, "Mach issue!", true);
+                            successMessage = false;
                         }
 
                     } else {
                         confirmActions.displayMessage(edit_pfp_new_pwd_issue, "Size issue 8-20!", true);
+                        successMessage = false;
                     }
 
                 } else {
                     confirmActions.displayMessage(edit_pfp_old_pwd_issue, "Wrong password!", true);
+                    successMessage = false;
                 }
 
             } else {
                 //System.out.println("To change pwd, fill all!");
 
                 //confirmActions.displayMessage(edit_pfp_old_pwd_issue, "To change pwd, fill all!", false);
+            }
+
+            if(successMessage) {
+                confirmActions.displayMessage(pfp_display_msg, "Profile is updated!", false);
             }
 
             // Reset password fields
@@ -981,9 +997,15 @@ public class Controller implements Initializable {
             profileNewPasswordConfirm.setDisable(true);
             editingProfile = false;
             btnEditProfile.setText("Edit");
+            edit_pfp_cancel_btn.setDisable(true);
         }
     }
 
+    /**
+     * This method cancels editing profile.
+     * @throws SQLException if any error occurs.
+     * @author Sossio.
+     */
     public void editProfileCancel() throws SQLException {
         // Reset to current data
         profileFirstName.setText(connection.getUserDatabaseFirstName(user.getUserId()));
@@ -1008,10 +1030,12 @@ public class Controller implements Initializable {
         profileNewPasswordConfirm.setDisable(true);
         editingProfile = false;
         btnEditProfile.setText("Edit");
+        edit_pfp_cancel_btn.setDisable(true);
         confirmActions.displayMessage(pfp_display_msg, "Profile editing canceled!", false);
     }
 
     /**
+     * Shows available profile images using a grid.
      * @author Kasper.
      */
     public void changeImage() {
@@ -1035,8 +1059,9 @@ public class Controller implements Initializable {
     }
 
     /**
-     * Author Kasper.
+     * Edits the profile picture of a user.
      * @param event
+     * @author Kasper. Developed by Sossio.
      */
     public void clickGrid(MouseEvent event) {
         Node clickedNode = event.getPickResult().getIntersectedNode();
@@ -1062,6 +1087,8 @@ public class Controller implements Initializable {
             changingProfileImage = false;
             profileSelector.setVisible(false);
             System.out.println("Mouse clicked cell: " + colIndex + " And: " + rowIndex);
+
+            confirmActions.displayMessage(pfp_display_msg, "Profile image is updated!", false);
         }
     }
 

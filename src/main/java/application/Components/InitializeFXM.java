@@ -40,6 +40,9 @@ public class InitializeFXM {
 
             controller.pfp_display_msg = (Label) root.lookup("#pfp_edit_error_msg");
 
+            controller.edit_pfp_cancel_btn = (Button) root.lookup("#edit_pfp_cancel_btn");
+            controller.edit_pfp_cancel_btn.setDisable(true);
+
             controller.edit_pfp_fname_issue = (Label) root.lookup("#edit_pfp_fname_issue");
             controller.edit_pfp_lname_issue = (Label) root.lookup("#edit_pfp_lname_issue");
             controller.edit_pfp_address_issue = (Label) root.lookup("#edit_pfp_address_issue");
