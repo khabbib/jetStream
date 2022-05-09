@@ -1048,8 +1048,9 @@ public class Controller implements Initializable {
      */
     public void changeImage() {
         profileSelector.setVisible(true);
-        dir = new File("./application/profiles/64x64");
+        dir = new File("src/main/resources/application/profiles/64x64");
         files = dir.listFiles();
+
         int b = 0;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 5; j++) {

@@ -34,7 +34,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #112;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #112;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
       <AnchorPane fx:id="pnlSupport" layoutX="105.0" prefHeight="693.0" prefWidth="1089.0" style="-fx-background-color: #112;">
          <children>
@@ -1049,18 +1049,6 @@
          <children>
             <Group layoutX="722.0" layoutY="533.0">
                <children>
-                  <Pane layoutX="-40.0" layoutY="-35.0" prefHeight="36.0" prefWidth="184.0" style="-fx-background-color: #151D3B #151D3B; -fx-background-radius: 0 10 0 0;">
-                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </padding>
-                     <children>
-                        <Text fill="WHITE" layoutX="11.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #eee;" text="Search by  country name" wrappingWidth="154.0">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </Pane>
                   <Pane layoutX="-40.0" prefHeight="49.0" prefWidth="386.0">
                      <children>
                         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#151d3b" height="38.0" layoutY="5.0" stroke="#151d3b" strokeType="INSIDE" strokeWidth="0.0" style="-fx-background-color: #151D3B #151D3B;" width="386.0" />
@@ -1075,7 +1063,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </ImageView>
-                        <TextField fx:id="search_f_name" layoutX="23.0" layoutY="12.0" onAction="#searchHit" onKeyTyped="#searchAppear" prefHeight="25.0" prefWidth="213.0" promptText="Search..." style="-fx-background-color: transparent; -fx-text-fill: white;" />
+                        <TextField fx:id="search_f_name" layoutX="23.0" layoutY="12.0" onAction="#searchHit" onKeyTyped="#searchAppear" prefHeight="25.0" prefWidth="213.0" promptText="Search by country..." style="-fx-background-color: transparent; -fx-text-fill: white;" />
                         <Line endX="16.0" layoutX="329.0" layoutY="5.0" startX="16.0" startY="38.0" stroke="#2e304d" />
                         <Group layoutX="309.0" layoutY="12.0">
                            <children>
@@ -1110,7 +1098,7 @@
             <Group layoutX="16.0" layoutY="25.0">
                <children>
                   <ScrollPane fx:id="scrollPane" layoutY="39.0" prefHeight="420.0" prefWidth="655.0" style="-fx-background: #0E0E1B; -fx-border-color: #112; -fx-focus-traversable: false;" />
-                  <Pane prefHeight="39.0" prefWidth="231.0" style="-fx-background-color: #151D3B; -fx-background-radius: 10 10 0 0;">
+                  <Pane prefHeight="39.0" prefWidth="230.0" style="-fx-background-color: #151D3B; -fx-background-radius: 10 10 0 0;">
                      <children>
                         <Text fill="WHITE" layoutX="10.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #eee;" text="Choose a country" wrappingWidth="200.0">
                            <font>
@@ -1126,9 +1114,9 @@
             </Group>
             <Group layoutX="16.0" layoutY="498.0">
                <children>
-                  <Pane prefHeight="37.0" prefWidth="279.0" style="-fx-background-color: #151D3B #151D3B; -fx-background-radius: 0 10 0 0;">
+                  <Pane layoutY="2.0" prefHeight="39.0" prefWidth="230.0" style="-fx-background-color: #151D3B; -fx-background-radius: 10 10 0 0;">
                      <children>
-                        <Text fill="WHITE" layoutX="11.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #eee;" text="Search deparuter &amp; destination" wrappingWidth="263.0">
+                        <Text fill="WHITE" layoutX="10.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #eee;" text="Advanced search" wrappingWidth="200.0">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -1157,7 +1145,7 @@
                                           <HBox alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="171.0" spacing="10.0">
                                              <children>
                                                 <DatePicker fx:id="date_input_flight" editable="false" prefHeight="26.0" prefWidth="116.0" promptText="fdsfsdf" style="-fx-border-insets-color: #112; -fx-fill: #eee;" stylesheets="@../Styles/DatePicker.css" />
-                                                <Label prefHeight="17.0" prefWidth="82.0" text="Deparure date " textFill="WHITE" />
+                                                <Label prefHeight="17.0" prefWidth="91.0" text="Departure date " textFill="WHITE" />
                                              </children>
                                           </HBox>
                                        </children>
@@ -1225,7 +1213,7 @@
                               </HBox>
                               <HBox alignment="CENTER" prefHeight="35.0" prefWidth="552.0">
                                  <children>
-                                    <HBox alignment="CENTER">
+                                    <HBox alignment="CENTER" prefHeight="37.0" prefWidth="636.0">
                                        <children>
                                           <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="493.0" spacing="125.0">
                                              <children>
