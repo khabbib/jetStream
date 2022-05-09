@@ -341,6 +341,7 @@ public class Controller implements Initializable {
      */
     public void displayFlightPaths() {
         flightPaths.start();
+        pnlFlight.toFront();
     }
 
 
@@ -770,10 +771,7 @@ public class Controller implements Initializable {
         button.setStyle("-fx-background-color: #ff7000");
         vBoxRight.getChildren().add(button);
 
-        // if flight is return flight tho change rotate f icon 190 deg
-        if (flights.get(i).isrTur()){
-           // pathIcon.setRotate(180);
-        }
+
                 /* // match tur and return flights
 
                 // Change tur and return flights to a different color
@@ -791,6 +789,7 @@ public class Controller implements Initializable {
         vBoxCenter.setMaxWidth(105);
         vBoxCenter.setMinWidth(105);
 
+        hbox.setBackground(new Background(new BackgroundFill(Color.valueOf("#151D3B"), CornerRadii.EMPTY, Insets.EMPTY)));
         hbox.getChildren().addAll(vBoxLeft,vBoxCenter,vBoxRight);
         hbox.setPadding(new Insets(5));
         hbox.setMargin(vBoxLeft,new Insets(10,0,10,10));
