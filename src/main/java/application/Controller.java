@@ -55,6 +55,7 @@ import java.util.*;
  *
  */
 public class Controller implements Initializable {
+
     //<editor-fold desc="GLOBAL VARIABLES" >
     // error / success message in user dashboard variable
 
@@ -302,13 +303,15 @@ public class Controller implements Initializable {
     Connection connection;
     Config config;
 
-
     FlightPaths flightPaths;
     RegistrationUser registrationUser;
     RegisterAdmin registerAdmin;
     InitializeFXM initializeFXM;
     AdminControl adminControl;
     //</editor-fold>
+
+    // Loader in login
+    @FXML public ImageView login_loader_flight;
 
     //----------------- HOME -----------------//
     public Controller(){
@@ -445,6 +448,7 @@ public class Controller implements Initializable {
                 User user = connection.authenticationUser(login_email.getText(), login_pass.getText());
                 if (user != null) {
                     renderDashboard(e, user);
+                    login_loader_flight.setVisible(true); // set loader to true
                     try {
                         profilePicturePreview.setImage(connection.getProfilePicture(user));
                     } catch (SQLException ei) {
