@@ -86,6 +86,7 @@ public class Controller implements Initializable {
     @FXML public PasswordField profileOldPassword;
     @FXML public TextField profileNewPassword, profileNewPasswordConfirm;
     @FXML public Button btnEditProfile;
+    private static boolean changingProfileImage = false;
 
     // Issues
     @FXML public Label edit_pfp_fname_issue, edit_pfp_lname_issue, edit_pfp_address_issue, edit_pfp_email_issue, edit_pfp_phone_issue;
@@ -1047,20 +1048,27 @@ public class Controller implements Initializable {
      * @author Kasper.
      */
     public void changeImage() {
-        profileSelector.setVisible(true);
-        dir = new File("src/main/resources/application/profiles/64x64");
-        files = dir.listFiles();
+        if (changingProfileImage == false) {
+            profileSelector.setVisible(true);
+            dir = new File("src/main/resources/application/profiles/64x64");
+            files = dir.listFiles();
+            changingProfileImage = true;
 
-        int b = 0;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 5; j++) {
-                profileSelector.add(new ImageView(new Image(files[b].getAbsolutePath())), i, j);
-                b++;
+            int b = 0;
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 5; j++) {
+                    profileSelector.add(new ImageView(new Image(files[b].getAbsolutePath())), i, j);
+                    b++;
+                }
             }
+        } else {
+            profileSelector.setVisible(false);
+            changingProfileImage = false;
         }
     }
 
     /**
+     * Author Kasper.
      * @param event
      */
     public void clickGrid(MouseEvent event) {
@@ -1077,7 +1085,6 @@ public class Controller implements Initializable {
             System.out.println(profilePic);
             profilePic = profilePic.substring(profilePic.indexOf("application") , profilePic.length());
             profilePic = profilePic.replace("\\","/");
-            //profilePic = "file:" + profilePic;
             System.out.println(profilePic);
 
             try {
@@ -1085,7 +1092,7 @@ public class Controller implements Initializable {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
+            changingProfileImage = false;
             profileSelector.setVisible(false);
             System.out.println("Mouse clicked cell: " + colIndex + " And: " + rowIndex);
         }
