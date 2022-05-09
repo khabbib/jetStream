@@ -34,6 +34,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -87,6 +90,7 @@ public class Controller implements Initializable {
     @FXML public PasswordField profileOldPassword;
     @FXML public TextField profileNewPassword, profileNewPasswordConfirm;
     @FXML public Button btnEditProfile;
+    private static boolean changingProfileImage = false;
 
     // Issues
     @FXML public Label edit_pfp_fname_issue, edit_pfp_lname_issue, edit_pfp_address_issue, edit_pfp_email_issue, edit_pfp_phone_issue;
@@ -649,6 +653,8 @@ public class Controller implements Initializable {
                     hbox.setBackground(new Background(new BackgroundFill(Color.valueOf("#151D3B"), CornerRadii.EMPTY, Insets.EMPTY)));
                 });
             }
+        }else {
+            nbr_of_available_flights.setText("0");
         }
     } // the method will show the flights list on the right side of the dashboard when a user choose a country
 
@@ -720,86 +726,43 @@ public class Controller implements Initializable {
     // create content of the flights list
     private HBox createFlightsContent(ArrayList<Flight> flights, int i) {
         HBox hbox = new HBox(1);
-        HBox hboxChildCenter = new HBox(1);
-        HBox hboxChildRight = new HBox(1);
 
-        Image img = new Image("/application/image/jetStream.png");
-        ImageView image = new ImageView(img);
-        image.setFitWidth(30);
-        image.setFitHeight(40);
+        VBox vBoxLeft = new VBox();
+        VBox vBoxCenter = new VBox();
+        VBox vBoxRight = new VBox();
 
-        // flight icons
-        Image onboard = new Image("/application/image/onboard.png");
-        ImageView onboardIcon = new ImageView(onboard);
-        onboardIcon.setFitWidth(30);
-        onboardIcon.setOpacity(0.5);
-        onboardIcon.setFitHeight(30);
-
-        Image path = new Image("/application/image/path.png");
-        ImageView pathIcon = new ImageView(path);
-        pathIcon.setFitWidth(70);
-        pathIcon.setFitHeight(30);
-        pathIcon.setStyle("-fx-margin: 0 40 0 40; -fx-opacity: 0.5");
-
-        Label prices = new Label(flights.get(i).getPrice() + " SEK");
-
-        VBox imageHolder = new VBox();
-        imageHolder.getChildren().addAll(pathIcon, prices);
-
-        Image landing = new Image("/application/image/landing.png");
-        ImageView landingIcon = new ImageView(landing);
-        landingIcon.setOpacity(0.5);
-        landingIcon.setFitWidth(25);
-        landingIcon.setFitHeight(25);
-
-        Label titleF = new Label();
-        titleF.setMaxSize(50,40);
-        titleF.setStyle("-fx-text-fill: #999;");
-        titleF.setText(flights.get(i).getDeparture_name());
-
-        Text depTime = new Text();
-        String tmp = flights.get(i).getDeparture_time();
-        String[] sorted = tmp.split(":");
-        String s = sorted[0] + ": " + sorted[1];
-        depTime.setText(s);
-        Text depDate = new Text(flights.get(i).getDeparture_date());
-
-        depTime.setFill(Color.valueOf("#eee"));
-        depTime.setStyle("-fx-font-weight: bold");
-        Text desTime = new Text();
-        String tmp1 = flights.get(i).getDestination_time();
-        String[] sorted1 = tmp1.split(":");
-        String s1 = sorted1[0] + ": " + sorted1[1];
-        Text desDate = new Text(flights.get(i).getDestination_date());
-        desTime.setText(s1); // calculate arriving time
-        desTime.setStyle("-fx-font-weight: bold");
-        desTime.setFill(Color.valueOf("#eee"));
+        Font font = Font.font("Futura", FontWeight.BOLD, 12);
+        Font font2 = Font.font("Futura", FontWeight.NORMAL, 10);
 
 
-        Label titleD = new Label();
-        titleD.setMaxSize(50,40);
-        titleD.setText(flights.get(i).getDestination_name());
-        titleD.setStyle("-fx-text-fill: #999;");
+        Label departure = new Label("Departure:");
+        departure.setPadding(new Insets(0,0,10,0));
+        departure.setFont(font2);
+        Label country = new Label(flights.get(i).getDeparture_name().replace("_"," "));
+        country.setFont(font);
+        Label date = new Label(flights.get(i).getDeparture_time().substring(0,5) + " | " + flights.get(i).getDeparture_date());
+        date.setFont(font2);
+        vBoxLeft.getChildren().addAll(departure,country,date);
 
-        Label date = new Label();
-        date.setText(flights.get(i).getDestination_time());
-        // box holderx
-        VBox boardingBox = new VBox();
-        boardingBox.setAlignment(Pos.CENTER_LEFT);
-        boardingBox.getChildren().addAll(onboardIcon, depTime, depDate, titleF);
-        // box holder
-        VBox landingBox = new VBox();
-        landingBox.setAlignment(Pos.CENTER_LEFT);
-        landingBox.getChildren().addAll(landingIcon,desTime, desDate, titleD);
+        Label destination = new Label("Destination:");
+        destination.setPadding(new Insets(0,0,10,0));
+        destination.setFont(font2);
+        Label country2 = new Label(flights.get(i).getDestination_name().replace("_"," "));
+        country2.setFont(font);
+        Label date2 = new Label(flights.get(i).getDestination_time().substring(0,5) + " | " + flights.get(i).getDestination_date());
+        date2.setFont(font2);
+        vBoxCenter.getChildren().addAll(destination,country2,date2);
 
-        hboxChildCenter.getChildren().addAll(boardingBox, imageHolder, landingBox);
-        hboxChildCenter.setSpacing(15);
-        hboxChildCenter.setAlignment(Pos.CENTER_LEFT);
+        Button button = new Button(flights.get(i).getPrice() + " SEK");
 
+        button.setFont(font);
+        button.setTextFill(Color.WHITE);
+        button.setStyle("-fx-background-color: #ff7000");
+        vBoxRight.getChildren().add(button);
 
         // if flight is return flight tho change rotate f icon 190 deg
         if (flights.get(i).isrTur()){
-            pathIcon.setRotate(180);
+           // pathIcon.setRotate(180);
         }
                 /* // match tur and return flights
 
@@ -813,9 +776,16 @@ public class Controller implements Initializable {
                 }
                  */ // match tur and return flights
 
-        hbox.getChildren().addAll(hboxChildCenter, hboxChildRight);
-        hbox.setHgrow(hboxChildCenter, Priority.ALWAYS);
+        vBoxLeft.setMaxWidth(105);
+        vBoxLeft.setMinWidth(105);
+        vBoxCenter.setMaxWidth(105);
+        vBoxCenter.setMinWidth(105);
+
+        hbox.getChildren().addAll(vBoxLeft,vBoxCenter,vBoxRight);
         hbox.setPadding(new Insets(5));
+        hbox.setMargin(vBoxLeft,new Insets(10,0,10,10));
+        hbox.setMargin(vBoxCenter,new Insets(10,0,10,0));
+        hbox.setMargin(vBoxRight,new Insets(30,15,10,0));
         hbox.setEffect(new DropShadow(2.0, Color.BLACK));
         hbox.setAlignment(Pos.TOP_LEFT);
         hbox.setSpacing(30);
@@ -1069,15 +1039,22 @@ public class Controller implements Initializable {
      * @author Kasper.
      */
     public void changeImage() {
-        profileSelector.setVisible(true);
-        dir = new File("src/main/resources/application/profiles/64x64");
-        files = dir.listFiles();
-        int b = 0;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 5; j++) {
-                profileSelector.add(new ImageView(new Image(files[b].getAbsolutePath())), i, j);
-                b++;
+        if (changingProfileImage == false) {
+            profileSelector.setVisible(true);
+            dir = new File("src/main/resources/application/profiles/64x64");
+            files = dir.listFiles();
+            changingProfileImage = true;
+
+            int b = 0;
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 5; j++) {
+                    profileSelector.add(new ImageView(new Image(files[b].getAbsolutePath())), i, j);
+                    b++;
+                }
             }
+        } else {
+            profileSelector.setVisible(false);
+            changingProfileImage = false;
         }
     }
 
@@ -1100,7 +1077,6 @@ public class Controller implements Initializable {
             System.out.println(profilePic);
             profilePic = profilePic.substring(profilePic.indexOf("application") , profilePic.length());
             profilePic = profilePic.replace("\\","/");
-            //profilePic = "file:" + profilePic;
             System.out.println(profilePic);
 
             try {
@@ -1108,7 +1084,7 @@ public class Controller implements Initializable {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
+            changingProfileImage = false;
             profileSelector.setVisible(false);
             System.out.println("Mouse clicked cell: " + colIndex + " And: " + rowIndex);
 

@@ -1,7 +1,7 @@
 * {
 	-fx-primary-color: #ff8000;
 	-fx-secondary-color: #ff7000;
-	-fx-light-grey-color: #112;
+	-fx-light-grey-color: #eee;
 	-fx-focus-color: -fx-secondary-color;
 }
 
@@ -53,6 +53,6 @@
 }
 
 .date-picker .text-field {
-    -fx-control-inner-background:  #151D3B;
+    -fx-control-inner-background:   #0E0E1B;
     -fx-control-inner-border: 0;
 }
