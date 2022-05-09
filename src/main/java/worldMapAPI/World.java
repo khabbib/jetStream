@@ -289,7 +289,7 @@ public class World extends Region {
         widthProperty().addListener(o -> resize());
         heightProperty().addListener(o -> resize());
         sceneProperty().addListener(o -> {
-            if (isZoomEnabled()) { getScene().addEventFilter( ScrollEvent.ANY, new WeakEventHandler<>(_scrollEventHandler)); }
+            if (isZoomEnabled()) { this.addEventFilter( ScrollEvent.ANY, new WeakEventHandler<>(_scrollEventHandler)); }
         });
     }
 
