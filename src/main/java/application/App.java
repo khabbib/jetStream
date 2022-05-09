@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -29,6 +30,8 @@ public class App extends Application {
             stage.setScene(scene);
             stage.setResizable(false);
             //stage.initStyle(StageStyle.UNDECORATED); // to remove windows border
+            Image img = new Image("/application/image/jetStream.png");
+            stage.getIcons().add(img);
             stage.setTitle("Home");
             stage.show();
         }catch (Exception e){

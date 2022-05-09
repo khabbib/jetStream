@@ -85,7 +85,8 @@ public class Controller implements Initializable {
     @FXML public ImageView profilePicturePreview;
     @FXML public TextField profileFirstName, profileLastName, profileEmail, profileAdress, profilePhoneNumber;
     @FXML public GridPane profileSelector;
-    @FXML public PasswordField profileOldPassword, profileNewPassword, profileNewPasswordConfirm;
+    @FXML public PasswordField profileOldPassword;
+    @FXML public TextField profileNewPassword, profileNewPasswordConfirm;
     @FXML public Button btnEditProfile;
 
     // Issues
@@ -320,7 +321,7 @@ public class Controller implements Initializable {
      * @throws IOException
      */
     public void switchToHome(ActionEvent e) {
-        config.render(e,"Home", "Home window");
+        config.render(e,"Home", "Home");
     }
 
     /***
@@ -530,7 +531,7 @@ public class Controller implements Initializable {
      * @throws IOException
      */
     public void switchToRegistration(ActionEvent e) {
-        this.root = config.render(e, "user/Registration", "Registration window");
+        this.root = config.render(e, "user/Registration", "Registration");
     }// the method will switch the user to the registration page
 
     /**
@@ -543,7 +544,7 @@ public class Controller implements Initializable {
         boolean ok = registrationUser.registerUser();
         System.out.println("Kommer in i if-satsen!");
         if (ok){
-            root = config.render(e, "user/Login", "Login window");
+            root = config.render(e, "user/Login", "Login");
             success_msg = (Label) root.lookup("#success_msg");
             confirmActions.displayMessage(success_msg, "User successfully registered!", false);
         } else {
@@ -578,7 +579,7 @@ public class Controller implements Initializable {
      * @throws IOException
      */
     public void switchToLogin(ActionEvent e) {
-        this.root = config.render(e, "user/Login", "Login window");
+        this.root = config.render(e, "user/Login", "Login");
         success_msg = (Label) root.lookup("#sucess_msg");
     }
 
@@ -868,10 +869,9 @@ public class Controller implements Initializable {
             profileAdress.setDisable(false);
             profileEmail.setDisable(true); // Let be false cause an error will occur!
             profilePhoneNumber.setDisable(false);
-                //profilePassword.setDisable(false);
-                profileOldPassword.setDisable(false);
-                profileNewPassword.setDisable(false);
-                profileNewPasswordConfirm.setDisable(false);
+            profileOldPassword.setDisable(false);
+            profileNewPassword.setDisable(false);
+            profileNewPasswordConfirm.setDisable(false);
             btnEditProfile.setText("Confirm");
             editingProfile = true;
         } else {
@@ -961,7 +961,7 @@ public class Controller implements Initializable {
             }
 
             // Edit Password (Special design)
-            if (!profileOldPassword.getText().isEmpty() && !profileNewPassword.getText().isEmpty() && !profileNewPasswordConfirm.getText().isEmpty()){
+            if (!profileOldPassword.getText().isEmpty() || !profileNewPassword.getText().isEmpty() || !profileNewPasswordConfirm.getText().isEmpty()){
 
                 if(connection.hashPassword(profileOldPassword.getText()).equals(connection.getUserDatabasePassword(user.getUserId()))) {
 
@@ -988,9 +988,9 @@ public class Controller implements Initializable {
                 }
 
             } else {
-                System.out.println("To change pwd, fill all!");
+                //System.out.println("To change pwd, fill all!");
 
-                confirmActions.displayMessage(edit_pfp_old_pwd_issue, "To change pwd, fill all!", false);
+                //confirmActions.displayMessage(edit_pfp_old_pwd_issue, "To change pwd, fill all!", false);
             }
 
             // Reset password fields
@@ -1010,6 +1010,33 @@ public class Controller implements Initializable {
             editingProfile = false;
             btnEditProfile.setText("Edit");
         }
+    }
+
+    public void editProfileCancel() throws SQLException {
+        // Reset to current data
+        profileFirstName.setText(connection.getUserDatabaseFirstName(user.getUserId()));
+        profileLastName.setText(connection.getUserDatabaseLastName(user.getUserId()));
+        profileAdress.setText(connection.getUserDatabaseAddress(user.getUserId()));
+        //profileEmail.setText(connection.getUserDatabaseEmail(user.getUserId()));
+        profilePhoneNumber.setText(connection.getUserDatabasePhoneNumber(user.getUserId()));
+
+        // Reset password fields
+        profileOldPassword.setText("");
+        profileNewPassword.setText("");
+        profileNewPasswordConfirm.setText("");
+
+        // Make text fields disabled
+        profileFirstName.setDisable(true);
+        profileLastName.setDisable(true);
+        profileAdress.setDisable(true);
+        profileEmail.setDisable(true);
+        profilePhoneNumber.setDisable(true);
+        profileOldPassword.setDisable(true);
+        profileNewPassword.setDisable(true);
+        profileNewPasswordConfirm.setDisable(true);
+        editingProfile = false;
+        btnEditProfile.setText("Edit");
+        confirmActions.displayMessage(pfp_display_msg, "Profile editing canceled!", false);
     }
 
     /**

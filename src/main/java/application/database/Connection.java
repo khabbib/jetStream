@@ -353,6 +353,8 @@ public class Connection {
         while(rs.next()) {
             firstName = rs.getString(("u_f_name"));
         }
+        con.close();
+        stmt.close();
         return firstName;
     }
 
@@ -367,6 +369,8 @@ public class Connection {
         while(rs.next()) {
             lastName = rs.getString(("u_l_name"));
         }
+        con.close();
+        stmt.close();
         return lastName;
     }
 
@@ -386,6 +390,8 @@ public class Connection {
         while(rs.next()) {
             address = rs.getString(("u_address"));
         }
+        con.close();
+        stmt.close();
         return address;
     }
 
@@ -405,6 +411,8 @@ public class Connection {
         while(rs.next()) {
             email = rs.getString(("u_email"));
         }
+        con.close();
+        stmt.close();
         return email;
     }
 
@@ -424,6 +432,8 @@ public class Connection {
         while(rs.next()) {
             phoneNumber = rs.getString(("u_phone_nr"));
         }
+        con.close();
+        stmt.close();
         return phoneNumber;
     }
 
@@ -443,6 +453,8 @@ public class Connection {
         while(rs.next()) {
             password = rs.getString(("u_password"));
         }
+        con.close();
+        stmt.close();
         return password;
     }
 
