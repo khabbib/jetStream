@@ -12,16 +12,21 @@ Java support javaFX as a tool that build desktop, mobile and other platform appl
 
 <h1>Sample:</h1>
 <p>
-  <img src="https://user-images.githubusercontent.com/51061202/163873292-e752a277-4093-411d-b67d-904745a25ea3.PNG" width="500" />
-  <img src="https://user-images.githubusercontent.com/51061202/163873973-a677c95d-e854-4011-a827-22f40aaea058.PNG" width="500" /> 
+    
+  <img src="https://i.gyazo.com/667fc3e73cc475cb4c8ac2d6ef24dfd6.gif" width="500" />
+  <img src="https://user-images.githubusercontent.com/51061202/167398091-aaec4b4f-b48b-4e59-98c2-5caf35d9c8a7.png" width="500" />
 </p>
 <p>
-  <img src="https://user-images.githubusercontent.com/51061202/163874076-3d68a435-5dea-4c8d-a084-944614e96df3.PNG" width="500" />
-  <img src="https://user-images.githubusercontent.com/51061202/163874083-477fe76f-ebe7-487e-be63-14af7169bf63.PNG" width="500" /> 
+  <img src="https://user-images.githubusercontent.com/51061202/167398259-b492cf16-8523-45f7-9a60-aed9cdfe828e.png" width="500" />
+  <img src="https://user-images.githubusercontent.com/51061202/167398371-82f0c013-4b05-4594-9c62-c9331ff14cf9.png" width="500" /> 
 </p>
 
+<p>
+  <img src="https://user-images.githubusercontent.com/51061202/167398611-ccf7bb47-8415-4f81-97a1-d4a3ba1fd1af.png" width="500" />
+  <img src="https://user-images.githubusercontent.com/51061202/167398617-65542117-df06-483b-b519-8cbb2fff5c5c.png" width="500" /> 
+</p>
 
-<h1>Run the program</h1>
+<h1>How to start with application </h1>
 
 <h3>Step 1. </h3>
 <span>Open jetstream project with intelliJ IDE.</span>
