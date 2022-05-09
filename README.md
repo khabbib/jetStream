@@ -1,8 +1,9 @@
 
 <div style="border:5px dotted #ffcc00" class="div">
-  <img width="60" alt="jetstream" src="https://user-images.githubusercontent.com/51061202/164430813-f42db212-9183-4bf6-a06a-1b90698e82ee.png">
-  <h1> JetStream </h1>
-  
+  <img width="60" alt="jetstream" src="https://user-images.githubusercontent.com/51061202/167385701-460f2213-b037-4f38-bce5-6a361ca32699.png">
+ <p>Version: 0.10.5</p>
+  <h1>JetStream </h1> 
+ 
 </div>
   
 A desktop based flight application with an intractive world map and geolocation support.
