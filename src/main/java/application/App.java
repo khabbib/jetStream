@@ -34,6 +34,8 @@ public class App extends Application {
             stage.getIcons().add(img);
             
             //stage.initStyle(StageStyle.UNDECORATED); // to remove windows border
+            Image img = new Image("/application/image/jetStream.png");
+            stage.getIcons().add(img);
             stage.setTitle("Home");
             stage.show();
         }catch (Exception e){

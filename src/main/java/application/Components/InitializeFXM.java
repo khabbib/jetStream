@@ -32,8 +32,8 @@ public class InitializeFXM {
             controller.profileAdress = (TextField) root.lookup("#profileAdress");
             controller.profilePhoneNumber = (TextField) root.lookup("#profilePhoneNumber");
             controller.profileOldPassword = (PasswordField) root.lookup("#profileOldPassword");
-            controller.profileNewPassword = (PasswordField) root.lookup("#profileNewPassword");
-            controller.profileNewPasswordConfirm = (PasswordField) root.lookup("#profileNewPasswordConfirm");
+            controller.profileNewPassword = (TextField) root.lookup("#profileNewPassword");
+            controller.profileNewPasswordConfirm = (TextField) root.lookup("#profileNewPasswordConfirm");
             controller.profilePicturePreview = (ImageView) root.lookup("#profilePicturePreview");
             controller.profileSelector = (GridPane) root.lookup("#profileSelector");
             controller.btnEditProfile = (Button) root.lookup("#btnEditProfile");
