@@ -552,8 +552,8 @@ public class Connection {
         ArrayList<Flight> flights = new ArrayList<>();
 
         try {
-            String convert = name.toLowerCase();
-            String searchTarget = convert.substring(0, 1).toUpperCase() + convert.substring(1); // convert first character to Uppercase
+            String searchTarget = name;//convert.substring(0, 1).toUpperCase() + convert.substring(1); // convert first character to Uppercase
+            System.out.println(searchTarget);
             java.sql.Connection con = getDatabaseConnection();
             Statement stmt = con.createStatement();
             flights.clear();
