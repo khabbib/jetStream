@@ -254,7 +254,7 @@ public class Controller implements Initializable {
     @FXML public Button issue_btn_sup, feedback_btn_sup, contact_btn_sup, send_fb_btn_sup, send_issue_btn_sup, send_contact_btn_sup;
     @FXML public TextField subject_fb_txt_sup, email_fb_txt_sup, subject_contact_txt_sup, email_contact_txt_sup, title_issue_txt_sup, email_issue_txt_sup;
     //@FXML private TextFlow msgcontent_fb_txt_sup,msgcontent_contact_txt_sup,msgcontent_issue_txt_sup;
-    @FXML public Label sup_report_error_msg, sup_contact_error_msg, sup_feedback_error_msg;
+    @FXML public Label sup_report_display_msg, sup_contact_display_msg, sup_feedback_display_msg;
     @FXML public AnchorPane issue_panel_sup, contact_panel_sup, feedback_panel_sup;
     @FXML public TextArea msg_issue_txt_sup, msg_fb_txt_sup, msg_contact_txt_sup;
     //</editor-fold
@@ -270,16 +270,12 @@ public class Controller implements Initializable {
     @FXML public TableView<UserHistory> table_tickets;
     @FXML public CheckBox select_col_ticket_admin;
 
-
-
     // members table variables
     public ObservableList<User> fetchedList_admin;
     public ObservableList<User> items_admin;
     @FXML public Button delet_btn_mbr_admin, deletS_btn_mbr_admin;
     @FXML public TableView<User> table_member_admin;
     @FXML public CheckBox select_col_mbr_admin;
-
-
 
     //</editor-fold>
     //<editor-fold desc"LOGIN VARIABLES">

@@ -3,8 +3,6 @@ import application.Controller;
 import application.auth.Purchase;
 import application.model.ConfirmActions;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
@@ -54,10 +52,11 @@ public class Support {
             if(ok) {
                 if(Purchase.sendSupportEmail(email, title, msg)) {
                     Purchase.sendAutoConfirmEmailSupport(email);
+                    confirmActions.displayMessage(controller.sup_report_display_msg, "Report issue sent!", false);
                     resetText(controller.title_issue_txt_sup, controller.email_issue_txt_sup, controller.msg_issue_txt_sup);
                 }
             } else {
-                confirmActions.displayMessage(controller.sup_report_error_msg, "Empty fields!", true);
+                confirmActions.displayMessage(controller.sup_report_display_msg, "Empty fields!", true);
             }
 
         } else if(e.getSource() == controller.send_fb_btn_sup) {
@@ -70,10 +69,11 @@ public class Support {
             if(ok) {
                 if(Purchase.sendSupportEmail(email, title, msg)) {
                     Purchase.sendAutoConfirmEmailSupport(email);
+                    confirmActions.displayMessage(controller.sup_feedback_display_msg, "Feedback sent!", false);
                     resetText(controller.subject_fb_txt_sup, controller.email_fb_txt_sup, controller.msg_fb_txt_sup);
                 }
             } else {
-                confirmActions.displayMessage(controller.sup_feedback_error_msg, "Empty fields!", true);
+                confirmActions.displayMessage(controller.sup_feedback_display_msg, "Empty fields!", true);
             }
 
         } else if(e.getSource() == controller.send_contact_btn_sup) {
@@ -86,10 +86,11 @@ public class Support {
             if(ok) {
                 if(Purchase.sendSupportEmail(email, title, msg)) {
                     Purchase.sendAutoConfirmEmailSupport(email);
+                    confirmActions.displayMessage(controller.sup_contact_display_msg, "Contact sent!", false);
                     resetText(controller.subject_contact_txt_sup, controller.email_contact_txt_sup, controller.msg_contact_txt_sup);
                 }
             } else {
-                confirmActions.displayMessage(controller.sup_contact_error_msg, "Empty fields!", true);
+                confirmActions.displayMessage(controller.sup_contact_display_msg, "Empty fields!", true);
             }
 
         }

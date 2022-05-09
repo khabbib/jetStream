@@ -85,12 +85,12 @@
                   </Label>
                   <VBox alignment="TOP_RIGHT" layoutX="57.0" layoutY="120.0" spacing="15.0">
                      <children>
-                        <TextField fx:id="title_issue_txt_sup" promptText="Title of issue" style="-fx-background-color: #151D3B #151D3B;">
+                        <TextField fx:id="title_issue_txt_sup" promptText="Title" style="-fx-background-color: #151D3B #151D3B; -fx-text-fill: #eee;">
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
                         </TextField>
-                        <TextField fx:id="email_issue_txt_sup" promptText="Email address" style="-fx-background-color: #151D3B #151D3B;">
+                        <TextField fx:id="email_issue_txt_sup" promptText="Email address" style="-fx-background-color: #151D3B #151D3B; -fx-text-fill: #eee;">
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
@@ -114,7 +114,7 @@
                      </children>
                   </VBox>
                   <Label fx:id="msg_issue_txt_sup_error" layoutX="571.0" layoutY="485.0" prefHeight="17.0" prefWidth="279.0" />
-                  <Label fx:id="sup_report_error_msg" layoutX="571.0" layoutY="485.0" prefHeight="17.0" prefWidth="263.0" />
+                  <Label fx:id="sup_report_display_msg" layoutX="571.0" layoutY="485.0" prefHeight="17.0" prefWidth="263.0" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="contact_panel_sup" layoutX="49.0" layoutY="132.0" prefHeight="530.0" prefWidth="876.0" style="-fx-background-color: #0E0E1B #0E0E1B #0E0E1B #0E0E1B;">
@@ -126,12 +126,12 @@
                   </Label>
                   <VBox alignment="TOP_RIGHT" layoutX="57.0" layoutY="120.0" spacing="15.0">
                      <children>
-                        <TextField fx:id="subject_contact_txt_sup" promptText="Title of issue" style="-fx-background-color: #151D3B #151D3B;">
+                        <TextField fx:id="subject_contact_txt_sup" promptText="Title" style="-fx-background-color: #151D3B #151D3B; -fx-text-fill: #eee;">
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
                         </TextField>
-                        <TextField fx:id="email_contact_txt_sup" promptText="Email address" style="-fx-background-color: #151D3B #151D3B;">
+                        <TextField fx:id="email_contact_txt_sup" promptText="Email address" style="-fx-background-color: #151D3B #151D3B; -fx-text-fill: #eee;">
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
@@ -154,7 +154,7 @@
                         </Button>
                      </children>
                   </VBox>
-                  <Label fx:id="sup_contact_error_msg" layoutX="564.0" layoutY="485.0" prefHeight="17.0" prefWidth="279.0" />
+                  <Label fx:id="sup_contact_display_msg" layoutX="564.0" layoutY="485.0" prefHeight="17.0" prefWidth="279.0" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="feedback_panel_sup" layoutX="49.0" layoutY="132.0" prefHeight="530.0" prefWidth="876.0" style="-fx-background-color: #0E0E1B #0E0E1B #0E0E1B #0E0E1B; -fx-background-radius: 5;">
@@ -166,12 +166,12 @@
                   </Label>
                   <VBox alignment="TOP_RIGHT" layoutX="57.0" layoutY="120.0" spacing="15.0">
                      <children>
-                        <TextField fx:id="subject_fb_txt_sup" promptText="Subject" style="-fx-background-color: #151D3B #151D3B;">
+                        <TextField fx:id="subject_fb_txt_sup" promptText="Title" style="-fx-background-color: #151D3B #151D3B; -fx-text-fill: #eee;">
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
                         </TextField>
-                        <TextField fx:id="email_fb_txt_sup" promptText="Email address" style="-fx-background-color: #151D3B #151D3B;">
+                        <TextField fx:id="email_fb_txt_sup" promptText="Email address" style="-fx-background-color: #151D3B #151D3B; -fx-text-fill: #eee;">
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
@@ -194,7 +194,7 @@
                         </Button>
                      </children>
                   </VBox>
-                  <Label fx:id="sup_feedback_error_msg" layoutX="561.0" layoutY="484.0" prefHeight="17.0" prefWidth="299.0" />
+                  <Label fx:id="sup_feedback_display_msg" layoutX="561.0" layoutY="484.0" prefHeight="17.0" prefWidth="299.0" />
                </children>
             </AnchorPane>
          </children>
