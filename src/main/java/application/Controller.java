@@ -734,11 +734,14 @@ public class Controller implements Initializable {
         Font font = Font.font("Futura", FontWeight.BOLD, 12);
         Font font2 = Font.font("Futura", FontWeight.NORMAL, 10);
 
-
         Label departure = new Label("Departure:");
         departure.setPadding(new Insets(0,0,10,0));
         departure.setFont(font2);
         Label country = new Label(flights.get(i).getDeparture_name().replace("_"," "));
+        if (country.getText().length() >= 15) {
+            country.setWrapText(true);
+            country.setMinHeight(35);
+        }
         country.setFont(font);
         Label date = new Label(flights.get(i).getDeparture_time().substring(0,5) + " | " + flights.get(i).getDeparture_date());
         date.setFont(font2);
@@ -748,6 +751,10 @@ public class Controller implements Initializable {
         destination.setPadding(new Insets(0,0,10,0));
         destination.setFont(font2);
         Label country2 = new Label(flights.get(i).getDestination_name().replace("_"," "));
+        if (country2.getText().length() >= 15) {
+            country2.setWrapText(true);
+            country2.setMinHeight(35);
+        }
         country2.setFont(font);
         Label date2 = new Label(flights.get(i).getDestination_time().substring(0,5) + " | " + flights.get(i).getDestination_date());
         date2.setFont(font2);
