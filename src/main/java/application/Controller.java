@@ -748,7 +748,7 @@ public class Controller implements Initializable {
         destination.setFont(font2);
         Label country2 = new Label(flights.get(i).getDestination_name().replace("_"," "));
         country2.setFont(font);
-        Label date2 = new Label(flights.get(i).getDestination_time() + " | " + flights.get(i).getDestination_date());
+        Label date2 = new Label(flights.get(i).getDestination_time().substring(0,5) + " | " + flights.get(i).getDestination_date());
         date2.setFont(font2);
         vBoxCenter.getChildren().addAll(destination,country2,date2);
 
