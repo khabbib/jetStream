@@ -1348,7 +1348,7 @@
          <children>
             <VBox layoutX="14.0" layoutY="23.0" spacing="15.0">
                <children>
-                  <Group translateX="25.0">
+                  <Group>
                      <children>
                         <ImageView fitHeight="31.0" fitWidth="77.0" pickOnBounds="true" preserveRatio="true">
                            <image>
