@@ -47,17 +47,17 @@
                   </Label>
                   <HBox layoutX="116.0" spacing="10.0">
                      <children>
-                        <Button fx:id="feedback_btn_sup" graphicTextGap="6.0" mnemonicParsing="false" onAction="#support_event_handler" prefHeight="43.0" prefWidth="149.0" style="-fx-background-color: #eee;" text="Feedback" textFill="#363636">
+                        <Button fx:id="feedback_btn_sup" graphicTextGap="6.0" mnemonicParsing="false" onAction="#support_event_handler" prefHeight="43.0" prefWidth="149.0" style="-fx-background-color: #ff7000;" text="Feedback" textFill="WHITE">
                            <padding>
                               <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
                            </padding>
                         </Button>
-                        <Button fx:id="issue_btn_sup" graphicTextGap="6.0" mnemonicParsing="false" onAction="#support_event_handler" prefHeight="43.0" prefWidth="149.0" style="-fx-background-color: #222;" text="Report issue" textFill="WHITE">
+                        <Button fx:id="issue_btn_sup" graphicTextGap="6.0" mnemonicParsing="false" onAction="#support_event_handler" prefHeight="43.0" prefWidth="149.0" style="-fx-background-color: #333;" text="Report issue" textFill="WHITE">
                            <padding>
                               <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
                            </padding>
                         </Button>
-                        <Button fx:id="contact_btn_sup" graphicTextGap="6.0" mnemonicParsing="false" onAction="#support_event_handler" prefHeight="43.0" prefWidth="149.0" style="-fx-background-color: #222;" text="Contact us" textFill="WHITE">
+                        <Button fx:id="contact_btn_sup" graphicTextGap="6.0" mnemonicParsing="false" onAction="#support_event_handler" prefHeight="43.0" prefWidth="149.0" style="-fx-background-color: #333;" text="Contact us" textFill="WHITE">
                            <padding>
                               <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
                            </padding>
@@ -1526,6 +1526,11 @@
                                  </cursor>
                               </ImageView>
                               <Label layoutX="34.0" layoutY="18.0" prefHeight="17.0" prefWidth="51.0" text="Settings" textFill="WHITE" />
+                              <Button fx:id="iconProfile" layoutX="2.0" layoutY="14.0" mnemonicParsing="false" onAction="#userDev" opacity="0.0" prefHeight="30.0" prefWidth="77.0" text="Button">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
                            </children>
                         </Group>
                         <Group layoutY="78.0">
