@@ -246,7 +246,7 @@ public class Coordinates {
             case "United_States_of_America": coordinates = setCoordinates(130,200); break;
             case "Uruguay": coordinates = setCoordinates(215,350); break;
             case "Uzbekistan": coordinates = setCoordinates(430,220); break;
-            case "Vatikan_City": coordinates = setCoordinates(340,210); break;
+            case "Vatican_City": coordinates = setCoordinates(340,210); break;
             case "Saint_Vincent": coordinates = setCoordinates(560,260); break;
             case "Venezuela": coordinates = setCoordinates(200,280); break;
             case "VirginIslands_BR": coordinates = setCoordinates(560,260); break;
