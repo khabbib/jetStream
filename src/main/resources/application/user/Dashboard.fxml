@@ -1079,7 +1079,7 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="pnlFlight" layoutX="107.0" prefHeight="700.0" prefWidth="1089.0" style="-fx-background-color: #112;" visible="false">
+      <AnchorPane fx:id="pnlFlight" layoutX="107.0" prefHeight="700.0" prefWidth="1089.0" style="-fx-background-color: #112;">
          <children>
             <Group layoutX="722.0" layoutY="533.0">
                <children>

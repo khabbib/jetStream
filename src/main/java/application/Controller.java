@@ -345,6 +345,7 @@ public class Controller implements Initializable {
      */
     public void displayFlightPaths() {
         flightPaths.start();
+        pnlFlight.toFront();
     }
 
 
