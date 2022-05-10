@@ -300,7 +300,6 @@ public class Controller implements Initializable {
     public Pane pane;
     // Edit profile
     @FXML public Label pfp_display_msg;
-
     //<editor-fold desc="instance initialize">
     application.Components.Support support;
     Search search;
@@ -353,7 +352,6 @@ public class Controller implements Initializable {
         flightPaths.start();
         pnlFlight.toFront();
     }
-
 
     /**
      * Login operation (show password )
