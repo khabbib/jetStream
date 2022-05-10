@@ -32,6 +32,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
@@ -103,8 +105,8 @@ public class Controller implements Initializable {
     @FXML private Button quizButton;
 
     // Seat
-    private final GridPane gridE = new GridPane(); //Layout
-    private final GridPane gridB = new GridPane(); //Layout
+    public final GridPane gridE = new GridPane(); //Layout
+    public final GridPane gridB = new GridPane(); //Layout
 
     // toggle options
     @FXML private Button iconProfile, iconFlight, iconHistorik, iconGame, iconSupport, iconCloseSeat, iconCloseSeat1;
@@ -442,6 +444,19 @@ public class Controller implements Initializable {
     }
 
     /**
+     * This method plays sound on button actions.
+     * @param soundName takes the name of the sound as a string to print in concole.
+     * @param src is file path name.
+     * @author Sossio. :D
+     */
+    public void playSoundLogin(String soundName, String src) {
+        Media buzzer = new Media(getClass().getResource(src).toExternalForm());
+        MediaPlayer mediaPlayer = new MediaPlayer(buzzer);
+        mediaPlayer.play();
+        System.out.println(soundName + " fx played!");
+    }
+
+    /**
      * the method will switch the user to the dashboard page
      * navigate to dashboard pages
      * @param e
@@ -454,6 +469,7 @@ public class Controller implements Initializable {
                 if (user != null) {
                     renderDashboard(e, user);
                     login_loader_flight.setVisible(true); // set loader to true
+                    playSoundLogin("Login", "sounds/login.wav");
                     try {
                         profilePicturePreview.setImage(connection.getProfilePicture(user));
                     } catch (SQLException ei) {
@@ -570,6 +586,7 @@ public class Controller implements Initializable {
             root = config.render(e, "user/Login", "Login");
             success_msg = (Label) root.lookup("#success_msg");
             confirmActions.displayMessage(success_msg, "User successfully registered!", false);
+            playSoundLogin("Success", "sounds/success.wav");
         } else {
             confirmActions.displayMessage(success_msg, "Error", true);
         }
@@ -585,6 +602,7 @@ public class Controller implements Initializable {
             adminControl.updateMemberTable();
             pnlMember.toFront();
             confirmActions.displayMessage(registration_error_admin, "User successfully registered!", false);
+            playSoundLogin("Success", "sounds/success.wav");
             first_name_reg_admin.setText("");
             last_name_reg_admin.setText("");
             first_name_reg_admin.setText("");
@@ -633,13 +651,21 @@ public class Controller implements Initializable {
                     turAndReturnFlights.add(flights.get(i));
                 }
 
-
                 int finalI1 = i;
                 // to click
                 hbox.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+
+                    gridE.getChildren().clear();
+                    gridB.getChildren().clear();
+
                    boolean ready = preperBeforeCreatingSeats();
                    if (ready){
                         if (flights.get(finalI1).isrTur()){ // chose two-way
+                            System.out.println(gridE.getChildren().size());
+                            gridE.getChildren().clear();
+                            System.out.println(gridE.getChildren().size());
+                            gridB.getChildren().clear();
+
                             System.out.println("A tur flight from event handler");
                             fillInfoSeatPnl(flights, finalI1);
                             createThisSeat(flights, finalI1);
@@ -671,6 +697,10 @@ public class Controller implements Initializable {
     } // the method will show the flights list on the right side of the dashboard when a user choose a country
 
     private void createThisSeat(ArrayList<Flight> flights, int finalI1) {
+
+        gridE.getChildren().clear();
+        gridB.getChildren().clear();
+
         try {
             int[] amountSeats = connection.getSeatNumber(flights.get(finalI1).getId());
             boolean buildSeatsSuccess = chooseSeat(amountSeats[0], amountSeats[1]);
@@ -697,8 +727,9 @@ public class Controller implements Initializable {
     private boolean preperBeforeCreatingSeats() {
         takenSeatE.clear();
         takenSeatB.clear();
-        gridE.getChildren().clear();
-        gridB.getChildren().clear();
+
+        flight_seats_eco.getChildren().removeAll();
+        flights_seats_business.getChildren().removeAll();
 
         // Seat window
         gridE.setHgap(5);
@@ -1288,89 +1319,105 @@ public class Controller implements Initializable {
             pnlPayment.toBack();
         }else if(e.getSource() == card_purchase_btn){
 
-                String nbr = card_nbr.getText();
-                String name = card_fname.getText();
-                String lname = card_lname.getText();
-                String month = card_month.getText();
-                String year = card_year.getText();
-                String cvc = card_cvc.getText();
+            String nbr = card_nbr.getText();
+            String name = card_fname.getText();
+            String lname = card_lname.getText();
+            String month = card_month.getText();
+            String year = card_year.getText();
+            String cvc = card_cvc.getText();
 
-                if (!nbr.isEmpty()) {
-                    if (!name.isEmpty()) {
-                        if (!lname.isEmpty()) {
-                            if (!year.isEmpty()) {
-                                if (!month.isEmpty()) {
-                                    if (!cvc.isEmpty()) {
+            if (!nbr.isEmpty()) {
+                if (!name.isEmpty()) {
+                    if (!lname.isEmpty()) {
+                        if (!year.isEmpty()) {
+                            if (!month.isEmpty()) {
+                                if (!cvc.isEmpty()) {
 
-                                        boolean validCard = Purchase.purchaseTicket(nbr, name, lname, month, year, cvc);
-                    if (validCard){
-                        System.out.println("Card is valid!");
-                        boolean purchaseDone1 = false;
-                        boolean purchaseDone2 = false;
-                        String rfc1 = "", rfc2 = "";
+                                    boolean validCard = Purchase.purchaseTicket(nbr, name, lname, month, year, cvc);
+                                    if (validCard) {
+                                        System.out.println("Card is valid!");
+                                        boolean purchaseDone1 = false;
+                                        boolean purchaseDone2 = false;
+                                        String rfc1 = "", rfc2 = "";
 
-                        if(turSeat != null){
-                            for (int i = 0; i <= 1; i++){
-                                System.out.println("Loop is running...");
-                                if (turSeat != null && turFlight_nbr_seat_pnl != null){ // saving tur flight
-                                    System.out.println("First condition");
-                                    StringBuilder rfc = connection.generateRandomRFC();
-                                    String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                                        if (turSeat != null) {
+                                            for (int i = 0; i <= 1; i++) {
+                                                System.out.println("Loop is running...");
 
-                                    boolean saveTicket = connection.savePurchasedTicket(user.getUserId(), turFlight_nbr_seat_pnl, String.valueOf(rfc), date, turSeat, false);
-                                    if (saveTicket){
-                                        rfc1 = String.valueOf(rfc);
-                                        purchaseDone1 = true;
+                                                if (turSeat != null && turFlight_nbr_seat_pnl != null) { // saving tur flight
+                                                    System.out.println("First condition");
+                                                    StringBuilder rfc = connection.generateRandomRFC();
+                                                    String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+                                                    boolean saveTicket = connection.savePurchasedTicket(user.getUserId(), turFlight_nbr_seat_pnl, String.valueOf(rfc), date, turSeat, false);
+                                                    if (saveTicket) {
+                                                        rfc1 = String.valueOf(rfc);
+                                                        purchaseDone1 = true;
+                                                    }
+                                                    turSeat = null;
+                                                    turFlight_nbr_seat_pnl = null;
+                                                } else {
+                                                    System.out.println("Second condition 2");
+                                                    StringBuilder rfc = connection.generateRandomRFC();
+                                                    String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+                                                    boolean saveTicket = connection.savePurchasedTicket(user.getUserId(), flight_nbr_seat_pnl.getText(), String.valueOf(rfc), date, seat_nbr_seat_pnl.getText(), false);
+                                                    if (saveTicket) {
+                                                        purchaseDone1 = true;
+                                                        rfc1 = String.valueOf(rfc);
+                                                        //confirmPurchase(String.valueOf(rfc));
+                                                    } else {
+                                                        System.out.println("Did not saved the purchase in database");
+                                                    }
+                                                }
+                                            }
+                                        } else {
+                                            System.out.println("Tur seat is null.");
+
+                                            System.out.println("Second condition 2");
+                                            StringBuilder rfc = connection.generateRandomRFC();
+                                            String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+                                            boolean saveTicket = connection.savePurchasedTicket(user.getUserId(), flight_nbr_seat_pnl.getText(), String.valueOf(rfc), date, seat_nbr_seat_pnl.getText(), false);
+                                            if (saveTicket){
+                                                purchaseDone1 = true;
+                                                rfc1 = String.valueOf(rfc);
+                                                //confirmPurchase(String.valueOf(rfc));
+                                            }else {
+                                                System.out.println("Did not saved the purchase in database");
+                                            }
+                                        }
+
+                                        if (purchaseDone1 && purchaseDone2) {
+                                            System.out.println("Booked two-ways flights");
+                                            confirmPurchase(rfc2); // can send more information form here.
+                                        } else if (purchaseDone1) {
+                                            System.out.println("Booked only one-way flight");
+                                            confirmPurchase(rfc1);
+                                        }
+
+                                    }else{
+                                        System.out.println("Card not valid");
+                                        confirmActions.displayMessage(payment_err_msg, "Card is not valid.", true);
                                     }
-                                    turSeat = null;
-                                    turFlight_nbr_seat_pnl = null;
                                 } else {
-                            System.out.println("Second condition 2");
-                            StringBuilder rfc = connection.generateRandomRFC();
-                            String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
-                            boolean saveTicket = connection.savePurchasedTicket(user.getUserId(), flight_nbr_seat_pnl.getText(), String.valueOf(rfc), date, seat_nbr_seat_pnl.getText(), false);
-                            if (saveTicket){
-                                purchaseDone1 = true;
-                                rfc1 = String.valueOf(rfc);
-                                //confirmPurchase(String.valueOf(rfc));
-                            }else {
-                                System.out.println("Did not saved the purchase in database");
-                            }
-                        }
-
-                        if(purchaseDone1 && purchaseDone2){
-                            System.out.println("Booked two-ways flights");
-                            confirmPurchase(rfc2); // can send more information form here.
-                        }else if(purchaseDone1){
-                            System.out.println("Booked only one-way flight");
-                            confirmPurchase(rfc1);
-                        }
-
-                                }else {
-                                    System.out.println("Card not valid");
-                                    confirmActions.displayMessage(payment_err_msg, "Card is not valid.", true);
-                                }
-
-                            } else {
-                                confirmActions.displayMessage(payment_err_msg, "CVC is empty!", true);
-                            }
-                        } else {
-                            confirmActions.displayMessage(payment_err_msg, "Month is empty!", true);
+                                    confirmActions.displayMessage(payment_err_msg, "CVC is empty!", true);
                                 }
                             } else {
-                                confirmActions.displayMessage(payment_err_msg, "Year is empty!", true);
+                                confirmActions.displayMessage(payment_err_msg, "Month is empty!", true);
                             }
                         } else {
-                            confirmActions.displayMessage(payment_err_msg, "Last name is empty!", true);
+                            confirmActions.displayMessage(payment_err_msg, "Year is empty!", true);
                         }
-
                     } else {
-                        confirmActions.displayMessage(payment_err_msg, "First name is empty!", true);
+                        confirmActions.displayMessage(payment_err_msg, "Last name is empty!", true);
                     }
-                }else {
-                    confirmActions.displayMessage(payment_err_msg, "Card numbers is empty!", true);
+                } else {
+                    confirmActions.displayMessage(payment_err_msg, "First name is empty!", true);
                 }
+            }else {
+                confirmActions.displayMessage(payment_err_msg, "Card numbers is empty!", true);
+            }
 
         }else if(e.getSource() == seat_next_btn){
             //<editor-fold desc="file">
