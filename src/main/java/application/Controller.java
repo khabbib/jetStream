@@ -272,11 +272,18 @@ public class Controller implements Initializable {
     @FXML public CheckBox select_col_ticket_admin;
 
     // members table variables
-    public ObservableList<User> fetchedList_admin;
-    public ObservableList<User> items_admin;
+    public ObservableList<User> fetchedList_member_admin;
+    public ObservableList<User> items_member_admin;
     @FXML public Button delet_btn_mbr_admin, deletS_btn_mbr_admin;
     @FXML public TableView<User> table_member_admin;
     @FXML public CheckBox select_col_mbr_admin;
+
+    //flights table variables
+    public ObservableList<Flight> fetchedList_flight_admin;
+    public ObservableList<Flight> items_flight_admin;
+    @FXML public Button delete_singelFlightBtn_admin, delete_allFlightsBtn_admin, refreshFlightsBtn_admin, addFlightsBtn_admin;
+    @FXML public TableView<Flight> table_flight_admin;
+    @FXML public CheckBox select_all_box_flight_admin;
 
     //</editor-fold>
     //<editor-fold desc"LOGIN VARIABLES">
@@ -1296,48 +1303,60 @@ public class Controller implements Initializable {
                                     if (!cvc.isEmpty()) {
 
                                         boolean validCard = Purchase.purchaseTicket(nbr, name, lname, month, year, cvc);
-                                        if (validCard){
-                                            System.out.println("Card is valid!");
+                    if (validCard){
+                        System.out.println("Card is valid!");
+                        boolean purchaseDone1 = false;
+                        boolean purchaseDone2 = false;
+                        String rfc1 = "", rfc2 = "";
 
-                                            for (int i = 0; i <= 1; i++){
-                                                System.out.println("Loop is running...");
-                                                if (turSeat != null && turFlight_nbr_seat_pnl != null){ // saving tur flight
-                                                    System.out.println("First condition");
-                                                    StringBuilder rfc = connection.generateRandomRFC();
-                                                    String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                        if(turSeat != null){
+                            for (int i = 0; i <= 1; i++){
+                                System.out.println("Loop is running...");
+                                if (turSeat != null && turFlight_nbr_seat_pnl != null){ // saving tur flight
+                                    System.out.println("First condition");
+                                    StringBuilder rfc = connection.generateRandomRFC();
+                                    String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
-                                                    boolean saveTicket = connection.savePurchasedTicket(user.getUserId(), turFlight_nbr_seat_pnl, String.valueOf(rfc), date, turSeat, false);
-                                                    if (saveTicket){
-                                                        confirmPurchase(String.valueOf(rfc));
-                                                    }
-                                                    turSeat = null;
-                                                    turFlight_nbr_seat_pnl = null;
-                                                }else {
-                                                    System.out.println("Second condition");
-                                                    StringBuilder rfc = connection.generateRandomRFC();
-                                                    String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
-                                                    boolean saveTicket = connection.savePurchasedTicket(user.getUserId(), flight_nbr_seat_pnl.getText(), String.valueOf(rfc), date, seat_nbr_seat_pnl.getText(), false);
-                                                    if (saveTicket){
-                                                        confirmPurchase(String.valueOf(rfc));
-                                                    }else {
-                                                        System.out.println("Did not saved the purchase in database");
-                                                        //JOptionPane.showMessageDialog(null, "Did not saved the purchase in database");
-                                                    }
-                                                }
-                                            }
-
-
-                                        }else {
-                                            System.out.println("Card not valid");
-                                            confirmActions.displayMessage(payment_err_msg, "Card is not valid.", true);
-                                        }
-
-                                    } else {
-                                        confirmActions.displayMessage(payment_err_msg, "CVC is empty!", true);
+                                    boolean saveTicket = connection.savePurchasedTicket(user.getUserId(), turFlight_nbr_seat_pnl, String.valueOf(rfc), date, turSeat, false);
+                                    if (saveTicket){
+                                        rfc1 = String.valueOf(rfc);
+                                        purchaseDone1 = true;
                                     }
+                                    turSeat = null;
+                                    turFlight_nbr_seat_pnl = null;
                                 } else {
-                                    confirmActions.displayMessage(payment_err_msg, "Month is empty!", true);
+                            System.out.println("Second condition 2");
+                            StringBuilder rfc = connection.generateRandomRFC();
+                            String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+                            boolean saveTicket = connection.savePurchasedTicket(user.getUserId(), flight_nbr_seat_pnl.getText(), String.valueOf(rfc), date, seat_nbr_seat_pnl.getText(), false);
+                            if (saveTicket){
+                                purchaseDone1 = true;
+                                rfc1 = String.valueOf(rfc);
+                                //confirmPurchase(String.valueOf(rfc));
+                            }else {
+                                System.out.println("Did not saved the purchase in database");
+                            }
+                        }
+
+                        if(purchaseDone1 && purchaseDone2){
+                            System.out.println("Booked two-ways flights");
+                            confirmPurchase(rfc2); // can send more information form here.
+                        }else if(purchaseDone1){
+                            System.out.println("Booked only one-way flight");
+                            confirmPurchase(rfc1);
+                        }
+
+                                }else {
+                                    System.out.println("Card not valid");
+                                    confirmActions.displayMessage(payment_err_msg, "Card is not valid.", true);
+                                }
+
+                            } else {
+                                confirmActions.displayMessage(payment_err_msg, "CVC is empty!", true);
+                            }
+                        } else {
+                            confirmActions.displayMessage(payment_err_msg, "Month is empty!", true);
                                 }
                             } else {
                                 confirmActions.displayMessage(payment_err_msg, "Year is empty!", true);
@@ -1345,6 +1364,7 @@ public class Controller implements Initializable {
                         } else {
                             confirmActions.displayMessage(payment_err_msg, "Last name is empty!", true);
                         }
+
                     } else {
                         confirmActions.displayMessage(payment_err_msg, "First name is empty!", true);
                     }
@@ -1491,9 +1511,9 @@ public class Controller implements Initializable {
                     stage.show();
 
 
-                    fillMemmbersTable(root);
+                    adminControl.fillMemmbersTable(root);
                     adminControl.fillTicketTable(root);
-
+                    adminControl.fillTableFlights(root);
 
                     memberListView = (ListView<String>) root.lookup("#memberListView");
                     if(memberListView != null)
@@ -1846,14 +1866,7 @@ public class Controller implements Initializable {
         support.supportInfo(e);
     }
 
-    //----------------- Amdin Tables  -----------------//
-    public void fillMemmbersTable(Parent root) throws SQLException {
-        adminControl.fillMemmbersTable(root);
 
-    }
-    public void fillTicketTable(Parent root) throws SQLException {
-        adminControl.fillTicketTable(root);
-    }
     //----------------- History  -----------------//
 
     /**

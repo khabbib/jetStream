@@ -74,6 +74,8 @@ public enum CountryList {
     Germany,
     Ghana,
     Greece,
+
+    Greenland,
     Grenada,
     Guatemala,
     Guinea,

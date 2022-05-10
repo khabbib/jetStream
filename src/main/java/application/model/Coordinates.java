@@ -124,8 +124,8 @@ public class Coordinates {
             case "Kiribati": coordinates = setCoordinates(560,260); break;
             case "Comoros": coordinates = setCoordinates(560,260); break;
             case "Saint_Kitts_And_Nevis": coordinates = setCoordinates(560,260); break;
-            case "North Korea": coordinates = setCoordinates(540,220); break;
-            case "South Korea": coordinates = setCoordinates(540,220); break;
+            case "Korea_North": coordinates = setCoordinates(540,220); break;
+            case "Korea_South": coordinates = setCoordinates(540,220); break;
             case "Kosovo": coordinates = setCoordinates(350,210); break;
             case "Kuwait": coordinates = setCoordinates(400,250); break;
             case "Cayman_Islands": coordinates = setCoordinates(560,260); break;
