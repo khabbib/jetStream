@@ -271,11 +271,18 @@ public class Controller implements Initializable {
     @FXML public CheckBox select_col_ticket_admin;
 
     // members table variables
-    public ObservableList<User> fetchedList_admin;
-    public ObservableList<User> items_admin;
+    public ObservableList<User> fetchedList_member_admin;
+    public ObservableList<User> items_member_admin;
     @FXML public Button delet_btn_mbr_admin, deletS_btn_mbr_admin;
     @FXML public TableView<User> table_member_admin;
     @FXML public CheckBox select_col_mbr_admin;
+
+    //flights table variables
+    public ObservableList<Flight> fetchedList_flight_admin;
+    public ObservableList<Flight> items_flight_admin;
+    @FXML public Button delete_singelFlightBtn_admin, delete_allFlightsBtn_admin, refreshFlightsBtn_admin, addFlightsBtn_admin;
+    @FXML public TableView<Flight> table_flight_admin;
+    @FXML public CheckBox select_all_box_flight_admin;
 
     //</editor-fold>
     //<editor-fold desc"LOGIN VARIABLES">
@@ -1475,9 +1482,9 @@ public class Controller implements Initializable {
                     stage.show();
 
 
-                    fillMemmbersTable(root);
+                    adminControl.fillMemmbersTable(root);
                     adminControl.fillTicketTable(root);
-
+                    adminControl.fillTableFlights(root);
 
                     memberListView = (ListView<String>) root.lookup("#memberListView");
                     if(memberListView != null)
@@ -1830,14 +1837,7 @@ public class Controller implements Initializable {
         support.supportInfo(e);
     }
 
-    //----------------- Amdin Tables  -----------------//
-    public void fillMemmbersTable(Parent root) throws SQLException {
-        adminControl.fillMemmbersTable(root);
 
-    }
-    public void fillTicketTable(Parent root) throws SQLException {
-        adminControl.fillTicketTable(root);
-    }
     //----------------- History  -----------------//
 
     /**
