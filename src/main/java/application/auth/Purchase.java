@@ -23,7 +23,7 @@ public class Purchase {
      * @param cvc
      * @return
      */
-    public  static boolean purchaseTicket(String nbr, String firstName, String lastName, String month, String year, String cvc) {
+    public static boolean purchaseTicket(String nbr, String firstName, String lastName, String month, String year, String cvc) {
         // CAN BE DEVELOPED MORE...
         return true;
     }

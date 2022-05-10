@@ -68,6 +68,7 @@ public class DashboardController {
         controller.card_year = (TextField) root.lookup("#card_year");
         controller.card_cvc = (TextField) root.lookup("#card_cvc");
         controller.card_counter_nbr = (Label) root.lookup("#card_counter_nbr");
+        controller.payment_err_msg = (Label) root.lookup("#payment_err_msg");
 
         // Config scrollbar
 
