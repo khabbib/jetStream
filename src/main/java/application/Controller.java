@@ -131,6 +131,7 @@ public class Controller implements Initializable {
     @FXML public TextField card_cvc;
     @FXML private Button card_prev_btn, card_purchase_btn, seat_next_btn;
     @FXML public Label card_counter_nbr;
+    @FXML public Label payment_err_msg;
 
     // scrollpane seats
     @FXML public ScrollPane business_scrollpane;
@@ -1272,6 +1273,7 @@ public class Controller implements Initializable {
 
     /**
      * @param e
+     * @author Khabib. Developed by Sossio.
      */
     public void purchaseHandle(ActionEvent e){
         if (e.getSource() == card_prev_btn){
@@ -1279,57 +1281,75 @@ public class Controller implements Initializable {
             pnlPayment.toBack();
         }else if(e.getSource() == card_purchase_btn){
 
-            //<editor-fold desc="file">
                 String nbr = card_nbr.getText();
                 String name = card_fname.getText();
                 String lname = card_lname.getText();
                 String month = card_month.getText();
                 String year = card_year.getText();
                 String cvc = card_cvc.getText();
-            //</editor-fold>
 
-                if (!card_nbr.getText().isEmpty()){
-                    boolean validCard = Purchase.purchaseTicket(nbr, name, lname, month, year, cvc);
-                    if (validCard){
-                        System.out.println("Card is valid!");
+                if (!nbr.isEmpty()) {
+                    if (!name.isEmpty()) {
+                        if (!lname.isEmpty()) {
+                            if (!year.isEmpty()) {
+                                if (!month.isEmpty()) {
+                                    if (!cvc.isEmpty()) {
+
+                                        boolean validCard = Purchase.purchaseTicket(nbr, name, lname, month, year, cvc);
+                                        if (validCard){
+                                            System.out.println("Card is valid!");
+
+                                            for (int i = 0; i <= 1; i++){
+                                                System.out.println("Loop is running...");
+                                                if (turSeat != null && turFlight_nbr_seat_pnl != null){ // saving tur flight
+                                                    System.out.println("First condition");
+                                                    StringBuilder rfc = connection.generateRandomRFC();
+                                                    String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+                                                    boolean saveTicket = connection.savePurchasedTicket(user.getUserId(), turFlight_nbr_seat_pnl, String.valueOf(rfc), date, turSeat, false);
+                                                    if (saveTicket){
+                                                        confirmPurchase(String.valueOf(rfc));
+                                                    }
+                                                    turSeat = null;
+                                                    turFlight_nbr_seat_pnl = null;
+                                                }else {
+                                                    System.out.println("Second condition");
+                                                    StringBuilder rfc = connection.generateRandomRFC();
+                                                    String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+                                                    boolean saveTicket = connection.savePurchasedTicket(user.getUserId(), flight_nbr_seat_pnl.getText(), String.valueOf(rfc), date, seat_nbr_seat_pnl.getText(), false);
+                                                    if (saveTicket){
+                                                        confirmPurchase(String.valueOf(rfc));
+                                                    }else {
+                                                        System.out.println("Did not saved the purchase in database");
+                                                        //JOptionPane.showMessageDialog(null, "Did not saved the purchase in database");
+                                                    }
+                                                }
+                                            }
 
 
-                        for (int i = 0; i <= 1; i++){
-                            System.out.println("Loop is running...");
-                            if (turSeat != null && turFlight_nbr_seat_pnl != null){ // saving tur flight
-                                System.out.println("First condition");
-                                StringBuilder rfc = connection.generateRandomRFC();
-                                String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                                        }else {
+                                            System.out.println("Card not valid");
+                                            confirmActions.displayMessage(payment_err_msg, "Card is not valid.", true);
+                                        }
 
-                                boolean saveTicket = connection.savePurchasedTicket(user.getUserId(), turFlight_nbr_seat_pnl, String.valueOf(rfc), date, turSeat, false);
-                                if (saveTicket){
-                                    confirmPurchase(String.valueOf(rfc));
+                                    } else {
+                                        confirmActions.displayMessage(payment_err_msg, "CVC is empty!", true);
+                                    }
+                                } else {
+                                    confirmActions.displayMessage(payment_err_msg, "Month is empty!", true);
                                 }
-                                turSeat = null;
-                                turFlight_nbr_seat_pnl = null;
-                            }else {
-                                System.out.println("Second condition");
-                                StringBuilder rfc = connection.generateRandomRFC();
-                                String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
-                                boolean saveTicket = connection.savePurchasedTicket(user.getUserId(), flight_nbr_seat_pnl.getText(), String.valueOf(rfc), date, seat_nbr_seat_pnl.getText(), false);
-                                if (saveTicket){
-                                    confirmPurchase(String.valueOf(rfc));
-                                }else {
-                                    System.out.println("Did not saved the purchase in database");
-                                    //JOptionPane.showMessageDialog(null, "Did not saved the purchase in database");
-                                }
+                            } else {
+                                confirmActions.displayMessage(payment_err_msg, "Year is empty!", true);
                             }
+                        } else {
+                            confirmActions.displayMessage(payment_err_msg, "Last name is empty!", true);
                         }
-
-
-                    }else {
-                        System.out.println("Card not valid");
-                        //JOptionPane.showMessageDialog(null, "Card is not valid");
+                    } else {
+                        confirmActions.displayMessage(payment_err_msg, "First name is empty!", true);
                     }
                 }else {
-                    System.out.println("Purchase successfully done!");
-                    //JOptionPane.showMessageDialog(null, "Purchase successfully done!");
+                    confirmActions.displayMessage(payment_err_msg, "Card numbers is empty!", true);
                 }
 
         }else if(e.getSource() == seat_next_btn){
@@ -1342,35 +1362,53 @@ public class Controller implements Initializable {
                 String seat = seat_nbr_seat_pnl.getText();
             //</editor-fold>
 
-                if (!name_s.isEmpty() && !lname_s.isEmpty() && !fourdigit.isEmpty() && !email.isEmpty() && !seat.isEmpty()){
-                    if (turAndReturnFlights.size() == 1){
-                        System.out.println("Active tur");
-                        turSeat = seat_nbr_seat_pnl.getText();
-                        turFlight_nbr_seat_pnl = flight_nbr_seat_pnl.getText();
+                if (name_s.length() >= 3 && name_s.length() <= 30){
+                    if (lname_s.length() >= 3 && lname_s.length() <= 30) {
+                        if (fourdigit.length() == 12) {
+                            if (email.length() >= 6 && email.length() <= 60 && email.contains("@") && email.contains("gmail")) {
+                                if (!seat.isEmpty()) {
 
-                        flight_nbr_seat_pnl.setText(null);
-                        seat_nbr_seat_pnl.setText(null);
-                        price_seat_pnl.setText(null);
+                                    if (turAndReturnFlights.size() == 1){
+                                        System.out.println("Active tur");
+                                        turSeat = seat_nbr_seat_pnl.getText();
+                                        turFlight_nbr_seat_pnl = flight_nbr_seat_pnl.getText();
 
-                        // clear the operation - preperBeforeCreatingSeats
-                        boolean build = preperBeforeCreatingSeats();
-                        if (build){
-                            from_info_seat_pnl.setText(turAndReturnFlights.get(0).getDeparture_name());
-                            to_info_seat_pnl.setText(turAndReturnFlights.get(0).getDestination_name());
-                            from_d_info_seat_pnl.setText(turAndReturnFlights.get(0).getDeparture_date());
-                            to_d_info_seat_pnl.setText(turAndReturnFlights.get(0).getDestination_date());
-                            flight_nbr_seat_pnl.setText(turAndReturnFlights.get(0).getId());
-                            price = Double.parseDouble(turAndReturnFlights.get(0).getPrice());
-                            price_seat_pnl.setText(String.valueOf(price));
-                            createThisSeat(turAndReturnFlights, 0);
-                            turAndReturnFlights.clear();
+                                        flight_nbr_seat_pnl.setText(null);
+                                        seat_nbr_seat_pnl.setText(null);
+                                        price_seat_pnl.setText(null);
+
+                                        // clear the operation - preperBeforeCreatingSeats
+                                        boolean build = preperBeforeCreatingSeats();
+                                        if (build){
+                                            from_info_seat_pnl.setText(turAndReturnFlights.get(0).getDeparture_name());
+                                            to_info_seat_pnl.setText(turAndReturnFlights.get(0).getDestination_name());
+                                            from_d_info_seat_pnl.setText(turAndReturnFlights.get(0).getDeparture_date());
+                                            to_d_info_seat_pnl.setText(turAndReturnFlights.get(0).getDestination_date());
+                                            flight_nbr_seat_pnl.setText(turAndReturnFlights.get(0).getId());
+                                            price = Double.parseDouble(turAndReturnFlights.get(0).getPrice());
+                                            price_seat_pnl.setText(String.valueOf(price));
+                                            createThisSeat(turAndReturnFlights, 0);
+                                            turAndReturnFlights.clear();
+                                        }
+                                    } else {
+                                        System.out.println("To front");
+                                        pnlPayment.toFront();
+                                    }
+
+                                } else {
+                                    confirmActions.displayMessage(msg_seat_pnl, "Please choose a seat!", true);
+                                }
+                            } else {
+                                confirmActions.displayMessage(msg_seat_pnl, "Email char 6-30 or format issue!", true);
+                            }
+                        } else {
+                            confirmActions.displayMessage(msg_seat_pnl, "SSN shall be 12 chars!", true);
                         }
                     } else {
-                        System.out.println("To front");
-                        pnlPayment.toFront();
+                        confirmActions.displayMessage(msg_seat_pnl, "Lastname shall be 3-30 chars!", true);
                     }
                 }else {
-                    confirmActions.displayMessage(msg_seat_pnl, "Empty field issue!", true);
+                    confirmActions.displayMessage(msg_seat_pnl, "Firstname shall be 3-30 chars!", true);
                 }
         }else if(e.getSource() == redirect_to_dash_btn){
             updateHistoryList();

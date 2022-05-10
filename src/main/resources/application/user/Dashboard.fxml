@@ -35,7 +35,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #112;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #112;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
       <AnchorPane fx:id="pnlSupport" layoutX="105.0" prefHeight="693.0" prefWidth="1089.0" style="-fx-background-color: #112;">
          <children>
@@ -795,6 +795,7 @@
                         <Button fx:id="iconCloseSeat" layoutX="-14.0" layoutY="17.0" mnemonicParsing="false" onAction="#userDev" opacity="0.0" prefHeight="32.0" prefWidth="28.0" />
                      </children>
                   </Group>
+                  <Label fx:id="payment_err_msg" layoutX="105.0" layoutY="572.0" prefHeight="17.0" prefWidth="428.0" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="pnlPassager" layoutX="27.0" layoutY="27.0" prefHeight="647.0" prefWidth="1072.0" style="-fx-background-color: #151D3B; -fx-background-radius: 10;">
@@ -906,7 +907,7 @@
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
                         </TextField>
-                        <TextField fx:id="four_digit_seat_pnl" layoutX="130.0" layoutY="56.0" promptText="yyyymmdd-xxxx" style="-fx-background-color: #112; -fx-text-fill: #eee;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <TextField fx:id="four_digit_seat_pnl" layoutX="130.0" layoutY="56.0" promptText="yyyymmddxxxx" style="-fx-background-color: #112; -fx-text-fill: #eee;" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
@@ -988,7 +989,7 @@
                         <Image url="@../image/user.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="msg_seat_pnl" layoutX="191.0" layoutY="448.0" prefHeight="20.0" prefWidth="156.0" textFill="#c34848">
+                  <Label fx:id="msg_seat_pnl" layoutX="189.0" layoutY="570.0" prefHeight="20.0" prefWidth="329.0" textFill="#c34848">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -1134,7 +1135,7 @@
             </Group>
             <Group layoutX="16.0" layoutY="25.0">
                <children>
-                  <ScrollPane fx:id="scrollPane" layoutY="39.0" prefHeight="420.0" prefWidth="655.0" style="-fx-background: #0E0E1B; -fx-border-color: #112; -fx-focus-traversable: false;" />
+                  <ScrollPane fx:id="scrollPane" layoutY="39.0" prefHeight="420.0" prefWidth="655.0" style="-fx-background: #112; -fx-focus-traversable: false;" />
                   <Pane prefHeight="39.0" prefWidth="230.0" style="-fx-background-color: #151D3B; -fx-background-radius: 10 10 0 0;">
                      <children>
                         <Text fill="WHITE" layoutX="10.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #eee;" text="Choose a country" wrappingWidth="200.0">
