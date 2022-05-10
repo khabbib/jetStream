@@ -297,20 +297,22 @@
             </Label>
             <Button fx:id="refreshFlightsBtn_admin" layoutX="922.0" layoutY="564.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="97.0" style="-fx-background-color: #f87000;" text="Refresh" textFill="WHITE" />
             <Button fx:id="addFlightsBtn_admin" layoutX="58.0" layoutY="564.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="97.0" style="-fx-background-color: #f87000;" text="add flight" textFill="WHITE" />
-            <Button fx:id="deleteFlightBtn_admin" layoutX="810.0" layoutY="564.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="97.0" style="-fx-background-color: #f87000;" text="Delete selected Flight" textFill="WHITE" />
-            <TableView fx:id="table_historik" layoutX="23.0" layoutY="112.0" prefHeight="398.0" prefWidth="1008.0">
+            <Button fx:id="delete_singelFlightBtn_admin" layoutX="527.0" layoutY="564.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="176.0" style="-fx-background-color: #f87000;" text="Delete selected singel Flight" textFill="WHITE" />
+            <TableView fx:id="table_flight_admin" layoutX="15.0" layoutY="130.0" prefHeight="398.0" prefWidth="1098.0">
                <columns>
-                  <TableColumn prefWidth="55.0" text="Numb" />
-                  <TableColumn fx:id="no_col_table_historik" prefWidth="130.0" text="Flight ID" />
-                  <TableColumn fx:id="company_col_table_historik" prefWidth="27.0" text="Airline" />
-                  <TableColumn fx:id="model_col_table_historik" prefWidth="115.0" text="Departure name" />
-                  <TableColumn fx:id="rfc_col_table_historik" prefWidth="157.0" text="Departure Time" />
-                  <TableColumn fx:id="flightid_col_table_historik" prefWidth="173.0" text="Destination name" />
-                  <TableColumn fx:id="from_col_table_historik" prefWidth="170.0" text="Destination time" />
-                  <TableColumn fx:id="to_col_table_historik" prefWidth="145.0" text="Flight Model" />
-                  <TableColumn fx:id="select_col_table_historik" prefWidth="58.0">
+                  <TableColumn fx:id="counter_col_flight_admin" prefWidth="55.0" text="Numb" />
+                  <TableColumn fx:id="flightID_col_flight_admin" text="Flight ID" />
+                  <TableColumn fx:id="DepartureName_col_flight_admin" prefWidth="114.0" text="Departure name" />
+                  <TableColumn fx:id="DepartureDate_col_flight_admin" prefWidth="111.0" text="Departure date" />
+                  <TableColumn fx:id="DepartureTime_col_flight_admin" prefWidth="116.0" text="Departure time" />
+                  <TableColumn fx:id="DestinationName_col_flight_admin" prefWidth="151.0" text="Destination name" />
+                  <TableColumn fx:id="DestinationDate_col_flight_admin" prefWidth="139.0" text="Destination date" />
+                  <TableColumn fx:id="DestinationTime_col_flight_admin" prefWidth="138.0" text="Destination time" />
+                  <TableColumn fx:id="price_col_flight_admin" minWidth="0.0" prefWidth="92.0" text="Price" />
+                  <TableColumn fx:id="p_id_col_flight_admin" prefWidth="64.0" text="Plane id" />
+                  <TableColumn fx:id="select_col_table_flights" minWidth="0.0" prefWidth="27.0">
                      <graphic>
-                        <CheckBox fx:id="select_all_box_historik" mnemonicParsing="false" />
+                        <CheckBox fx:id="select_all_box_flight_admin" mnemonicParsing="false" prefHeight="17.0" prefWidth="31.0" />
                      </graphic>
                   </TableColumn>
                </columns>
@@ -319,6 +321,7 @@
                   <URL value="@../Styles/ScrollStyle.css" />
                </stylesheets>
             </TableView>
+            <Button fx:id="delete_allFlightsBtn_admin" layoutX="730.0" layoutY="564.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="176.0" style="-fx-background-color: #f87000;" text="Delete all selected Flights" textFill="WHITE" />
          </children>
       </AnchorPane>
       <Pane prefHeight="700.0" prefWidth="105.0">
