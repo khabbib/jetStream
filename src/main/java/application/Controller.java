@@ -1292,44 +1292,66 @@ public class Controller implements Initializable {
                     boolean validCard = Purchase.purchaseTicket(nbr, name, lname, month, year, cvc);
                     if (validCard){
                         System.out.println("Card is valid!");
+                        boolean purchaseDone1 = false;
+                        boolean purchaseDone2 = false;
+                        String rfc1 = "", rfc2 = "";
 
+                        if(turSeat != null){
+                            for (int i = 0; i <= 1; i++){
+                                System.out.println("Loop is running...");
+                                if (turSeat != null && turFlight_nbr_seat_pnl != null){ // saving tur flight
+                                    System.out.println("First condition");
+                                    StringBuilder rfc = connection.generateRandomRFC();
+                                    String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
-                        for (int i = 0; i <= 1; i++){
-                            System.out.println("Loop is running...");
-                            if (turSeat != null && turFlight_nbr_seat_pnl != null){ // saving tur flight
-                                System.out.println("First condition");
-                                StringBuilder rfc = connection.generateRandomRFC();
-                                String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
-                                boolean saveTicket = connection.savePurchasedTicket(user.getUserId(), turFlight_nbr_seat_pnl, String.valueOf(rfc), date, turSeat, false);
-                                if (saveTicket){
-                                    confirmPurchase(String.valueOf(rfc));
-                                }
-                                turSeat = null;
-                                turFlight_nbr_seat_pnl = null;
-                            }else {
-                                System.out.println("Second condition");
-                                StringBuilder rfc = connection.generateRandomRFC();
-                                String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
-                                boolean saveTicket = connection.savePurchasedTicket(user.getUserId(), flight_nbr_seat_pnl.getText(), String.valueOf(rfc), date, seat_nbr_seat_pnl.getText(), false);
-                                if (saveTicket){
-                                    confirmPurchase(String.valueOf(rfc));
+                                    boolean saveTicket = connection.savePurchasedTicket(user.getUserId(), turFlight_nbr_seat_pnl, String.valueOf(rfc), date, turSeat, false);
+                                    if (saveTicket){
+                                        rfc1 = String.valueOf(rfc);
+                                        purchaseDone1 = true;
+                                    }
+                                    turSeat = null;
+                                    turFlight_nbr_seat_pnl = null;
                                 }else {
-                                    System.out.println("Did not saved the purchase in database");
-                                    //JOptionPane.showMessageDialog(null, "Did not saved the purchase in database");
+                                    System.out.println("Second condition");
+                                    StringBuilder rfc = connection.generateRandomRFC();
+                                    String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+                                    boolean saveTicket = connection.savePurchasedTicket(user.getUserId(), flight_nbr_seat_pnl.getText(), String.valueOf(rfc), date, seat_nbr_seat_pnl.getText(), false);
+                                    if (saveTicket){
+                                        purchaseDone2 = true;
+                                    }else {
+                                        System.out.println("Did not saved the purchase in database");
+                                    }
                                 }
                             }
+                        }
+                        else {
+                            System.out.println("Second condition 2");
+                            StringBuilder rfc = connection.generateRandomRFC();
+                            String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+                            boolean saveTicket = connection.savePurchasedTicket(user.getUserId(), flight_nbr_seat_pnl.getText(), String.valueOf(rfc), date, seat_nbr_seat_pnl.getText(), false);
+                            if (saveTicket){
+                                purchaseDone1 = true;
+                                rfc1 = String.valueOf(rfc);
+                                //confirmPurchase(String.valueOf(rfc));
+                            }else {
+                                System.out.println("Did not saved the purchase in database");
+                            }
+                        }
+
+                        if(purchaseDone1 && purchaseDone2){
+                            System.out.println("Booked two-ways flights");
+                            confirmPurchase(rfc2); // can send more information form here.
+                        }else if(purchaseDone1){
+                            System.out.println("Booked only one-way flight");
+                            confirmPurchase(rfc1);
                         }
 
 
                     }else {
                         System.out.println("Card not valid");
-                        //JOptionPane.showMessageDialog(null, "Card is not valid");
                     }
-                }else {
-                    System.out.println("Purchase successfully done!");
-                    //JOptionPane.showMessageDialog(null, "Purchase successfully done!");
                 }
 
         }else if(e.getSource() == seat_next_btn){
