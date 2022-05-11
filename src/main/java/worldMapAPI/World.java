@@ -482,7 +482,16 @@ public class World extends Region {
                 } else {
                     setSelectedCountry(COUNTRY);
                     System.out.println("Pressed country: " + COUNTRY_NAME);
-
+                    System.out.println(controller.weatherMenu);
+                    if (controller.weatherMenu == true) {
+                        try {
+                            controller.forecast(convert(COUNTRY_NAME).replace('_', ' '));
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
 
                     //game.checkAnswer(COUNTRY_NAME);
                     flights = connection.seachFlightFromSearchField(convert(COUNTRY_NAME));

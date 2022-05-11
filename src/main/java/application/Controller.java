@@ -34,10 +34,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import worldMapAPI.World;
@@ -298,12 +296,20 @@ public class Controller implements Initializable {
     // Edit profile
     @FXML public Label pfp_display_msg;
 
+    //Weather
+    @FXML public static Label lblForecastA,lblForecastB,lblForecastC,lblForecastD,lblForecastE,lblForecastF;
+    @FXML public static ImageView weatherIcon;
+    @FXML public static Pane weatherPane;
+    @FXML public static Pane weatherPaneBase;
+    public static boolean weatherMenu;
+
     //<editor-fold desc="instance initialize">
     application.Components.Support support;
     Search search;
     ConfirmActions confirmActions;
     DashboardController dashboardController;
     Connection connection;
+    WeatherAPI weatherAPI;
     Config config;
 
     FlightPaths flightPaths;
@@ -328,6 +334,7 @@ public class Controller implements Initializable {
         dashboardController = new DashboardController(this, root, connection);
         initializeFXM = new InitializeFXM(this,connection);
         flightPaths = new FlightPaths(this);
+        weatherAPI = new WeatherAPI();
         adminControl = new AdminControl(this, connection);
     }
 
@@ -349,6 +356,30 @@ public class Controller implements Initializable {
     public void displayFlightPaths() {
         flightPaths.start();
         pnlFlight.toFront();
+    }
+
+    public void forecast(String country) throws IOException, InterruptedException {
+        ArrayList<String> arrayList = weatherAPI.weatherForecast(country);
+        if (country.contains("United States")) { country = "USA"; }
+        lblForecastA.setText(country);
+        lblForecastB.setText("Weather: " + arrayList.get(1));
+        lblForecastC.setText(arrayList.get(2) + "°C");
+        lblForecastD.setText("Feels like: " + arrayList.get(3) + "°C");
+        lblForecastE.setText("Minimum: " + arrayList.get(4) + "°C");
+        lblForecastF.setText("Maxiumum: " + arrayList.get(5) + "°C");
+        weatherIcon.setImage(new Image("http://openweathermap.org/img/wn/"+arrayList.get(0).replace(" ","")+"@2x.png"));
+    }
+
+    public void weatherButton() {
+        if (!weatherMenu) {
+            weatherPane.setVisible(true);
+            weatherPane.setPickOnBounds(true);
+            weatherMenu = true;
+        } else {
+            weatherPane.setVisible(false);
+            weatherPane.setPickOnBounds(false);
+            weatherMenu = false;
+        }
     }
 
 
@@ -499,6 +530,8 @@ public class Controller implements Initializable {
         this.root = config.render(e,"user/Dashboard", "User Dashboard");
         dashboardController.userInitializeFXML(root, user);
         initializeFXM.initializeProfile(root, user);
+        initializeFXM.initializeWeather(root);
+        weatherPaneBase.setClip(new Rectangle(186, 334));
         createWorld = new CreateWorld();
         world = createWorld.init(this, connection);
         createWorld.addWorldInMap(scrollPane, user);
