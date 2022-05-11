@@ -2,13 +2,11 @@ package application.model;
 
 import javafx.scene.control.CheckBox;
 
-import javax.swing.*;
-
 /**
  * This class saves data to flight.
  */
 public class Flight {
-    public int counter = 1;
+    private int size = 1;
     private String id, departure_name, destination_name, departure_date, destination_date,  departure_time, destination_time, price;
     private boolean rTur = false;
     private CheckBox box;
@@ -22,8 +20,8 @@ public class Flight {
      * @param destination_time
      * @param price
      */
-    public Flight(String id, String departure_name, String departure_date, String departure_time,String destination_name, String destination_date, String destination_time, String price, boolean rTur, int counter){
-        this.counter = counter;
+    public Flight(String id, String departure_name, String departure_date, String departure_time,String destination_name, String destination_date, String destination_time, String price, boolean rTur, int size){
+        this.size = size;
         this.id = id;
         this.rTur = rTur;
         this.departure_name = departure_name;
@@ -37,9 +35,9 @@ public class Flight {
     }
 
     // ----- GETTER AND SETTERS ----- //
-    public int getCounter()
+    public int getSize()
     {
-        return counter;
+        return size;
     }
     public String getDeparture_time() {
         return departure_time;
@@ -65,7 +63,7 @@ public class Flight {
     public String getPrice() {
         return price;
     }
-    public CheckBox getBox()
+    public CheckBox getFlightBox()
     {
         return box;
     }

@@ -116,7 +116,8 @@ public class Controller implements Initializable {
     //<editor-fold desc="ADMIN VARIABLES">
     @FXML private ListView<String> ticketListView, memberListView, flightListView;
     @FXML private AnchorPane pnlFlights, pnlTickets, pnlMember, registerAnchorPane;
-    @FXML private Button flightsBtn, membersBtn, ticketsBtn, logoutButton, registerCommitBtn_admin, registerMemberBtn_admin, returnToMemberListBtn_admin, refreshMembersBtn_admin, deleteMemberBtn_admin;
+    @FXML private Button flightsBtn, membersBtn, ticketsBtn, logoutButton, registerCommitBtn_admin, registerMemberBtn_admin, returnToMemberListBtn_admin, refreshMembersBtn_admin, deleteMemberBtn_admin,
+            search_input_flight_admin, prev_tur_date_flight_admin, next_tur_date_flight_admin;
 
     //</editor-fold>
     //<editor-fold desc="DASHBOARD VARIABLES">

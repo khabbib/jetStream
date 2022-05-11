@@ -686,8 +686,9 @@ public class Connection {
                 String price_get = flight.getString("f_price");
 
                 flights.add(new Flight(id_get,departure_name_get,departure_date_get,departure_time_get, destination_name_get,destination_date_get,destination_time_get,price_get, false, i));
-            }
+
             i++;
+            }
             con.close();
             stmt.close();
         }catch (SQLException e){
