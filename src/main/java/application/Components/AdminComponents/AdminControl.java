@@ -175,7 +175,7 @@ public class AdminControl {
         controller.delete_singelFlightBtn_admin = (Button) root.lookup("#delete_singelFlightBtn_admin");
         controller.table_flight_admin = (TableView<Flight>) root.lookup("#table_flight_admin");
 
-        controller.table_flight_admin.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("counter"));
+        controller.table_flight_admin.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("size"));
         controller.table_flight_admin.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("id"));
         controller.table_flight_admin.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("departure_name"));
         controller.table_flight_admin.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("departure_date"));
@@ -185,17 +185,17 @@ public class AdminControl {
         controller.table_flight_admin.getColumns().get(7).setCellValueFactory(new PropertyValueFactory<>("destination_time"));
         controller.table_flight_admin.getColumns().get(8).setCellValueFactory(new PropertyValueFactory<>("price"));
         controller.table_flight_admin.getColumns().get(9).setCellValueFactory(new PropertyValueFactory<>("rTur"));
-        controller.table_flight_admin.getColumns().get(10).setCellValueFactory(new PropertyValueFactory<>("select_col_table_flights"));
+        controller.table_flight_admin.getColumns().get(10).setCellValueFactory(new PropertyValueFactory<>("select_col_table_flight"));
 
 
         controller.table_flight_admin.getSelectionModel().selectedItemProperty().addListener((ObservableList, oldValue, newValue) -> {
 
             if (newValue != null) {
-                if (newValue.getBox().isSelected()) {
-                    newValue.getBox().setSelected(false);
+                if (newValue.getFlightBox().isSelected()) {
+                    newValue.getFlightBox().setSelected(false);
                 } else
-                    newValue.getBox().setSelected(true);
-                System.out.println("selected item: " + newValue.getBox() + " value: " + newValue.getBox().isSelected());
+                    newValue.getFlightBox().setSelected(true);
+                System.out.println("selected item: " + newValue.getFlightBox() + " value: " + newValue.getFlightBox().isSelected());
             }
             controller.delete_singelFlightBtn_admin.setDisable(true);
 
@@ -212,12 +212,12 @@ public class AdminControl {
                 for (Flight item : controller.items_flight_admin) {
                     if (controller.select_all_box_flight_admin.isSelected()) {
                         selectedAllItems = true;
-                        item.getBox().setSelected(true);
-                        System.out.println(item.getBox().isSelected() + " state");
+                        item.getFlightBox().setSelected(true);
+                        System.out.println(item.getFlightBox().isSelected() + " state");
                     } else {
                         selectedAllItems = false;
-                        item.getBox().setSelected(false);
-                        System.out.println(item.getBox().isSelected() + " state");
+                        item.getFlightBox().setSelected(false);
+                        System.out.println(item.getFlightBox().isSelected() + " state");
                     }
                 }
 
