@@ -212,6 +212,7 @@ public class Connection {
             } else{
                 System.out.println("Email not found!");
             }
+            con.close();
         }
 
         if(uniqueEmail) {
@@ -315,6 +316,7 @@ public class Connection {
             counter++;
 
         }
+        con.close();
         return userlist;
     }
 
@@ -334,6 +336,7 @@ public class Connection {
                 ticketlist.add(new Book(id, flight_id, refNr, date, seats, counter));
                 counter++;
             }
+            con.close();
             return ticketlist;
         }
     /**
@@ -630,6 +633,7 @@ public class Connection {
             System.out.println(result.getString("picture"));
             image = new Image(result.getString("picture"));
         }
+        con.close();
         System.out.println("=== Gets profile picture!");
         return image;
     }
@@ -646,6 +650,7 @@ public class Connection {
         stmt.executeUpdate("SET search_path TO jetstream;");
         stmt.executeUpdate("UPDATE profile_picture SET picture = '" + src + "' WHERE u_id = " + user.getUserId() + ";");
         System.out.println("=== Sets default image to user!");
+        con.close();
     }
 
     /**
@@ -660,6 +665,7 @@ public class Connection {
         stmt.executeUpdate("SET search_path TO jetstream;");
         String userId = "select u_id from userr where u_email = '" + email + "'";
         stmt.executeUpdate("INSERT INTO profile_picture(u_id, picture) values((" + userId + "), '" + pfpImageSrc + "');");
+        con.close();
     }
 
     public ArrayList<Flight> getAllFlights()
