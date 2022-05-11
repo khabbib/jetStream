@@ -55,11 +55,11 @@ public class RegisterAdmin {
                                 if (controller.password_reg_admin.getText().length() >= 8 && controller.password_reg_admin.getText().length() <= 20){
                                     if (controller.password_reg_admin.getText().equals(controller.confirm_password_reg_admin.getText())){
                                         if(controller.emailaddress_reg_admin.getText().contains("@") && (controller.emailaddress_reg_admin.getText().contains("gmail") || controller.emailaddress_reg_admin.getText().contains("hotmail") || controller.emailaddress_reg_admin.getText().contains("yahoo") || controller.emailaddress_reg_admin.getText().contains("outlook"))){
-                                            if(controller.isAdminCheckbox.isSelected()) {
+                                            if(controller.is_admin_checkbox.isSelected()) {
                                                 boolean ok1 = connection.saveUser(controller.first_name_reg_admin.getText(), controller.last_name_reg_admin.getText(), controller.address_reg_admin.getText(), controller.emailaddress_reg_admin.getText(), controller.phone_number_reg_admin.getText(), controller.password_reg_admin.getText(), true);
                                                 if(ok1) {
                                                     try {
-                                                        connection.setProfilePicture("application/profiles/user.png", controller.emailaddress_reg.getText());
+                                                        connection.setProfilePicture("application/profiles/user.png", controller.registration_email.getText());
                                                     } catch (SQLException ex) {
                                                         ex.printStackTrace();
                                                     }
@@ -71,7 +71,7 @@ public class RegisterAdmin {
                                                 boolean ok2 = connection.saveUser(controller.first_name_reg_admin.getText(), controller.last_name_reg_admin.getText(), controller.address_reg_admin.getText(), controller.emailaddress_reg_admin.getText(), controller.phone_number_reg_admin.getText(), controller.password_reg_admin.getText(), false);
                                                 if(ok2) {
                                                     try {
-                                                        connection.setProfilePicture("application/profiles/user.png", controller.emailaddress_reg.getText());
+                                                        connection.setProfilePicture("application/profiles/user.png", controller.registration_email.getText());
                                                     } catch (SQLException ex) {
                                                         ex.printStackTrace();
                                                     }

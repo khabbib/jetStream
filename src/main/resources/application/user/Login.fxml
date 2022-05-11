@@ -72,8 +72,8 @@
             </Text>
          </children>
       </HBox>
-      <Label fx:id="success_msg" layoutX="488.0" layoutY="33.0" prefHeight="17.0" prefWidth="231.0" textFill="#3dee46" />
-      <Label fx:id="error_msg" layoutX="416.0" layoutY="489.0" prefHeight="17.0" prefWidth="368.0" textFill="#d74141" />
+      <Label fx:id="success_msg_lbl" layoutX="488.0" layoutY="33.0" prefHeight="17.0" prefWidth="231.0" textFill="#3dee46" />
+      <Label fx:id="error_message_lbl" layoutX="416.0" layoutY="489.0" prefHeight="17.0" prefWidth="368.0" textFill="#d74141" />
       <Button layoutX="42.0" layoutY="17.0" mnemonicParsing="false" onAction="#switchToHome" opacity="0.0" prefHeight="73.0" prefWidth="137.0" style="-fx-background-color: #f87000;" text="Back to Home" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />

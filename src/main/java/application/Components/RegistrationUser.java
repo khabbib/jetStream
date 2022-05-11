@@ -4,11 +4,6 @@ import application.Controller;
 import application.config.Config;
 import application.database.Connection;
 import application.model.ConfirmActions;
-import application.model.User;
-import javafx.animation.PauseTransition;
-import javafx.event.ActionEvent;
-import javafx.scene.Parent;
-import javafx.util.Duration;
 
 import java.sql.SQLException;
 
@@ -41,25 +36,25 @@ public class RegistrationUser {
      */
     public boolean registerUser() {
         boolean registered = false;
-        if (!controller.first_name_reg.getText().isEmpty() && !controller.last_name_reg.getText().isEmpty() && !controller.address_reg.getText().isEmpty() && !controller.emailaddress_reg.getText().isEmpty() && !controller.phone_number_reg.getText().isEmpty() && !controller.password_reg.getText().isEmpty() && !controller.confirm_password_reg.getText().isEmpty()){
-            if ((controller.first_name_reg.getText().length() >= 3 && controller.first_name_reg.getText().length() <= 30)){
-                if ((controller.last_name_reg.getText().length() >= 3 && controller.last_name_reg.getText().length() <= 30)){
-                    if ((controller.address_reg.getText().length() >= 5 && controller.address_reg.getText().length() <= 60)){
-                        if((controller.emailaddress_reg.getText().length() >= 6 && controller.emailaddress_reg.getText().length() <= 30)){
-                            if ((controller.phone_number_reg.getText().length() == 10)){
-                                if (controller.password_reg.getText().length() >= 8 && controller.password_reg.getText().length() <= 20){
-                                    if (controller.password_reg.getText().equals(controller.confirm_password_reg.getText())){
-                                        if(controller.emailaddress_reg.getText().contains("@") && (controller.emailaddress_reg.getText().contains("gmail") || controller.emailaddress_reg.getText().contains("hotmail") || controller.emailaddress_reg.getText().contains("yahoo") || controller.emailaddress_reg.getText().contains("outlook"))){
-                                            boolean ok = connection.saveUser(controller.first_name_reg.getText(), controller.last_name_reg.getText(), controller.address_reg.getText(), controller.emailaddress_reg.getText(), controller.phone_number_reg.getText(), controller.password_reg.getText(), false);
+        if (!controller.registration_first_name.getText().isEmpty() && !controller.registration_last_name.getText().isEmpty() && !controller.registration_address.getText().isEmpty() && !controller.registration_email.getText().isEmpty() && !controller.registration_phone_number.getText().isEmpty() && !controller.registration_password.getText().isEmpty() && !controller.registration_confirm_password.getText().isEmpty()){
+            if ((controller.registration_first_name.getText().length() >= 3 && controller.registration_first_name.getText().length() <= 30)){
+                if ((controller.registration_last_name.getText().length() >= 3 && controller.registration_last_name.getText().length() <= 30)){
+                    if ((controller.registration_address.getText().length() >= 5 && controller.registration_address.getText().length() <= 60)){
+                        if((controller.registration_email.getText().length() >= 6 && controller.registration_email.getText().length() <= 30)){
+                            if ((controller.registration_phone_number.getText().length() == 10)){
+                                if (controller.registration_password.getText().length() >= 8 && controller.registration_password.getText().length() <= 20){
+                                    if (controller.registration_password.getText().equals(controller.registration_confirm_password.getText())){
+                                        if(controller.registration_email.getText().contains("@") && (controller.registration_email.getText().contains("gmail") || controller.registration_email.getText().contains("hotmail") || controller.registration_email.getText().contains("yahoo") || controller.registration_email.getText().contains("outlook"))){
+                                            boolean ok = connection.saveUser(controller.registration_first_name.getText(), controller.registration_last_name.getText(), controller.registration_address.getText(), controller.registration_email.getText(), controller.registration_phone_number.getText(), controller.registration_password.getText(), false);
                                             if (ok) {
                                                 try {
-                                                    connection.setProfilePicture("application/profiles/user.png", controller.emailaddress_reg.getText());
+                                                    connection.setProfilePicture("application/profiles/user.png", controller.registration_email.getText());
                                                 } catch (SQLException ex) {
                                                     ex.printStackTrace();
                                                 }
                                                 registered = true;
                                             } else {
-                                                confirmActions.displayMessage(controller.registration_error, "Not registered! (Email exists!)", true);
+                                                confirmActions.displayMessage(controller.registration_error_lbl, "Not registered! (Email exists!)", true);
                                             }
                                         }else {
                                             confirmActions.displayMessage(controller.email_issue_reg, "Type issue [email]", true);
@@ -86,7 +81,7 @@ public class RegistrationUser {
                 confirmActions.displayMessage(controller.name_issue_reg, "Size issue 3-30", true);
             }
         }else {
-            confirmActions.displayMessage(controller.registration_error, "Empty field issue", true);
+            confirmActions.displayMessage(controller.registration_error_lbl, "Empty field issue", true);
         }
         return registered;
     }

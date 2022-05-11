@@ -18,52 +18,52 @@ public class Search {
     }
 
     public void checkboxEvent(ActionEvent e){
-        if (controller.turR_checkBox_flight.isSelected()){
-            controller.rtur_date_pick.setDisable(false);
-            controller.next_rtur_date_flight.setDisable(false);
-            controller.prev_rtur_date_flight.setDisable(false);
+        if (controller.round_trip_checkbox.isSelected()){
+            controller.return_date_pick_hbox.setDisable(false);
+            controller.date_next_day_return_button.setDisable(false);
+            controller.date_previous_day_return_button.setDisable(false);
         }else {
-            controller.rtur_date_pick.setDisable(true);
-            controller.next_rtur_date_flight.setDisable(true);
-            controller.prev_rtur_date_flight.setDisable(true);
+            controller.return_date_pick_hbox.setDisable(true);
+            controller.date_next_day_return_button.setDisable(true);
+            controller.date_previous_day_return_button.setDisable(true);
         }
 
     }
 
     public void searchFlight() {
-        System.out.println(controller.turR_checkBox_flight.isSelected() + " checkbox");
+        System.out.println(controller.round_trip_checkbox.isSelected() + " checkbox");
 
-        String from = controller.from_input_flight.getText();
-        String to = controller.disc_input_flight.getText();
+        String from = controller.from_input_flight_textfield.getText();
+        String to = controller.display_input_flights.getText();
         LocalDate d = controller.date_input_flight.getValue();
         LocalDate Rd = controller.dateR_input_flight.getValue();
 
-        if (!controller.turR_checkBox_flight.isSelected()){
+        if (!controller.round_trip_checkbox.isSelected()){
             if (!(from.isEmpty()) && !(to.isEmpty())){
                 if (d == null) {
                     boolean ok = confirmActions.confirmThisAction("Confirm action", "Search without date?", "To continue search without specifying the date confirm.");
                     if (ok) {
-                        controller.avalibleFlights = connection.searchFlight(from, to, null, null);
+                        controller.available_flights_list = connection.searchFlight(from, to, null, null);
                     }
                 } else {
-                    controller.avalibleFlights = connection.searchFlight(from, to, String.valueOf(d), null);
+                    controller.available_flights_list = connection.searchFlight(from, to, String.valueOf(d), null);
                 }
             }
         }else {
             if (!from.isEmpty() && !to.isEmpty()){
                 if (!(d == null) && (!(Rd ==null))){
-                    controller.avalibleFlights = connection.searchFlight(from, to, String.valueOf(d), String.valueOf(Rd));
+                    controller.available_flights_list = connection.searchFlight(from, to, String.valueOf(d), String.valueOf(Rd));
                 }else
-                    controller.avalibleFlights = connection.searchFlight(from, to, null, null);
+                    controller.available_flights_list = connection.searchFlight(from, to, null, null);
             }
         }
 
         // fill out the flights on  screen
-        if (controller.avalibleFlights.isEmpty()){
+        if (controller.available_flights_list.isEmpty()){
             controller.fillFlights(null);
         }else {
-            System.out.println(controller.avalibleFlights.size() );
-            controller.fillFlights(controller.avalibleFlights);
+            System.out.println(controller.available_flights_list.size() );
+            controller.fillFlights(controller.available_flights_list);
         }
     }
 
@@ -71,11 +71,11 @@ public class Search {
 
     public void searchHit() {
         if (!controller.search_f_name.getText().isEmpty()){
-            controller.avalibleFlights.clear();
+            controller.available_flights_list.clear();
             System.out.println("search from controll " + controller.search_f_name.getText());
-            controller.avalibleFlights = connection.seachFlightFromSearchField(controller.search_f_name.getText());
-            if (!controller.avalibleFlights.isEmpty()){
-                controller.fillFlights(controller.avalibleFlights);
+            controller.available_flights_list = connection.seachFlightFromSearchField(controller.search_f_name.getText());
+            if (!controller.available_flights_list.isEmpty()){
+                controller.fillFlights(controller.available_flights_list);
             }
         }
     }

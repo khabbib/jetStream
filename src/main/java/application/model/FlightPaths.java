@@ -33,9 +33,9 @@ public class FlightPaths {
 
     public void createVariables(){
         pane.setPickOnBounds(false);
-        controller.world.getChildren().add(pane);
-        pane.prefWidthProperty().bind(controller.scrollPane.widthProperty());
-        pane.prefHeightProperty().bind(controller.scrollPane.heightProperty());
+        controller.world_map.getChildren().add(pane);
+        pane.prefWidthProperty().bind(controller.world_map_scrollpane.widthProperty());
+        pane.prefHeightProperty().bind(controller.world_map_scrollpane.heightProperty());
         list = new ArrayList<PathTransition>();
     }
 
@@ -50,9 +50,9 @@ public class FlightPaths {
 
     public void flightsInHistory(){
         Coordinates coordinates = new Coordinates();
-        for (int i = 0; i < controller.table_historik.getItems().size(); i++) {
-            System.out.println(controller.table_historik.getColumns().get(10).getCellData(i));
-            CheckBox checkBox = (CheckBox) controller.table_historik.getColumns().get(10).getCellData(i);
+        for (int i = 0; i < controller.history_tableview.getItems().size(); i++) {
+            System.out.println(controller.history_tableview.getColumns().get(10).getCellData(i));
+            CheckBox checkBox = (CheckBox) controller.history_tableview.getColumns().get(10).getCellData(i);
             if (checkBox.isSelected()) {
                 System.out.println("yeeaahash");
                 createAnimation(coordinates.convert(controller.from_col_table_historik.getCellData(i)), coordinates.convert(controller.to_col_table_historik.getCellData(i)));
@@ -65,7 +65,7 @@ public class FlightPaths {
             for (int a = 0; a < list.size(); a++) {
                 list.get(a).stop();
             }
-            controller.world.getChildren().remove(pane);
+            controller.world_map.getChildren().remove(pane);
         }
     }
 

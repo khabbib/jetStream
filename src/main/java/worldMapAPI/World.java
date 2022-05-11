@@ -41,7 +41,6 @@ import org.kordamp.ikonli.materialdesign.MaterialDesign;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -191,12 +190,12 @@ public class World extends Region {
                 if (get()) {
                     System.out.println("Scholl goes here!");
                     assert controller != null;
-                    controller.scrollPane.addEventFilter(ScrollEvent.ANY, _scrollEventHandler);
+                    controller.world_map_scrollpane.addEventFilter(ScrollEvent.ANY, _scrollEventHandler);
                     System.out.println("Scholl goes here!");
                 } else {
                     assert controller != null;
                     System.out.println("Scholl goes here!");
-                    controller.scrollPane.removeEventFilter(ScrollEvent.ANY, _scrollEventHandler);
+                    controller.world_map_scrollpane.removeEventFilter(ScrollEvent.ANY, _scrollEventHandler);
                 }
             }
             @Override public Object getBean() { return World.this; }

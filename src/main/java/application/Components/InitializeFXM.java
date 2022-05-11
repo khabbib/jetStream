@@ -40,24 +40,24 @@ public class InitializeFXM {
     public void initializeProfile(Parent root, User user){
         //Profile info
         if (user != null) {
-            controller.profilePicture = (ImageView) root.lookup("#profilePicture");
-            controller.profilePicturePreview = (ImageView) root.lookup("#profilePicturePreview");
-            controller.profileFirstName = (TextField) root.lookup("#profileFirstName");
-            controller.profileLastName = (TextField) root.lookup("#profileLastName");
-            controller.profileEmail = (TextField) root.lookup("#profileEmail");
-            controller.profileAdress = (TextField) root.lookup("#profileAdress");
-            controller.profilePhoneNumber = (TextField) root.lookup("#profilePhoneNumber");
-            controller.profileOldPassword = (PasswordField) root.lookup("#profileOldPassword");
-            controller.profileNewPassword = (TextField) root.lookup("#profileNewPassword");
-            controller.profileNewPasswordConfirm = (TextField) root.lookup("#profileNewPasswordConfirm");
-            controller.profilePicturePreview = (ImageView) root.lookup("#profilePicturePreview");
-            controller.profileSelector = (GridPane) root.lookup("#profileSelector");
-            controller.btnEditProfile = (Button) root.lookup("#btnEditProfile");
+            controller.profile_image_imageview = (ImageView) root.lookup("#profile_image_imageview");
+            controller.profile_image_preview_imageview = (ImageView) root.lookup("#profile_image_preview_imageview");
+            controller.profile_first_name_lbl = (TextField) root.lookup("#profile_first_name_lbl");
+            controller.profile_last_name_lbl = (TextField) root.lookup("#profile_last_name_lbl");
+            controller.profile_email_lbl = (TextField) root.lookup("#profile_email_lbl");
+            controller.profile_address_lbl = (TextField) root.lookup("#profile_address_lbl");
+            controller.profile_phone_lbl = (TextField) root.lookup("#profile_phone_lbl");
+            controller.profile_old_password_passwordfield = (PasswordField) root.lookup("#profile_old_password_passwordfield");
+            controller.profile_new_password_textfield = (TextField) root.lookup("#profile_new_password_textfield");
+            controller.profile_confirm_password_textfield = (TextField) root.lookup("#profile_confirm_password_textfield");
+            controller.profile_image_preview_imageview = (ImageView) root.lookup("#profile_image_preview_imageview");
+            controller.profile_profile_image_gridpane = (GridPane) root.lookup("#profile_profile_image_gridpane");
+            controller.profile_edit_btn = (Button) root.lookup("#profile_edit_btn");
 
             controller.pfp_display_msg = (Label) root.lookup("#pfp_edit_error_msg");
 
-            controller.edit_pfp_cancel_btn = (Button) root.lookup("#edit_pfp_cancel_btn");
-            controller.edit_pfp_cancel_btn.setDisable(true);
+            controller.profile_cancel_btn = (Button) root.lookup("#profile_cancel_btn");
+            controller.profile_cancel_btn.setDisable(true);
 
             controller.edit_pfp_fname_issue = (Label) root.lookup("#edit_pfp_fname_issue");
             controller.edit_pfp_lname_issue = (Label) root.lookup("#edit_pfp_lname_issue");
@@ -68,30 +68,30 @@ public class InitializeFXM {
             controller.edit_pfp_new_pwd_issue = (Label) root.lookup("#edit_pfp_new_pwd_issue");
             controller.edit_pfp_new_c_pwd_issue = (Label) root.lookup("#edit_pfp_new_c_pwd_issue");
 
-            controller.profileFirstName.setText(user.getLastName()); // DO NOT EDIT, IT SHOULD BE LIKE THAT! /Sossio
-            controller.profileLastName.setText(user.getFirstName()); // DO NOT EDIT, IT SHOULD BE LIKE THAT! /Sossio
-            controller.profileEmail.setText(user.getEmail());
-            controller.profileAdress.setText(user.getAddress());
-            controller.profilePhoneNumber.setText(user.getPhoneNumber());
+            controller.profile_first_name_lbl.setText(user.getLastName()); // DO NOT EDIT, IT SHOULD BE LIKE THAT! /Sossio
+            controller.profile_last_name_lbl.setText(user.getFirstName()); // DO NOT EDIT, IT SHOULD BE LIKE THAT! /Sossio
+            controller.profile_email_lbl.setText(user.getEmail());
+            controller.profile_address_lbl.setText(user.getAddress());
+            controller.profile_phone_lbl.setText(user.getPhoneNumber());
 
             try {
                 Image image = connection.getProfilePicture(user);
-                controller.profilePicture.setImage(image);
-                controller.profilePicturePreview.setImage(image);
-                controller.profilePicturePreview.setImage(connection.getProfilePicture(user));
+                controller.profile_image_imageview.setImage(image);
+                controller.profile_image_preview_imageview.setImage(image);
+                controller.profile_image_preview_imageview.setImage(connection.getProfilePicture(user));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
 
-            controller.profileFirstName.setDisable(true);
-            controller.profileLastName.setDisable(true);
-            controller.profileEmail.setDisable(true);
-            controller.profileAdress.setDisable(true);
-            controller.profilePhoneNumber.setDisable(true);
+            controller.profile_first_name_lbl.setDisable(true);
+            controller.profile_last_name_lbl.setDisable(true);
+            controller.profile_email_lbl.setDisable(true);
+            controller.profile_address_lbl.setDisable(true);
+            controller.profile_phone_lbl.setDisable(true);
             //controller.profilePassword.setDisable(true);
-            controller.profileOldPassword.setDisable(true);
-            controller.profileNewPassword.setDisable(true);
-            controller.profileNewPasswordConfirm.setDisable(true);
+            controller.profile_old_password_passwordfield.setDisable(true);
+            controller.profile_new_password_textfield.setDisable(true);
+            controller.profile_confirm_password_textfield.setDisable(true);
             LocalDate date = LocalDate.now();
             controller.date_input_flight = (DatePicker) root.lookup("#date_input_flight");
             controller.dateR_input_flight = (DatePicker) root.lookup("#dateR_input_flight");
