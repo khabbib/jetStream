@@ -652,18 +652,9 @@ public class Controller implements Initializable {
                 int finalI1 = i;
                 // to click
                 hbox.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
-
-                    gridE.getChildren().clear();
-                    gridB.getChildren().clear();
-
                    boolean ready = preperBeforeCreatingSeats();
                    if (ready){
                         if (flights.get(finalI1).isrTur()){ // chose two-way
-                            System.out.println(gridE.getChildren().size());
-                            gridE.getChildren().clear();
-                            System.out.println(gridE.getChildren().size());
-                            gridB.getChildren().clear();
-
                             System.out.println("A tur flight from event handler");
                             fillInfoSeatPnl(flights, finalI1);
                             createThisSeat(flights, finalI1);
@@ -675,9 +666,6 @@ public class Controller implements Initializable {
                             fillInfoSeatPnl(flights, finalI1);
                             createThisSeat(flights, finalI1);
                         }
-
-                        // flights seat panel will be shown
-
                         pnlSeat.toFront();
                    }
                 });
@@ -726,9 +714,8 @@ public class Controller implements Initializable {
         takenSeatE.clear();
         takenSeatB.clear();
 
-        flight_seats_eco.getChildren().removeAll();
-        flights_seats_business.getChildren().removeAll();
-
+        flight_seats_eco.getChildren().clear();
+        flights_seats_business.getChildren().clear();
         // Seat window
         gridE.setHgap(5);
         gridE.setVgap(5);
