@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -21,6 +22,21 @@ public class InitializeFXM {
         this.connection = connection;
     }
 
+    public void initializeWeather(Parent root) {
+        controller.lblForecastA = (Label) root.lookup("#lblForecastA");
+        controller.lblForecastB = (Label) root.lookup("#lblForecastB");
+        controller.lblForecastC = (Label) root.lookup("#lblForecastC");
+        controller.lblForecastD = (Label) root.lookup("#lblForecastD");
+        controller.lblForecastE = (Label) root.lookup("#lblForecastE");
+        controller.lblForecastF = (Label) root.lookup("#lblForecastF");
+        controller.weatherIcon = (ImageView) root.lookup("#weatherIcon");
+        controller.weatherPane = (Pane) root.lookup("#weatherPane");
+        controller.weatherPaneBase = (Pane) root.lookup("#weatherPaneBase");
+        controller.weatherPaneBase.setPickOnBounds(false);
+        controller.weatherPane.setVisible(false);
+        controller.weatherPane.setPickOnBounds(false);
+        controller.weatherMenu = false;
+    }
     public void initializeProfile(Parent root, User user){
         //Profile info
         if (user != null) {
