@@ -155,8 +155,8 @@ public class AdminControl {
     public void updateMemberTable() throws SQLException {
         ArrayList<User> list = connection.getAllUsers();
 
-        controller.fetchedList_member_admin = FXCollections.observableArrayList(list);
-        controller.table_member_admin.setItems(controller.fetchedList_member_admin);
+        controller.items_member_admin = FXCollections.observableArrayList(list);
+        controller.table_member_admin.setItems(controller.items_member_admin);
     }
 
     public void fillTicketTable(Parent root) throws SQLException {

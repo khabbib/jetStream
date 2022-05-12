@@ -668,6 +668,7 @@ public class Connection {
         con.close();
     }
 
+
     public ArrayList<Flight> getAllFlights()
     {
         ArrayList<Flight> flights = new ArrayList<>();
@@ -802,6 +803,34 @@ public class Connection {
         return deleted;
     }
 
+
+    /**
+     * This metod deletes member at the column that has the request id
+     * @param id_col_mbr_admin
+     * @return
+     * @author Obed
+     */
+    public boolean deleteMember(String id_col_mbr_admin) {
+        boolean deleted = false;
+        try {
+            java.sql.Connection con = Connection.getDatabaseConnection();
+            Statement stmt = con.createStatement();
+            System.out.println("UserID to delete: " +id_col_mbr_admin);
+            stmt.executeUpdate("SET search_path TO jetstream;");
+            stmt.executeUpdate("delete from userr where u_id = '" + id_col_mbr_admin + "';");
+            deleted = true;
+            con.close();
+            stmt.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return deleted;
+    }
+
+
+
+
+
     /**
      * @return
      */
@@ -870,21 +899,6 @@ public class Connection {
     }
 
 
-    public boolean deleteMember(String userid)
-    {
-       boolean deleted = false;
-        try {
-            java.sql.Connection con = Connection.getDatabaseConnection();
-            Statement stmt = con.createStatement();
-            stmt.executeUpdate("SET search_path TO jetstream;");
-            stmt.executeQuery("delete u_id where u_id =" + userid + "'");
-            deleted = true;
-            con.close();
-            stmt.close();
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-    return deleted;
-    }
+
 
 }
