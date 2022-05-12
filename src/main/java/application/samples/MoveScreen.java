@@ -1,4 +1,4 @@
-package application.moveScreen;
+package application.samples;
 
 import javafx.event.EventHandler;
 import javafx.scene.Parent;

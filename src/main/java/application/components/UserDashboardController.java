@@ -1,10 +1,9 @@
-package application.Components;
+package application.components;
 
 import application.Controller;
 import application.database.Connection;
 import application.model.CreateWorld;
 import application.model.User;
-import application.moveScreen.MoveScreen;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -192,6 +191,7 @@ public class UserDashboardController {
      * @param e
      * @param user
      * @param controller
+     * @author Khabib developed by Kasper
      */
     public void renderDashboard(ActionEvent e, User user, Controller controller) {
         controller.user = user;
@@ -215,6 +215,7 @@ public class UserDashboardController {
      * @param e
      * @param controller
      * @throws IOException
+     * @author Habib
      */
     public void noLoginRequired(ActionEvent e, Controller controller) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/Dashboard.fxml")));
@@ -237,7 +238,6 @@ public class UserDashboardController {
         controller.username_lbl.setText(null);
         controller.main_stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         controller.main_scene = new Scene(root);
-        MoveScreen.moveScreen(root, controller.main_stage);
         controller.main_stage.setTitle("Test dashboard window");
         controller.main_stage.setScene(controller.main_scene);
         controller.main_stage.show();

@@ -1,4 +1,4 @@
-package application.Components.AdminComponents;
+package application.components.AdminComponents;
 
 import application.Controller;
 import application.config.Config;

@@ -1,4 +1,4 @@
-package application.Components;
+package application.components;
 
 import application.Controller;
 import javafx.event.ActionEvent;
@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class DeveloperHandler {
-    public void userDev(ActionEvent e, Controller controller){
+    public void userDashboardEventHandler(ActionEvent e, Controller controller){
         if (e.getSource() == controller.menu_profile_btn) {
             controller.profile_anchorpane.toFront();
             controller.toggleMenuColor();

@@ -792,7 +792,7 @@
                               <ColorAdjust brightness="-0.05" contrast="0.04" hue="0.16" saturation="0.59" />
                            </effect>
                         </ImageView>
-                        <Button fx:id="booking_close_btn" layoutX="-14.0" layoutY="17.0" mnemonicParsing="false" onAction="#userDev" opacity="0.0" prefHeight="32.0" prefWidth="28.0" />
+                        <Button fx:id="booking_close_btn" layoutX="-14.0" layoutY="17.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" opacity="0.0" prefHeight="32.0" prefWidth="28.0" />
                      </children>
                   </Group>
                   <Label fx:id="payment_err_msg" layoutX="105.0" layoutY="572.0" prefHeight="17.0" prefWidth="428.0" />
@@ -1031,7 +1031,7 @@
                               <ColorAdjust brightness="-0.05" contrast="0.04" hue="0.16" saturation="0.59" />
                            </effect>
                         </ImageView>
-                        <Button fx:id="booking_close_second_page_btn" layoutX="-14.0" layoutY="17.0" mnemonicParsing="false" onAction="#userDev" opacity="0.0" prefHeight="32.0" prefWidth="28.0" />
+                        <Button fx:id="booking_close_second_page_btn" layoutX="-14.0" layoutY="17.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" opacity="0.0" prefHeight="32.0" prefWidth="28.0" />
                      </children>
                   </Group>
                   <VBox fx:id="booking_info_vbox" alignment="CENTER_LEFT" layoutX="38.0" layoutY="84.0" prefHeight="82.0" prefWidth="480.0" style="-fx-background-color: #1122; -fx-background-radius: 10;">
@@ -1258,11 +1258,11 @@
                                              <children>
                                                 <HBox alignment="CENTER" spacing="5.0">
                                                    <children>
-                                                      <Button fx:id="date_previous_day_button" mnemonicParsing="false" onAction="#userDev" style="-fx-background-color: #0E0E1B #0E0E1B;" text="Prev day" textFill="WHITE">
+                                                      <Button fx:id="date_previous_day_button" mnemonicParsing="false" onAction="#userDashboardEventHandler" style="-fx-background-color: #0E0E1B #0E0E1B;" text="Prev day" textFill="WHITE">
                                                          <cursor>
                                                             <Cursor fx:constant="HAND" />
                                                          </cursor></Button>
-                                                      <Button fx:id="date_next_day_button" mnemonicParsing="false" onAction="#userDev" style="-fx-background-color: #0E0E1B #0E0E1B;" text="Next day" textFill="WHITE">
+                                                      <Button fx:id="date_next_day_button" mnemonicParsing="false" onAction="#userDashboardEventHandler" style="-fx-background-color: #0E0E1B #0E0E1B;" text="Next day" textFill="WHITE">
                                                          <cursor>
                                                             <Cursor fx:constant="HAND" />
                                                          </cursor></Button>
@@ -1270,11 +1270,11 @@
                                                 </HBox>
                                                 <HBox alignment="CENTER" spacing="5.0">
                                                    <children>
-                                                      <Button fx:id="date_previous_day_return_button" disable="true" mnemonicParsing="false" onAction="#userDev" style="-fx-background-color: #0E0E1B #0E0E1B;" text="Prev day" textFill="WHITE">
+                                                      <Button fx:id="date_previous_day_return_button" disable="true" mnemonicParsing="false" onAction="#userDashboardEventHandler" style="-fx-background-color: #0E0E1B #0E0E1B;" text="Prev day" textFill="WHITE">
                                                          <cursor>
                                                             <Cursor fx:constant="HAND" />
                                                          </cursor></Button>
-                                                      <Button fx:id="date_next_day_return_button" disable="true" mnemonicParsing="false" onAction="#userDev" style="-fx-background-color: #0E0E1B #0E0E1B;" text="Next day" textFill="WHITE">
+                                                      <Button fx:id="date_next_day_return_button" disable="true" mnemonicParsing="false" onAction="#userDashboardEventHandler" style="-fx-background-color: #0E0E1B #0E0E1B;" text="Next day" textFill="WHITE">
                                                          <cursor>
                                                             <Cursor fx:constant="HAND" />
                                                          </cursor></Button>
@@ -1473,7 +1473,7 @@
                                     <Label text="Flights" textFill="WHITE" />
                                  </children>
                               </HBox>
-                              <Button fx:id="menu_flight_btn" layoutY="1.0" mnemonicParsing="false" onAction="#userDev" opacity="0.0" prefHeight="25.0" prefWidth="91.0">
+                              <Button fx:id="menu_flight_btn" layoutY="1.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" opacity="0.0" prefHeight="25.0" prefWidth="91.0">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
@@ -1504,7 +1504,7 @@
                                     <Label opacity="0.5" text="History" textFill="WHITE" />
                                  </children>
                               </HBox>
-                              <Button fx:id="menu_history_btn" mnemonicParsing="false" onAction="#userDev" opacity="0.0" prefHeight="22.0" prefWidth="91.0">
+                              <Button fx:id="menu_history_btn" mnemonicParsing="false" onAction="#userDashboardEventHandler" opacity="0.0" prefHeight="22.0" prefWidth="91.0">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
@@ -1535,7 +1535,7 @@
                                     <Label opacity="0.5" text="Games" textFill="WHITE" />
                                  </children>
                               </HBox>
-                              <Button fx:id="menu_entertainment_btn" layoutX="1.0" layoutY="1.0" mnemonicParsing="false" onAction="#userDev" opacity="0.0" prefHeight="25.0" prefWidth="90.0">
+                              <Button fx:id="menu_entertainment_btn" layoutX="1.0" layoutY="1.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" opacity="0.0" prefHeight="25.0" prefWidth="90.0">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
@@ -1566,7 +1566,7 @@
                                     <Label opacity="0.5" text="Support" textFill="WHITE" />
                                  </children>
                               </HBox>
-                              <Button fx:id="menu_support_btn" layoutX="1.0" layoutY="2.0" mnemonicParsing="false" onAction="#userDev" opacity="0.0" prefHeight="25.0" prefWidth="94.0">
+                              <Button fx:id="menu_support_btn" layoutX="1.0" layoutY="2.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" opacity="0.0" prefHeight="25.0" prefWidth="94.0">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
@@ -1615,7 +1615,7 @@
                                  </cursor>
                               </ImageView>
                               <Label layoutX="34.0" layoutY="18.0" prefHeight="17.0" prefWidth="51.0" text="Settings" textFill="WHITE" />
-                              <Button fx:id="menu_profile_btn" layoutX="2.0" layoutY="14.0" mnemonicParsing="false" onAction="#userDev" opacity="0.0" prefHeight="30.0" prefWidth="77.0" text="Button">
+                              <Button fx:id="menu_profile_btn" layoutX="2.0" layoutY="14.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" opacity="0.0" prefHeight="30.0" prefWidth="77.0" text="Button">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>

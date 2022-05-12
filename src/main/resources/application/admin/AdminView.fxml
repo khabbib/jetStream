@@ -415,12 +415,12 @@
                                        <children>
                                           <HBox alignment="CENTER" spacing="5.0">
                                              <children>
-                                                <Button fx:id="prev_tur_date_flight_admin" mnemonicParsing="false" onAction="#userDev" style="-fx-background-color: #0E0E1B #0E0E1B;" text="Prev day" textFill="WHITE">
+                                                <Button fx:id="prev_tur_date_flight_admin" mnemonicParsing="false" onAction="#userDashboardEventHandler" style="-fx-background-color: #0E0E1B #0E0E1B;" text="Prev day" textFill="WHITE">
                                                    <cursor>
                                                       <Cursor fx:constant="HAND" />
                                                    </cursor>
                                                 </Button>
-                                                <Button fx:id="next_tur_date_flight_admin" mnemonicParsing="false" onAction="#userDev" style="-fx-background-color: #0E0E1B #0E0E1B;" text="Next day" textFill="WHITE">
+                                                <Button fx:id="next_tur_date_flight_admin" mnemonicParsing="false" onAction="#userDashboardEventHandler" style="-fx-background-color: #0E0E1B #0E0E1B;" text="Next day" textFill="WHITE">
                                                    <cursor>
                                                       <Cursor fx:constant="HAND" />
                                                    </cursor>

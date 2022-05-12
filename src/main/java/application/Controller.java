@@ -1,7 +1,7 @@
 package application;
-import application.Components.*;
-import application.Components.AdminComponents.AdminControl;
-import application.Components.AdminComponents.RegisterAdmin;
+import application.components.*;
+import application.components.AdminComponents.AdminControl;
+import application.components.AdminComponents.RegisterAdmin;
 import application.config.Config;
 import application.games.Game2048Main;
 import application.games.MPlayer;
@@ -342,7 +342,7 @@ public class Controller implements Initializable {
     @FXML public ImageView play_button_image;
 
     //<editor-fold desc="instance initialize">
-    application.Components.Support support;
+    application.components.Support support;
     Search search;
     public ConfirmActions confirmActions;
     public UserDashboardController userDashboardController;
@@ -750,11 +750,11 @@ public class Controller implements Initializable {
     }
 
     /**
-     * User even handler.
+     * User dashboard event handler.
      * @param e
      */
-    public void userDev(ActionEvent e){
-       developerHandler.userDev(e,this);
+    public void userDashboardEventHandler(ActionEvent e){
+       developerHandler.userDashboardEventHandler(e,this);
     }
 
     /**

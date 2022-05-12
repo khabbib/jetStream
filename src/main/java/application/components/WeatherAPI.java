@@ -1,4 +1,4 @@
-package application.Components;
+package application.components;
 
 import application.Controller;
 import javafx.scene.image.Image;
