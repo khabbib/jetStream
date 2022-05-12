@@ -179,7 +179,7 @@ public class Coordinates {
             case "New_Zealand": coordinates = setCoordinates(580,380); break;
             case "Oman": coordinates = setCoordinates(400,250); break;
             case "Panama": coordinates = setCoordinates(150,260); break;
-            case "Peru": coordinates = setCoordinates(180,320); break;
+            case "Peru": coordinates = setCoordinates(190,320); break;
             case "French_Polynesia": coordinates = setCoordinates(560,260); break;
             case "Papua_New_Guinea": coordinates = setCoordinates(565,300); break;
             case "Philippines": coordinates = setCoordinates(530,280); break;
