@@ -1,5 +1,6 @@
 package application.Components;
 
+import javafx.event.ActionEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -48,6 +49,17 @@ public class MusicHandler implements Runnable {
         } else {
             playing=false;
         }
+    }
+
+    public void mediaHandler(ActionEvent e) {
+        if (e.getSource().toString().contains("play")) {
+            playButton();
+        } else if (e.getSource().toString().contains("next")) {
+            nextButton();
+        } else if (e.getSource().toString().contains("prev")) {
+            prevButton();
+        }
+        System.out.println(e.getSource());
     }
     @Override
     public void run() {

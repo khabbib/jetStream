@@ -31,8 +31,21 @@ public class DashboardController {
         this.connection = connection;
     }
 
-    public void userInitializeFXML(Parent root, User user){
+    /**
+     *
+     */
+    public void toggleMenuColor(Controller controller) {
+        controller.menu_highlight_color_flight.setVisible(false);
+        controller.menu_highlight_color_history.setVisible(false);
+        controller.menu_highlight_color_entertainment.setVisible(false);
+        controller.menu_highlight_color_support.setVisible(false);
 
+        controller.map_menu_user_image.setOpacity(0.5);
+        controller.history_menu_user_image.setOpacity(0.5);
+        controller.entertainment_menu_user_image.setOpacity(0.5);
+        controller.support_menu_user_image.setOpacity(0.5);
+    }
+    public void userInitializeFXML(Parent root, User user){
         // flight list related variables
         controller.nbr_of_available_flights = (Label) root.lookup("#nbr_of_available_flights");
         // global error message for user dashboard

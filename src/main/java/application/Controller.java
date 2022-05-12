@@ -65,9 +65,9 @@ public class Controller implements Initializable {
     public CreateWorld create_world;
     public static World world_map;
     public static User user;
-    private File profile_image_directory;
-    private File[] profile_image_files;
-    private static boolean is_editing_profile;
+    public File profile_image_directory;
+    public File[] profile_image_files;
+    public static boolean is_editing_profile;
 
     // FXML variables
     @FXML private ButtonBar logout_button_bar;
@@ -89,7 +89,7 @@ public class Controller implements Initializable {
     @FXML public PasswordField profile_old_password_passwordfield;
     @FXML public TextField profile_new_password_textfield, profile_confirm_password_textfield;
     @FXML public Button profile_edit_btn;
-    private static boolean is_editing_profile_image = false;
+    public static boolean is_editing_profile_image = false;
 
     // Issues
     @FXML public Label edit_pfp_fname_issue, edit_pfp_lname_issue, edit_pfp_address_issue, edit_pfp_email_issue, edit_pfp_phone_issue;
@@ -100,38 +100,91 @@ public class Controller implements Initializable {
     public final GridPane business_seat_gridpane = new GridPane(); //Layout
 
     // toggle options
-    @FXML private Button menu_profile_btn, menu_flight_btn, menu_history_btn, menu_entertainment_btn, menu_support_btn, booking_close_btn, booking_close_second_page_btn;
+    @FXML
+    public Button menu_profile_btn;
+    @FXML
+    public Button menu_flight_btn;
+    @FXML
+    public Button menu_history_btn;
+    @FXML
+    public Button menu_entertainment_btn;
+    @FXML
+    public Button menu_support_btn;
+    @FXML
+    public Button booking_close_btn;
+    @FXML
+    public Button booking_close_second_page_btn;
     @FXML public AnchorPane profile_anchorpane, history_anchorpane, flight_anchorpane, entertainment_anchorpane, support_anchorpane;
-    @FXML private Pane menu_highlight_color_flight, menu_highlight_color_history, menu_highlight_color_entertainment, menu_highlight_color_support;
+    @FXML
+    public Pane menu_highlight_color_flight;
+    @FXML
+    public Pane menu_highlight_color_history;
+    @FXML
+    public Pane menu_highlight_color_entertainment;
+    @FXML
+    public Pane menu_highlight_color_support;
 
    //</editor-fold>
 
     //<editor-fold desc="ADMIN VARIABLES">
-    @FXML private ListView<String> ticket_listview, member_listview, flightListView;
-    @FXML private AnchorPane admin_flights_anchorpane;
-    @FXML private AnchorPane admin_tickets_anchorpane;
+    @FXML
+    public ListView<String> ticket_listview;
+    @FXML
+    public ListView<String> member_listview;
+    @FXML private ListView<String> flightListView;
+    @FXML
+    public AnchorPane admin_flights_anchorpane;
+    @FXML
+    public AnchorPane admin_tickets_anchorpane;
     @FXML
     public AnchorPane admin_members_anchorpane;
-    @FXML private AnchorPane admin_register_anchorpane;
-    @FXML private Button admin_flights_button, admin_members_button, admin_tickets_button, admin_logout_button, registerCommitBtn_admin, registerMemberBtn_admin, returnToMemberListBtn_admin, refreshMembersBtn_admin, deleteMemberBtn_admin,
-            search_input_flight_admin, prev_tur_date_flight_admin, next_tur_date_flight_admin;
+    @FXML
+    public AnchorPane admin_register_anchorpane;
+    @FXML
+    public Button admin_flights_button;
+    @FXML
+    public Button admin_members_button;
+    @FXML
+    public Button admin_tickets_button;
+    @FXML
+    public Button admin_logout_button;
+    @FXML private Button registerCommitBtn_admin;
+    @FXML
+    public Button registerMemberBtn_admin;
+    @FXML
+    public Button returnToMemberListBtn_admin;
+    @FXML
+    public Button refreshMembersBtn_admin;
+    @FXML private Button deleteMemberBtn_admin;
+    @FXML private Button search_input_flight_admin;
+    @FXML private Button prev_tur_date_flight_admin;
+    @FXML private Button next_tur_date_flight_admin;
 
     //</editor-fold>
     //<editor-fold desc="DASHBOARD VARIABLES">
 
     // purchase variables
-    @FXML private AnchorPane payment_anchorpane;
+    @FXML
+    public AnchorPane payment_anchorpane;
     @FXML public TextField card_nbr;
     @FXML public TextField card_fname;
     @FXML public TextField card_lname;
     @FXML public TextField card_month;
     @FXML public TextField card_year;
     @FXML public TextField card_cvc;
-    @FXML private Button card_prev_btn, card_purchase_btn, seat_next_btn;
+    @FXML
+    public Button card_prev_btn;
+    @FXML
+    public Button card_purchase_btn;
+    @FXML
+    public Button seat_next_btn;
     @FXML public Label card_counter_nbr;
     @FXML public Label payment_err_msg;
-    @FXML private AnchorPane success_purchase_anchorpane;
-    @FXML private Button success_purchase_to_dashboard_button, print_ticket_purchase_btn;
+    @FXML
+    public AnchorPane success_purchase_anchorpane;
+    @FXML
+    public Button success_purchase_to_dashboard_button;
+    @FXML private Button print_ticket_purchase_btn;
 
     // From seat
     @FXML public AnchorPane booking_seat_anchorpane;
@@ -164,7 +217,8 @@ public class Controller implements Initializable {
     public double seat_price = 0.0;
     public ArrayList<Flight> round_trip_flights = new ArrayList<>();
     public boolean has_return_flight = false;
-    private String departure_seat, return_seat;
+    public String departure_seat;
+    public String return_seat;
 
     //</editor-fold>
     //<editor-fold desc="HISTORY VARIABLES">
@@ -308,12 +362,15 @@ public class Controller implements Initializable {
     public Config config;
 
     FlightPaths flightPaths;
+    DeveloperHandler developerHandler;
     RegistrationUser registrationUser;
     public RegisterAdmin registerAdmin;
     FlightsViewManager flightsViewManager;
+    PurchaseHandler purchaseHandler;
     public InitializeFXM initializeFXM;
     public AdminControl adminControl;
     MusicHandler musicHandler;
+    ProfileManager profileManager;
     //</editor-fold>
 
     // Loader in login
@@ -332,9 +389,13 @@ public class Controller implements Initializable {
         initializeFXM = new InitializeFXM(this,connection);
         flightPaths = new FlightPaths(this);
         weatherAPI = new WeatherAPI();
+        profileManager = new ProfileManager();
         password = new PasswordHandler();
         adminControl = new AdminControl(this, connection);
         musicHandler = new MusicHandler();
+        developerHandler = new DeveloperHandler();
+        developerHandler = new DeveloperHandler();
+        purchaseHandler = new PurchaseHandler();
         flightsViewManager = new FlightsViewManager();
     }
 
@@ -598,168 +659,7 @@ public class Controller implements Initializable {
      * @author Kasper. Huge modified and developed by Sossio.
      */
     public void editProfile() throws SQLException {
-        if (is_editing_profile == false) {
-            profile_cancel_btn.setDisable(false);
-
-            profile_first_name_lbl.setDisable(false);
-            profile_last_name_lbl.setDisable(false);
-            profile_address_lbl.setDisable(false);
-            profile_email_lbl.setDisable(true); // Let be false cause an error will occur!
-            profile_phone_lbl.setDisable(false);
-            profile_old_password_passwordfield.setDisable(false);
-            profile_new_password_textfield.setDisable(false);
-            profile_confirm_password_textfield.setDisable(false);
-            profile_edit_btn.setText("Confirm");
-            is_editing_profile = true;
-        } else {
-
-            User editedUser = user;
-
-            boolean successMessage = true;
-
-            // Edit Firstname
-            if (!profile_first_name_lbl.getText().isEmpty() && (profile_first_name_lbl.getText().length() >= 3 && profile_first_name_lbl.getText().length() <= 30)) {
-                editedUser.setFirstName(profile_first_name_lbl.getText());
-
-                System.out.println("Updating user firstname...");
-                user = editedUser;
-
-                connection.updateUserFirstName(user);
-
-            } else {
-                System.out.println("Firstname issue!");
-                confirmActions.displayMessage(edit_pfp_fname_issue, "Size issue 3-30!", true);
-                profile_first_name_lbl.setText(connection.getUserDatabaseFirstName(user.getUserId()));
-
-                successMessage = false;
-            }
-
-            // Edit Lastname
-            if(!profile_last_name_lbl.getText().isEmpty() && (profile_last_name_lbl.getText().length() >= 3 && profile_last_name_lbl.getText().length() <= 30)) {
-                editedUser.setLastName(profile_last_name_lbl.getText());
-
-                System.out.println("Updating lastname...");
-                user = editedUser;
-
-                connection.updateUserLastName(user);
-            } else {
-                System.out.println("Lastname issue!");
-                confirmActions.displayMessage(edit_pfp_lname_issue, "Size issue 3-30!", true);
-                profile_last_name_lbl.setText(connection.getUserDatabaseLastName(user.getUserId()));
-
-                successMessage = false;
-            }
-
-            // Edit Address
-            if (!profile_address_lbl.getText().isEmpty() && (profile_address_lbl.getText().length() >= 5 && profile_address_lbl.getText().length() <= 60)){
-                editedUser.setAddress(profile_address_lbl.getText());
-
-                System.out.println("Updating address...");
-                user = editedUser;
-
-                connection.updateUserAddress(user);
-            } else {
-                System.out.println("Address issue!");
-                confirmActions.displayMessage(edit_pfp_address_issue, "Size issue 5-60!", true);
-                profile_address_lbl.setText(connection.getUserDatabaseAddress(user.getUserId()));
-
-                successMessage = false;
-            }
-
-            // Edit Email (LET BE!)
-//            if (!profileEmail.getText().isEmpty() && (profileEmail.getText().length() >= 6 && profileEmail.getText().length() <= 30)) {
-//                editedUser.setEmail(profileEmail.getText());
-//
-//                System.out.println("Updating user okay!");
-//                user = editedUser;
-//
-//                boolean okToEditProfile = connection.updateUserPersonData(user, connection.getUserDatabaseEmail(user.getUserId()));
-//                if(okToEditProfile) {
-//                    confirmActions.displayMessage(pfp_display_msg, "Profile is updated!", false);
-//                } else {
-//                    confirmActions.displayMessage(edit_pfp_email_issue, "New email is taken!", true);
-//                    profileEmail.setText(connection.getUserDatabaseEmail(user.getUserId()));
-//                }
-//
-//            } else {
-//                System.out.println("Email issue!");
-//                confirmActions.displayMessage(edit_pfp_email_issue, "Size issue 6-30!", true);
-//                profileEmail.setText(connection.getUserDatabaseEmail(user.getUserId()));
-//            }
-
-            // Edit Phone Number
-            if (!profile_phone_lbl.getText().isEmpty() && profile_phone_lbl.getText().length() == 10){
-                editedUser.setPhoneNumber(profile_phone_lbl.getText());
-
-                System.out.println("Updating phone number...");
-                user = editedUser;
-
-                connection.updateUserPhoneNumber(user);
-            } else {
-                System.out.println("Phone number issue!");
-                confirmActions.displayMessage(edit_pfp_phone_issue, "Size issue 10!", true);
-                profile_phone_lbl.setText(connection.getUserDatabasePhoneNumber(user.getUserId()));
-
-                successMessage = false;
-            }
-
-            // Edit Password (Special design)
-            if (!profile_old_password_passwordfield.getText().isEmpty() || !profile_new_password_textfield.getText().isEmpty() || !profile_confirm_password_textfield.getText().isEmpty()){
-
-                if(connection.hashPassword(profile_old_password_passwordfield.getText()).equals(connection.getUserDatabasePassword(user.getUserId()))) {
-
-                    if(profile_new_password_textfield.getText().length() >= 8 && profile_new_password_textfield.getText().length() <= 20) {
-
-                        if(profile_confirm_password_textfield.getText().equals(profile_new_password_textfield.getText())) {
-                            editedUser.setPassword(profile_new_password_textfield.getText());
-
-                            System.out.println("Updating new password...");
-                            user = editedUser;
-
-                            connection.updateUserPassword(user);
-                        } else {
-                            confirmActions.displayMessage(edit_pfp_new_c_pwd_issue, "Mach issue!", true);
-                            successMessage = false;
-                        }
-
-                    } else {
-                        confirmActions.displayMessage(edit_pfp_new_pwd_issue, "Size issue 8-20!", true);
-                        successMessage = false;
-                    }
-
-                } else {
-                    confirmActions.displayMessage(edit_pfp_old_pwd_issue, "Wrong password!", true);
-                    successMessage = false;
-                }
-
-            } else {
-                //System.out.println("To change pwd, fill all!");
-
-                //confirmActions.displayMessage(edit_pfp_old_pwd_issue, "To change pwd, fill all!", false);
-            }
-
-            if(successMessage) {
-                confirmActions.displayMessage(pfp_display_msg, "Profile is updated!", false);
-            }
-
-            // Reset password fields
-            profile_old_password_passwordfield.setText("");
-            profile_new_password_textfield.setText("");
-            profile_confirm_password_textfield.setText("");
-
-            // Make text fields disabled
-            profile_first_name_lbl.setDisable(true);
-            profile_last_name_lbl.setDisable(true);
-            profile_address_lbl.setDisable(true);
-            profile_email_lbl.setDisable(true);
-            profile_phone_lbl.setDisable(true);
-            profile_old_password_passwordfield.setDisable(true);
-            profile_new_password_textfield.setDisable(true);
-            profile_confirm_password_textfield.setDisable(true);
-            is_editing_profile = false;
-            profile_edit_btn.setText("Edit");
-            profile_cancel_btn.setDisable(true);
-        }
+        profileManager.editProfile(this);
     }
 
     /**
@@ -768,31 +668,7 @@ public class Controller implements Initializable {
      * @author Sossio.
      */
     public void editProfileCancel() throws SQLException {
-        // Reset to current data
-        profile_first_name_lbl.setText(connection.getUserDatabaseFirstName(user.getUserId()));
-        profile_last_name_lbl.setText(connection.getUserDatabaseLastName(user.getUserId()));
-        profile_address_lbl.setText(connection.getUserDatabaseAddress(user.getUserId()));
-        //profileEmail.setText(connection.getUserDatabaseEmail(user.getUserId()));
-        profile_phone_lbl.setText(connection.getUserDatabasePhoneNumber(user.getUserId()));
-
-        // Reset password fields
-        profile_old_password_passwordfield.setText("");
-        profile_new_password_textfield.setText("");
-        profile_confirm_password_textfield.setText("");
-
-        // Make text fields disabled
-        profile_first_name_lbl.setDisable(true);
-        profile_last_name_lbl.setDisable(true);
-        profile_address_lbl.setDisable(true);
-        profile_email_lbl.setDisable(true);
-        profile_phone_lbl.setDisable(true);
-        profile_old_password_passwordfield.setDisable(true);
-        profile_new_password_textfield.setDisable(true);
-        profile_confirm_password_textfield.setDisable(true);
-        is_editing_profile = false;
-        profile_edit_btn.setText("Edit");
-        profile_cancel_btn.setDisable(true);
-        confirmActions.displayMessage(pfp_display_msg, "Profile editing canceled!", false);
+        profileManager.editProfileCancel(this);
     }
 
     /**
@@ -800,23 +676,7 @@ public class Controller implements Initializable {
      * @author Kasper.
      */
     public void changeImage() {
-        if (is_editing_profile_image == false) {
-            profile_profile_image_gridpane.setVisible(true);
-            profile_image_directory = new File("src/main/resources/application/profiles/64x64");
-            profile_image_files = profile_image_directory.listFiles();
-            is_editing_profile_image = true;
-
-            int b = 0;
-            for (int i = 0; i < 3; i++) {
-                for (int j = 0; j < 5; j++) {
-                    profile_profile_image_gridpane.add(new ImageView(new Image(profile_image_files[b].getAbsolutePath())), i, j);
-                    b++;
-                }
-            }
-        } else {
-            profile_profile_image_gridpane.setVisible(false);
-            is_editing_profile_image = false;
-        }
+        profileManager.changeImage(this);
     }
 
     /**
@@ -825,43 +685,11 @@ public class Controller implements Initializable {
      * @author Kasper. Developed by Sossio.
      */
     public void clickGrid(MouseEvent event) {
-        Node clickedNode = event.getPickResult().getIntersectedNode();
-        if (clickedNode != profile_profile_image_gridpane) {
-            Integer colIndex = GridPane.getColumnIndex(clickedNode);
-            Integer rowIndex = GridPane.getRowIndex(clickedNode);
-            profile_image_directory = new File("src/main/resources/application/profiles/256x256");
-            profile_image_files = profile_image_directory.listFiles();
-            Image image = new Image(profile_image_files[(colIndex*5)+rowIndex].getAbsolutePath());
-            profile_image_preview_imageview.setImage(image);
-            profile_image_imageview.setImage(image);
-            String profilePic = (profile_image_files[(colIndex*5)+rowIndex].getAbsolutePath());
-            System.out.println(profilePic);
-            profilePic = profilePic.substring(profilePic.indexOf("application") , profilePic.length());
-            profilePic = profilePic.replace("\\","/");
-            System.out.println(profilePic);
-
-            try {
-                connection.setProfilePictureIdk(profilePic, user);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            is_editing_profile_image = false;
-            profile_profile_image_gridpane.setVisible(false);
-            System.out.println("Mouse clicked cell: " + colIndex + " And: " + rowIndex);
-
-            confirmActions.displayMessage(pfp_display_msg, "Profile image is updated!", false);
-        }
+        profileManager.clickGrid(event,this);
     }
 
     public void mediaHandler(ActionEvent e) {
-        if (e.getSource().toString().contains("play")) {
-            musicHandler.playButton();
-        } else if (e.getSource().toString().contains("next")) {
-            musicHandler.nextButton();
-        } else if (e.getSource().toString().contains("prev")) {
-            musicHandler.prevButton();
-        }
-        System.out.println(e.getSource());
+        musicHandler.mediaHandler(e);
     }
 
     /**
@@ -869,228 +697,18 @@ public class Controller implements Initializable {
      * @author Khabib. Developed by Sossio.
      */
     public void purchaseHandle(ActionEvent e){
-        if (e.getSource() == card_prev_btn){
-            booking_passenger_anchorpane.toFront();
-            payment_anchorpane.toBack();
-        }else if(e.getSource() == card_purchase_btn){
-
-            String nbr = card_nbr.getText();
-            String name = card_fname.getText();
-            String lname = card_lname.getText();
-            String month = card_month.getText();
-            String year = card_year.getText();
-            String cvc = card_cvc.getText();
-
-            if (!nbr.isEmpty()) {
-                if (!name.isEmpty()) {
-                    if (!lname.isEmpty()) {
-                        if (!year.isEmpty()) {
-                            if (!month.isEmpty()) {
-                                if (!cvc.isEmpty()) {
-
-                                    boolean validCard = Purchase.purchaseTicket(nbr, name, lname, month, year, cvc);
-                                    if (validCard) {
-                                        System.out.println("Card is valid!");
-                                        boolean purchaseDone1 = false;
-                                        boolean purchaseDone2 = false;
-                                        String rfc1 = "", rfc2 = "";
-
-                                        if (departure_seat != null) {
-                                            for (int i = 0; i <= 1; i++) {
-                                                System.out.println("Loop is running...");
-
-                                                if (departure_seat != null && return_seat != null) { // saving tur flight
-                                                    System.out.println("First condition");
-                                                    StringBuilder rfc = connection.generateRandomRFC();
-                                                    String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
-                                                    boolean saveTicket = connection.savePurchasedTicket(user.getUserId(), return_seat, String.valueOf(rfc), date, departure_seat, false);
-                                                    if (saveTicket) {
-                                                        rfc1 = String.valueOf(rfc);
-                                                        purchaseDone1 = true;
-                                                    }
-                                                    departure_seat = null;
-                                                    return_seat = null;
-                                                } else {
-                                                    System.out.println("Second condition 2");
-                                                    StringBuilder rfc = connection.generateRandomRFC();
-                                                    String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
-                                                    boolean saveTicket = connection.savePurchasedTicket(user.getUserId(), booking_flight_number_lbl.getText(), String.valueOf(rfc), date, booking_seat_number_lbl.getText(), false);
-                                                    if (saveTicket) {
-                                                        purchaseDone1 = true;
-                                                        rfc1 = String.valueOf(rfc);
-                                                        //confirmPurchase(String.valueOf(rfc));
-                                                    } else {
-                                                        System.out.println("Did not saved the purchase in database");
-                                                    }
-                                                }
-                                            }
-                                        } else {
-                                            System.out.println("Tur seat is null.");
-
-                                            System.out.println("Second condition 2");
-                                            StringBuilder rfc = connection.generateRandomRFC();
-                                            String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
-                                            boolean saveTicket = connection.savePurchasedTicket(user.getUserId(), booking_flight_number_lbl.getText(), String.valueOf(rfc), date, booking_seat_number_lbl.getText(), false);
-                                            if (saveTicket){
-                                                purchaseDone1 = true;
-                                                rfc1 = String.valueOf(rfc);
-                                                //confirmPurchase(String.valueOf(rfc));
-                                            }else {
-                                                System.out.println("Did not saved the purchase in database");
-                                            }
-                                        }
-
-                                        if (purchaseDone1 && purchaseDone2) {
-                                            System.out.println("Booked two-ways flights");
-                                            confirmPurchase(rfc2); // can send more information form here.
-                                        } else if (purchaseDone1) {
-                                            System.out.println("Booked only one-way flight");
-                                            confirmPurchase(rfc1);
-                                        }
-
-                                    }else{
-                                        System.out.println("Card not valid");
-                                        confirmActions.displayMessage(payment_err_msg, "Card is not valid.", true);
-                                    }
-                                } else {
-                                    confirmActions.displayMessage(payment_err_msg, "CVC is empty!", true);
-                                }
-                            } else {
-                                confirmActions.displayMessage(payment_err_msg, "Month is empty!", true);
-                            }
-                        } else {
-                            confirmActions.displayMessage(payment_err_msg, "Year is empty!", true);
-                        }
-                    } else {
-                        confirmActions.displayMessage(payment_err_msg, "Last name is empty!", true);
-                    }
-                } else {
-                    confirmActions.displayMessage(payment_err_msg, "First name is empty!", true);
-                }
-            }else {
-                confirmActions.displayMessage(payment_err_msg, "Card numbers is empty!", true);
-            }
-
-        }else if(e.getSource() == seat_next_btn){
-            //<editor-fold desc="file">
-                String name_s = booking_first_name_textfield.getText();
-                String lname_s = booking_last_name_textfield.getText();
-                String fourdigit = booking_four_digits_textfield.getText();
-                String email = booking_email_textfield.getText();
-                String isTur = booking_is_retur_lbl.getText();
-                String seat = booking_seat_number_lbl.getText();
-            //</editor-fold>
-
-                if (name_s.length() >= 3 && name_s.length() <= 30){
-                    if (lname_s.length() >= 3 && lname_s.length() <= 30) {
-                        if (fourdigit.length() == 12) {
-                            if (email.length() >= 6 && email.length() <= 60 && email.contains("@") && email.contains("gmail")) {
-                                if (!seat.isEmpty()) {
-
-                                    if (round_trip_flights.size() == 1){
-                                        System.out.println("Active tur");
-                                        departure_seat = booking_seat_number_lbl.getText();
-                                        return_seat = booking_flight_number_lbl.getText();
-
-                                        booking_flight_number_lbl.setText(null);
-                                        booking_seat_number_lbl.setText(null);
-                                        booking_price_lbl.setText(null);
-
-                                        // clear the operation - preperBeforeCreatingSeats
-                                        boolean build = preperBeforeCreatingSeats();
-                                        if (build){
-                                            booking_departure_lbl.setText(round_trip_flights.get(0).getDeparture_name());
-                                            booking_destination_lbl.setText(round_trip_flights.get(0).getDestination_name());
-                                            booking_departure_extra_lbl.setText(round_trip_flights.get(0).getDeparture_date());
-                                            booking_destination_extra_lbl.setText(round_trip_flights.get(0).getDestination_date());
-                                            booking_flight_number_lbl.setText(round_trip_flights.get(0).getId());
-                                            seat_price = Double.parseDouble(round_trip_flights.get(0).getPrice());
-                                            booking_price_lbl.setText(String.valueOf(seat_price));
-                                            createThisSeat(round_trip_flights, 0);
-                                            round_trip_flights.clear();
-                                        }
-                                    } else {
-                                        System.out.println("To front");
-                                        payment_anchorpane.toFront();
-                                    }
-
-                                } else {
-                                    confirmActions.displayMessage(booking_msg_lbl, "Please choose a seat!", true);
-                                }
-                            } else {
-                                confirmActions.displayMessage(booking_msg_lbl, "Email char 6-30 or format issue!", true);
-                            }
-                        } else {
-                            confirmActions.displayMessage(booking_msg_lbl, "SSN shall be 12 chars!", true);
-                        }
-                    } else {
-                        confirmActions.displayMessage(booking_msg_lbl, "Lastname shall be 3-30 chars!", true);
-                    }
-                }else {
-                    confirmActions.displayMessage(booking_msg_lbl, "Firstname shall be 3-30 chars!", true);
-                }
-        }else if(e.getSource() == success_purchase_to_dashboard_button){
-            updateHistoryList();
-            flight_anchorpane.toFront();
-            restore_psgr_info();
-            success_purchase_anchorpane.toBack();
-            payment_anchorpane.toBack();
-
-        }
+        purchaseHandler.purchaseHandle(e,this);
     }
 
-    private void confirmPurchase(String rfc) {
-        System.out.println(booking_email_textfield.getText() + " Your email!!!");
-        if (!booking_email_textfield.getText().isEmpty()){
-            boolean sentMail = Purchase.sendEmail(booking_email_textfield.getText(), booking_first_name_textfield.getText(), booking_flight_number_lbl.getText(), booking_seat_number_lbl.getText(), booking_price_lbl.getText());
-            if (sentMail){
-                if (departure_seat != null){
-                    System.out.println("Tur is reached here");
-                    history_reference_number_lbl.setText(rfc.toString());
-                    success_purchase_anchorpane.toFront();
-                    departure_seat = null;
-                    System.out.println("Email successfully sent!");
-                }else {
-                    System.out.println("Returne has been reached here");
-                    history_reference_number_lbl.setText(rfc.toString());
-                    success_purchase_anchorpane.toFront();
-                }
-            }else {
-                System.out.println("The email addrss is not correct");
-                //JOptionPane.showMessageDialog(null, "The email address is not correct!");
-            }
-        }
-        System.out.println("saved information in database");
+    public void confirmPurchase(String rfc) {
+        purchaseHandler.confirmPurchase(rfc,this);
     }
 
     /**
      *
      */
     public void restore_psgr_info(){
-        booking_first_name_textfield.clear();
-        booking_last_name_textfield.clear();
-        booking_four_digits_textfield.clear();
-        booking_email_textfield.clear();
-        booking_seat_number_lbl.setText(null);
-        booking_flight_number_lbl.setText(null);
-        booking_price_lbl.setText(null);
-        card_nbr.clear();
-        card_fname.clear();
-        card_lname.clear();
-        card_month.clear();
-        card_year.clear();
-        card_cvc.clear();
-        taken_seat_economy.clear();
-        taken_seat_business.clear();
-        economy_seat_gridpane.getChildren().clear();
-        business_seat_gridpane.getChildren().clear();
-        round_trip_flights.clear();
-        departure_seat = null;
-        return_seat = null;
-
+        purchaseHandler.restore_psgr_info(this);
     }
 
     /**
@@ -1099,75 +717,7 @@ public class Controller implements Initializable {
      * @author Obed.
      */
     public void switchToAdminView(ActionEvent e) {
-
-        if (!login_pass.getText().isEmpty() && !login_email.getText().isEmpty()) {
-            try {
-                User user = connection.authenticationAdmin(login_email.getText(), login_pass.getText());
-                if (user != null) {
-
-                    root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("admin/AdminView.fxml")));
-                    main_stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-                    main_scene = new Scene(root);
-                    main_stage.setTitle("Admin window");
-                    main_stage.setScene(main_scene);
-                    main_stage.show();
-
-
-                    adminControl.fillMemmbersTable(root);
-                    adminControl.fillTicketTable(root);
-                    adminControl.fillTableFlights(root);
-
-                    member_listview = (ListView<String>) root.lookup("#member_listview");
-                    if(member_listview != null)
-                    {
-                        ArrayList<User> member = connection.getAllUsers();
-                        ArrayList<String> temp = new ArrayList<>();
-                        int pageNr = 0;
-                        for(User item: member)
-                        {
-                            pageNr++;
-                            StringBuilder temp2 = new StringBuilder();
-                            System.out.println(item.isIsadmin() + " Obedddddd ");
-                            temp2.append(pageNr).append(" Member[ id. ").append(item.getUserId()).append(", First Name: ").append(item.getFirstName()).append(", List Name: ").append(item.getLastName()).append(", Adress: ").append(item.getAddress()).append(", Email: ").append(item.getEmail()).append(", Number: ").append(item.getPhoneNumber()).append(", Password: ").append(item.getPassword()).append(", isAdmin: ").append(item.isIsadmin()).append(" ]");
-                            temp.add(temp2.toString());
-                        }
-
-                        ObservableList<String> tickets = FXCollections.observableList(temp);
-                        member_listview.setItems(tickets);
-
-                    }
-
-                    ticket_listview = (ListView<String>) root.lookup("#ticket_listview");
-                    if(ticket_listview != null)
-                    {
-
-
-                        ArrayList<Book> ticket = connection.searchTicket();
-                        ArrayList<String> temp = new ArrayList<>();
-                        for(Book item: ticket)
-                        {
-                            StringBuilder temp2 = new StringBuilder();
-                            temp2.append("Ticket[ user. ").append(item.getUser_id()).append(", flightid: ").append(item.getFlight_id()).append(", seat number: ").append(item.getSeatNbr()).append(" ]");
-                            temp.add(temp2.toString());
-                        }
-                        ObservableList<String> tickets = FXCollections.observableList(temp);
-                        ticket_listview.setItems(tickets);
-                    }
-                } else {
-                    error_message_lbl.setText("Wrong email or pass!");
-                    PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                    pause.setOnFinished(a -> error_message_lbl.setText(null));
-                    pause.play();
-                }
-            }catch (IOException io){
-                io.printStackTrace();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        } else {
-            error_message_lbl.setText("Fill the field!");
-
-        }
+      adminControl.switchToAdminView(e,this);
     }
 
     /**
@@ -1175,98 +725,14 @@ public class Controller implements Initializable {
      * @param e
      */
     public void userDev(ActionEvent e){
-        if (e.getSource() == menu_profile_btn) {
-            profile_anchorpane.toFront();
-            toggleMenuColor();
-        }
-        else if(e.getSource() == booking_close_btn || e.getSource() == booking_close_second_page_btn){
-            booking_seat_anchorpane.toBack();
-            restore_psgr_info();
-        }
-        else if (e.getSource() == menu_flight_btn) {
-            flight_anchorpane.toFront();
-            toggleMenuColor();
-            menu_highlight_color_flight.setVisible(true);
-            map_menu_user_image.setOpacity(1);
-        }
-        else if (e.getSource() == menu_history_btn) {
-            history_anchorpane.toFront();
-            toggleMenuColor();
-            menu_highlight_color_history.setVisible(true);
-            history_menu_user_image.setOpacity(1);
-        }
-        else if (e.getSource() == menu_entertainment_btn) {
-            entertainment_anchorpane.toFront();
-            toggleMenuColor();
-            menu_highlight_color_entertainment.setVisible(true);
-            entertainment_menu_user_image.setOpacity(1);
-
-        }
-        else if(e.getSource() == menu_support_btn){
-            support_anchorpane.toFront();
-            toggleMenuColor();
-            menu_highlight_color_support.setVisible(true);
-            support_menu_user_image.setOpacity(1);
-        }
-
-        // navigating av
-        else if(e.getSource() == date_previous_day_button){
-            System.out.println("NOOOO");
-            if (date_input_flight.getValue() == null){
-                System.out.println("Nulll value");
-                LocalDate date = LocalDate.now();
-                date_input_flight.setValue(date);
-                date_input_flight.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
-                    System.out.println("Not null 1");
-                        System.out.println(date);
-                        // do something
-                        System.out.println(oldValue + " old");
-                        System.out.println(newValue + " new");
-                        date_input_flight.setValue(date);
-
-                });
-            }
-            if (date_input_flight.getValue() != null){
-                date_input_flight.setValue(date_input_flight.getValue().minusDays(1));
-            }else {
-                confirmActions.displayMessage(search_flight_error_lbl, "Date is not initialized!", true);
-            }
-        }
-        else if(e.getSource() == date_next_day_button){
-            if (date_input_flight.getValue() != null){
-                date_input_flight.setValue(date_input_flight.getValue().plusDays(1));
-            }else
-                confirmActions.displayMessage(search_flight_error_lbl, "Date is not initialized!", true);
-        }
-        else if(e.getSource() == date_previous_day_return_button){
-            if (dateR_input_flight.getValue() != null){
-                dateR_input_flight.setValue(dateR_input_flight.getValue().plusDays(1));
-            }else
-                confirmActions.displayMessage(search_flight_error_lbl, "Date is not initialized!", true);
-        }
-        else if(e.getSource() == date_next_day_return_button){
-            if (dateR_input_flight.getValue() != null){
-                dateR_input_flight.setValue(dateR_input_flight.getValue().plusDays(1));
-            }else
-                confirmActions.displayMessage(search_flight_error_lbl, "Date is not initialized!", true);
-        }
-
-
+       developerHandler.userDev(e,this);
     }
 
     /**
      *
      */
-    private void toggleMenuColor() {
-        menu_highlight_color_flight.setVisible(false);
-        menu_highlight_color_history.setVisible(false);
-        menu_highlight_color_entertainment.setVisible(false);
-        menu_highlight_color_support.setVisible(false);
-
-        map_menu_user_image.setOpacity(0.5);
-        history_menu_user_image.setOpacity(0.5);
-        entertainment_menu_user_image.setOpacity(0.5);
-        support_menu_user_image.setOpacity(0.5);
+    public void toggleMenuColor() {
+        dashboardController.toggleMenuColor(this);
     }
 
     /**
@@ -1276,41 +742,7 @@ public class Controller implements Initializable {
      * @autor Obed.
      */
     public void adminDev(ActionEvent e) throws SQLException {
-        if(e.getSource() == admin_logout_button)
-        {
-            switchToLogin(e);
-        }
-        else if(e.getSource() == refreshMembersBtn_admin){
-            adminControl.updateMemberTable();
-        }else if(e.getSource() == deletS_btn_mbr_admin){
-            // delete a member here
-            adminControl.updateMemberTable();
-        }
-        else if(e.getSource() == returnToMemberListBtn_admin)
-        {
-            admin_members_anchorpane.toFront();
-        }
-
-        else if(e.getSource() == registerMemberBtn_admin)
-        {
-            admin_register_anchorpane.toFront();
-        }
-
-        else if(e.getSource() == admin_flights_button)
-        {
-            admin_flights_anchorpane.toFront();
-        }
-
-        else if(e.getSource() == admin_tickets_button)
-        {
-            admin_tickets_anchorpane.toFront();
-        }
-
-        else if(e.getSource() == admin_members_button)
-        {
-            admin_members_anchorpane.toFront();
-        }
-
+        developerHandler.adminDev(e,this);
     }
 
     //----------------- SEARCH FLIGHTS -----------------//

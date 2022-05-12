@@ -2,20 +2,32 @@ package application.Components.AdminComponents;
 
 import application.Controller;
 import application.database.Connection;
+import application.model.Book;
 import application.model.Flight;
 import application.model.User;
 import application.model.UserHistory;
+import javafx.animation.PauseTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class AdminControl {
     private Controller controller;
@@ -24,6 +36,76 @@ public class AdminControl {
     public AdminControl(Controller controller, Connection connection) {
         this.controller = controller;
         this.connection = connection;
+    }
+
+    public void switchToAdminView(ActionEvent e, Controller controller) {
+        if (!controller.login_pass.getText().isEmpty() && !controller.login_email.getText().isEmpty()) {
+            try {
+                User user = connection.authenticationAdmin(controller.login_email.getText(), controller.login_pass.getText());
+                if (user != null) {
+
+                    controller.root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("admin/AdminView.fxml")));
+                    controller.main_stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+                    controller.main_scene = new Scene(controller.root);
+                    controller.main_stage.setTitle("Admin window");
+                    controller.main_stage.setScene(controller.main_scene);
+                    controller.main_stage.show();
+
+
+                    controller.adminControl.fillMemmbersTable(controller.root);
+                    controller.adminControl.fillTicketTable(controller.root);
+                    controller.adminControl.fillTableFlights(controller.root);
+
+                    controller.member_listview = (ListView<String>) controller.root.lookup("#member_listview");
+                    if(controller.member_listview != null)
+                    {
+                        ArrayList<User> member = connection.getAllUsers();
+                        ArrayList<String> temp = new ArrayList<>();
+                        int pageNr = 0;
+                        for(User item: member)
+                        {
+                            pageNr++;
+                            StringBuilder temp2 = new StringBuilder();
+                            System.out.println(item.isIsadmin() + " Obedddddd ");
+                            temp2.append(pageNr).append(" Member[ id. ").append(item.getUserId()).append(", First Name: ").append(item.getFirstName()).append(", List Name: ").append(item.getLastName()).append(", Adress: ").append(item.getAddress()).append(", Email: ").append(item.getEmail()).append(", Number: ").append(item.getPhoneNumber()).append(", Password: ").append(item.getPassword()).append(", isAdmin: ").append(item.isIsadmin()).append(" ]");
+                            temp.add(temp2.toString());
+                        }
+
+                        ObservableList<String> tickets = FXCollections.observableList(temp);
+                        controller.member_listview.setItems(tickets);
+
+                    }
+
+                    controller.ticket_listview = (ListView<String>) controller.root.lookup("#ticket_listview");
+                    if(controller.ticket_listview != null)
+                    {
+
+
+                        ArrayList<Book> ticket = connection.searchTicket();
+                        ArrayList<String> temp = new ArrayList<>();
+                        for(Book item: ticket)
+                        {
+                            StringBuilder temp2 = new StringBuilder();
+                            temp2.append("Ticket[ user. ").append(item.getUser_id()).append(", flightid: ").append(item.getFlight_id()).append(", seat number: ").append(item.getSeatNbr()).append(" ]");
+                            temp.add(temp2.toString());
+                        }
+                        ObservableList<String> tickets = FXCollections.observableList(temp);
+                        controller.ticket_listview.setItems(tickets);
+                    }
+                } else {
+                    controller.error_message_lbl.setText("Wrong email or pass!");
+                    PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                    pause.setOnFinished(a -> controller.error_message_lbl.setText(null));
+                    pause.play();
+                }
+            }catch (IOException io){
+                io.printStackTrace();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            controller.error_message_lbl.setText("Fill the field!");
+        }
     }
 
     //This metod fills members infomation from database to columns
