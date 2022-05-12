@@ -1,23 +1,20 @@
-package application.model;
+package application.Components;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
-
 public class MusicHandler implements Runnable {
     private MediaPlayer mediaPlayer;
     private Thread thread;
     private File[] files;
     private boolean playing = false;
     private int i = 0;
-
     public MusicHandler() {
         files = new File("music").listFiles();
         thread = new Thread(this);
         mediaPlayer = new MediaPlayer(new Media(files[0].toURI().toString()));
     }
-
     public void nextButton() {
         playing = false;
         mediaPlayer = new MediaPlayer(new Media(files[nextSong()].toURI().toString()));
@@ -25,7 +22,6 @@ public class MusicHandler implements Runnable {
         thread = new Thread(this);
         thread.start();
     }
-
     public void prevButton() {
         playing = false;
         mediaPlayer = new MediaPlayer(new Media(files[prevSong()].toURI().toString()));
@@ -53,7 +49,6 @@ public class MusicHandler implements Runnable {
             playing=false;
         }
     }
-
     @Override
     public void run() {
         do {

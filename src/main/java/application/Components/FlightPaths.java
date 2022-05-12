@@ -1,6 +1,7 @@
-package application.model;
+package application.Components;
 
 import application.Controller;
+import application.model.Coordinates;
 import javafx.animation.*;
 import javafx.scene.control.CheckBox;
 import javafx.scene.image.Image;

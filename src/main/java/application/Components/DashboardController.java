@@ -2,11 +2,24 @@ package application.Components;
 
 import application.Controller;
 import application.database.Connection;
+import application.model.CreateWorld;
 import application.model.User;
+import application.moveScreen.MoveScreen;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Objects;
 
 public class DashboardController {
     private Controller controller;
@@ -73,20 +86,20 @@ public class DashboardController {
         // Config scrollbar
 
         // Passenger info
-        controller.booking_first_name_textfield = (TextField) root.lookup("#name_seat_pnl");
-        controller.booking_last_name_textfield = (TextField) root.lookup("#lname_seat_pnl");
-        controller.booking_four_digits_textfield = (TextField) root.lookup("#fourdigit_seat_pnl");
-        controller.booking_email_textfield = (TextField) root.lookup("#email_seat_pnl");
-        controller.booking_seat_number_lbl = (Label) root.lookup("#seat_nbr_seat_pnl");
-        controller.booking_retur_seat_number_lbl = (Label) root.lookup("#rtur_seat_nbr_seat_pnl");
-        controller.booking_msg_lbl = (Label) root.lookup("#msg_seat_pnl");
-        controller.booking_flight_number_lbl = (Label) root.lookup("#flight_nbr_seat_pnl");
-        controller.booking_price_lbl = (Label) root.lookup("#price_seat_pnl");
-        controller.booking_departure_lbl = (Label) root.lookup("#from_info_seat_pnl");
-        controller.booking_departure_extra_lbl = (Label) root.lookup("#from_d_info_seat_pnl");
-        controller.booking_destination_lbl = (Label) root.lookup("#to_info_seat_pnl");
-        controller.booking_destination_extra_lbl = (Label) root.lookup("#to_d_info_seat_pnl");
-        controller.booking_is_retur_lbl = (Label) root.lookup("#isTur_seat_pnl");
+        controller.booking_first_name_textfield = (TextField) root.lookup("#booking_first_name_textfield");
+        controller.booking_last_name_textfield = (TextField) root.lookup("#booking_last_name_textfield");
+        controller.booking_four_digits_textfield = (TextField) root.lookup("#booking_four_digits_textfield");
+        controller.booking_email_textfield = (TextField) root.lookup("#booking_email_textfield");
+        controller.booking_seat_number_lbl = (Label) root.lookup("#booking_seat_number_lbl");
+        controller.booking_retur_seat_number_lbl = (Label) root.lookup("#booking_retur_seat_number_lbl");
+        controller.booking_msg_lbl = (Label) root.lookup("#booking_msg_lbl");
+        controller.booking_flight_number_lbl = (Label) root.lookup("#booking_flight_number_lbl");
+        controller.booking_price_lbl = (Label) root.lookup("#booking_price_lbl");
+        controller.booking_departure_lbl = (Label) root.lookup("#booking_departure_lbl");
+        controller.booking_departure_extra_lbl = (Label) root.lookup("#booking_departure_extra_lbl");
+        controller.booking_destination_lbl = (Label) root.lookup("#booking_destination_lbl");
+        controller.booking_destination_extra_lbl = (Label) root.lookup("#booking_destination_extra_lbl");
+        controller.booking_is_retur_lbl = (Label) root.lookup("#booking_is_retur_lbl");
 
         // look up for global variables
         controller.username_lbl = (Label) root.lookup("#username_lbl");
@@ -111,7 +124,72 @@ public class DashboardController {
         // loader in login
         //controller.login_loader_flight = (ImageView) root.lookup("#login_loader_flight");
         //controller.login_loader_flight.setVisible(false); // set loader to false
-
     }
+
+    public void switchToDashboard(ActionEvent e, Controller controller) throws IOException {
+        if (!controller.login_email.getText().isEmpty() || !controller.login_pass.getText().isEmpty()) {
+            if (controller.login_email.getText().contains("@") && (controller.login_email.getText().contains("gmail") || controller.login_email.getText().contains("hotmail") || controller.login_email.getText().contains("yahoo") || controller.login_email.getText().contains("outlook"))) {
+                User user = controller.connection.authenticationUser(controller.login_email.getText(), controller.login_pass.getText());
+                if (user != null) {
+                    controller.renderDashboard(e, user);
+                    controller.login_loader_flight.setVisible(true); // set loader to true
+                    controller.playSoundLogin("Login", "sounds/login.wav");
+                    try {
+                        controller.profile_image_preview_imageview.setImage(controller.connection.getProfilePicture(user));
+                    } catch (SQLException ei) {
+                        ei.printStackTrace();
+                    }
+                } else {
+                    controller.confirmActions.displayMessage(controller.error_message_lbl, "Wrong email or password!", true);
+                }
+            } else {
+                controller.confirmActions.displayMessage(controller.error_message_lbl, "Email has wrong format!", true);
+            }
+        } else {
+            controller.confirmActions.displayMessage(controller.error_message_lbl, "Email or password is empty, please fill in fields!", true);
+        }
+    }
+
+    public void renderDashboard(ActionEvent e, User user, Controller controller) {
+        controller.user = user;
+        controller.root = controller.config.render(e,"user/Dashboard", "User Dashboard");
+        controller.dashboardController.userInitializeFXML(controller.root, user);
+        controller.initializeFXM.initializeProfile(controller.root, user);
+        controller.initializeFXM.initializeWeather(controller.root);
+        controller.weatherPaneBase.setClip(new Rectangle(186, 334));
+        controller.create_world = new CreateWorld();
+        controller.world_map = controller.create_world.init(controller, controller.connection);
+        controller.create_world.addWorldInMap(controller.world_map_scrollpane, user);
+        controller.world_map_scrollpane.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color:  #0E0E1B;");
+        controller.world_map.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color:  #0E0E1B;");
+        controller.setInfoIntoTableHistorik();
+    } // the method will render dashboard page for user
+
+    public void noLoginRequired(ActionEvent e, Controller controller) throws IOException {
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/Dashboard.fxml")));
+        this.userInitializeFXML(controller.root, controller.user);
+        controller.flights_scrollpane = (ScrollPane) root.lookup("#flights_scrollpane");
+        controller.flights_scrollpane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        controller.booking_seat_anchorpane = (AnchorPane) root.lookup("#booking_seat_anchorpane");
+
+        controller.flight_display_vbox = (VBox) controller.flights_scrollpane.getContent();
+        controller.world_map_scrollpane = (ScrollPane) root.lookup("#world_map_scrollpane");
+        controller.world_map_scrollpane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        controller.world_map_scrollpane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        controller.create_world = new CreateWorld();
+        controller.world_map = controller.create_world.init(controller, connection);
+
+        controller.world_map_scrollpane.setContent(new StackPane(controller.world_map));
+        controller.world_map_scrollpane.setBackground(new Background(new BackgroundFill(controller.world_map.getBackgroundColor(), CornerRadii.EMPTY, Insets.EMPTY)));
+
+        controller.username_lbl = (Label) root.lookup("#username_lbl");
+        controller.username_lbl.setText(null);
+        controller.main_stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        controller.main_scene = new Scene(root);
+        MoveScreen.moveScreen(root, controller.main_stage);
+        controller.main_stage.setTitle("Test dashboard window");
+        controller.main_stage.setScene(controller.main_scene);
+        controller.main_stage.show();
+    }// shortcut login to user dashboard
 
 }

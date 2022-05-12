@@ -4,6 +4,8 @@ import application.Controller;
 import application.config.Config;
 import application.database.Connection;
 import application.model.ConfirmActions;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Label;
 
 import java.sql.SQLException;
 
@@ -84,5 +86,18 @@ public class RegistrationUser {
             confirmActions.displayMessage(controller.registration_error_lbl, "Empty field issue", true);
         }
         return registered;
+    }
+
+    public void registerUser(ActionEvent e, Controller controller) {
+        boolean ok = registerUser();
+        System.out.println("Kommer in i if-satsen!");
+        if (ok){
+            controller.root = config.render(e, "user/Login", "Login");
+            controller.success_msg_lbl = (Label) controller.root.lookup("#success_msg_lbl");
+            confirmActions.displayMessage(controller.success_msg_lbl, "User successfully registered!", false);
+            controller.playSoundLogin("Success", "sounds/success.wav");
+        } else {
+            confirmActions.displayMessage(controller.success_msg_lbl, "Error", true);
+        }
     }
 }

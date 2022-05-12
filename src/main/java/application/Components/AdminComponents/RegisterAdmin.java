@@ -109,4 +109,22 @@ public class RegisterAdmin {
         }
         return registered;
     }
+
+    public void registerUserAdmin(ActionEvent e, Controller controller) throws SQLException {
+        boolean ok = controller.registerAdmin.registerUserAdmin(e);
+        if (ok){
+            controller.adminControl.updateMemberTable();
+            controller.admin_members_anchorpane.toFront();
+            confirmActions.displayMessage(controller.registration_error_admin, "User successfully registered!", false);
+            controller.playSoundLogin("Success", "sounds/success.wav");
+            controller.first_name_reg_admin.setText("");
+            controller.last_name_reg_admin.setText("");
+            controller.first_name_reg_admin.setText("");
+            controller.address_reg_admin.setText("");
+            controller.emailaddress_reg_admin.setText("");
+            controller.phone_number_reg_admin.setText("");
+            controller.password_reg_admin.setText("");
+            controller.confirm_password_reg_admin.setText("");
+        }
+    }
 }

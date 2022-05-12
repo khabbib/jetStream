@@ -1,4 +1,7 @@
-package application.model;
+package application.Components;
+
+import application.Controller;
+import javafx.scene.image.Image;
 
 import java.io.IOException;
 import java.net.URI;
@@ -75,6 +78,29 @@ public class WeatherAPI {
         return forecast;
     }
 
+    public void setInformation(Controller controller, String country) throws IOException, InterruptedException {
+        ArrayList<String> arrayList = weatherForecast(country);
+        if (country.contains("United States")) { country = "USA"; }
+        controller.lblForecastA.setText(country);
+        controller.lblForecastB.setText("Weather: " + arrayList.get(1));
+        controller.lblForecastC.setText(arrayList.get(2) + "°C");
+        controller.lblForecastD.setText("Feels like: " + arrayList.get(3) + "°C");
+        controller.lblForecastE.setText("Minimum: " + arrayList.get(4) + "°C");
+        controller.lblForecastF.setText("Maxiumum: " + arrayList.get(5) + "°C");
+        controller. weatherIcon.setImage(new Image("http://openweathermap.org/img/wn/"+arrayList.get(0).replace(" ","")+"@2x.png"));
+    }
+
+    public void weatherMenu(Controller controller) {
+        if (!controller.weatherMenu) {
+            controller.weatherPane.setVisible(true);
+            controller.weatherPane.setPickOnBounds(true);
+            controller.weatherMenu = true;
+        } else {
+            controller.weatherPane.setVisible(false);
+            controller.weatherPane.setPickOnBounds(false);
+            controller.weatherMenu = false;
+        }
+    }
     private String convert(String weather){
 
         switch (weather) {
