@@ -46,7 +46,7 @@ public class WeatherAPI {
 
             if (responseString.length() > 120) {
                 String weather = null;
-                if (responseString.contains("rain") && !responseString.contains("light") || responseString.contains("snow") && !responseString.contains("light") || responseString.contains("mist")) {
+                if (responseString.contains("rain") && !responseString.contains("light") && !responseString.contains("Ukraine")|| responseString.contains("snow") && !responseString.contains("light") || responseString.contains("mist")) {
                     weather = responseString.substring(integers.get(16) + 1, integers.get(17));
                     forecast.add(convert(weather));
                     forecast.add(weather.substring(0, 1).toUpperCase() + weather.substring(1));

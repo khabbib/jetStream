@@ -305,6 +305,7 @@ public class Controller implements Initializable {
     RegisterAdmin registerAdmin;
     InitializeFXM initializeFXM;
     AdminControl adminControl;
+    MusicHandler musicHandler;
     //</editor-fold>
 
     // Loader in login
@@ -324,6 +325,7 @@ public class Controller implements Initializable {
         flightPaths = new FlightPaths(this);
         weatherAPI = new WeatherAPI();
         adminControl = new AdminControl(this, connection);
+        musicHandler = new MusicHandler();
     }
 
     //----------------- HOME -----------------//
@@ -1312,6 +1314,17 @@ public class Controller implements Initializable {
         label.setBackground(new Background(new BackgroundFill(Color.WHITE, new CornerRadii(5), Insets.EMPTY)));
         label.setBorder(new Border(new BorderStroke(Color.WHITE, BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(0))));
         return label;
+    }
+
+    public void mediaHandler(ActionEvent e) {
+        if (e.getSource().toString().contains("play")) {
+            musicHandler.playButton();
+        } else if (e.getSource().toString().contains("next")) {
+            musicHandler.nextButton();
+        } else if (e.getSource().toString().contains("prev")) {
+            musicHandler.prevButton();
+        }
+        System.out.println(e.getSource());
     }
 
     /**
