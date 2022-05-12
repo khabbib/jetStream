@@ -13,6 +13,9 @@ import javafx.scene.layout.Pane;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
+/**
+ * #comment (comment this class and create javadoc to every method)
+ */
 public class InitializeFXM {
     private Controller controller;
     private Connection connection;

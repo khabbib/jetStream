@@ -15,6 +15,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
@@ -344,7 +345,7 @@ public class Controller implements Initializable {
     application.Components.Support support;
     Search search;
     public ConfirmActions confirmActions;
-    public DashboardController dashboardController;
+    public UserDashboardController userDashboardController;
     public Connection connection;
     WeatherAPI weatherAPI;
     PasswordHandler password;
@@ -373,7 +374,7 @@ public class Controller implements Initializable {
         search = new Search(this, connection, confirmActions);
         registrationUser = new RegistrationUser(this, connection, config);
         registerAdmin = new RegisterAdmin(this, connection, config);
-        dashboardController = new DashboardController(this, root, connection);
+        userDashboardController = new UserDashboardController(this, root, connection);
         initializeFXM = new InitializeFXM(this,connection);
         flightPaths = new FlightPaths(this);
         weatherAPI = new WeatherAPI();
@@ -386,6 +387,13 @@ public class Controller implements Initializable {
         musicHandler = new MusicHandler(this);
     }
 
+    /**
+     * This method validates the input from text fields and checks if it's limitation is correct.
+     * @param textField comes from fxml text field id.
+     * @param limitType indicates which text shall be validated.
+     * @return true if its okay.
+     * @author Sossio.
+     */
     public static boolean validateInputLimit(TextField textField, String limitType) {
 
         boolean isTrue = false;
@@ -504,7 +512,7 @@ public class Controller implements Initializable {
      * This method plays sound on button actions.
      * @param soundName takes the name of the sound as a string to print in concole.
      * @param src is file path name.
-     * @author Sossio. :D
+     * @author Sossio.
      */
     public void playSoundLogin(String soundName, String src) {
         Media buzzer = new Media(getClass().getResource(src).toExternalForm());
@@ -519,8 +527,8 @@ public class Controller implements Initializable {
      * @param e
      * @throws IOException
      */
-    public void switchToDashboard(ActionEvent e) throws IOException {
-        dashboardController.switchToDashboard(e,this);
+    public void switchToUserDashboard(ActionEvent e) throws IOException {
+        userDashboardController.switchToUserDashboard(e,this);
     }
 
     /**
@@ -545,7 +553,7 @@ public class Controller implements Initializable {
      * @throws IOException
      */
     public void renderDashboard(ActionEvent e, User user) {
-        dashboardController.renderDashboard(e,user,this);
+        userDashboardController.renderDashboard(e,user,this);
     } // the method will render dashboard page for user
 
     /**
@@ -553,7 +561,7 @@ public class Controller implements Initializable {
      * @throws IOException
      */
     public void noLoginRequired(ActionEvent e) throws IOException {
-        dashboardController.noLoginRequired(e,this);
+        userDashboardController.noLoginRequired(e,this);
     }// shortcut login to user dashboard
 
     /**
@@ -753,7 +761,7 @@ public class Controller implements Initializable {
      *
      */
     public void toggleMenuColor() {
-        dashboardController.toggleMenuColor(this);
+        userDashboardController.toggleMenuColor(this);
     }
 
     /**

@@ -102,7 +102,7 @@ public class RegisterAdmin {
     /**
      * This method is called when register button is clicked.
      * @param e handles an event on button.
-     * @param controller connetcs to variables and methods.
+     * @param controller connects to variables and methods.
      * @author Obed. Developed by Sossio.
      */
     public void registerUserAdminBtnAction(ActionEvent e, Controller controller) throws SQLException {

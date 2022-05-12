@@ -15,7 +15,7 @@
             <Font size="25.0" />
          </font>
       </Text>
-      <Button layoutX="516.0" layoutY="430.0" mnemonicParsing="false" onAction="#switchToDashboard" style="-fx-background-color: #f78600#f78600;" text="Return to dashboard" textFill="#0a0a0a">
+      <Button layoutX="516.0" layoutY="430.0" mnemonicParsing="false" onAction="#switchToUserDashboard" style="-fx-background-color: #f78600#f78600;" text="Return to dashboard" textFill="#0a0a0a">
          <padding>
             <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
          </padding></Button>

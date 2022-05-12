@@ -2,6 +2,7 @@ package application.model;
 
 /**
  * Enumeration for country names.
+ * @autor Kasper and Sossio.
  */
 public enum CountryList {
     Afghanistan,
@@ -74,7 +75,6 @@ public enum CountryList {
     Germany,
     Ghana,
     Greece,
-
     Greenland,
     Grenada,
     Guatemala,

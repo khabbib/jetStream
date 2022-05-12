@@ -15,6 +15,9 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * #comment (comment this class and create javadoc to every method)
+ */
 public class FlightPaths {
 
     private Controller controller;

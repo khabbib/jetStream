@@ -1,5 +1,8 @@
 package application.model;
 
+/**
+ * #comment (comment this class and create javadoc to every method)
+ */
 public class Coordinates {
     public double[] convert(String s){
         double[] coordinates = new double[2];

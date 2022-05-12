@@ -11,8 +11,16 @@ import javafx.scene.layout.GridPane;
 import java.io.File;
 import java.sql.SQLException;
 
+/**
+ * This class handles profile information.
+ */
 public class ProfileManager {
 
+    /**
+     * This method edits profile information to later save in the database.
+     * @throws SQLException if any error occurs.
+     * @author Kasper. Huge modified and developed by Sossio.
+     */
     public void editProfile(Controller controller) throws SQLException {
         if (controller.is_editing_profile == false) {
             controller.profile_cancel_btn.setDisable(false);
@@ -178,6 +186,11 @@ public class ProfileManager {
         }
     }
 
+    /**
+     * This method cancels editing profile.
+     * @throws SQLException if any error occurs.
+     * @author Sossio.
+     */
     public void editProfileCancel(Controller controller) throws SQLException {
         // Reset to current data
         controller.profile_first_name_lbl.setText(controller.connection.getUserDatabaseFirstName(controller.user.getUserId()));
@@ -206,6 +219,10 @@ public class ProfileManager {
         controller.confirmActions.displayMessage(controller.pfp_display_msg, "Profile editing canceled!", false);
     }
 
+    /**
+     * Shows available profile images using a grid.
+     * @author Kasper.
+     */
     public void changeImage(Controller controller) {
         if (controller.is_editing_profile_image == false) {
             controller.profile_profile_image_gridpane.setVisible(true);
@@ -226,6 +243,11 @@ public class ProfileManager {
         }
     }
 
+    /**
+     * Edits the profile picture of a user.
+     * @param event
+     * @author Kasper. Developed by Sossio.
+     */
     public void clickGrid(MouseEvent event, Controller controller) {
         Node clickedNode = event.getPickResult().getIntersectedNode();
         if (clickedNode != controller.profile_profile_image_gridpane) {

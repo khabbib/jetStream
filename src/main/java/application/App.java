@@ -7,9 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
-
 import java.util.Objects;
 
 
@@ -21,7 +19,9 @@ public class App extends Application {
     @FXML public StackPane pane;
 
     /**
+     * #comment
      * @param stage
+     * @author Khabib.
      */
     @Override public void start(Stage stage) {
         try {

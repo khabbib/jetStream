@@ -3,11 +3,14 @@ package application.Components;
 import application.Controller;
 import javafx.event.ActionEvent;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
+
+/**
+ * #comment (comment this class and create javadoc to every method)
+ */
 public class MusicHandler implements Runnable {
     private MediaPlayer mediaPlayer;
     private Thread thread;

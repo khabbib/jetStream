@@ -21,18 +21,28 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Objects;
 
-public class DashboardController {
+/**
+ * This class handles user dashboard.
+ */
+public class UserDashboardController {
     private Controller controller;
     private Parent root;
     private Connection connection;
-    public DashboardController(Controller controller, Parent root, Connection connection){
+
+    /**
+     * Class constructor.
+     * @param controller connects to all variables and methods.
+     * @param root gets parent root.
+     * @param connection connects to database.
+     */
+    public UserDashboardController(Controller controller, Parent root, Connection connection){
         this.controller = controller;
         this.root = root;
         this.connection = connection;
     }
 
     /**
-     *
+     * #comment
      */
     public void toggleMenuColor(Controller controller) {
         controller.menu_highlight_color_flight.setVisible(false);
@@ -45,20 +55,26 @@ public class DashboardController {
         controller.entertainment_menu_user_image.setOpacity(0.5);
         controller.support_menu_user_image.setOpacity(0.5);
     }
+
+    /**
+     * #comment
+     * @param root
+     * @param user
+     */
     public void userInitializeFXML(Parent root, User user){
         // flight list related variables
         controller.nbr_of_available_flights = (Label) root.lookup("#nbr_of_available_flights");
+
         // global error message for user dashboard
         controller.user_dashboard_msgbox_pane = (Pane)root.lookup("#msgBox_user_dashboard");
         controller.user_notification_lbl = (Label) root.lookup("#notify_user_dashboard");
         // login success message
-        //
-        // scrollpane seats
+
+        // scroll pane seats
         controller.eco_seat_scrollpane = (ScrollPane) root.lookup("#eco_seat_scrollpane");
         controller.business_seat_scrollpane = (ScrollPane) root.lookup("#business_seat_scrollpane");
         controller.eco_seat_scrollpane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         controller.business_seat_scrollpane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-
 
         controller.flight_seats_eco_anchorpane = (AnchorPane) controller.eco_seat_scrollpane.getContent();
         controller.flights_seats_business_anchorpane = (AnchorPane) controller.business_seat_scrollpane.getContent();
@@ -139,7 +155,14 @@ public class DashboardController {
         //controller.login_loader_flight.setVisible(false); // set loader to false
     }
 
-    public void switchToDashboard(ActionEvent e, Controller controller) throws IOException {
+    /**
+     * #comment
+     * The method will switch the user to the dashboard page.
+     * Navigate to dashboard pages.
+     * @param e takes an event listener.
+     * @author Khabib. Developed by Sossio.
+     */
+    public void switchToUserDashboard(ActionEvent e, Controller controller) {
         if (!controller.login_email.getText().isEmpty() || !controller.login_pass.getText().isEmpty()) {
             if (controller.login_email.getText().contains("@") && (controller.login_email.getText().contains("gmail") || controller.login_email.getText().contains("hotmail") || controller.login_email.getText().contains("yahoo") || controller.login_email.getText().contains("outlook"))) {
                 User user = controller.connection.authenticationUser(controller.login_email.getText(), controller.login_pass.getText());
@@ -163,10 +186,17 @@ public class DashboardController {
         }
     }
 
+    /**
+     * #comment
+     * The method will render dashboard page for user
+     * @param e
+     * @param user
+     * @param controller
+     */
     public void renderDashboard(ActionEvent e, User user, Controller controller) {
         controller.user = user;
         controller.root = controller.config.render(e,"user/Dashboard", "User Dashboard");
-        controller.dashboardController.userInitializeFXML(controller.root, user);
+        controller.userDashboardController.userInitializeFXML(controller.root, user);
         controller.initializeFXM.initializeProfile(controller.root, user);
         controller.initializeFXM.initializeWeather(controller.root);
         controller.initializeFXM.initializeMusic(controller.root);
@@ -177,8 +207,15 @@ public class DashboardController {
         controller.world_map_scrollpane.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color:  #0E0E1B;");
         controller.world_map.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color:  #0E0E1B;");
         controller.setInfoIntoTableHistorik();
-    } // the method will render dashboard page for user
+    }
 
+    /**
+     * #comment
+     * Shortcut login to user dashboard
+     * @param e
+     * @param controller
+     * @throws IOException
+     */
     public void noLoginRequired(ActionEvent e, Controller controller) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/Dashboard.fxml")));
         this.userInitializeFXML(controller.root, controller.user);
@@ -204,6 +241,5 @@ public class DashboardController {
         controller.main_stage.setTitle("Test dashboard window");
         controller.main_stage.setScene(controller.main_scene);
         controller.main_stage.show();
-    }// shortcut login to user dashboard
-
+    }
 }

@@ -5,6 +5,7 @@ import javafx.scene.control.CheckBox;
 import java.util.Date;
 
 /**
+ * #comment (comment this class and create javadoc to every method)
  * This class saves data to book.
  */
 public class Book {

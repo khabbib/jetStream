@@ -11,14 +11,14 @@ public class Flight {
     private boolean rTur = false;
     private CheckBox box;
     /**
-     * @param id
-     * @param departure_name
-     * @param departure_date
-     * @param departure_time
-     * @param destination_name
-     * @param destination_date
-     * @param destination_time
-     * @param price
+     * @param id of flight.
+     * @param departure_name text.
+     * @param departure_date date.
+     * @param departure_time time.
+     * @param destination_name text.
+     * @param destination_date date.
+     * @param destination_time time.
+     * @param price of flight.
      */
     public Flight(String id, String departure_name, String departure_date, String departure_time,String destination_name, String destination_date, String destination_time, String price, boolean rTur, int size){
         this.size = size;

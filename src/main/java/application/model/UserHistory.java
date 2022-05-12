@@ -5,6 +5,7 @@ import javafx.scene.control.CheckBox;
 import java.awt.*;
 
 /**
+ * #comment (comment this class and create javadoc to every method)
  * This class saves data to user history of booked tickets.
  */
 public class UserHistory {

@@ -7,10 +7,14 @@ import javafx.event.ActionEvent;
 
 import java.time.LocalDate;
 
+/**
+ * #comment (comment this class and create javadoc to every method)
+ */
 public class Search {
     private Controller controller;
     private Connection connection;
     private ConfirmActions confirmActions;
+
     public Search(Controller controller, Connection connection, ConfirmActions confirmActions){
         this.controller = controller;
         this.connection = connection;

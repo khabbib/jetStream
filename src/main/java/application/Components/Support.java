@@ -1,20 +1,20 @@
 package application.Components;
 import application.Controller;
-import application.auth.Purchase;
 import application.model.ConfirmActions;
 import javafx.event.ActionEvent;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 /**
- * This class handles support path.
+ * This class handles support path, where users can send email to admin.
  */
 public class Support {
     private Controller controller;
     private ConfirmActions confirmActions;
 
     /**
-     * @param controller
+     * Class constructor.
+     * @param controller connects all methods and variables.
      */
     public Support(Controller controller){
         this.controller = controller;
@@ -22,7 +22,10 @@ public class Support {
     }
 
     /**
-     * @param e
+     * This method sends specific email to chosen part such as report issue, feedback and contact.
+     * Method also handles error if text fields is empty etc.
+     * @param e is event listener for buttons
+     * @author Sossio and Khabib.
      */
     public void supportInfo(ActionEvent e){
         System.out.println(e.getSource());
@@ -96,12 +99,24 @@ public class Support {
         }
     }
 
+    /**
+     * This method shows which button is active.
+     * @author Khabib and Sossio.
+     */
     private void activeBtn() {
         controller.issue_btn_sup.setStyle("-fx-background-color: #333; -fx-text-fill: #fff");
         controller.feedback_btn_sup.setStyle("-fx-background-color: #333; -fx-text-fill: #fff");
         controller.contact_btn_sup.setStyle("-fx-background-color: #333; -fx-text-fill: #fff");
     }
 
+    /**
+     * This method checks if text fields is empty or not.
+     * @param title text.
+     * @param email text.
+     * @param msg text.
+     * @return true if its not empty.
+     * @author Sossio.
+     */
     private boolean checkFields(String title, String email, String msg) {
         boolean ok = false;
         if(!title.isEmpty() && !email.isEmpty() && !msg.isEmpty()) {
@@ -110,6 +125,13 @@ public class Support {
         return ok;
     }
 
+    /**
+     * This method will reset all text in text fields.
+     * @param textField1 fxml id.
+     * @param textField2 fxml id.
+     * @param textArea fxml id.
+     * @author Sossio.
+     */
     private void resetText(TextField textField1, TextField textField2, TextArea textArea) {
         textField1.setText("");
         textField2.setText("");
