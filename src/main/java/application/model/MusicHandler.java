@@ -13,14 +13,12 @@ public class MusicHandler implements Runnable {
     private int i = 0;
 
     public MusicHandler() {
-        System.out.println("music handler");
         files = new File("music").listFiles();
         thread = new Thread(this);
         mediaPlayer = new MediaPlayer(new Media(files[0].toURI().toString()));
     }
 
     public void nextButton() {
-        System.out.println("next");
         playing = false;
         mediaPlayer = new MediaPlayer(new Media(files[nextSong()].toURI().toString()));
         playing = true;
@@ -29,7 +27,6 @@ public class MusicHandler implements Runnable {
     }
 
     public void prevButton() {
-        System.out.println("prev");
         playing = false;
         mediaPlayer = new MediaPlayer(new Media(files[prevSong()].toURI().toString()));
         playing = true;
@@ -49,12 +46,10 @@ public class MusicHandler implements Runnable {
 
     public void playButton() {
         if (!playing) {
-            System.out.println("yabadaba");
             playing=true;
             thread = new Thread(this);
             thread.start();
         } else {
-            System.out.println("wabadab");
             playing=false;
         }
     }
