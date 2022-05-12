@@ -197,7 +197,7 @@
                   </HBox>
                </children>
             </VBox>
-            <Button fx:id="registerCommitBtn_admin" layoutX="607.0" layoutY="374.0" mnemonicParsing="false" onAction="#registerUserAdmin" prefHeight="36.0" prefWidth="260.0" style="-fx-background-color: #f87000;" text="Register" textFill="WHITE" />
+            <Button fx:id="registerCommitBtn_admin" layoutX="607.0" layoutY="374.0" mnemonicParsing="false" onAction="#registerUserAdminBtnAction" prefHeight="36.0" prefWidth="260.0" style="-fx-background-color: #f87000;" text="Register" textFill="WHITE" />
             <Button fx:id="returnToMemberListBtn_admin" layoutX="607.0" layoutY="451.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="260.0" style="-fx-background-color: #f87000;" text="Return to member list" textFill="WHITE" />
             <Label layoutX="81.0" layoutY="40.0" text="Registration a user" textFill="#f87000">
                <font>

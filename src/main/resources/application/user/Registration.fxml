@@ -189,7 +189,7 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button layoutX="592.0" layoutY="381.0" mnemonicParsing="false" onAction="#registerUser" prefHeight="36.0" prefWidth="260.0" style="-fx-background-color: #f87000;" text="Register" textFill="WHITE">
+      <Button layoutX="592.0" layoutY="381.0" mnemonicParsing="false" onAction="#registerUserButton" prefHeight="36.0" prefWidth="260.0" style="-fx-background-color: #f87000;" text="Register" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>

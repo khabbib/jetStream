@@ -8,44 +8,32 @@ import application.games.MPlayer;
 import application.games.Piano;
 import application.games.Pong;
 import application.model.*;
-import application.auth.Purchase;
 import application.database.Connection;
-import javafx.animation.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
-import javafx.scene.text.*;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import worldMapAPI.World;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -398,6 +386,35 @@ public class Controller implements Initializable {
         musicHandler = new MusicHandler(this);
     }
 
+    public static boolean validateInputLimit(TextField textField, String limitType) {
+
+        boolean isTrue = false;
+
+        if ((textField.getText().length() >= 3 && textField.getText().length() <= 30) && limitType == "firstname") {
+            isTrue = true;
+        }
+        else if ((textField.getText().length() >= 3 && textField.getText().length() <= 30) && limitType == "lastname") {
+            isTrue = true;
+        }
+        else if ((textField.getText().length() >= 5 && textField.getText().length() <= 60) && limitType == "address") {
+            isTrue = true;
+        }
+        else if ((textField.getText().length() >= 6 && textField.getText().length() <= 30) && limitType == "email") {
+            isTrue = true;
+        }
+        else if ((textField.getText().length() == 10) && limitType == "phone") {
+            isTrue = true;
+        }
+        else if ((textField.getText().length() >= 8 && textField.getText().length() <= 20) && limitType == "password") {
+            isTrue = true;
+        }
+        else if ((textField.getText().contains("@") && (textField.getText().contains("gmail") || textField.getText().contains("hotmail") || textField.getText().contains("yahoo") || textField.getText().contains("outlook"))) && limitType == "email-format") {
+            isTrue = true;
+        }
+
+        return isTrue;
+    }
+
     //----------------- HOME -----------------//
 
     /**
@@ -553,16 +570,16 @@ public class Controller implements Initializable {
      * @throws SQLException
      * @throws IOException
      */
-    public void registerUser(ActionEvent e) {
-        registrationUser.registerUser(e,this);
+    public void registerUserButton(ActionEvent e) {
+        registrationUser.registerUserBtnAction(e,this);
     }
 
     /**
      * @param e
      * @throws SQLException
      */
-    public void registerUserAdmin(ActionEvent e) throws SQLException {
-        registerAdmin.registerUserAdmin(e,this);
+    public void registerUserAdminBtnAction(ActionEvent e) throws SQLException {
+        registerAdmin.registerUserAdminBtnAction(e,this);
     }
 
     /**
