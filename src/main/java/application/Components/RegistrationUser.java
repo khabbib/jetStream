@@ -90,7 +90,7 @@ public class RegistrationUser {
     /**
      * This method is called when register button is clicked.
      * @param e handles an event on button.
-     * @param controller connetcs to variables and methods.
+     * @param controller connects to variables and methods.
      * @author Khabib. Developed by Sossio.
      */
     public void registerUserBtnAction(ActionEvent e, Controller controller) {

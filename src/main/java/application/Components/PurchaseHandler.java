@@ -1,12 +1,14 @@
 package application.Components;
 
 import application.Controller;
-import application.auth.Purchase;
 import javafx.event.ActionEvent;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * #comment (comment this class and create javadoc to every method)
+ */
 public class PurchaseHandler {
 
     public void restore_psgr_info(Controller controller){
@@ -32,6 +34,11 @@ public class PurchaseHandler {
         controller.return_seat = null;
     }
 
+    /**
+     * @param rfc
+     * @param controller
+     * @author Khabib.
+     */
     public void confirmPurchase(String rfc, Controller controller) {
         System.out.println(controller.booking_email_textfield.getText() + " Your email!!!");
         if (!controller.booking_email_textfield.getText().isEmpty()){
@@ -56,6 +63,12 @@ public class PurchaseHandler {
         System.out.println("saved information in database");
     }
 
+    /**
+     * #comment
+     * @param e
+     * @param controller
+     * @autor Khabib. Developed by Sossio.
+     */
     public void purchaseHandle(ActionEvent e, Controller controller){
         if (e.getSource() == controller.card_prev_btn){
             controller.booking_passenger_anchorpane.toFront();

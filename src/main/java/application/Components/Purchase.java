@@ -1,4 +1,4 @@
-package application.auth;
+package application.Components;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -10,11 +10,13 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
+ * #comment
  * This class sends email to every user who booked a seat.
  */
 public class Purchase {
 
     /**
+     * #comment
      * @param nbr
      * @param firstName
      * @param lastName
@@ -29,12 +31,14 @@ public class Purchase {
     }
 
     /**
+     * #comment
      * @param receiver
      * @param user
      * @param flightnbr
      * @param seatNbr
      * @param price
      * @return
+     * @author Khabib.
      */
     public static boolean sendEmail(String receiver, String user,String flightnbr, String seatNbr,String price) {
         String sender = "jetstream.oksh@gmail.com";
@@ -97,11 +101,13 @@ public class Purchase {
     }
 
     /**
+     * #comment
      * This class is for support!
      * @param sender
      * @param title
      * @param msg
      * @return
+     * @author Khabib and Sossio.
      */
     public static boolean sendSupportEmail(String sender, String title, String msg) {
         String receiver = "jetstream.oksh@gmail.com";
@@ -149,6 +155,12 @@ public class Purchase {
         return false;
     }
 
+    /**
+     * #comment
+     * @param sender
+     * @return
+     * @author Khabib and Sossio.
+     */
     public static boolean sendAutoConfirmEmailSupport(String sender) {
         String receiver = "jetstream.oksh@gmail.com";
         String password = "jetstreamemail";
@@ -196,11 +208,13 @@ public class Purchase {
     }
 
     /**
+     * #comment
      * @param user
      * @param flightnbr
      * @param seatnbr
      * @param price
      * @return
+     * @author Khabib and Sossio.
      */
     private static String buildTemplate(String user, String flightnbr, String seatnbr, String price) {
         return (
@@ -217,6 +231,14 @@ public class Purchase {
         );
     }
 
+    /**
+     * #comment
+     * @param sender
+     * @param title
+     * @param msg
+     * @return
+     * @author Khabib and Sossio.
+     */
     private static String buildSupportTemplate(String sender, String title, String msg) {
         return (
                 "<h1>New Support Message!</h1>\n" +
@@ -227,6 +249,11 @@ public class Purchase {
         );
     }
 
+    /**
+     * #comment
+     * @return
+     * @author Khabib and Sossio.
+     */
     private static String autoConfimationMsgSupport() {
         return (
                 "<h1>Support Confirmation!</h1>\n" +

@@ -5,6 +5,9 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 
+/**
+ * #comment (comment this class and create javadoc to every method)
+ */
 public class PasswordHandler {
 
     public void showPassword(ActionEvent e, Controller controller){

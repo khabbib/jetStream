@@ -6,7 +6,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
- *
+ * #comment (comment this class and create javadoc to every method)
  */
 public class MoveScreen {
     private static double xOffset =0;

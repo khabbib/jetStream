@@ -13,6 +13,7 @@ import javafx.util.Duration;
 import java.util.Optional;
 
 /**
+ * #comment (comment this class and create javadoc to every method)
  *  This class is used to warn if the user really want to confirm an action.
  */
 public class ConfirmActions {

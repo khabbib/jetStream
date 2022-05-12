@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import java.util.Objects;
 
 /**
+ * #comment (comment this class and create javadoc to every method)
  * This class ... configurates?
  */
 public class Config {

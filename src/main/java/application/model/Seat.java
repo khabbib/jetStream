@@ -1,6 +1,7 @@
 package application.model;
 
 /**
+ * #comment (comment this class and create javadoc to every method)
  * This class saves data to seat.
  */
 public class Seat {

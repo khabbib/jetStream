@@ -18,6 +18,9 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * #comment (comment this class and create javadoc to every method)
+ */
 public class FlightsViewManager {
 
     public void resetSearchFromTo(Controller controller) {

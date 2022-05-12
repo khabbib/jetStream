@@ -37,7 +37,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="75.0" prefWidth="368.0" spacing="10.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#switchToDashboard" prefHeight="36.0" prefWidth="260.0" style="-fx-background-color: #f87000;" text="Login as user" textFill="WHITE">
+                  <Button mnemonicParsing="false" onAction="#switchToUserDashboard" prefHeight="36.0" prefWidth="260.0" style="-fx-background-color: #f87000;" text="Login as user" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>
