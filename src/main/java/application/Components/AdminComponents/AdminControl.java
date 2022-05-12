@@ -38,6 +38,13 @@ public class AdminControl {
         this.connection = connection;
     }
 
+    /**
+     * This metod switches the user from the login page to admin page. The metod authenticates if the user is admin from the database
+     * if it is true, the admin page is rendered
+     * @param e
+     * @param controller
+     * @author Obed
+     */
     public void switchToAdminView(ActionEvent e, Controller controller) {
         if (!controller.login_pass.getText().isEmpty() && !controller.login_email.getText().isEmpty()) {
             try {
@@ -55,42 +62,7 @@ public class AdminControl {
                     controller.adminControl.fillTicketTable(controller.root);
                     controller.adminControl.fillTableFlights(controller.root);
 
-                    controller.member_listview = (ListView<String>) controller.root.lookup("#member_listview");
-                    if(controller.member_listview != null)
-                    {
-                        ArrayList<User> member = connection.getAllUsers();
-                        ArrayList<String> temp = new ArrayList<>();
-                        int pageNr = 0;
-                        for(User item: member)
-                        {
-                            pageNr++;
-                            StringBuilder temp2 = new StringBuilder();
-                            System.out.println(item.isIsadmin() + " Obedddddd ");
-                            temp2.append(pageNr).append(" Member[ id. ").append(item.getUserId()).append(", First Name: ").append(item.getFirstName()).append(", List Name: ").append(item.getLastName()).append(", Adress: ").append(item.getAddress()).append(", Email: ").append(item.getEmail()).append(", Number: ").append(item.getPhoneNumber()).append(", Password: ").append(item.getPassword()).append(", isAdmin: ").append(item.isIsadmin()).append(" ]");
-                            temp.add(temp2.toString());
-                        }
 
-                        ObservableList<String> tickets = FXCollections.observableList(temp);
-                        controller.member_listview.setItems(tickets);
-
-                    }
-
-                    controller.ticket_listview = (ListView<String>) controller.root.lookup("#ticket_listview");
-                    if(controller.ticket_listview != null)
-                    {
-
-
-                        ArrayList<Book> ticket = connection.searchTicket();
-                        ArrayList<String> temp = new ArrayList<>();
-                        for(Book item: ticket)
-                        {
-                            StringBuilder temp2 = new StringBuilder();
-                            temp2.append("Ticket[ user. ").append(item.getUser_id()).append(", flightid: ").append(item.getFlight_id()).append(", seat number: ").append(item.getSeatNbr()).append(" ]");
-                            temp.add(temp2.toString());
-                        }
-                        ObservableList<String> tickets = FXCollections.observableList(temp);
-                        controller.ticket_listview.setItems(tickets);
-                    }
                 } else {
                     controller.error_message_lbl.setText("Wrong email or pass!");
                     PauseTransition pause = new PauseTransition(Duration.seconds(2));
@@ -105,7 +77,15 @@ public class AdminControl {
         }
     }
 
-    //This metod fills members infomation from database to columns
+
+    /**
+     *This metod creates a table view of members. Every column get its infomation from the database table userr
+     * inside this metod there is also delete function that checks if a checkbox is selected or not
+     * if selected the piece of infomation can be deleted from databse
+     * There is also a updated object inside the metod, that updates the tableview if refresh button is selected
+     *  @param root
+     * @throws SQLException
+     */
     public void fillMemmbersTable(Parent root) throws SQLException {
 
         controller.select_col_mbr_admin = (CheckBox) root.lookup("#select_col_mbr_admin");
@@ -160,8 +140,9 @@ public class AdminControl {
                 if (selectedAllItems) { // check if all items are selected
                     controller.delet_btn_mbr_admin.setDisable(false);
 
+
                 } else {
-                    controller.deletS_btn_mbr_admin.setDisable(true);
+                    controller.delet_btn_mbr_admin.setDisable(true);
                 }
 
             }
