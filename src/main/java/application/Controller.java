@@ -394,7 +394,6 @@ public class Controller implements Initializable {
         adminControl = new AdminControl(this, connection);
         musicHandler = new MusicHandler();
         developerHandler = new DeveloperHandler();
-        developerHandler = new DeveloperHandler();
         purchaseHandler = new PurchaseHandler();
         flightsViewManager = new FlightsViewManager();
     }
