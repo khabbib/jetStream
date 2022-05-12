@@ -456,6 +456,10 @@ public class Controller implements Initializable {
         }
     }
 
+    public void stopMusic(){
+        System.out.println("hello");
+    }
+
     public void playQuiz(){
         MPlayer mPlayer = new MPlayer();
         try { Stage primary = new Stage(); mPlayer.start(primary);

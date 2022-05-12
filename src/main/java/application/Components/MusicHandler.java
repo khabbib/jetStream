@@ -71,6 +71,10 @@ public class MusicHandler implements Runnable {
     @Override
     public void run() {
         do {
+            mediaPlayer.setOnEndOfMedia(() -> {
+                mediaPlayer = new MediaPlayer(new Media(files[nextSong()].toURI().toString()));
+                mediaPlayer.play();
+            });
             mediaPlayer.play();
         } while (playing);
         mediaPlayer.pause();

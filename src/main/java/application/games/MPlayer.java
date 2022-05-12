@@ -1,5 +1,6 @@
 package application.games;
 
+import application.Controller;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -26,10 +27,11 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Random;
 
-public class MPlayer extends Application implements ChangeListener {
+public class MPlayer extends Application implements Runnable {
 
     @FXML
     private ChoiceBox alternatives;
+    @FXML Button closeButton;
     @FXML
     private ProgressBar progressBar;
     @FXML
@@ -40,30 +42,28 @@ public class MPlayer extends Application implements ChangeListener {
     private File song;
     private ArrayList alternativesList;
     private MediaPlayer mediaPlayer;
+    private Controller controller;
     private boolean secondGame;
     private boolean waitGuess;
     private boolean newSong;
     private double maxRounds;
     private int correct;
     private double round;
+    private Stage stage;
     private Parent root;
     private Thread thread;
 
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        try {
-            //primaryStage.initModality(Modality.WINDOW_MODAL);
-            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("mplayer.fxml")));
-            Scene scene = new Scene(root);
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("Music Quiz");
-            primaryStage.show();
-            progressBar = (ProgressBar) root.lookup("#progressBar");
-            initRounds();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        primaryStage.initStyle(StageStyle.UNDECORATED);
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MPlayer.fxml")));
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Music Quiz");
+        primaryStage.show();
+        progressBar = (ProgressBar) root.lookup("#progressBar");
+        initRounds();
     }
 
     public void startGame() throws InterruptedException {
@@ -75,21 +75,25 @@ public class MPlayer extends Application implements ChangeListener {
             maxRounds = Integer.parseInt(rounds.getSelectionModel().getSelectedItem().toString());
             secondGame = true;
             game();
-            Music music = new Music();
-            thread = new Thread(music);
+            thread = new Thread(this);
             thread.start();
         }
     }
 
+    public void closeApplication(ActionEvent event){
+        secondGame = false;
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        stage.close();
+    }
+
     private void game() throws InterruptedException {
-        if (round==maxRounds) {
+        if (round == maxRounds) {
             reset();
             progressBar.setProgress(0.0);
             round = 0;
             titleLabel.setText("You got: " + correct + "/" + (int) maxRounds + " correct");
             secondGame = false;
-        }
-        else if (!newSong) {
+        } else if (!newSong) {
             System.out.println(round);
             nextSong(randomSong());
             progressBar.setProgress((1 / maxRounds) * round);
@@ -113,12 +117,12 @@ public class MPlayer extends Application implements ChangeListener {
         song = null;
         alternatives.getItems().removeAll(alternativesList);
     }
-
     public void fillAlternatives(File correct) {
         alternativesList = new ArrayList();
-        alternativesList.add(correct.getName());
+        alternativesList.add(correct.getName().substring(0,correct.getName().length()-4));
         for (int i = 0; i < 4; i++) {
             String randomSong = randomSong().getName();
+            randomSong = randomSong.substring(0,randomSong.length() - 4);
             while (alternativesList.contains(randomSong)) {
                 randomSong = randomSong().getName();
             }
@@ -129,22 +133,21 @@ public class MPlayer extends Application implements ChangeListener {
 
         alternatives.getItems().addAll(alternativesList);
     }
-
     public File randomSong() {
         File[] files = new File("music").listFiles();
         Random rand = new Random();
         File song = files[rand.nextInt(files.length)];
         return song;
     }
-
     public void nextSong(File currentSong) {
         song = currentSong;
         newSong = true;
         fillAlternatives(currentSong);
     }
-
     public void guess() throws InterruptedException {
-        if (alternatives.getSelectionModel().getSelectedItem().equals(song.getName())) {
+        if (alternatives.getSelectionModel().getSelectedItem().toString().substring(0,alternatives.getSelectionModel().getSelectedItem().toString().length() - 4).equals(song.getName().substring(0,alternatives.getSelectionModel().getSelectedItem().toString().length() - 4))) {
+            System.out.println(alternatives.getSelectionModel().getSelectedItem().toString().substring(0,alternatives.getSelectionModel().getSelectedItem().toString().length() - 4));
+            System.out.println(song.getName().substring(0,alternatives.getSelectionModel().getSelectedItem().toString().length() - 4));
             titleLabel.setText("Correct answer!");
             correct++;
         } else {
@@ -159,30 +162,24 @@ public class MPlayer extends Application implements ChangeListener {
     }
 
     @Override
-    public void changed(ObservableValue observableValue, Object o, Object t1) {
-
-    }
-
-    public class Music implements Runnable {
-        @Override
-        public void run() {
-            while(secondGame) {
-                if (newSong) {
-                    System.out.println("jieiowre");
-                    if (song != null) {
-                        System.out.println(song.getName());
-                        Media media = new Media(song.toURI().toString());
-                        mediaPlayer = new MediaPlayer(media);
-                        mediaPlayer.play();
-                        newSong = false;
-                    }
-                }
-                try {
-                    thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+    public void run() {
+        while (secondGame) {
+            if (newSong) {
+                System.out.println("jieiowre");
+                if (song != null) {
+                    System.out.println(song.getName());
+                    Media media = new Media(song.toURI().toString());
+                    mediaPlayer = new MediaPlayer(media);
+                    mediaPlayer.play();
+                    newSong = false;
                 }
             }
+            try {
+                thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+        mediaPlayer.stop();
     }
 }
