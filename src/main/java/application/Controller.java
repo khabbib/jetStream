@@ -15,6 +15,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
@@ -1004,6 +1005,8 @@ public class Controller implements Initializable {
         history_tableview.setItems(history_items_list);
     }
 
+
+
     /**
      * the method will handle delete option in history panel.
      * @param e event
@@ -1051,6 +1054,38 @@ public class Controller implements Initializable {
 
         }
     }
+
+    /**
+     * This metod deletes member from database if deletebutton is selected
+     * @param e
+     * @throws SQLException
+     * @author Obed
+     */
+    public void removemember_admin(ActionEvent e) throws SQLException {
+        if (table_member_admin.getItems().size() > 0) { // check if there is any items before running the operation.
+            if (e.getSource() == deletS_btn_mbr_admin) { // if single remove button clicked
+                items_member_admin = table_member_admin.getItems(); // get the whole tables items into an observable list to compare.
+                if (items_member_admin != null) { // if observable items has item
+                    // show a confirmation message to user
+                    boolean confirmed = confirmActions.confirmThisAction("Confirm to delete selected item", "Do you want to proceed?", "The selected items will be deleted!");
+                    if (confirmed) { // if user confirm the action
+                        for (User item : items_member_admin) { // loop through all historic items
+                            if (item.getBox().isSelected()) { // check if the checkbox for one or more item is selected
+                                boolean ok = connection.deleteMember(item.getUserId()); // send the actual reference number as an argument to database to compare and delete
+                                if (ok) { // if database succeed to delete the item runs this statement
+                                    adminControl.updateMemberTable(); // historic table updates
+                                    System.out.println("Item has been deleted successfully!"); // show a success message for user
+                                }
+                            }
+                        }
+                    } else { // if user not confirm the action
+                        System.out.println("not deleted screen message");
+                    }
+                }
+            }
+        }
+    }
+
 
     //----------------- GETTERS AND SETTERS -----------------//
     public Scene getMain_scene() {

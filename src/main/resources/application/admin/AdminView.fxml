@@ -266,7 +266,6 @@
             </Label>
             <Button fx:id="registerMemberBtn_admin" layoutX="20.0" layoutY="563.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="155.0" style="-fx-background-color: #f87000;" text="Register" textFill="WHITE" />
             <Button fx:id="refreshMembersBtn_admin" layoutX="977.0" layoutY="554.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="74.0" style="-fx-background-color: #f87000;" text="Refresh" textFill="WHITE" />
-            <Button fx:id="delet_btn_mbr_admin" layoutX="198.0" layoutY="563.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="155.0" style="-fx-background-color: #f87000;" text="Delete all" textFill="WHITE" />
             <Group layoutX="259.0" layoutY="20.0" />
             <TableView fx:id="table_member_admin" layoutX="28.0" layoutY="118.0" prefHeight="398.0" prefWidth="1036.0">
                <columns>
@@ -280,7 +279,7 @@
                   <TableColumn fx:id="status_col_mbr_admin" prefWidth="70.0" text="IsAdmin" />
                   <TableColumn fx:id="select_col_table_historik1" prefWidth="39.0">
                      <graphic>
-                        <CheckBox fx:id="select_col_mbr_admin" mnemonicParsing="false" />
+                        <CheckBox fx:id="select_col_mbr_admin" mnemonicParsing="false" opacity="0.0" />
                      </graphic>
                   </TableColumn>
                </columns>
@@ -289,7 +288,7 @@
                   <URL value="@../Styles/ScrollStyle.css" />
                </stylesheets>
             </TableView>
-            <Button fx:id="deletS_btn_mbr_admin" layoutX="373.0" layoutY="563.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="155.0" style="-fx-background-color: #f87000;" text="single delete" textFill="WHITE" />
+            <Button fx:id="deletS_btn_mbr_admin" layoutX="210.0" layoutY="563.0" mnemonicParsing="false" onAction="#removemember_admin" prefHeight="36.0" prefWidth="155.0" style="-fx-background-color: #f87000;" text="Delete selected member" textFill="WHITE" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="admin_flights_anchorpane" layoutX="76.0" layoutY="-1.0" prefHeight="700.0" prefWidth="1124.0" style="-fx-background-color: #112;">
