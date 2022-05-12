@@ -350,6 +350,7 @@ public class Controller implements Initializable {
     @FXML public static Pane weatherPane;
     @FXML public static Pane weatherPaneBase;
     public static boolean weatherMenu;
+    @FXML public ImageView play_button_image;
 
     //<editor-fold desc="instance initialize">
     application.Components.Support support;
@@ -360,7 +361,6 @@ public class Controller implements Initializable {
     WeatherAPI weatherAPI;
     PasswordHandler password;
     public Config config;
-
     FlightPaths flightPaths;
     DeveloperHandler developerHandler;
     RegistrationUser registrationUser;
@@ -392,10 +392,10 @@ public class Controller implements Initializable {
         profileManager = new ProfileManager();
         password = new PasswordHandler();
         adminControl = new AdminControl(this, connection);
-        musicHandler = new MusicHandler();
         developerHandler = new DeveloperHandler();
         purchaseHandler = new PurchaseHandler();
         flightsViewManager = new FlightsViewManager();
+        musicHandler = new MusicHandler(this);
     }
 
     //----------------- HOME -----------------//
@@ -715,8 +715,9 @@ public class Controller implements Initializable {
      * @param e
      * @author Obed.
      */
-    public void switchToAdminView(ActionEvent e) {
-      adminControl.switchToAdminView(e,this);
+    public void switchToAdminView(ActionEvent e) throws IOException {
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("admin/AdminView.fxml")));
+        adminControl.switchToAdminView(e, this);
     }
 
     /**

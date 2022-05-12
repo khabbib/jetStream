@@ -1377,7 +1377,7 @@
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="223.0" layoutY="10.0" prefHeight="17.0" prefWidth="116.0" text="Weather forecast" textFill="WHITE" />
                   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="36.0" layoutY="10.0" prefHeight="17.0" prefWidth="116.0" text="Music player" textFill="WHITE" />
-                  <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="79.0" layoutY="42.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="play_button_image" fitHeight="30.0" fitWidth="30.0" layoutX="79.0" layoutY="42.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../image/media/play.png" />
                      </image>

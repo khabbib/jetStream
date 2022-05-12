@@ -1,6 +1,9 @@
 package application.Components;
 
+import application.Controller;
 import javafx.event.ActionEvent;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -10,8 +13,10 @@ public class MusicHandler implements Runnable {
     private Thread thread;
     private File[] files;
     private boolean playing = false;
+    private Controller controller;
     private int i = 0;
-    public MusicHandler() {
+    public MusicHandler(Controller controller) {
+        this.controller = controller;
         files = new File("music").listFiles();
         thread = new Thread(this);
         mediaPlayer = new MediaPlayer(new Media(files[0].toURI().toString()));
@@ -43,10 +48,12 @@ public class MusicHandler implements Runnable {
 
     public void playButton() {
         if (!playing) {
+            controller.play_button_image.setImage(new Image("application/image/media/pause.png"));
             playing=true;
             thread = new Thread(this);
             thread.start();
         } else {
+            controller.play_button_image.setImage(new Image("application/image/media/play.png"));
             playing=false;
         }
     }

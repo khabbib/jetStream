@@ -169,6 +169,7 @@ public class DashboardController {
         controller.dashboardController.userInitializeFXML(controller.root, user);
         controller.initializeFXM.initializeProfile(controller.root, user);
         controller.initializeFXM.initializeWeather(controller.root);
+        controller.initializeFXM.initializeMusic(controller.root);
         controller.weatherPaneBase.setClip(new Rectangle(186, 334));
         controller.create_world = new CreateWorld();
         controller.world_map = controller.create_world.init(controller, controller.connection);

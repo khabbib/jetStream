@@ -22,6 +22,9 @@ public class InitializeFXM {
         this.connection = connection;
     }
 
+    public void initializeMusic(Parent root) {
+        controller.play_button_image = (ImageView) root.lookup("#play_button_image");
+    }
     public void initializeWeather(Parent root) {
         controller.lblForecastA = (Label) root.lookup("#lblForecastA");
         controller.lblForecastB = (Label) root.lookup("#lblForecastB");

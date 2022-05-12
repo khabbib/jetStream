@@ -44,7 +44,6 @@ public class AdminControl {
                 User user = connection.authenticationAdmin(controller.login_email.getText(), controller.login_pass.getText());
                 if (user != null) {
 
-                    controller.root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("admin/AdminView.fxml")));
                     controller.main_stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
                     controller.main_scene = new Scene(controller.root);
                     controller.main_stage.setTitle("Admin window");
@@ -98,8 +97,6 @@ public class AdminControl {
                     pause.setOnFinished(a -> controller.error_message_lbl.setText(null));
                     pause.play();
                 }
-            }catch (IOException io){
-                io.printStackTrace();
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
