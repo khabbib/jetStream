@@ -47,7 +47,7 @@ import java.sql.*;
 import java.util.*;
 
 /**
- *
+ * This class is main class which connects all components, methods and variables together with FXML.
  */
 public class Controller implements Initializable {
 
@@ -398,42 +398,6 @@ public class Controller implements Initializable {
         bgMusic = new BgMusic(this);
     }
 
-    /**
-     * This method validates the input from text fields and checks if it's limitation is correct.
-     * @param textField comes from fxml text field id.
-     * @param limitType indicates which text shall be validated.
-     * @return true if its okay.
-     * @author Sossio.
-     */
-    public static boolean validateInputLimit(TextField textField, String limitType) {
-
-        boolean isTrue = false;
-
-        if ((textField.getText().length() >= 3 && textField.getText().length() <= 30) && limitType == "firstname") {
-            isTrue = true;
-        }
-        else if ((textField.getText().length() >= 3 && textField.getText().length() <= 30) && limitType == "lastname") {
-            isTrue = true;
-        }
-        else if ((textField.getText().length() >= 5 && textField.getText().length() <= 60) && limitType == "address") {
-            isTrue = true;
-        }
-        else if ((textField.getText().length() >= 6 && textField.getText().length() <= 30) && limitType == "email") {
-            isTrue = true;
-        }
-        else if ((textField.getText().length() == 10) && limitType == "phone") {
-            isTrue = true;
-        }
-        else if ((textField.getText().length() >= 8 && textField.getText().length() <= 20) && limitType == "password") {
-            isTrue = true;
-        }
-        else if ((textField.getText().contains("@") && (textField.getText().contains("gmail") || textField.getText().contains("hotmail") || textField.getText().contains("yahoo") || textField.getText().contains("outlook"))) && limitType == "email-format") {
-            isTrue = true;
-        }
-
-        return isTrue;
-    }
-
     //----------------- HOME -----------------//
 
     /**
@@ -479,21 +443,16 @@ public class Controller implements Initializable {
        password.syncPasswordShow(this);
     }
 
+    public void stopMusic(){
+        System.out.println("hello");
+    }
 
-    /**
-     * Start minigames!
-     * @author Kasper
-     */
     public void playPong(){
         Pong pong = new Pong();
         try { Stage primary = new Stage(); pong.start(primary);
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public void stopMusic(){
-        System.out.println("hello");
     }
 
     public void playQuiz(){
@@ -510,7 +469,6 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
     }
-
     public void play2048(){
         Game2048Main game2048Main = new Game2048Main();
         try { Stage primary = new Stage(); game2048Main.start(primary);
@@ -1022,8 +980,6 @@ public class Controller implements Initializable {
         history_items_list = FXCollections.observableArrayList(list);
         history_tableview.setItems(history_items_list);
     }
-
-
 
     /**
      * the method will handle delete option in history panel.

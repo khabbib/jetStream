@@ -35,7 +35,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #112;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #112;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
       <AnchorPane fx:id="support_anchorpane" layoutX="105.0" prefHeight="693.0" prefWidth="1089.0" style="-fx-background-color: #112;">
          <children>
@@ -1083,57 +1083,6 @@
       <AnchorPane fx:id="flight_anchorpane" layoutX="107.0" prefHeight="700.0" prefWidth="1089.0" style="-fx-background-color: #112;">
          <children>
             <Pane layoutX="682.0" layoutY="587.0" prefHeight="92.0" prefWidth="386.0" style="-fx-background-color: #151D3B #151D3B; -fx-background-radius: 5;" />
-            <Group layoutX="722.0" layoutY="533.0">
-               <children>
-                  <Pane layoutX="-40.0" prefHeight="49.0" prefWidth="386.0">
-                     <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#151d3b" height="38.0" layoutY="5.0" stroke="#151d3b" strokeType="INSIDE" strokeWidth="0.0" style="-fx-background-color: #151D3B #151D3B;" width="386.0" />
-                        <ImageView fitHeight="19.0" fitWidth="25.0" layoutX="357.0" layoutY="15.0" onMouseClicked="#searchHit" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../image/search.png" />
-                           </image>
-                           <effect>
-                              <ColorAdjust brightness="0.47" contrast="0.16" hue="0.98" saturation="0.48" />
-                           </effect>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </ImageView>
-                        <TextField fx:id="search_f_name" layoutX="23.0" layoutY="12.0" onAction="#searchHit" onKeyTyped="#searchAppear" prefHeight="25.0" prefWidth="213.0" promptText="Search by country..." style="-fx-background-color: transparent; -fx-text-fill: white;" />
-                        <Line endX="16.0" layoutX="329.0" layoutY="5.0" startX="16.0" startY="38.0" stroke="#2e304d" />
-                        <Group layoutX="309.0" layoutY="12.0">
-                           <children>
-                              <StackPane prefHeight="19.0" prefWidth="18.0" style="-fx-background-color: #112; -fx-background-radius: 5;">
-                                 <children>
-                                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../image/close.png" />
-                                       </image>
-                                    </ImageView>
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </padding>
-                              </StackPane>
-                              <Button layoutX="2.0" layoutY="2.0" mnemonicParsing="false" onAction="#resetSearchCountry" opacity="0.0" style="-fx-background-color: #112;" text="1" textFill="WHITE">
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor></Button>
-                           </children>
-                        </Group>
-                     </children>
-                  </Pane>
-                  <ListView fx:id="search_list_appear" layoutX="-26.0" layoutY="41.0" prefHeight="105.0" prefWidth="335.0" style="-fx-background-color: #151D3B; -fx-background-radius: 5;" visible="false">
-                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </padding>
-                     <stylesheets>
-                        <URL value="@../Styles/ListView.css" />
-                        <URL value="@../Styles/ScrollStyle.css" />
-                     </stylesheets>
-                  </ListView>
-               </children>
-            </Group>
             <Group layoutX="16.0" layoutY="25.0">
                <children>
                   <ScrollPane fx:id="world_map_scrollpane" layoutY="39.0" prefHeight="420.0" prefWidth="655.0" style="-fx-background: #112; -fx-focus-traversable: false;" />
@@ -1307,7 +1256,7 @@
                               </HBox>
                            </children>
                         </VBox>
-                        <ListView fx:id="search_list_appear_second" layoutX="19.0" layoutY="55.0" prefHeight="82.0" prefWidth="241.0" style="-fx-background-color: #151D3B; -fx-background-radius: 5;" visible="false">
+                        <ListView fx:id="search_list_appear_second" layoutX="19.0" layoutY="55.0" prefHeight="82.0" prefWidth="241.0" style="-fx-background-color: #112; -fx-background-radius: 5;" visible="false">
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
@@ -1316,7 +1265,7 @@
                               <URL value="@../Styles/ScrollStyle.css" />
                            </stylesheets>
                         </ListView>
-                        <ListView fx:id="search_list_appear_third" layoutX="219.0" layoutY="55.0" prefHeight="82.0" prefWidth="231.0" style="-fx-background-color: #151D3B; -fx-background-radius: 5;" visible="false">
+                        <ListView fx:id="search_list_appear_third" layoutX="219.0" layoutY="55.0" prefHeight="82.0" prefWidth="231.0" style="-fx-background-color: #112; -fx-background-radius: 5;" visible="false">
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
@@ -1425,6 +1374,57 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
+            <Group layoutX="722.0" layoutY="533.0">
+               <children>
+                  <Pane layoutX="-40.0" prefHeight="49.0" prefWidth="386.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#151d3b" height="38.0" layoutY="5.0" stroke="#151d3b" strokeType="INSIDE" strokeWidth="0.0" style="-fx-background-color: #151D3B #151D3B;" width="386.0" />
+                        <ImageView fitHeight="19.0" fitWidth="25.0" layoutX="357.0" layoutY="15.0" onMouseClicked="#searchHit" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/search.png" />
+                           </image>
+                           <effect>
+                              <ColorAdjust brightness="0.47" contrast="0.16" hue="0.98" saturation="0.48" />
+                           </effect>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </ImageView>
+                        <TextField fx:id="search_f_name" layoutX="23.0" layoutY="12.0" onAction="#searchHit" onKeyTyped="#searchAppear" prefHeight="25.0" prefWidth="213.0" promptText="Search by country..." style="-fx-background-color: transparent; -fx-text-fill: white;" />
+                        <Line endX="16.0" layoutX="329.0" layoutY="5.0" startX="16.0" startY="38.0" stroke="#2e304d" />
+                        <Group layoutX="309.0" layoutY="12.0">
+                           <children>
+                              <StackPane prefHeight="19.0" prefWidth="18.0" style="-fx-background-color: #112; -fx-background-radius: 5;">
+                                 <children>
+                                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../image/close.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </StackPane>
+                              <Button layoutX="2.0" layoutY="2.0" mnemonicParsing="false" onAction="#resetSearchCountry" opacity="0.0" style="-fx-background-color: #112;" text="1" textFill="WHITE">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor></Button>
+                           </children>
+                        </Group>
+                     </children>
+                  </Pane>
+                  <ListView fx:id="search_list_appear" layoutX="-26.0" layoutY="41.0" prefHeight="105.0" prefWidth="335.0" style="-fx-background-color: #112; -fx-background-radius: 5;" visible="false">
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                     <stylesheets>
+                        <URL value="@../Styles/ListView.css" />
+                        <URL value="@../Styles/ScrollStyle.css" />
+                     </stylesheets>
+                  </ListView>
+               </children>
+            </Group>
          </children>
       </AnchorPane>
       <Pane fx:id="user_dashboard_msgbox_pane" layoutX="385.0" layoutY="12.0" prefHeight="48.0" prefWidth="388.0" visible="false">

@@ -41,14 +41,14 @@ public class RegistrationUser {
      */
     public boolean registerUser() {
         boolean registered = false;
-        if (Controller.validateInputLimit(controller.registration_first_name, "firstname")){
-            if (Controller.validateInputLimit(controller.registration_last_name, "lastname")){
-                if (Controller.validateInputLimit(controller.registration_address, "address")){
-                    if(Controller.validateInputLimit(controller.registration_email, "email")){
-                        if (Controller.validateInputLimit(controller.registration_phone_number, "phone")){
-                            if (Controller.validateInputLimit(controller.registration_password, "password")){
+        if (ErrorHandler.validateInputLimit(controller.registration_first_name, "firstname")){
+            if (ErrorHandler.validateInputLimit(controller.registration_last_name, "lastname")){
+                if (ErrorHandler.validateInputLimit(controller.registration_address, "address")){
+                    if(ErrorHandler.validateInputLimit(controller.registration_email, "email")){
+                        if (ErrorHandler.validateInputLimit(controller.registration_phone_number, "phone")){
+                            if (ErrorHandler.validateInputLimit(controller.registration_password, "password")){
                                 if (controller.registration_password.getText().equals(controller.registration_confirm_password.getText())){
-                                    if(Controller.validateInputLimit(controller.registration_email, "email-format")){
+                                    if(ErrorHandler.validateInputLimit(controller.registration_email, "email-format")){
                                         boolean ok = db.saveUser(controller.registration_first_name.getText(), controller.registration_last_name.getText(), controller.registration_address.getText(), controller.registration_email.getText(), controller.registration_phone_number.getText(), controller.registration_password.getText(), false);
                                         if (ok) {
                                             try {
