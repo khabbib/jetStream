@@ -39,14 +39,14 @@ public class RegisterAdmin {
      */
     public boolean registerUserAdmin(ActionEvent e) {
         boolean registered = false;
-        if (Controller.validateInputLimit(controller.first_name_reg_admin, "firstname")){
-            if (Controller.validateInputLimit(controller.last_name_reg_admin, "lastname")){
-                if (Controller.validateInputLimit(controller.address_reg_admin, "address")){
-                    if(Controller.validateInputLimit(controller.emailaddress_reg_admin, "email")){
-                        if (Controller.validateInputLimit(controller.phone_number_reg_admin, "phone")){
-                            if (Controller.validateInputLimit(controller.password_reg_admin, "password")){
+        if (ErrorHandler.validateInputLimit(controller.first_name_reg_admin, "firstname")){
+            if (ErrorHandler.validateInputLimit(controller.last_name_reg_admin, "lastname")){
+                if (ErrorHandler.validateInputLimit(controller.address_reg_admin, "address")){
+                    if(ErrorHandler.validateInputLimit(controller.emailaddress_reg_admin, "email")){
+                        if (ErrorHandler.validateInputLimit(controller.phone_number_reg_admin, "phone")){
+                            if (ErrorHandler.validateInputLimit(controller.password_reg_admin, "password")){
                                 if (controller.password_reg_admin.getText().equals(controller.confirm_password_reg_admin.getText())){
-                                    if(Controller.validateInputLimit(controller.emailaddress_reg_admin, "email-format")){
+                                    if(ErrorHandler.validateInputLimit(controller.emailaddress_reg_admin, "email-format")){
                                         if(controller.is_admin_checkbox.isSelected()) {
                                             boolean ok1 = db.saveUser(controller.first_name_reg_admin.getText(), controller.last_name_reg_admin.getText(), controller.address_reg_admin.getText(), controller.emailaddress_reg_admin.getText(), controller.phone_number_reg_admin.getText(), controller.password_reg_admin.getText(), true);
                                             if(ok1) {
