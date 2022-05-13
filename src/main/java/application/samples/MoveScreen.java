@@ -6,15 +6,17 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
- * #comment (comment this class and create javadoc to every method)
+ * This is a test class to move a scene.
+ * @author Khabib.
  */
 public class MoveScreen {
     private static double xOffset =0;
     private static double yOffset =0;
 
     /**
-     * @param root
-     * @param stage
+     * Class constructor.
+     * @param root ir root.
+     * @param stage is parent stage.
      */
     public static void moveScreen(Parent root, Stage stage){
         root.setOnMousePressed(new EventHandler<MouseEvent>() {

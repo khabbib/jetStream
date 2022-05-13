@@ -10,6 +10,7 @@ import java.util.Properties;
 
 /**
  * This is a test class to send an email.
+ * @author Khabib.
  */
 public class Mail {
     private String to = "abcd@gmail.com";
@@ -21,9 +22,10 @@ public class Mail {
     }
 
     /**
-     * @param to
-     * @param from
-     * @param host
+     * Class constructor.
+     * @param to user
+     * @param from user.
+     * @param host is host of email.
      */
     public Mail(String to, String from, String host) {
         this.to = to;
