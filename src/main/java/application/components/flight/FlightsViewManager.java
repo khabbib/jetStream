@@ -23,13 +23,15 @@ import java.util.Objects;
 public class FlightsViewManager {
 
     public void resetSearchFromTo(Controller controller) {
-        controller.from_input_flight_textfield.setText("");
-        controller.display_input_flights.setText("");
+        System.out.println(controller.from_input_flight_textfield.getText() + " info checker");
+        controller.from_input_flight_textfield.clear();
+        System.out.println(controller.from_input_flight_textfield.getText() + " info checker after");
+        controller.display_input_flights.setText(null);
         controller.search_list_appear_second.setVisible(false);
         controller.search_list_appear_third.setVisible(false);
     }
     public void resetSearchCountry(Controller controller) {
-        controller.search_f_name.setText("");
+        controller.search_f_name.setText(null);
         controller.search_list_appear.setVisible(false);
     }
 

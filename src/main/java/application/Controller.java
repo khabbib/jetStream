@@ -808,7 +808,9 @@ public class Controller implements Initializable {
     public void departureNameAppear(){
         if (from_input_flight_textfield != null){
             ObservableList<String> searchAprear = FXCollections.observableList(propareSearchTerm(from_input_flight_textfield.getText().toLowerCase()));
+            System.out.println("Typed ===== " + from_input_flight_textfield.getText());
             if (!searchAprear.isEmpty()){
+                System.out.println(searchAprear.get(0) + " appeared search");
                 if (search_list_appear_second != null){
                     search_list_appear_second.getItems().removeAll();
                 }
