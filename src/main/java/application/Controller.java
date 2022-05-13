@@ -107,12 +107,12 @@ public class Controller implements Initializable {
     @FXML
     public Button menu_entertainment_btn;
     @FXML
-    public Button menu_support_btn;
+    public Button menu_support_btn, menu_ceo_btn, menu_my_tickets_btn;
     @FXML
     public Button booking_close_btn;
     @FXML
     public Button booking_close_second_page_btn;
-    @FXML public AnchorPane profile_anchorpane, history_anchorpane, flight_anchorpane, entertainment_anchorpane, support_anchorpane;
+    @FXML public AnchorPane profile_anchorpane, history_anchorpane, flight_anchorpane, entertainment_anchorpane, support_anchorpane, ceo_anchorpane, my_ticket_anchorpane;
     @FXML
     public Pane menu_highlight_color_flight;
     @FXML
@@ -120,7 +120,7 @@ public class Controller implements Initializable {
     @FXML
     public Pane menu_highlight_color_entertainment;
     @FXML
-    public Pane menu_highlight_color_support;
+    public Pane menu_highlight_color_support, menu_highlight_color_ceo, menu_highlight_color_my_ticket;
 
    //</editor-fold>
 
@@ -206,7 +206,7 @@ public class Controller implements Initializable {
     @FXML public ImageView map_menu_user_image;
     @FXML public ImageView history_menu_user_image;
     @FXML public ImageView entertainment_menu_user_image;
-    @FXML public ImageView support_menu_user_image;
+    @FXML public ImageView support_menu_user_image, ceo_menu_user_image, my_tickets_menu_user_image;
 
     //</editor-fold>
     //<editor-fold desc="SEAT VARIABLES"
@@ -483,11 +483,11 @@ public class Controller implements Initializable {
      * @param src is file path name.
      * @author Sossio.
      */
-    public void playSoundLogin(String soundName, String src) {
+    public void playSound(String soundName, String src) {
         Media buzzer = new Media(getClass().getResource(src).toExternalForm());
         MediaPlayer mediaPlayer = new MediaPlayer(buzzer);
         mediaPlayer.play();
-        System.out.println(soundName + " fx played!");
+        System.out.println("'" + soundName + "' fx played!");
     }
 
     /**
@@ -567,6 +567,11 @@ public class Controller implements Initializable {
     public void switchToLogin(ActionEvent e) {
         this.root = config.render(e, "user/Login", "Login");
         success_msg_lbl = (Label) root.lookup("#success_msg_lbl");
+        if(user != null) {
+            playSound("Logout", "sounds/logout.wav");
+        } else {
+            user = null;
+        }
     }
 
     /**

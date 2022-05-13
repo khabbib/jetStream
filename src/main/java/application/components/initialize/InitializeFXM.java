@@ -134,6 +134,8 @@ public class InitializeFXM {
         controller.entertainment_menu_user_image = (ImageView)root.lookup("#game_menu_user");
         controller.history_menu_user_image = (ImageView)root.lookup("#historik_menu_user");
         controller.support_menu_user_image = (ImageView)root.lookup("#support_menu_user");
+        controller.ceo_menu_user_image = (ImageView) root.lookup("#ceo_menu_user_image");
+        controller.my_tickets_menu_user_image = (ImageView) root.lookup("#my_ticket_menu_user_image");
 
         // Success page
         controller.history_reference_number_lbl = (Label) root.lookup("#rfc_no_sucesspnl");

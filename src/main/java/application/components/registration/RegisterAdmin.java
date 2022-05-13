@@ -111,7 +111,6 @@ public class RegisterAdmin {
             controller.adminControl.updateMemberTable();
             controller.admin_members_anchorpane.toFront();
             errorHandler.displayMessage(controller.registration_error_admin, "User successfully registered!", false);
-            controller.playSoundLogin("Success", "sounds/success.wav");
             controller.first_name_reg_admin.setText("");
             controller.last_name_reg_admin.setText("");
             controller.first_name_reg_admin.setText("");

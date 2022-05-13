@@ -15,9 +15,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #112;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #112;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
-      <VBox layoutX="420.0" layoutY="169.0" prefHeight="320.0" prefWidth="368.0" spacing="10.0">
+      <VBox layoutX="418.0" layoutY="186.0" prefHeight="320.0" prefWidth="368.0" spacing="10.0">
          <children>
             <TextField fx:id="login_email" prefHeight="36.0" prefWidth="260.0" promptText="email" text="jetstream@gmail.com" />
             <PasswordField fx:id="login_pass" onKeyTyped="#syncPasswordShow" prefHeight="36.0" prefWidth="260.0" promptText="password" text="jetstream09" />
@@ -73,7 +73,7 @@
          </children>
       </HBox>
       <Label fx:id="success_msg_lbl" layoutX="488.0" layoutY="33.0" prefHeight="17.0" prefWidth="231.0" textFill="#3dee46" />
-      <Label fx:id="error_message_lbl" layoutX="416.0" layoutY="489.0" prefHeight="17.0" prefWidth="368.0" textFill="#d74141" />
+      <Label fx:id="error_message_lbl" layoutX="414.0" layoutY="537.0" prefHeight="17.0" prefWidth="368.0" textFill="#d74141" />
       <Button layoutX="42.0" layoutY="17.0" mnemonicParsing="false" onAction="#switchToHome" opacity="0.0" prefHeight="73.0" prefWidth="137.0" style="-fx-background-color: #f87000;" text="Back to Home" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
