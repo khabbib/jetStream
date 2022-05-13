@@ -125,8 +125,10 @@ public class ErrorHandler {
         if (label != null){
             if(isError){
                 label.setStyle("-fx-text-fill:red");
+                controller.playSound("Error", "sounds/error.wav");
             } else {
                 label.setStyle("-fx-text-fill:green");
+                controller.playSound("Success", "sounds/success.wav");
             }
             label.setText(msg);
             PauseTransition pause = new PauseTransition(Duration.seconds(3));

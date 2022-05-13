@@ -100,7 +100,6 @@ public class RegistrationUser {
             controller.root = config.render(e, "user/Login", "Login");
             controller.success_msg_lbl = (Label) controller.root.lookup("#success_msg_lbl");
             errorHandler.displayMessage(controller.success_msg_lbl, "User successfully registered!", false);
-            controller.playSoundLogin("Success", "sounds/success.wav");
         } else {
             errorHandler.displayMessage(controller.success_msg_lbl, "Error", true);
         }

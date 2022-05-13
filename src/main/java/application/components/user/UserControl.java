@@ -4,7 +4,6 @@ import application.Controller;
 import application.api.Db;
 import application.components.flight.CreateWorld;
 import application.components.initialize.InitializeFXM;
-import application.components.user.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -51,11 +50,15 @@ public class UserControl {
         controller.menu_highlight_color_history.setVisible(false);
         controller.menu_highlight_color_entertainment.setVisible(false);
         controller.menu_highlight_color_support.setVisible(false);
+        controller.menu_highlight_color_ceo.setVisible(false);
+        controller.menu_highlight_color_my_ticket.setVisible(false);
 
         controller.map_menu_user_image.setOpacity(0.5);
         controller.history_menu_user_image.setOpacity(0.5);
         controller.entertainment_menu_user_image.setOpacity(0.5);
         controller.support_menu_user_image.setOpacity(0.5);
+        controller.ceo_menu_user_image.setOpacity(0.5);
+        controller.my_tickets_menu_user_image.setOpacity(0.5);
     }
 
     /**
@@ -71,7 +74,7 @@ public class UserControl {
                 if (user != null) {
                     controller.renderDashboard(e, user);
                     controller.login_loader_flight.setVisible(true); // set loader to true
-                    controller.playSoundLogin("Login", "sounds/login.wav");
+                    controller.playSound("Login", "sounds/login.wav");
                     try {
                         controller.profile_image_preview_imageview.setImage(controller.db.getProfilePicture(user));
                     } catch (SQLException ei) {

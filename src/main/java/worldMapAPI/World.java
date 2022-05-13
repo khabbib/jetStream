@@ -481,6 +481,7 @@ public class World extends Region {
                 } else {
                     setSelectedCountry(COUNTRY);
                     System.out.println("Pressed country: " + COUNTRY_NAME);
+                    controller.playSound("Flight appear", "sounds/flight_appear.wav");
                     System.out.println(controller.weatherMenu);
                     if (controller.weatherMenu == true) {
                         try {

@@ -7,6 +7,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import java.util.Objects;
 
@@ -37,6 +39,12 @@ public class App extends Application {
 
             stage.setTitle("Home");
             stage.show();
+
+            Media buzzer = new Media(getClass().getResource("sounds/start.wav").toExternalForm());
+            MediaPlayer mediaPlayer = new MediaPlayer(buzzer);
+            mediaPlayer.play();
+            System.out.println("'Start' fx played!");
+
         }catch (Exception e){
             e.printStackTrace();
         }

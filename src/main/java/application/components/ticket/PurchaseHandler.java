@@ -73,7 +73,10 @@ public class PurchaseHandler {
         if (e.getSource() == controller.card_prev_btn){
             controller.booking_passenger_anchorpane.toFront();
             controller.payment_anchorpane.toBack();
+            controller.playSound("Next page", "sounds/next_page.wav");
+
         }else if(e.getSource() == controller.card_purchase_btn){
+            controller.playSound("Next page", "sounds/next_page.wav");
 
             String nbr = controller.card_nbr.getText();
             String name = controller.card_fname.getText();
@@ -95,6 +98,7 @@ public class PurchaseHandler {
                                         boolean purchaseDone1 = false;
                                         boolean purchaseDone2 = false;
                                         String rfc1 = "", rfc2 = "";
+                                        controller.playSound("Success", "sounds/success.wav");
 
                                         if (controller.departure_seat != null) {
                                             for (int i = 0; i <= 1; i++) {
@@ -190,7 +194,7 @@ public class PurchaseHandler {
                     if (fourdigit.length() == 12) {
                         if (email.length() >= 6 && email.length() <= 60 && email.contains("@") && email.contains("gmail")) {
                             if (!seat.isEmpty()) {
-
+                                controller.playSound("Next page", "sounds/next_page.wav");
                                 if (controller.round_trip_flights.size() == 1){
                                     System.out.println("Active tur");
                                     controller.departure_seat = controller.booking_seat_number_lbl.getText();
@@ -239,7 +243,7 @@ public class PurchaseHandler {
             controller.restore_psgr_info();
             controller.success_purchase_anchorpane.toBack();
             controller.payment_anchorpane.toBack();
-
+            controller.playSound("Next page", "sounds/next_page.wav");
         }
     }
 }
