@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * #comment
  * This class sends email to every user who booked a seat.
  */
 public class Purchase {

@@ -21,7 +21,7 @@ import java.sql.SQLException;
 import java.util.Objects;
 
 /**
- * This class handles user dashboard.
+ * This class handles user dashboard action and initialization of variables.
  */
 public class UserDashboardController {
     private Controller controller;
@@ -41,7 +41,8 @@ public class UserDashboardController {
     }
 
     /**
-     * #comment
+     * This method shows which menu is active on user dashboard.
+     * @author Khabib.
      */
     public void toggleMenuColor(Controller controller) {
         controller.menu_highlight_color_flight.setVisible(false);
@@ -56,9 +57,10 @@ public class UserDashboardController {
     }
 
     /**
-     * #comment
-     * @param root
-     * @param user
+     * This method initialize FXML components to user variables.
+     * @param root ir root.
+     * @param user is user.
+     * @author Khabib. Developed by Kasper and Sossio.
      */
     public void userInitializeFXML(Parent root, User user){
         // flight list related variables
@@ -155,8 +157,7 @@ public class UserDashboardController {
     }
 
     /**
-     * #comment
-     * The method will switch the user to the dashboard page.
+     * This method will switch the user to the dashboard page.
      * Navigate to dashboard pages.
      * @param e takes an event listener.
      * @author Khabib. Developed by Sossio.
@@ -186,12 +187,11 @@ public class UserDashboardController {
     }
 
     /**
-     * #comment
-     * The method will render dashboard page for user
-     * @param e
-     * @param user
-     * @param controller
-     * @author Khabib developed by Kasper
+     * The method will render dashboard page for user.
+     * @param e handles an event.
+     * @param user is user.
+     * @param controller connects all methods and variables.
+     * @author Khabib. Developed by Kasper.
      */
     public void renderDashboard(ActionEvent e, User user, Controller controller) {
         controller.user = user;
@@ -210,12 +210,11 @@ public class UserDashboardController {
     }
 
     /**
-     * #comment
-     * Shortcut login to user dashboard
-     * @param e
-     * @param controller
-     * @throws IOException
-     * @author Habib
+     * This method is a shortcut to login user dashboard.
+     * @param e is event action.
+     * @param controller connects to all variables and methods.
+     * @throws IOException if any IO exceptions occurs.
+     * @author Khabib.
      */
     public void noLoginRequired(ActionEvent e, Controller controller) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/Dashboard.fxml")));
