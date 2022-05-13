@@ -198,7 +198,7 @@
                </children>
             </VBox>
             <Button fx:id="registerCommitBtn_admin" layoutX="607.0" layoutY="374.0" mnemonicParsing="false" onAction="#registerUserAdminBtnAction" prefHeight="36.0" prefWidth="260.0" style="-fx-background-color: #f87000;" text="Register" textFill="WHITE" />
-            <Button fx:id="returnToMemberListBtn_admin" layoutX="607.0" layoutY="451.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="260.0" style="-fx-background-color: #f87000;" text="Return to member list" textFill="WHITE" />
+            <Button fx:id="returnToMemberListBtn_admin" layoutX="607.0" layoutY="451.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="260.0" style="-fx-background-color: #f87000;" text="Return to member list" textFill="WHITE" />
             <Label layoutX="81.0" layoutY="40.0" text="Registration a user" textFill="#f87000">
                <font>
                   <Font size="32.0" />
@@ -228,9 +228,9 @@
                   <Font size="27.0" />
                </font>
             </Label>
-            <Button fx:id="refreshTicketsBtn_ticket_admin" layoutX="969.0" layoutY="558.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="97.0" style="-fx-background-color: #f87000;" text="Refresh" textFill="WHITE" />
-            <Button fx:id="deleteAllTicketBtn_ticket_admin" layoutX="794.0" layoutY="558.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="155.0" style="-fx-background-color: #f87000;" text="Delete all selected ticket" textFill="WHITE" />
-            <Button fx:id="addTicketBtn_ticket_admin" layoutX="58.0" layoutY="558.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="97.0" style="-fx-background-color: #f87000;" text="Add Ticket" textFill="WHITE" />
+            <Button fx:id="refreshTicketsBtn_ticket_admin" layoutX="969.0" layoutY="558.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="97.0" style="-fx-background-color: #f87000;" text="Refresh" textFill="WHITE" />
+            <Button fx:id="deleteAllTicketBtn_ticket_admin" layoutX="794.0" layoutY="558.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="155.0" style="-fx-background-color: #f87000;" text="Delete all selected ticket" textFill="WHITE" />
+            <Button fx:id="addTicketBtn_ticket_admin" layoutX="58.0" layoutY="558.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="97.0" style="-fx-background-color: #f87000;" text="Add Ticket" textFill="WHITE" />
             <TableView fx:id="table_tickets" layoutX="58.0" layoutY="138.0" prefHeight="398.0" prefWidth="1008.0">
                <columns>
                   <TableColumn fx:id="nr_col_ticket_admin" prefWidth="75.0" text="No" />
@@ -254,7 +254,7 @@
                   <URL value="@../Styles/ScrollStyle.css" />
                </stylesheets>
             </TableView>
-            <Button fx:id="deleteTicketBtn_ticket_admin" layoutX="640.0" layoutY="558.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="136.0" style="-fx-background-color: #f87000;" text="Delete selected ticket" textFill="WHITE" />
+            <Button fx:id="deleteTicketBtn_ticket_admin" layoutX="640.0" layoutY="558.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="136.0" style="-fx-background-color: #f87000;" text="Delete selected ticket" textFill="WHITE" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="admin_members_anchorpane" layoutX="93.0" prefHeight="700.0" prefWidth="1104.0" style="-fx-background-color: #112;">
@@ -264,8 +264,8 @@
                   <Font size="23.0" />
                </font>
             </Label>
-            <Button fx:id="registerMemberBtn_admin" layoutX="20.0" layoutY="563.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="155.0" style="-fx-background-color: #f87000;" text="Register" textFill="WHITE" />
-            <Button fx:id="refreshMembersBtn_admin" layoutX="977.0" layoutY="554.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="74.0" style="-fx-background-color: #f87000;" text="Refresh" textFill="WHITE" />
+            <Button fx:id="registerMemberBtn_admin" layoutX="20.0" layoutY="563.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="155.0" style="-fx-background-color: #f87000;" text="Register" textFill="WHITE" />
+            <Button fx:id="refreshMembersBtn_admin" layoutX="977.0" layoutY="554.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="74.0" style="-fx-background-color: #f87000;" text="Refresh" textFill="WHITE" />
             <Group layoutX="259.0" layoutY="20.0" />
             <TableView fx:id="table_member_admin" layoutX="28.0" layoutY="118.0" prefHeight="398.0" prefWidth="1036.0">
                <columns>
@@ -460,10 +460,10 @@
                         <URL value="@../Styles/ScrollStyle.css" />
                      </stylesheets>
                   </ListView>
-                  <Button fx:id="delete_singelFlightBtn_admin" layoutX="682.0" layoutY="14.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="176.0" style="-fx-background-color: #f87000;" text="Delete selected singel Flight" textFill="WHITE" />
-                  <Button fx:id="delete_allFlightsBtn_admin" layoutX="682.0" layoutY="91.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="176.0" style="-fx-background-color: #f87000;" text="Delete all selected Flights" textFill="WHITE" />
-                  <Button fx:id="refreshFlightsBtn_admin" layoutX="884.0" layoutY="14.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="97.0" style="-fx-background-color: #f87000;" text="Refresh" textFill="WHITE" />
-                  <Button fx:id="addFlightsBtn_admin" layoutX="884.0" layoutY="91.0" mnemonicParsing="false" onAction="#adminDev" prefHeight="36.0" prefWidth="97.0" style="-fx-background-color: #f87000;" text="add flight" textFill="WHITE" />
+                  <Button fx:id="delete_singelFlightBtn_admin" layoutX="682.0" layoutY="14.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="176.0" style="-fx-background-color: #f87000;" text="Delete selected singel Flight" textFill="WHITE" />
+                  <Button fx:id="delete_allFlightsBtn_admin" layoutX="682.0" layoutY="91.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="176.0" style="-fx-background-color: #f87000;" text="Delete all selected Flights" textFill="WHITE" />
+                  <Button fx:id="refreshFlightsBtn_admin" layoutX="884.0" layoutY="14.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="97.0" style="-fx-background-color: #f87000;" text="Refresh" textFill="WHITE" />
+                  <Button fx:id="addFlightsBtn_admin" layoutX="884.0" layoutY="91.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="97.0" style="-fx-background-color: #f87000;" text="add flight" textFill="WHITE" />
                </children>
             </AnchorPane>
          </children>
@@ -475,7 +475,7 @@
                   <Image url="@../image/logout.png" />
                </image>
             </ImageView>
-            <Button fx:id="admin_logout_button" layoutX="13.0" layoutY="639.0" mnemonicParsing="false" onAction="#adminDev" opacity="0.0" prefHeight="47.0" prefWidth="48.0" text="Logout" />
+            <Button fx:id="admin_logout_button" layoutX="13.0" layoutY="639.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" opacity="0.0" prefHeight="47.0" prefWidth="48.0" text="Logout" />
             <ImageView fitHeight="54.0" fitWidth="54.0" layoutX="12.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../image/admin/members.png" />
@@ -484,7 +484,7 @@
                   <ColorAdjust brightness="1.0" />
                </effect>
             </ImageView>
-            <Button fx:id="admin_members_button" layoutX="6.0" layoutY="91.0" mnemonicParsing="false" onAction="#adminDev" opacity="0.0" prefHeight="83.0" prefWidth="65.0" text="View members" />
+            <Button fx:id="admin_members_button" layoutX="6.0" layoutY="91.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" opacity="0.0" prefHeight="83.0" prefWidth="65.0" text="View members" />
             <ImageView fitHeight="86.0" fitWidth="54.0" layoutX="11.0" layoutY="207.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../image/admin/flights.jpg" />
@@ -493,7 +493,7 @@
                   <ColorAdjust brightness="1.0" />
                </effect>
             </ImageView>
-            <Button fx:id="admin_flights_button" layoutX="6.0" layoutY="189.0" mnemonicParsing="false" onAction="#adminDev" opacity="0.0" prefHeight="90.0" prefWidth="65.0" text="View fligts" />
+            <Button fx:id="admin_flights_button" layoutX="6.0" layoutY="189.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" opacity="0.0" prefHeight="90.0" prefWidth="65.0" text="View fligts" />
             <ImageView fitHeight="47.0" fitWidth="29.0" layoutX="12.0" layoutY="585.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../image/user.png" />
@@ -507,7 +507,7 @@
                   <ColorAdjust brightness="1.0" />
                </effect>
             </ImageView>
-            <Button fx:id="admin_tickets_button" layoutX="6.0" layoutY="291.0" mnemonicParsing="false" onAction="#adminDev" opacity="0.0" prefHeight="65.0" prefWidth="65.0" style="-fx-background-color: #ff;" text="tikets" />
+            <Button fx:id="admin_tickets_button" layoutX="6.0" layoutY="291.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" opacity="0.0" prefHeight="65.0" prefWidth="65.0" style="-fx-background-color: #ff;" text="tikets" />
             <Label fx:id="userName_label_admin" layoutX="51.0" layoutY="591.0" text="user" textFill="WHITE" />
          </children>
       </Pane>
