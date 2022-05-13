@@ -1,6 +1,6 @@
 .list-view .list-cell:odd,
 .list-view .list-cell:even {
-    -fx-background-color: #151D3B;
+    -fx-background-color: #112;
     -fx-text-fill: #eee;
 }
 

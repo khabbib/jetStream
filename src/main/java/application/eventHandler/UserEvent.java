@@ -50,44 +50,16 @@ public class UserEvent {
 
         // navigating av
         else if(e.getSource() == controller.date_previous_day_button){
-            System.out.println("NOOOO");
-            if (controller.date_input_flight.getValue() == null){
-                System.out.println("Nulll value");
-                LocalDate date = LocalDate.now();
-                controller.date_input_flight.setValue(date);
-                controller.date_input_flight.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
-                    System.out.println("Not null 1");
-                    System.out.println(date);
-                    // do something
-                    System.out.println(oldValue + " old");
-                    System.out.println(newValue + " new");
-                    controller.date_input_flight.setValue(date);
-
-                });
-            }
-            if (controller.date_input_flight.getValue() != null){
-                controller.date_input_flight.setValue(controller.date_input_flight.getValue().minusDays(1));
-            }else {
-                controller.errorHandler.displayMessage(controller.search_flight_error_lbl, "Date is not initialized!", true);
-            }
+            controller.date_input_flight.setValue(controller.date_input_flight.getValue().minusDays(1));
         }
         else if(e.getSource() == controller.date_next_day_button){
-            if (controller.date_input_flight.getValue() != null){
-                controller.date_input_flight.setValue(controller.date_input_flight.getValue().plusDays(1));
-            }else
-                controller.errorHandler.displayMessage(controller.search_flight_error_lbl, "Date is not initialized!", true);
+            controller.date_input_flight.setValue(controller.date_input_flight.getValue().plusDays(1));
         }
         else if(e.getSource() == controller.date_previous_day_return_button){
-            if (controller.dateR_input_flight.getValue() != null){
-                controller.dateR_input_flight.setValue(controller.dateR_input_flight.getValue().plusDays(1));
-            }else
-                controller.errorHandler.displayMessage(controller.search_flight_error_lbl, "Date is not initialized!", true);
+            controller.dateR_input_flight.setValue(controller.dateR_input_flight.getValue().minusDays(1));
         }
         else if(e.getSource() == controller.date_next_day_return_button){
-            if (controller.dateR_input_flight.getValue() != null){
-                controller.dateR_input_flight.setValue(controller.dateR_input_flight.getValue().plusDays(1));
-            }else
-                controller.errorHandler.displayMessage(controller.search_flight_error_lbl, "Date is not initialized!", true);
+            controller.dateR_input_flight.setValue(controller.dateR_input_flight.getValue().plusDays(1));
         }
     }
 }
