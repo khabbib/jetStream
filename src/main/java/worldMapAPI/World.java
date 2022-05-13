@@ -1,8 +1,8 @@
 package worldMapAPI;
 
 import application.Controller;
-import application.database.Connection;
-import application.model.Flight;
+import application.api.Db;
+import application.components.flight.Flight;
 import javafx.application.Platform;
 import javafx.beans.DefaultProperty;
 import javafx.beans.property.BooleanProperty;
@@ -57,7 +57,7 @@ import static javafx.scene.input.MouseEvent.MOUSE_RELEASED;
 
 @DefaultProperty("children")
 public class World extends Region {
-    private Connection connection;
+    private Db db;
     public enum Resolution { HI_RES, LO_RES };
     private static final StyleablePropertyFactory<World> FACTORY          = new StyleablePropertyFactory<>(Region.getClassCssMetaData());
     private static final String                          HIRES_PROPERTIES = "worldMapAPI/hires.properties";
@@ -116,9 +116,9 @@ public class World extends Region {
 
 
     // ******************** Constructors **************************************
-    public World(final Resolution RESOLUTION,Controller controller, Connection connection) {
+    public World(final Resolution RESOLUTION,Controller controller, Db db) {
         this.controller = controller;
-        this.connection = connection;
+        this.db = db;
         if (controller == null) {
             System.out.println("this controller");
         }
@@ -493,7 +493,7 @@ public class World extends Region {
                     }
 
                     //game.checkAnswer(COUNTRY_NAME);
-                    flights = connection.seachFlightFromSearchField(convert(COUNTRY_NAME));
+                    flights = db.seachFlightFromSearchField(convert(COUNTRY_NAME));
                     if (!flights.isEmpty()){
                         controller.fillFlights(flights);
                     }else {

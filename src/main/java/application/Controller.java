@@ -1,14 +1,23 @@
 package application;
-import application.components.*;
-import application.components.AdminComponents.AdminControl;
-import application.components.AdminComponents.RegisterAdmin;
+import application.api.WeatherAPI;
+import application.components.admin.AdminControl;
+import application.components.registration.RegisterAdmin;
+import application.components.flight.*;
+import application.components.initialize.InitializeFXM;
+import application.components.user.*;
+import application.components.login.ShowPasswordField;
+import application.components.reservation.Book;
+import application.components.ticket.PurchaseHandler;
+import application.components.ticket.UserHistory;
+import application.components.registration.RegistrationUser;
 import application.config.Config;
+import application.eventHandler.AdminEvent;
+import application.eventHandler.UserEvent;
 import application.games.Game2048Main;
 import application.games.MPlayer;
 import application.games.Piano;
 import application.games.Pong;
-import application.model.*;
-import application.database.Connection;
+import application.api.Db;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -342,24 +351,25 @@ public class Controller implements Initializable {
     @FXML public ImageView play_button_image;
 
     //<editor-fold desc="instance initialize">
-    application.components.Support support;
-    Search search;
-    public ConfirmActions confirmActions;
-    public UserDashboardController userDashboardController;
-    public Connection connection;
-    WeatherAPI weatherAPI;
-    PasswordHandler password;
+    public Support support;
+    public Search search;
+    public ErrorHandler errorHandler;
+    public UserControl userControl;
+    public Db db;
+    public WeatherAPI weatherAPI;
+    public ShowPasswordField password;
     public Config config;
-    FlightPaths flightPaths;
-    DeveloperHandler developerHandler;
-    RegistrationUser registrationUser;
+    public FlightPaths flightPaths;
+    public UserEvent userEvent;
+    public AdminEvent adminEvent;
+    public RegistrationUser registrationUser;
     public RegisterAdmin registerAdmin;
-    FlightsViewManager flightsViewManager;
-    PurchaseHandler purchaseHandler;
+    public FlightsViewManager flightsViewManager;
+    public PurchaseHandler purchaseHandler;
     public InitializeFXM initializeFXM;
     public AdminControl adminControl;
-    MusicHandler musicHandler;
-    ProfileManager profileManager;
+    public BgMusic bgMusic;
+    public ProfileManager profileManager;
     //</editor-fold>
 
     // Loader in login
@@ -367,24 +377,25 @@ public class Controller implements Initializable {
 
     //----------------- HOME -----------------//
     public Controller(){
-        connection = new Connection(this);
+        db = new Db(this);
         config = new Config(this, root, main_stage);
         support = new Support(this);
-        confirmActions = new ConfirmActions(this);
-        search = new Search(this, connection, confirmActions);
-        registrationUser = new RegistrationUser(this, connection, config);
-        registerAdmin = new RegisterAdmin(this, connection, config);
-        userDashboardController = new UserDashboardController(this, root, connection);
-        initializeFXM = new InitializeFXM(this,connection);
+        errorHandler = new ErrorHandler(this);
+        search = new Search(this, db, errorHandler);
+        registrationUser = new RegistrationUser(this, db, config);
+        registerAdmin = new RegisterAdmin(this, db, config);
+        userControl = new UserControl(this, root, db);
+        initializeFXM = new InitializeFXM(this, db);
         flightPaths = new FlightPaths(this);
         weatherAPI = new WeatherAPI();
         profileManager = new ProfileManager();
-        password = new PasswordHandler();
-        adminControl = new AdminControl(this, connection);
-        developerHandler = new DeveloperHandler();
+        password = new ShowPasswordField();
+        adminControl = new AdminControl(this, db);
+        userEvent = new UserEvent();
+        adminEvent = new AdminEvent();
         purchaseHandler = new PurchaseHandler();
         flightsViewManager = new FlightsViewManager();
-        musicHandler = new MusicHandler(this);
+        bgMusic = new BgMusic(this);
     }
 
     /**
@@ -528,7 +539,7 @@ public class Controller implements Initializable {
      * @throws IOException
      */
     public void switchToUserDashboard(ActionEvent e) throws IOException {
-        userDashboardController.switchToUserDashboard(e,this);
+        userControl.switchToUserDashboard(e,this);
     }
 
     /**
@@ -553,7 +564,7 @@ public class Controller implements Initializable {
      * @throws IOException
      */
     public void renderDashboard(ActionEvent e, User user) {
-        userDashboardController.renderDashboard(e,user,this);
+        userControl.renderDashboard(e,user,this);
     } // the method will render dashboard page for user
 
     /**
@@ -561,7 +572,7 @@ public class Controller implements Initializable {
      * @throws IOException
      */
     public void noLoginRequired(ActionEvent e) throws IOException {
-        userDashboardController.noLoginRequired(e,this);
+        userControl.noLoginRequired(e,this);
     }// shortcut login to user dashboard
 
     /**
@@ -717,7 +728,7 @@ public class Controller implements Initializable {
     }
 
     public void mediaHandler(ActionEvent e) {
-        musicHandler.mediaHandler(e);
+        bgMusic.mediaHandler(e);
     }
 
     /**
@@ -754,14 +765,14 @@ public class Controller implements Initializable {
      * @param e
      */
     public void userDashboardEventHandler(ActionEvent e){
-       developerHandler.userDashboardEventHandler(e,this);
+       userEvent.userDashboardEventHandler(e,this);
     }
 
     /**
      *
      */
     public void toggleMenuColor() {
-        userDashboardController.toggleMenuColor(this);
+        userControl.toggleMenuColor(this);
     }
 
     /**
@@ -770,8 +781,8 @@ public class Controller implements Initializable {
      * @throws IOException
      * @autor Obed.
      */
-    public void adminDev(ActionEvent e) throws SQLException {
-        developerHandler.adminDev(e,this);
+    public void adminDashboardEventHandler(ActionEvent e) throws SQLException {
+        adminEvent.adminDashboardEventHandler(e,this);
     }
 
     //----------------- SEARCH FLIGHTS -----------------//
@@ -804,7 +815,7 @@ public class Controller implements Initializable {
             from_input_flight_textfield.setText(to);
             display_input_flights.setText(from);
         }else {
-            confirmActions.notifyError(user_dashboard_msgbox_pane, user_notification_lbl, "Search fields are empty!");
+            errorHandler.notifyError(user_dashboard_msgbox_pane, user_notification_lbl, "Search fields are empty!");
         }
 
     }
@@ -1006,7 +1017,7 @@ public class Controller implements Initializable {
      * it will update the historic table in user dashboard everytime an action happen or user want to navigate to the panel etc.
      */
     public void updateHistoryList(){
-        ArrayList<UserHistory> list = connection.searchDataForTableHistory(Integer.parseInt(user.getUserId()), false);
+        ArrayList<UserHistory> list = db.searchDataForTableHistory(Integer.parseInt(user.getUserId()), false);
 
         history_items_list = FXCollections.observableArrayList(list);
         history_tableview.setItems(history_items_list);
@@ -1024,11 +1035,11 @@ public class Controller implements Initializable {
                 history_flights = history_tableview.getItems(); // get the whole tables items into an observable list to compare.
                 if (history_flights != null){ // if observable items has item
                     // show a confirmation message to user
-                    boolean confirmed = confirmActions.confirmThisAction("Confirm to delete selected item", "Do you want to proceed?", "The selected items will be deleted!");
+                    boolean confirmed = errorHandler.confirmThisAction("Confirm to delete selected item", "Do you want to proceed?", "The selected items will be deleted!");
                     if (confirmed){ // if user confirm the action
                         for (UserHistory item: history_flights){ // loop through all historic items
                             if (item.getSelect_col_table_historik().isSelected()){ // check if the checkbox for one or more item is selected
-                                boolean ok = connection.deleteHistoryByRFC(item.getRfc_col_table_historik()); // send the actual reference number as an argument to database to compare and delete
+                                boolean ok = db.deleteHistoryByRFC(item.getRfc_col_table_historik()); // send the actual reference number as an argument to database to compare and delete
                                 if (ok){ // if database succeed to delete the item runs this statement
                                     updateHistoryList(); // historic table updates
                                     System.out.println("Item has been deleted successfully!"); // show a success message for user
@@ -1043,10 +1054,10 @@ public class Controller implements Initializable {
                 history_flights = history_tableview.getItems(); // get the whole tables items into an observable list to compare.
                 if (history_flights != null){ // if observable items has item
                     // show a confirmation message to user
-                    boolean confirmed = confirmActions.confirmThisAction("Confirm to delete the item", "Do you want to proceed?", history_flights.size() +" items will be deleted.");
+                    boolean confirmed = errorHandler.confirmThisAction("Confirm to delete the item", "Do you want to proceed?", history_flights.size() +" items will be deleted.");
                     if (confirmed){ // if user confirm the action
                         for (UserHistory item: history_flights){ // loop through all historic items
-                            boolean ok = connection.deleteHistoryByRFC(item.getRfc_col_table_historik()); // send the actual reference number as an argument to database to compare and delete
+                            boolean ok = db.deleteHistoryByRFC(item.getRfc_col_table_historik()); // send the actual reference number as an argument to database to compare and delete
                             if (ok){ // if database succeed to delete the item runs this statement
                                 updateHistoryList(); // historic table updates
                                 System.out.println("Item has been deleted successfully!"); // show a success message for user
@@ -1074,11 +1085,11 @@ public class Controller implements Initializable {
                 items_member_admin = table_member_admin.getItems(); // get the whole tables items into an observable list to compare.
                 if (items_member_admin != null) { // if observable items has item
                     // show a confirmation message to user
-                    boolean confirmed = confirmActions.confirmThisAction("Confirm to delete selected item", "Do you want to proceed?", "The selected items will be deleted!");
+                    boolean confirmed = errorHandler.confirmThisAction("Confirm to delete selected item", "Do you want to proceed?", "The selected items will be deleted!");
                     if (confirmed) { // if user confirm the action
                         for (User item : items_member_admin) { // loop through all historic items
                             if (item.getBox().isSelected()) { // check if the checkbox for one or more item is selected
-                                boolean ok = connection.deleteMember(item.getUserId()); // send the actual reference number as an argument to database to compare and delete
+                                boolean ok = db.deleteMember(item.getUserId()); // send the actual reference number as an argument to database to compare and delete
                                 if (ok) { // if database succeed to delete the item runs this statement
                                     adminControl.updateMemberTable(); // historic table updates
                                     System.out.println("Item has been deleted successfully!"); // show a success message for user
