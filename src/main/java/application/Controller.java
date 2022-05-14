@@ -772,7 +772,8 @@ public class Controller implements Initializable {
      *
      */
     public void change_search_info(){
-        if (!from_input_flight_textfield.getText().isEmpty() || !display_input_flights.getText().isEmpty()){
+
+        if (from_input_flight_textfield != null || display_input_flights != null ){
             String from = from_input_flight_textfield.getText();
             String to = display_input_flights.getText();
             from_input_flight_textfield.setText(to);
