@@ -165,7 +165,8 @@ public class Controller implements Initializable {
     @FXML public VBox       booking_info_vbox;
     @FXML public ImageView  support_menu_user_image, ceo_menu_user_image, my_tickets_menu_user_image,
             booking_profile_image, map_menu_user_image, history_menu_user_image, entertainment_menu_user_image;
-    public ArrayList<String> taken_seat_economy, taken_seat_business, round_trip_flights = new ArrayList<>();
+    public ArrayList<String> taken_seat_economy, taken_seat_business = new ArrayList<>();
+    public ArrayList<Flight> round_trip_flights = new ArrayList<>();
     public final GridPane economy_seat_gridpane = new GridPane();
     public final GridPane business_seat_gridpane = new GridPane();
     public String departure_seat, return_seat;
@@ -200,13 +201,14 @@ public class Controller implements Initializable {
     //<editor-fold desc="======== SUPPORT WINDOW VARIABLES ========">
     @FXML public Button issue_btn_sup, feedback_btn_sup, contact_btn_sup, send_fb_btn_sup, send_issue_btn_sup, send_contact_btn_sup;
     @FXML public TextField subject_fb_txt_sup, email_fb_txt_sup, subject_contact_txt_sup, email_contact_txt_sup, title_issue_txt_sup,
-            email_issue_txt_sup, msg_issue_txt_sup, msg_fb_txt_sup, msg_contact_txt_sup;
+            email_issue_txt_sup;
+    @FXML public TextArea msg_issue_txt_sup, msg_fb_txt_sup, msg_contact_txt_sup;
     @FXML public Label sup_report_display_msg, sup_contact_display_msg, sup_feedback_display_msg;
     @FXML public AnchorPane issue_panel_sup, contact_panel_sup, feedback_panel_sup;
     //</editor-fold
     //</editor-fold>
-
     //<editor-fold desc="========= INSTANCES OF CLASSES =========" >
+
     public FlightsViewManager flightsViewManager;
     public RegistrationUser registrationUser;
     public PurchaseHandler purchaseHandler;
