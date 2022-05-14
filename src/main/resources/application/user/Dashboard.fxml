@@ -1729,6 +1729,11 @@
                         </ListView>
                      </children>
                   </AnchorPane>
+                  <Label fx:id="err_advanced_search" layoutX="246.0" layoutY="13.0" prefHeight="17.0" prefWidth="277.0" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
                </children>
             </Group>
             <Group layoutX="678.0" layoutY="25.0">
@@ -1880,12 +1885,6 @@
             </Group>
          </children>
       </AnchorPane>
-      <Pane fx:id="user_dashboard_msgbox_pane" layoutX="385.0" layoutY="12.0" prefHeight="48.0" prefWidth="388.0" visible="false">
-         <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0b1d3b" height="46.0" layoutY="1.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="392.0" />
-            <Label fx:id="user_notification_lbl" layoutX="14.0" layoutY="16.0" text="Message" textFill="WHITE" />
-         </children>
-      </Pane>
       <Pane layoutY="-2.0" prefHeight="702.0" prefWidth="105.0" style="-fx-background-color: #151D3B; -fx-background-radius: 0 30 0 0;">
          <children>
             <VBox layoutX="14.0" layoutY="23.0" spacing="15.0">

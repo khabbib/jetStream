@@ -60,25 +60,6 @@ public class ErrorHandler {
     }
 
     /**
-     * User global notification
-     * @param box
-     * @param label
-     * @param msg
-     * @author Khabib.
-     */
-    public void notifyError(Pane box, Label label, String msg) {
-        box.setVisible(true);
-        label.setText(msg);
-        PauseTransition pause = new PauseTransition(Duration.seconds(2));
-        pause.setOnFinished(a -> {
-            box.setVisible(false);
-            label.setText(null);
-        });
-        pause.play();
-
-    }
-
-    /**
      * This method validates the input from text fields and checks if it's limitation is correct.
      * @param textField comes from fxml text field id.
      * @param limitType indicates which text shall be validated.

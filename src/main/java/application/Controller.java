@@ -51,329 +51,182 @@ import java.util.*;
  */
 public class Controller implements Initializable {
 
-    //<editor-fold desc="GLOBAL VARIABLES" >
-    // error / success message in user dashboard variable
-
-    @FXML public Label user_notification_lbl;
-    @FXML public Pane user_dashboard_msgbox_pane;
-    // Default variables
-    public Stage main_stage;
-    public Scene main_scene;
-    public Parent root;
-    public CreateWorld create_world;
-    public static World world_map;
-    public static User user;
-    public File profile_image_directory;
-    public File[] profile_image_files;
-    public static boolean is_editing_profile;
-
-    // FXML variables
-    @FXML private ButtonBar logout_button_bar;
-    @FXML public ScrollPane world_map_scrollpane;
-    @FXML public ScrollPane flights_scrollpane;
-    @FXML
-    public Label error_message_lbl;
-    @FXML public Label success_msg_lbl;
-    @FXML public Label username_lbl;
-    @FXML public VBox flight_display_vbox;
-
-    // ===== PROFILE EDITING =====
-    // General
-    @FXML public ImageView profile_image_imageview;
-    @FXML public ImageView profile_image_preview_imageview;
-    @FXML public TextField profile_first_name_lbl, profile_last_name_lbl, profile_email_lbl, profile_address_lbl, profile_phone_lbl;
-    @FXML public Button profile_cancel_btn;
-    @FXML public GridPane profile_profile_image_gridpane;
-    @FXML public PasswordField profile_old_password_passwordfield;
-    @FXML public TextField profile_new_password_textfield, profile_confirm_password_textfield;
-    @FXML public Button profile_edit_btn;
-    public static boolean is_editing_profile_image = false;
-
-    // Issues
-    @FXML public Label edit_pfp_fname_issue, edit_pfp_lname_issue, edit_pfp_address_issue, edit_pfp_email_issue, edit_pfp_phone_issue;
-    @FXML public Label edit_pfp_old_pwd_issue, edit_pfp_new_pwd_issue, edit_pfp_new_c_pwd_issue;
-
-    // Seat
-    public final GridPane economy_seat_gridpane = new GridPane(); //Layout
-    public final GridPane business_seat_gridpane = new GridPane(); //Layout
-
-    // toggle options
-    @FXML
-    public Button menu_profile_btn;
-    @FXML
-    public Button menu_flight_btn;
-    @FXML
-    public Button menu_history_btn;
-    @FXML
-    public Button menu_entertainment_btn;
-    @FXML
-    public Button menu_support_btn, menu_ceo_btn, menu_my_tickets_btn;
-    @FXML
-    public Button booking_close_btn;
-    @FXML
-    public Button booking_close_second_page_btn;
-    @FXML public AnchorPane profile_anchorpane, history_anchorpane, flight_anchorpane, entertainment_anchorpane, support_anchorpane, ceo_anchorpane, my_ticket_anchorpane;
-    @FXML
-    public Pane menu_highlight_color_flight;
-    @FXML
-    public Pane menu_highlight_color_history;
-    @FXML
-    public Pane menu_highlight_color_entertainment;
-    @FXML
-    public Pane menu_highlight_color_support, menu_highlight_color_ceo, menu_highlight_color_my_ticket;
-
-   //</editor-fold>
-
-    //<editor-fold desc="ADMIN VARIABLES">
-    @FXML
-    public ListView<String> ticket_listview;
-    @FXML
-    public ListView<String> member_listview;
-    @FXML private ListView<String> flightListView;
-    @FXML
-    public AnchorPane admin_flights_anchorpane;
-    @FXML
-    public AnchorPane admin_tickets_anchorpane;
-    @FXML
-    public AnchorPane admin_members_anchorpane;
-    @FXML
-    public AnchorPane admin_register_anchorpane;
-    @FXML
-    public Button admin_flights_button;
-    @FXML
-    public Button admin_members_button;
-    @FXML
-    public Button admin_tickets_button;
-    @FXML
-    public Button admin_logout_button;
-    @FXML private Button registerCommitBtn_admin;
-    @FXML
-    public Button registerMemberBtn_admin;
-    @FXML
-    public Button returnToMemberListBtn_admin;
-    @FXML
-    public Button refreshMembersBtn_admin;
-    @FXML private Button deleteMemberBtn_admin;
-    @FXML private Button search_input_flight_admin;
-    @FXML private Button prev_tur_date_flight_admin;
-    @FXML private Button next_tur_date_flight_admin;
+    //<editor-fold desc="========= GLOBAL VARIABLES =========" >
+    //<editor-fold desc="======== LOGIN WINDOW VARIABLES ========">
+    @FXML public TextField login_pass, login_email, show_password_field_login;
+    @FXML public Label error_message_lbl, success_msg_lbl; // ERRORS HANDLER
+    @FXML private Button forgot_password_login;
+    @FXML public CheckBox show_pasword_login;
 
     //</editor-fold>
-    //<editor-fold desc="DASHBOARD VARIABLES">
-
-    // purchase variables
-    @FXML
-    public AnchorPane payment_anchorpane;
-    @FXML public TextField card_nbr;
-    @FXML public TextField card_fname;
-    @FXML public TextField card_lname;
-    @FXML public TextField card_month;
-    @FXML public TextField card_year;
-    @FXML public TextField card_cvc;
-    @FXML
-    public Button card_prev_btn;
-    @FXML
-    public Button card_purchase_btn;
-    @FXML
-    public Button seat_next_btn;
-    @FXML public Label card_counter_nbr;
-    @FXML public Label payment_err_msg;
-    @FXML
-    public AnchorPane success_purchase_anchorpane;
-    @FXML
-    public Button success_purchase_to_dashboard_button;
-    @FXML private Button print_ticket_purchase_btn;
-
-    // From seat
-    @FXML public AnchorPane booking_seat_anchorpane;
-    @FXML public ScrollPane business_seat_scrollpane;
-    @FXML public ScrollPane eco_seat_scrollpane;
-    @FXML public ImageView booking_profile_image;
-    @FXML public AnchorPane booking_passenger_anchorpane;
-    @FXML public TextField booking_first_name_textfield;
-    @FXML public TextField booking_last_name_textfield;
-    @FXML public TextField booking_four_digits_textfield;
-    @FXML public TextField booking_email_textfield;
-    @FXML public AnchorPane flight_seats_eco_anchorpane;
-    @FXML public AnchorPane flights_seats_business_anchorpane;
-    @FXML public Label booking_seat_number_lbl, booking_msg_lbl, booking_flight_number_lbl, booking_retur_seat_number_lbl,
-            booking_price_lbl, booking_departure_lbl, booking_destination_lbl,
-            booking_departure_extra_lbl, booking_destination_extra_lbl, booking_is_retur_lbl;
-    @FXML public VBox booking_info_vbox;
-
-
-    // menu images
-    @FXML public ImageView map_menu_user_image;
-    @FXML public ImageView history_menu_user_image;
-    @FXML public ImageView entertainment_menu_user_image;
-    @FXML public ImageView support_menu_user_image, ceo_menu_user_image, my_tickets_menu_user_image;
 
     //</editor-fold>
-    //<editor-fold desc="SEAT VARIABLES"
-    public ArrayList<String> taken_seat_economy = new ArrayList<>();
-    public ArrayList<String> taken_seat_business = new ArrayList<>();
-    public double seat_price = 0.0;
-    public ArrayList<Flight> round_trip_flights = new ArrayList<>();
-    public boolean has_return_flight = false;
-    public String departure_seat;
-    public String return_seat;
 
+    //<editor-fold desc="========= ADMIN VARIABLES =========">
+    //<editor-fold desc="======== REGISTER WINDOW VARIABLES (admin) ========">
+    @FXML public CheckBox       is_admin_checkbox;
+    @FXML public TextField      first_name_reg_admin, last_name_reg_admin, address_reg_admin, emailaddress_reg_admin, phone_number_reg_admin;
+    @FXML public PasswordField  password_reg_admin, confirm_password_reg_admin;
+    @FXML public Label          name_issue_reg_admin,last_name_issue_reg_admin, address_issue_reg_admin, email_issue_reg_admin, phone_number_issue_reg_admin,
+                                password_issue_reg_admin, confirm_password_issue_reg_admin, registration_error_admin;
     //</editor-fold>
-    //<editor-fold desc="HISTORY VARIABLES">
-    ObservableList<UserHistory> history_items_list;
-    ObservableList<UserHistory> history_flights;
-    @FXML public TableView<UserHistory> history_tableview;
-    @FXML public Label history_reference_number_lbl;
-    @FXML private Button history_multiple_delete_button, history_single_delete_button, history_display_flight_path_button;
-    @FXML private CheckBox history_select_all_checkbox;
-    @FXML public TableColumn<Book, String> from_col_table_historik;
-    @FXML public TableColumn<Book, String> to_col_table_historik;
+    //<editor-fold desc="======== DASHBOARD VARIABLES ========">
+    @FXML public AnchorPane     admin_flights_anchorpane, admin_tickets_anchorpane, admin_members_anchorpane, admin_register_anchorpane;
+    @FXML public Button         admin_flights_button, admin_members_button, admin_tickets_button, admin_logout_button, registerCommitBtn_admin,
+                                registerMemberBtn_admin, returnToMemberListBtn_admin, refreshMembersBtn_admin, search_input_flight_admin,
+                                prev_tur_date_flight_admin, next_tur_date_flight_admin;
+    //</editor-fold>
+    //<editor-fold desc="======== TABLE VARIABLES ========">
 
-    //</editor-fold
-    //<editor-fold desc="SEARCH VARIABLES">
-    public ArrayList<Flight> available_flights_list = new ArrayList<>();
-    @FXML public ListView<String> search_list_appear;
-    @FXML public ListView<String> search_list_appear_second;
-    @FXML public ListView<String> search_list_appear_third;
-    @FXML public Label nbr_of_available_flights, search_flight_error_lbl;
-    @FXML public DatePicker date_input_flight,dateR_input_flight;
-    @FXML public TextField from_input_flight_textfield;
-
-    @FXML public HBox return_date_pick_hbox;
-    
-
-
-    @FXML public Button date_previous_day_button, date_next_day_button, date_previous_day_return_button, date_next_day_return_button;
-
-
-    @FXML public CheckBox round_trip_checkbox;
-    @FXML public TextField display_input_flights;
-    @FXML public TextField search_f_name;
-
-    //</editor-fold
-    //<editor-fold desc="REGISTER VARIABLES">
-    @FXML public Label registration_error_lbl;
-    // Register a new user
-    @FXML public TextField registration_first_name;
-    @FXML public TextField registration_last_name;
-    @FXML public TextField registration_address;
-    @FXML public TextField registration_email;
-    @FXML public TextField registration_phone_number;
-    @FXML public TextField registration_password;
-    @FXML public TextField registration_confirm_password;
-    @FXML public Label name_issue_reg;
-    @FXML public Label last_name_issue_reg;
-    @FXML public Label address_issue_reg;
-    @FXML public Label email_issue_reg;
-    @FXML public Label phone_number_issue_reg;
-    @FXML public Label password_issue_reg;
-    @FXML public Label confirm_password_issue_reg;
-
-    //Register user/admin in MemberPanel
-
-    // Register a new user
-    @FXML public CheckBox is_admin_checkbox;
-    @FXML public TextField first_name_reg_admin;
-    @FXML public TextField last_name_reg_admin;
-    @FXML public TextField address_reg_admin;
-    @FXML public TextField emailaddress_reg_admin;
-    @FXML public TextField phone_number_reg_admin;
-    @FXML public PasswordField password_reg_admin;
-    @FXML public PasswordField confirm_password_reg_admin;
-    @FXML public Label name_issue_reg_admin;
-    @FXML public Label last_name_issue_reg_admin;
-    @FXML public Label address_issue_reg_admin;
-    @FXML public Label email_issue_reg_admin;
-    @FXML public Label phone_number_issue_reg_admin;
-    @FXML public Label password_issue_reg_admin;
-    @FXML public Label confirm_password_issue_reg_admin;
-    @FXML public Label registration_error_admin;
-    //</editor-fold
-
-    //<editor-fold desc="SUPPORT VARIABLES">
-    @FXML public Button issue_btn_sup, feedback_btn_sup, contact_btn_sup, send_fb_btn_sup, send_issue_btn_sup, send_contact_btn_sup;
-    @FXML public TextField subject_fb_txt_sup, email_fb_txt_sup, subject_contact_txt_sup, email_contact_txt_sup, title_issue_txt_sup, email_issue_txt_sup;
-    //@FXML private TextFlow msgcontent_fb_txt_sup,msgcontent_contact_txt_sup,msgcontent_issue_txt_sup;
-    @FXML public Label sup_report_display_msg, sup_contact_display_msg, sup_feedback_display_msg;
-    @FXML public AnchorPane issue_panel_sup, contact_panel_sup, feedback_panel_sup;
-    @FXML public TextArea msg_issue_txt_sup, msg_fb_txt_sup, msg_contact_txt_sup;
-    //</editor-fold
-    //<editor-fold desc="SERCH VARIABLES">
-    //</editor-fold
-
-    //<editor-fold desc="ADMIN TABLE VARIABLES">
-
-    // ticket tabel variables
-    public ObservableList<UserHistory> fetchedList_ticket_admin;
-    public ObservableList<UserHistory> items_ticket_admin;
+    // ticket table variables
+    public ObservableList<UserHistory> fetchedList_ticket_admin, items_ticket_admin;
     @FXML public Button addTicketBtn_ticket_admin, deleteTicketBtn_ticket_admin, refreshTicketsBtn_ticket_admin;
     @FXML public TableView<UserHistory> table_tickets;
     @FXML public CheckBox select_col_ticket_admin;
 
     // members table variables
-    public ObservableList<User> fetchedList_member_admin;
-    public ObservableList<User> items_member_admin;
+    public ObservableList<User> fetchedList_member_admin, items_member_admin;
     @FXML public Button delet_btn_mbr_admin, deletS_btn_mbr_admin;
     @FXML public TableView<User> table_member_admin;
     @FXML public CheckBox select_col_mbr_admin;
 
     //flights table variables
-    public ObservableList<Flight> fetchedList_flight_admin;
-    public ObservableList<Flight> items_flight_admin;
+    public ObservableList<Flight> fetchedList_flight_admin, items_flight_admin;
     @FXML public Button delete_singelFlightBtn_admin, delete_allFlightsBtn_admin, refreshFlightsBtn_admin, addFlightsBtn_admin;
     @FXML public TableView<Flight> table_flight_admin;
     @FXML public CheckBox select_all_box_flight_admin;
-
     //</editor-fold>
-    //<editor-fold desc"LOGIN VARIABLES">
-    @FXML
-    public CheckBox show_pasword_login;
-    @FXML private Button forgot_password_login;
-    @FXML
-    public TextField login_pass;
-    @FXML
-    public TextField login_email;
-    @FXML
-    public TextField show_password_field_login;
-
     //</editor-fold>
 
-    public Pane pane;
-    // Edit profile
-    @FXML public Label pfp_display_msg;
+    //<editor-fold desc="========= USER DASHBOARD VARIABLES =========" >
+    //<editor-fold desc="========= DEFAULT VARIABLES =========" >
+    public static boolean is_editing_profile_image = false;
+    public static boolean is_editing_profile;
+    public File profile_image_directory;
+    public File[] profile_image_files;
+    public CreateWorld create_world;
+    public static World world_map;
+    public Stage main_stage;
+    public Scene main_scene;
+    public static User user;
+    public Parent root;
+    //</editor-fold>
+    //<editor-fold desc="========= FXML VARIABLES =========" >
 
-    //Weather
+    // LOADER ICON
+    @FXML public ImageView login_loader_flight;
+
+    // ERROR
+    @FXML public Label err_advanced_search;
+    @FXML public ScrollPane world_map_scrollpane, flights_scrollpane;
+    @FXML public Label username_lbl;
+    @FXML public VBox flight_display_vbox;
+
+    // ===== PROFILE EDITING =====
+    // General
+    @FXML public ImageView profile_image_imageview, profile_image_preview_imageview;
+    @FXML public TextField profile_first_name_lbl, profile_last_name_lbl, profile_email_lbl, profile_address_lbl,
+                           profile_phone_lbl, profile_new_password_textfield, profile_confirm_password_textfield;
+    @FXML public Button profile_cancel_btn, profile_edit_btn;
+    @FXML public GridPane profile_profile_image_gridpane;
+    @FXML public PasswordField profile_old_password_passwordfield;
+
+    // PROFILES
+    @FXML public Label edit_pfp_fname_issue, edit_pfp_lname_issue, edit_pfp_address_issue, edit_pfp_email_issue,
+                       edit_pfp_phone_issue, edit_pfp_old_pwd_issue, edit_pfp_new_pwd_issue, edit_pfp_new_c_pwd_issue, pfp_display_msg;
+
+
+    //  MENU BUTTONS ETC.
+    @FXML
+    public Button menu_profile_btn, menu_flight_btn, menu_history_btn, menu_entertainment_btn, menu_support_btn,
+                  menu_ceo_btn, menu_my_tickets_btn, booking_close_btn, booking_close_second_page_btn;
+    @FXML public AnchorPane profile_anchorpane, history_anchorpane, flight_anchorpane, entertainment_anchorpane, support_anchorpane, ceo_anchorpane, my_ticket_anchorpane;
+    @FXML public Pane menu_highlight_color_support, menu_highlight_color_ceo, menu_highlight_color_my_ticket, menu_highlight_color_flight,
+                      menu_highlight_color_history, menu_highlight_color_entertainment;
+
+    //</editor-fold>
+    //<editor-fold desc="========= WEATHER VARIABLES =========" >
     @FXML public static Label lblForecastA,lblForecastB,lblForecastC,lblForecastD,lblForecastE,lblForecastF;
-    @FXML public static ImageView weatherIcon;
-    @FXML public static Pane weatherPane;
-    @FXML public static Pane weatherPaneBase;
+    @FXML public static ImageView weatherIcon, play_button_image;
+    @FXML public static Pane weatherPane, weatherPaneBase;
     public static boolean weatherMenu;
-    @FXML public ImageView play_button_image;
+    //</editor-fold>
+    //<editor-fold desc="======== TICKET-PROCESS VARIABLES ========">
+    @FXML public AnchorPane success_purchase_anchorpane, booking_seat_anchorpane, booking_passenger_anchorpane,
+            flight_seats_eco_anchorpane, flights_seats_business_anchorpane, payment_anchorpane;
+    @FXML public TextField  card_nbr, card_fname, card_lname, card_month, card_year, card_cvc;
+    @FXML public Button     card_prev_btn, card_purchase_btn, seat_next_btn, success_purchase_to_dashboard_button, print_ticket_purchase_btn;     // FINAL BUTTONS AFTER PURCHASING THE TICKET
+    @FXML public Label      card_counter_nbr, payment_err_msg;
+    @FXML public ScrollPane business_seat_scrollpane, eco_seat_scrollpane;
+    @FXML public TextField  booking_last_name_textfield, booking_first_name_textfield, booking_four_digits_textfield, booking_email_textfield;
+    @FXML public Label      booking_seat_number_lbl, booking_msg_lbl, booking_flight_number_lbl, booking_retur_seat_number_lbl,
+            booking_price_lbl, booking_departure_lbl, booking_destination_lbl,
+            booking_departure_extra_lbl, booking_destination_extra_lbl, booking_is_retur_lbl;
+    @FXML public VBox       booking_info_vbox;
+    @FXML public ImageView  support_menu_user_image, ceo_menu_user_image, my_tickets_menu_user_image,
+            booking_profile_image, map_menu_user_image, history_menu_user_image, entertainment_menu_user_image;
+    public ArrayList<String> taken_seat_economy, taken_seat_business, round_trip_flights = new ArrayList<>();
+    public final GridPane economy_seat_gridpane = new GridPane();
+    public final GridPane business_seat_gridpane = new GridPane();
+    public String departure_seat, return_seat;
+    public boolean has_return_flight = false;
+    public double seat_price = 0.0;
 
-    //<editor-fold desc="instance initialize">
-    public Support support;
-    public Search search;
+    //</editor-fold>
+    //<editor-fold desc="======== HISTORY VARIABLES ========">
+    @FXML private Button history_multiple_delete_button, history_single_delete_button, history_display_flight_path_button;
+    @FXML public TableColumn<Book, String> from_col_table_historik,to_col_table_historik;
+    ObservableList<UserHistory> history_items_list, history_flights;
+    @FXML public TableView<UserHistory> history_tableview;
+    @FXML private CheckBox history_select_all_checkbox;
+    @FXML public Label history_reference_number_lbl;
+    //</editor-fold
+    //<editor-fold desc="======== SEARCH VARIABLES ========">
+    @FXML public Button date_previous_day_button, date_next_day_button, date_previous_day_return_button, date_next_day_return_button;
+    @FXML public ListView<String> search_list_appear, search_list_appear_second, search_list_appear_third;
+    @FXML public TextField from_input_flight_textfield, display_input_flights, search_f_name;
+    @FXML public Label nbr_of_available_flights, search_flight_error_lbl;
+    public ArrayList<Flight> available_flights_list = new ArrayList<>();
+    @FXML public DatePicker date_input_flight,dateR_input_flight;
+    @FXML public CheckBox round_trip_checkbox;
+    @FXML public HBox return_date_pick_hbox;
+    //</editor-fold>
+    //<editor-fold desc="======== REGISTER WINDOW VARIABLES ========">
+    @FXML public TextField  registration_first_name, registration_last_name, registration_address, registration_email,
+            registration_phone_number, registration_password, registration_confirm_password;
+    @FXML public Label      name_issue_reg, last_name_issue_reg, address_issue_reg, email_issue_reg, phone_number_issue_reg,
+            password_issue_reg, confirm_password_issue_reg, registration_error_lbl;
+    //</editor-fold>
+    //<editor-fold desc="======== SUPPORT WINDOW VARIABLES ========">
+    @FXML public Button issue_btn_sup, feedback_btn_sup, contact_btn_sup, send_fb_btn_sup, send_issue_btn_sup, send_contact_btn_sup;
+    @FXML public TextField subject_fb_txt_sup, email_fb_txt_sup, subject_contact_txt_sup, email_contact_txt_sup, title_issue_txt_sup,
+            email_issue_txt_sup, msg_issue_txt_sup, msg_fb_txt_sup, msg_contact_txt_sup;
+    @FXML public Label sup_report_display_msg, sup_contact_display_msg, sup_feedback_display_msg;
+    @FXML public AnchorPane issue_panel_sup, contact_panel_sup, feedback_panel_sup;
+    //</editor-fold
+    //</editor-fold>
+
+    //<editor-fold desc="========= INSTANCES OF CLASSES =========" >
+    public FlightsViewManager flightsViewManager;
+    public RegistrationUser registrationUser;
+    public PurchaseHandler purchaseHandler;
+    public ProfileManager profileManager;
+    public RegisterAdmin registerAdmin;
+    public InitializeFXM initializeFXM;
+    public ShowPasswordField password;
+    public AdminControl adminControl;
     public ErrorHandler errorHandler;
     public UserControl userControl;
-    public Db db;
-    public WeatherAPI weatherAPI;
-    public ShowPasswordField password;
-    public Config config;
     public FlightPaths flightPaths;
-    public UserEvent userEvent;
     public AdminEvent adminEvent;
-    public RegistrationUser registrationUser;
-    public RegisterAdmin registerAdmin;
-    public FlightsViewManager flightsViewManager;
-    public PurchaseHandler purchaseHandler;
-    public InitializeFXM initializeFXM;
-    public AdminControl adminControl;
+    public WeatherAPI weatherAPI;
+    public UserEvent userEvent;
     public BgMusic bgMusic;
-    public ProfileManager profileManager;
+    public Support support;
+    public Config config;
+    public Search search;
+    public Db db;
     //</editor-fold>
-
-    // Loader in login
-    @FXML public ImageView login_loader_flight;
 
     //----------------- HOME -----------------//
     public Controller(){
@@ -779,7 +632,7 @@ public class Controller implements Initializable {
             from_input_flight_textfield.setText(to);
             display_input_flights.setText(from);
         }else {
-            errorHandler.notifyError(user_dashboard_msgbox_pane, user_notification_lbl, "Search fields are empty!");
+            errorHandler.displayMessage(err_advanced_search, "Search fields are empty!", true);
         }
 
     }

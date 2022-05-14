@@ -116,8 +116,7 @@ public class InitializeFXM {
         controller.nbr_of_available_flights = (Label) root.lookup("#nbr_of_available_flights");
 
         // global error message for user dashboard
-        controller.user_dashboard_msgbox_pane = (Pane)root.lookup("#msgBox_user_dashboard");
-        controller.user_notification_lbl = (Label) root.lookup("#notify_user_dashboard");
+        controller.err_advanced_search = (Label) root.lookup("#err_advanced_search");
         // login success message
 
         // scroll pane seats
