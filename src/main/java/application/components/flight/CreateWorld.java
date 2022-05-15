@@ -3,6 +3,7 @@ package application.components.flight;
 import application.Controller;
 import application.api.Db;
 import application.components.user.User;
+import application.games.Geography;
 import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Background;
@@ -43,6 +44,24 @@ public class CreateWorld {
         return world;
     }
 
+    public World init(Geography geography) {
+        this.controller = controller;
+        world = WorldBuilder.create()
+                .resolution(World.Resolution.HI_RES)
+                .backgroundColor(Color.web("#0c0c1a"))
+                //.fillColor(Color.web("#dcb36c"))
+                //.strokeColor(Color.web("#987028"))
+                //.hoverColor(Color.web("#fec47e"))
+                //.pressedColor(Color.web("#6cee85"))
+                //.locationColor(Color.web("#0000ff"))
+                //.selectedColor(Color.MAGENTA)
+                .zoomEnabled(true)
+                .selectionEnabled(true)
+                .build(geography);
+
+        return world;
+    }
+
 
     public void addWorldInMap(ScrollPane scrollPane, User user) {
         StackPane stackPane = new StackPane(world);
@@ -56,6 +75,5 @@ public class CreateWorld {
 
         controller.username_lbl.setText(user.getFirstName());
         //controller.u_id.setText(user.getUserId());
-
     }
 }

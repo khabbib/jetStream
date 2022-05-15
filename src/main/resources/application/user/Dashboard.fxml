@@ -35,7 +35,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #112;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #112;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
       <AnchorPane fx:id="my_ticket_anchorpane" layoutX="106.0" layoutY="7.0" prefHeight="693.0" prefWidth="1089.0" style="-fx-background-color: #112;">
          <children>
@@ -860,67 +860,6 @@
                   <HBox spacing="10.0" />
                </children>
             </VBox>
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="entertainment_anchorpane" layoutX="107.0" prefHeight="700.0" prefWidth="1099.0" style="-fx-background-color: #112;">
-         <children>
-            <ImageView fitHeight="241.0" fitWidth="284.0" layoutX="395.0" layoutY="229.0" opacity="0.08" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../image/game_icon.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="241.0" fitWidth="200.0" layoutX="129.0" layoutY="116.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../gamePosters/MusicQuiz.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="MOVE" />
-               </cursor>
-            </ImageView>
-            <ImageView fitHeight="241.0" fitWidth="200.0" layoutX="344.0" layoutY="116.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../gamePosters/PONG.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="MOVE" />
-               </cursor>
-            </ImageView>
-            <Button layoutX="129.0" layoutY="371.0" mnemonicParsing="false" onAction="#playQuiz" prefHeight="30.0" prefWidth="196.0" style="-fx-background-color: #ff8000;" text="Play!" textFill="WHITE">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Button layoutX="344.0" layoutY="371.0" mnemonicParsing="false" onAction="#playPong" prefHeight="30.0" prefWidth="196.0" style="-fx-background-color: #ff8000;" text="Play!" textFill="WHITE">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Button layoutX="559.0" layoutY="371.0" mnemonicParsing="false" onAction="#playPiano" prefHeight="30.0" prefWidth="196.0" style="-fx-background-color: #ff8000;" text="Play!" textFill="WHITE">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <ImageView fitHeight="241.0" fitWidth="200.0" layoutX="559.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../gamePosters/Synth.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="MOVE" />
-               </cursor>
-            </ImageView>
-            <Button layoutX="773.0" layoutY="371.0" mnemonicParsing="false" onAction="#play2048" prefHeight="30.0" prefWidth="196.0" style="-fx-background-color: #ff8000;" text="Play!" textFill="WHITE">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <ImageView fitHeight="241.0" fitWidth="200.0" layoutX="773.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../gamePosters/2048.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="MOVE" />
-               </cursor>
-            </ImageView>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="history_anchorpane" layoutX="103.0" layoutY="-3.0" prefHeight="700.0" prefWidth="1089.0" style="-fx-background-color: #112;">
@@ -1780,6 +1719,57 @@
                   <Font size="14.0" />
                </font>
             </Label>
+            <Group layoutX="722.0" layoutY="533.0">
+               <children>
+                  <Pane layoutX="-40.0" prefHeight="49.0" prefWidth="386.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#151d3b" height="38.0" layoutY="5.0" stroke="#151d3b" strokeType="INSIDE" strokeWidth="0.0" style="-fx-background-color: #151D3B #151D3B;" width="386.0" />
+                        <ImageView fitHeight="19.0" fitWidth="25.0" layoutX="357.0" layoutY="15.0" onMouseClicked="#searchHit" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/search.png" />
+                           </image>
+                           <effect>
+                              <ColorAdjust brightness="0.47" contrast="0.16" hue="0.98" saturation="0.48" />
+                           </effect>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </ImageView>
+                        <TextField fx:id="search_f_name" layoutX="23.0" layoutY="12.0" onAction="#searchHit" onKeyTyped="#searchAppear" prefHeight="25.0" prefWidth="213.0" promptText="Search by country..." style="-fx-background-color: transparent; -fx-text-fill: white;" />
+                        <Line endX="16.0" layoutX="329.0" layoutY="5.0" startX="16.0" startY="38.0" stroke="#2e304d" />
+                        <Group layoutX="309.0" layoutY="12.0">
+                           <children>
+                              <StackPane prefHeight="19.0" prefWidth="18.0" style="-fx-background-color: #112; -fx-background-radius: 5;">
+                                 <children>
+                                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../image/close.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </StackPane>
+                              <Button layoutX="2.0" layoutY="2.0" mnemonicParsing="false" onAction="#resetSearchCountry" opacity="0.0" style="-fx-background-color: #112;" text="1" textFill="WHITE">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor></Button>
+                           </children>
+                        </Group>
+                     </children>
+                  </Pane>
+                  <ListView fx:id="search_list_appear" layoutX="-26.0" layoutY="41.0" prefHeight="105.0" prefWidth="335.0" style="-fx-background-color: #112; -fx-background-radius: 5;" visible="false">
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                     <stylesheets>
+                        <URL value="@../Styles/ListView.css" />
+                        <URL value="@../Styles/ScrollStyle.css" />
+                     </stylesheets>
+                  </ListView>
+               </children>
+            </Group>
             <Pane layoutX="682.0" layoutY="589.0" prefHeight="85.0" prefWidth="386.0">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="223.0" layoutY="10.0" prefHeight="17.0" prefWidth="116.0" text="Weather forecast" textFill="WHITE" />
@@ -1832,57 +1822,6 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Group layoutX="722.0" layoutY="533.0">
-               <children>
-                  <Pane layoutX="-40.0" prefHeight="49.0" prefWidth="386.0">
-                     <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#151d3b" height="38.0" layoutY="5.0" stroke="#151d3b" strokeType="INSIDE" strokeWidth="0.0" style="-fx-background-color: #151D3B #151D3B;" width="386.0" />
-                        <ImageView fitHeight="19.0" fitWidth="25.0" layoutX="357.0" layoutY="15.0" onMouseClicked="#searchHit" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../image/search.png" />
-                           </image>
-                           <effect>
-                              <ColorAdjust brightness="0.47" contrast="0.16" hue="0.98" saturation="0.48" />
-                           </effect>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </ImageView>
-                        <TextField fx:id="search_f_name" layoutX="23.0" layoutY="12.0" onAction="#searchHit" onKeyTyped="#searchAppear" prefHeight="25.0" prefWidth="213.0" promptText="Search by country..." style="-fx-background-color: transparent; -fx-text-fill: white;" />
-                        <Line endX="16.0" layoutX="329.0" layoutY="5.0" startX="16.0" startY="38.0" stroke="#2e304d" />
-                        <Group layoutX="309.0" layoutY="12.0">
-                           <children>
-                              <StackPane prefHeight="19.0" prefWidth="18.0" style="-fx-background-color: #112; -fx-background-radius: 5;">
-                                 <children>
-                                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../image/close.png" />
-                                       </image>
-                                    </ImageView>
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </padding>
-                              </StackPane>
-                              <Button layoutX="2.0" layoutY="2.0" mnemonicParsing="false" onAction="#resetSearchCountry" opacity="0.0" style="-fx-background-color: #112;" text="1" textFill="WHITE">
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor></Button>
-                           </children>
-                        </Group>
-                     </children>
-                  </Pane>
-                  <ListView fx:id="search_list_appear" layoutX="-26.0" layoutY="41.0" prefHeight="105.0" prefWidth="335.0" style="-fx-background-color: #112; -fx-background-radius: 5;" visible="false">
-                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </padding>
-                     <stylesheets>
-                        <URL value="@../Styles/ListView.css" />
-                        <URL value="@../Styles/ScrollStyle.css" />
-                     </stylesheets>
-                  </ListView>
-               </children>
-            </Group>
          </children>
       </AnchorPane>
       <Pane layoutY="-2.0" prefHeight="702.0" prefWidth="105.0" style="-fx-background-color: #151D3B; -fx-background-radius: 0 30 0 0;">
@@ -1984,7 +1923,7 @@
                                           <ColorAdjust brightness="1.0" />
                                        </effect>
                                     </ImageView>
-                                    <Label opacity="0.5" text="My tickets" textFill="WHITE" />
+                                    <Label opacity="0.5" text="Tickets" textFill="WHITE" />
                                  </children>
                               </HBox>
                               <Button fx:id="menu_my_tickets_btn" layoutX="1.0" layoutY="2.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" opacity="0.0" prefHeight="25.0" prefWidth="94.0">
@@ -2163,5 +2102,71 @@
             </VBox>
          </children>
       </Pane>
+      <AnchorPane fx:id="entertainment_anchorpane" layoutX="107.0" prefHeight="700.0" prefWidth="1099.0" style="-fx-background-color: #112;">
+         <children>
+            <ImageView fitHeight="241.0" fitWidth="200.0" layoutX="129.0" layoutY="98.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../gamePosters/MusicQuiz.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="MOVE" />
+               </cursor>
+            </ImageView>
+            <ImageView fitHeight="241.0" fitWidth="200.0" layoutX="344.0" layoutY="98.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../gamePosters/PONG.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="MOVE" />
+               </cursor>
+            </ImageView>
+            <Button layoutX="129.0" layoutY="353.0" mnemonicParsing="false" onAction="#playQuiz" prefHeight="30.0" prefWidth="196.0" style="-fx-background-color: #ff8000;" text="Play!" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="344.0" layoutY="353.0" mnemonicParsing="false" onAction="#playPong" prefHeight="30.0" prefWidth="196.0" style="-fx-background-color: #ff8000;" text="Play!" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="559.0" layoutY="353.0" mnemonicParsing="false" onAction="#playPiano" prefHeight="30.0" prefWidth="196.0" style="-fx-background-color: #ff8000;" text="Play!" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <ImageView fitHeight="241.0" fitWidth="200.0" layoutX="559.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../gamePosters/Synth.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="MOVE" />
+               </cursor>
+            </ImageView>
+            <Button layoutX="773.0" layoutY="353.0" mnemonicParsing="false" onAction="#play2048" prefHeight="30.0" prefWidth="196.0" style="-fx-background-color: #ff8000;" text="Play!" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <ImageView fitHeight="241.0" fitWidth="200.0" layoutX="773.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../gamePosters/2048.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="MOVE" />
+               </cursor>
+            </ImageView>
+            <ImageView fitHeight="180.0" fitWidth="624.0" layoutX="345.0" layoutY="423.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../gamePosters/Canberra.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="129.0" layoutY="571.0" mnemonicParsing="false" onAction="#playGeoQuiz" prefHeight="30.0" prefWidth="196.0" style="-fx-background-color: #ff8000;" text="Play!" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

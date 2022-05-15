@@ -13,10 +13,7 @@ import application.components.registration.RegistrationUser;
 import application.config.Config;
 import application.eventHandler.AdminEvent;
 import application.eventHandler.UserEvent;
-import application.games.Game2048Main;
-import application.games.MPlayer;
-import application.games.Piano;
-import application.games.Pong;
+import application.games.*;
 import application.api.Db;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -305,6 +302,14 @@ public class Controller implements Initializable {
     public void playPong(){
         Pong pong = new Pong();
         try { Stage primary = new Stage(); pong.start(primary);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void playGeoQuiz(){
+        Geography geography = new Geography();
+        try { Stage primary = new Stage(); geography.start(primary);
         } catch (Exception e) {
             e.printStackTrace();
         }

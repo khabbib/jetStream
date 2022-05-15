@@ -27,6 +27,7 @@ public class BgMusic implements Runnable {
     public void nextButton() {
         playing = false;
         mediaPlayer = new MediaPlayer(new Media(files[nextSong()].toURI().toString()));
+        controller.play_button_image.setImage(new Image("application/image/media/pause.png"));
         playing = true;
         thread = new Thread(this);
         thread.start();
@@ -34,6 +35,7 @@ public class BgMusic implements Runnable {
     public void prevButton() {
         playing = false;
         mediaPlayer = new MediaPlayer(new Media(files[prevSong()].toURI().toString()));
+        controller.play_button_image.setImage(new Image("application/image/media/pause.png"));
         playing = true;
         thread = new Thread(this);
         thread.start();

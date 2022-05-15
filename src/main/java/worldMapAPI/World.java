@@ -3,6 +3,7 @@ package worldMapAPI;
 import application.Controller;
 import application.api.Db;
 import application.components.flight.Flight;
+import application.games.Geography;
 import javafx.application.Platform;
 import javafx.beans.DefaultProperty;
 import javafx.beans.property.BooleanProperty;
@@ -34,6 +35,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.Shape;
 import org.kordamp.ikonli.Ikon;
@@ -58,6 +60,7 @@ import static javafx.scene.input.MouseEvent.MOUSE_RELEASED;
 @DefaultProperty("children")
 public class World extends Region {
     private Db db;
+
     public enum Resolution { HI_RES, LO_RES };
     private static final StyleablePropertyFactory<World> FACTORY          = new StyleablePropertyFactory<>(Region.getClassCssMetaData());
     private static final String                          HIRES_PROPERTIES = "worldMapAPI/hires.properties";
@@ -111,6 +114,7 @@ public class World extends Region {
     private              EventHandler<MouseEvent>        mouseReleaseHandler;
     private              EventHandler<MouseEvent>        mouseExitHandler;
     private              Controller                      controller;
+    private              Geography                       geography;
 
     //private              Game                            game;
 
@@ -122,7 +126,7 @@ public class World extends Region {
         if (controller == null) {
             System.out.println("this controller");
         }
-        //game = new Game(this);
+
         System.out.println(Resolution.HI_RES == RESOLUTION ? World.HIRES_PROPERTIES : World.LORES_PROPERTIES);
         resolutionProperties = readProperties(Resolution.HI_RES == RESOLUTION ? World.HIRES_PROPERTIES : World.LORES_PROPERTIES);
         backgroundColor      = new StyleableObjectProperty<Color>(BACKGROUND_COLOR.getInitialValue(World.this)) {
@@ -246,11 +250,136 @@ public class World extends Region {
         registerListeners();
     }
 
+    public World(Resolution RESOLUTION, Geography geography) {
+        this.geography = geography;
+        System.out.println(Resolution.HI_RES == RESOLUTION ? World.HIRES_PROPERTIES : World.LORES_PROPERTIES);
+        resolutionProperties = readProperties(Resolution.HI_RES == RESOLUTION ? World.HIRES_PROPERTIES : World.LORES_PROPERTIES);
+        backgroundColor      = new StyleableObjectProperty<Color>(BACKGROUND_COLOR.getInitialValue(World.this)) {
+            @Override protected void invalidated() { setBackground(new Background(new BackgroundFill(Paint.valueOf("#112"), CornerRadii.EMPTY, Insets.EMPTY))); }
+            @Override public Object getBean() { return World.this; }
+            @Override public String getName() { return "backgroundColor"; }
+            @Override public CssMetaData<? extends Styleable, Color> getCssMetaData() { return FACTORY.createColorCssMetaData("-background-color", s -> s.backgroundColor, Color.web("#112"), false); }
+        };
+        fillColor            = new StyleableObjectProperty<Color>(FILL_COLOR.getInitialValue(World.this)) {
+            @Override protected void invalidated() { setFillAndStroke(); }
+            @Override public Object getBean() { return World.this; }
+            @Override public String getName() { return "fillColor"; }
+            @Override public CssMetaData<? extends Styleable, Color> getCssMetaData() { return FACTORY.createColorCssMetaData("-background-color", s -> s.backgroundColor, Color.web("#112"), false); }
+        };
+        strokeColor          = new StyleableObjectProperty<Color>(STROKE_COLOR.getInitialValue(World.this)) {
+            @Override protected void invalidated() { setFillAndStroke(); }
+            @Override public Object getBean() { return World.this; }
+            @Override public String getName() { return "strokeColor"; }
+            @Override public CssMetaData<? extends Styleable, Color> getCssMetaData() { return STROKE_COLOR; }
+        };
+        hoverColor           = new StyleableObjectProperty<Color>(HOVER_COLOR.getInitialValue(World.this)) {
+            @Override protected void invalidated() { }
+            @Override public Object getBean() { return World.this; }
+            @Override public String getName() { return "hoverColor"; }
+            @Override public CssMetaData<? extends Styleable, Color> getCssMetaData() { return HOVER_COLOR; }
+        };
+        pressedColor         = new StyleableObjectProperty<Color>(PRESSED_COLOR.getInitialValue(this)) {
+            @Override protected void invalidated() {}
+            @Override public Object getBean() { return World.this; }
+            @Override public String getName() { return "pressedColor"; }
+            @Override public CssMetaData<? extends Styleable, Color> getCssMetaData() { return PRESSED_COLOR; }
+        };
+        selectedColor        = new StyleableObjectProperty<Color>(SELECTED_COLOR.getInitialValue(this)) {
+            @Override protected void invalidated() {}
+            @Override public Object getBean() { return World.this; }
+            @Override public String getName() { return "selectedColor"; }
+            @Override public CssMetaData<? extends Styleable, Color> getCssMetaData() { return SELECTED_COLOR; }
+        };
+        locationColor        = new StyleableObjectProperty<Color>(LOCATION_COLOR.getInitialValue(this)) {
+            @Override protected void invalidated() {
+            }
+            @Override public Object getBean() { return World.this; }
+            @Override public String getName() { return "locationColor"; }
+            @Override public CssMetaData<? extends Styleable, Color> getCssMetaData() { return LOCATION_COLOR; }
+        };
+        hoverEnabled         = new BooleanPropertyBase(true) {
+            @Override protected void invalidated() {}
+            @Override public Object getBean() { return World.this; }
+            @Override public String getName() { return "hoverEnabled"; }
+        };
+        selectionEnabled     = new BooleanPropertyBase(false) {
+            @Override protected void invalidated() {}
+            @Override public Object getBean() { return World.this; }
+            @Override public String getName() { return "selectionEnabled"; }
+        };
+        selectedCountry      = new ObjectPropertyBase<Country>() {
+            @Override protected void invalidated() {}
+            @Override public Object getBean() { return World.this; }
+            @Override public String getName() { return "selectedCountry"; }
+        };
+        zoomEnabled          = new BooleanPropertyBase(false) {
+            @Override protected void invalidated() {
+                if (null == getScene()) return;
+                System.out.println("Scholl goes here!");
+                if (get()) {
+                    System.out.println("Scholl goes here!");
+                    assert controller != null;
+                    controller.world_map_scrollpane.addEventFilter(ScrollEvent.ANY, _scrollEventHandler);
+                    System.out.println("Scholl goes here!");
+                } else {
+                    assert controller != null;
+                    System.out.println("Scholl goes here!");
+                    controller.world_map_scrollpane.removeEventFilter(ScrollEvent.ANY, _scrollEventHandler);
+                }
+            }
+            @Override public Object getBean() { return World.this; }
+            @Override public String getName() { return "zoomEnabled"; }
+        };
+        scaleFactor          = new DoublePropertyBase(1.0) {
+            @Override protected void invalidated() {
+                if (isZoomEnabled()) {
+                    setScaleX(get());
+                    setScaleY(get());
+                }
+            }
+            @Override public Object getBean() { return World.this; }
+            @Override public String getName() { return "scaleFactor"; }
+        };
+        countryPaths         = createCountryPaths();
+
+        locationIconCode     = MaterialDesign.MDI_CHECKBOX_BLANK_CIRCLE;
+        pane                 = new Pane();
+        group                = new Group();
+
+        _mouseEnterHandler   = evt -> handleMouseEvent(evt, mouseEnterHandler);
+        _mousePressHandler   = evt -> handleMouseEvent(evt, mousePressHandler);
+        _mouseReleaseHandler = evt -> handleMouseEvent(evt, mouseReleaseHandler);
+        _mouseExitHandler    = evt -> handleMouseEvent(evt, mouseExitHandler);
+        _scrollEventHandler  = evt -> {
+            if (group.getTranslateX() != 0 || group.getTranslateY() != 0) { resetZoom(); }
+            double delta    = 1.2;
+            double scale    = getScaleFactor();
+            double oldScale = scale;
+            scale           = evt.getDeltaY() < 0 ? scale / delta : scale * delta;
+            scale           = clamp( 1, 10, scale);
+            double factor   = (scale / oldScale) - 1;
+            if (Double.compare(1, getScaleFactor()) == 0) {
+                zoomSceneX = evt.getX();
+                zoomSceneY = evt.getY();
+                resetZoom();
+            }
+            double deltaX = (zoomSceneX - (getBoundsInParent().getWidth() / 2 + getBoundsInParent().getMinX()));
+            double deltaY = (zoomSceneY - (getBoundsInParent().getHeight() / 2 + getBoundsInParent().getMinY()));
+            setScaleFactor(scale);
+            setPivot(deltaX * factor, deltaY * factor);
+
+            evt.consume();
+        };
+
+        initGraphics();
+        registerListeners();
+    }
+
 
     // ******************** Initialization ************************************
     private void initGraphics() {
         if (Double.compare(getPrefWidth(), 0.0) <= 0 || Double.compare(getPrefHeight(), 0.0) <= 0 ||
-            Double.compare(getWidth(), 0.0) <= 0 || Double.compare(getHeight(), 0.0) <= 0) {
+                Double.compare(getWidth(), 0.0) <= 0 || Double.compare(getHeight(), 0.0) <= 0) {
             if (getPrefWidth() > 0 && getPrefHeight() > 0) {
                 setPrefSize(getPrefWidth(), getPrefHeight());
             } else {
@@ -260,8 +389,9 @@ public class World extends Region {
 
         getStyleClass().add("world");
 
-        Color fill   = getFillColor();
+        Color fill = getFillColor();
         Color stroke = getStrokeColor();
+
 
         countryPaths.forEach((name, pathList) -> {
             Country country = Country.valueOf(name);
@@ -480,31 +610,32 @@ public class World extends Region {
                     color = null == COUNTRY.getColor() ? getFillColor() : COUNTRY.getColor();
                 } else {
                     setSelectedCountry(COUNTRY);
-                    System.out.println("Pressed country: " + COUNTRY_NAME);
-                    controller.playSound("Flight appear", "sounds/flight_appear.wav");
-                    System.out.println(controller.weatherMenu);
-                    if (controller.weatherMenu == true) {
-                        try {
-                            controller.forecast(convert(COUNTRY_NAME).replace('_', ' '));
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
+                    if (controller != null) {
+                        System.out.println("Pressed country: " + COUNTRY_NAME);
+                        controller.playSound("Flight appear", "sounds/flight_appear.wav");
+                        System.out.println(controller.weatherMenu);
+                        if (controller.weatherMenu == true) {
+                            try {
+                                controller.forecast(convert(COUNTRY_NAME).replace('_', ' '));
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
                         }
+
+                        flights = db.seachFlightFromSearchField(convert(COUNTRY_NAME));
+                        if (!flights.isEmpty()){
+                            controller.fillFlights(flights);
+                        }else {
+                            controller.fillFlights(null);
+                        }
+                    } else {
+                        System.out.println("country");
+                    geography.guess(convert(COUNTRY_NAME));
                     }
 
-                    //game.checkAnswer(COUNTRY_NAME);
-                    flights = db.seachFlightFromSearchField(convert(COUNTRY_NAME));
-                    if (!flights.isEmpty()){
-                        controller.fillFlights(flights);
-                    }else {
-                        controller.fillFlights(null);
-                    }
                     color = getSelectedColor();
-                    //getFlights(convert(COUNTRY_NAME));
-                    //Controller.setOutput_info(NewScene.showNewScene(COUNTRY_NAME, resor));
-                    //Controller.fyllTable(NewScene.showNewScene(COUNTRY_NAME, resor));
-
 
                 }
                 formerSelectedCountry = getSelectedCountry();
@@ -571,8 +702,13 @@ public class World extends Region {
         resolutionProperties.forEach((key, value) -> {
             String            name     = key.toString();
             List<CountryPath> pathList = new ArrayList<>();
+            if (geography == null) {
             for (String path : value.toString().split(";")) { pathList.add(new CountryPath(name, path)); }
             countryPaths.put(name, pathList);
+        } else {
+                for (String path : value.toString().split(";")) { pathList.add(new CountryPath(name, path, false)); }
+                countryPaths.put(name, pathList);
+            }
         });
         return countryPaths;
     }

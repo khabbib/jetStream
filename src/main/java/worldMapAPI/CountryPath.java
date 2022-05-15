@@ -26,6 +26,15 @@ public class CountryPath extends SVGPath {
         setContent(CONTENT);
     }
 
+    public CountryPath(final String NAME, final String CONTENT, boolean b) {
+        super();
+        this.NAME    = NAME;
+        this.LOCALE  = new Locale("", NAME);
+        TOOLTIP = null;
+        if (null == CONTENT) return;
+        setContent(CONTENT);
+    }
+
 
     // ******************** Methods *******************************************
     public String getName() { return NAME; }
