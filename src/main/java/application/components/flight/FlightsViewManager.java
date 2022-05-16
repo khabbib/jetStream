@@ -55,7 +55,7 @@ public class FlightsViewManager {
                 controller.flight_display_vbox.getChildren().addAll(hbox); // the box
                 controller.flight_display_vbox.setAlignment(Pos.TOP_LEFT);
                 if (flights.get(i).isrTur()){
-                    controller.round_trip_flights.add(flights.get(i));
+                    controller.round_trip_flights.add(String.valueOf(flights.get(i)));
                 }
 
                 int finalI1 = i;
