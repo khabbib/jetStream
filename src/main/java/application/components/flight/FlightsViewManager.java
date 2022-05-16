@@ -1,6 +1,7 @@
 package application.components.flight;
 
 import application.Controller;
+import application.ErrorHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -22,6 +23,12 @@ import java.util.Objects;
  */
 public class FlightsViewManager {
 
+    private ErrorHandler errorHandler;
+
+    public FlightsViewManager(Controller controller) {
+        errorHandler = new ErrorHandler(controller);
+    }
+
     public void resetSearchFromTo(Controller controller) {
         System.out.println(controller.from_input_flight_textfield.getText() + " info checker");
         controller.from_input_flight_textfield.clear();
@@ -41,11 +48,14 @@ public class FlightsViewManager {
             controller.flight_display_vbox.getChildren().clear();
             controller.flights_scrollpane.setVvalue(0);
             controller.nbr_of_available_flights.setText(String.valueOf(flights.size()));
-            try {
-                controller.booking_profile_image.setImage(controller.db.getProfilePicture(controller.user));
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            } // update profile picture
+
+            if(!controller.exploreMode) {
+                try {
+                    controller.booking_profile_image.setImage(controller.db.getProfilePicture(controller.user));
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                } // update profile picture
+            }
 
             for (int i = 0; i < flights.size();i++){
                 HBox hbox = controller.createFlightsContent(flights, i);
@@ -59,25 +69,38 @@ public class FlightsViewManager {
                 }
 
                 int finalI1 = i;
-                // to click
-                hbox.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
-                    boolean ready = controller.preperBeforeCreatingSeats();
-                    if (ready){
-                        if (flights.get(finalI1).isrTur()){ // chose two-way
-                            System.out.println("A tur flight from event handler");
-                            controller.fillInfoSeatPnl(flights, finalI1);
-                            controller.createThisSeat(flights, finalI1);
-                            if(!controller.round_trip_flights.isEmpty()){
-                                controller.round_trip_flights.remove(finalI1); // remove one-way flight
-                                controller.has_return_flight = true; // set to true if there is more flight
+
+
+                    // to click
+                    hbox.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+
+                        if (!controller.exploreMode) {
+
+                            boolean ready = controller.preperBeforeCreatingSeats();
+                            if (ready){
+                                if (flights.get(finalI1).isrTur()){ // chose two-way
+                                    System.out.println("A tur flight from event handler");
+                                    controller.fillInfoSeatPnl(flights, finalI1);
+                                    controller.createThisSeat(flights, finalI1);
+                                    if(!controller.round_trip_flights.isEmpty()){
+                                        controller.round_trip_flights.remove(finalI1); // remove one-way flight
+                                        controller.has_return_flight = true; // set to true if there is more flight
+                                    }
+                                }else { // chose one-way
+                                    controller.fillInfoSeatPnl(flights, finalI1);
+                                    controller.createThisSeat(flights, finalI1);
+                                }
+                                controller.booking_seat_anchorpane.toFront();
+                                controller.playSound("Next page", "sounds/next_page.wav");
                             }
-                        }else { // chose one-way
-                            controller.fillInfoSeatPnl(flights, finalI1);
-                            controller.createThisSeat(flights, finalI1);
+
+                        } else {
+                            controller.playSound("Error", "sounds/error.wav");
+                            errorHandler.confirmThisAction("Information", "You must log in to go further!", "");
                         }
-                        controller.booking_seat_anchorpane.toFront();
-                    }
-                });
+                    });
+
+
                 // to hover
                 hbox.addEventFilter(MouseEvent.MOUSE_ENTERED, e -> {
                     hbox.setBackground(new Background(new BackgroundFill(Color.valueOf("#112"), CornerRadii.EMPTY, Insets.EMPTY)));

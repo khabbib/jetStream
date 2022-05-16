@@ -56,6 +56,7 @@ public class Controller implements Initializable {
     @FXML public Label error_message_lbl, success_msg_lbl; // ERRORS HANDLER
     @FXML private Button forgot_password_login;
     @FXML public CheckBox show_pasword_login;
+    public static boolean exploreMode = true; // If explore mode is off, it means user is logged in.
 
     //</editor-fold>
 
@@ -260,10 +261,10 @@ public class Controller implements Initializable {
         profileManager = new ProfileManager();
         password = new ShowPasswordField();
         adminControl = new AdminControl(this, db);
-        userEvent = new UserEvent();
+        userEvent = new UserEvent(this);
         adminEvent = new AdminEvent();
         purchaseHandler = new PurchaseHandler();
-        flightsViewManager = new FlightsViewManager();
+        flightsViewManager = new FlightsViewManager(this);
         bgMusic = new BgMusic(this);
     }
 
@@ -374,6 +375,7 @@ public class Controller implements Initializable {
      * @throws IOException
      */
     public void switchToUserDashboard(ActionEvent e) throws IOException {
+        exploreMode = false;
         userControl.switchToUserDashboard(e,this);
     }
 
@@ -399,7 +401,7 @@ public class Controller implements Initializable {
      * @throws IOException
      */
     public void renderDashboard(ActionEvent e, User user) {
-        userControl.renderDashboard(e,user,this);
+        userControl.renderDashboard(e, user,this);
     } // the method will render dashboard page for user
 
     /**
@@ -407,6 +409,7 @@ public class Controller implements Initializable {
      * @throws IOException
      */
     public void noLoginRequired(ActionEvent e) throws IOException {
+        exploreMode = true;
         userControl.noLoginRequired(e,this);
     }// shortcut login to user dashboard
 
@@ -442,6 +445,7 @@ public class Controller implements Initializable {
      * @throws IOException
      */
     public void switchToLogin(ActionEvent e) {
+        exploreMode = true;
         this.root = config.render(e, "user/Login", "Login");
         success_msg_lbl = (Label) root.lookup("#success_msg_lbl");
         if(user != null) {

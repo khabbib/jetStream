@@ -94,13 +94,15 @@ public class InitializeFXM {
             controller.profile_address_lbl.setText(user.getAddress());
             controller.profile_phone_lbl.setText(user.getPhoneNumber());
 
-            try {
-                Image image = db.getProfilePicture(user);
-                controller.profile_image_imageview.setImage(image);
-                controller.profile_image_preview_imageview.setImage(image);
-                controller.profile_image_preview_imageview.setImage(db.getProfilePicture(user));
-            } catch (SQLException e) {
-                e.printStackTrace();
+            if (!controller.exploreMode) {
+                try {
+                    Image image = db.getProfilePicture(user);
+                    controller.profile_image_imageview.setImage(image);
+                    controller.profile_image_preview_imageview.setImage(image);
+                    controller.profile_image_preview_imageview.setImage(db.getProfilePicture(user));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
 
             controller.profile_first_name_lbl.setDisable(true);
