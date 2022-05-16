@@ -162,7 +162,8 @@ public class Controller implements Initializable {
     @FXML public VBox       booking_info_vbox;
     @FXML public ImageView  support_menu_user_image, ceo_menu_user_image, my_tickets_menu_user_image,
             booking_profile_image, map_menu_user_image, history_menu_user_image, entertainment_menu_user_image;
-    public ArrayList<String> taken_seat_economy, taken_seat_business = new ArrayList<>();
+    public ArrayList<String> taken_seat_business = new ArrayList<>();
+    public ArrayList<String> taken_seat_economy = new ArrayList<>();
     public ArrayList<Flight> round_trip_flights = new ArrayList<>();
     public final GridPane economy_seat_gridpane = new GridPane();
     public final GridPane business_seat_gridpane = new GridPane();
