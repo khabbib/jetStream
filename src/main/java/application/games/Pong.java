@@ -16,9 +16,9 @@ import javafx.util.Duration;
 
 public class Pong extends Application {
 
-    private static final int width = 800;
-    private static final int height = 600;
-    private static final int PLAYER_HEIGHT = 100;
+    private static final int width = 1000;
+    private static final int height = 500;
+    private static final int PLAYER_HEIGHT = 90;
     private static final int PLAYER_WIDTH = 15;
     private static final double BALL_R = 15;
     private int ballYSpeed = 1;
@@ -31,7 +31,7 @@ public class Pong extends Application {
     private int scoreP2 = 0;
     private boolean gameStarted;
     private int playerOneXPos = 0;
-    private double playerTwoXPos = width - PLAYER_WIDTH;
+    private double playerTwoXPos = width - PLAYER_WIDTH*2;
 
     public void start(Stage stage) throws Exception {
         Canvas canvas = new Canvas(width, height);
@@ -40,6 +40,7 @@ public class Pong extends Application {
         tl.setCycleCount(Timeline.INDEFINITE);
         canvas.setOnMouseMoved(e ->  playerOneYPos  = e.getY());
         canvas.setOnMouseClicked(e ->  gameStarted = true);
+        stage.setTitle("Pong | Extreme Edition");
         stage.setScene(new Scene(new StackPane(canvas)));
         stage.show();
         tl.play();
@@ -54,13 +55,13 @@ public class Pong extends Application {
             ballXPos+=ballXSpeed;
             ballYPos+=ballYSpeed;
             if(ballXPos < width - width  / 4) {
-                playerTwoYPos = ballYPos - PLAYER_HEIGHT / 2;
+                playerTwoYPos = ballYPos - PLAYER_HEIGHT*2 / 2;
             }  else {
-                playerTwoYPos =  ballYPos > playerTwoYPos + PLAYER_HEIGHT / 2 ?playerTwoYPos += 1: playerTwoYPos - 1;
+                playerTwoYPos =  ballYPos > playerTwoYPos + PLAYER_HEIGHT*2 / 2 ?playerTwoYPos += 5: playerTwoYPos - 5;
             }
             gc.fillOval(ballXPos, ballYPos, BALL_R, BALL_R);
         } else {
-            gc.setStroke(Color.YELLOW);
+            gc.setStroke(Color.DARKORANGE);
             gc.setTextAlign(TextAlignment.CENTER);
             gc.strokeText("Click to Start", width / 2, height / 2);
             ballXPos = width / 2;
@@ -85,7 +86,7 @@ public class Pong extends Application {
             ballYSpeed *= -1;
         }
         gc.fillText(scoreP1 + "\t\t\t\t\t\t\t\t" + scoreP2, width / 2, 100);
-        gc.fillRect(playerTwoXPos, playerTwoYPos, PLAYER_WIDTH, PLAYER_HEIGHT);
+        gc.fillRect(playerTwoXPos, playerTwoYPos, PLAYER_WIDTH, PLAYER_HEIGHT*2);
         gc.fillRect(playerOneXPos, playerOneYPos, PLAYER_WIDTH, PLAYER_HEIGHT);
     }
 
