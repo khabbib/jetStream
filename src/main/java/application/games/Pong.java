@@ -55,9 +55,9 @@ public class Pong extends Application {
             ballXPos+=ballXSpeed;
             ballYPos+=ballYSpeed;
             if(ballXPos < width - width  / 4) {
-                playerTwoYPos = ballYPos - PLAYER_HEIGHT*2 / 2;
+                playerTwoYPos = ballYPos - PLAYER_HEIGHT;
             }  else {
-                playerTwoYPos =  ballYPos > playerTwoYPos + PLAYER_HEIGHT*2 / 2 ?playerTwoYPos += 5: playerTwoYPos - 5;
+                playerTwoYPos =  ballYPos > playerTwoYPos + PLAYER_HEIGHT ?playerTwoYPos += 10: playerTwoYPos - 10;
             }
             gc.fillOval(ballXPos, ballYPos, BALL_R, BALL_R);
         } else {
