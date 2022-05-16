@@ -3,7 +3,9 @@ package application.components.user;
 import application.Controller;
 import application.api.Db;
 import application.components.flight.CreateWorld;
+import application.components.flight.Flight;
 import application.components.initialize.InitializeFXM;
+import application.components.ticket.UserHistory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -17,6 +19,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -112,7 +115,31 @@ public class UserControl {
         controller.world_map_scrollpane.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color:  #0E0E1B;");
         controller.world_map.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color:  #0E0E1B;");
         controller.setInfoIntoTableHistorik();
+
     }
+
+    public void fillMyTicket(ArrayList<UserHistory> list) {
+        controller.from_myticket.setText(list.get(0).getFrom_col_table_historik());
+        controller.to_myticket.setText(list.get(0).getTo_col_table_historik());
+        controller.seat_myticket.setText(list.get(0).getSeatno_col_table_historik());
+        controller.airline_myticket.setText(list.get(0).getModel_col_table_historik());
+        controller.flightno_myticket.setText(String.valueOf(list.get(0).getFlightid_col_table_historik()));
+        controller.dep_date_myticket.setText(list.get(0).getDep_date());
+        controller.des_date_myticket.setText(list.get(0).getDes_date());
+        controller.dep_time_myticket.setText(list.get(0).getDep_time());
+        controller.rfc_muticket.setText(list.get(0).getRfc_col_table_historik());
+        controller.des_time_myticket.setText(list.get(0).getDes_time());
+        controller.ttl_price_myticket.setText(list.get(0).getPrice_col_table_historik() + " SEK");
+
+        if (list.get(0).isCheckedIn()){
+            controller.checka_btn_myticket.setDisable(true);
+            controller.cancel_btn_my_ticket.setDisable(true);
+            controller.checka_btn_myticket.setText("Already checked");
+            controller.checka_btn_myticket.setStyle("-fx-border: #fb3585; -fx-background-color: #fb3585; -fx-color: #112;");
+            controller.cancel_btn_my_ticket.setStyle("-fx-background-color: #fb3585; -fx-color: #112");
+        }
+    }
+
 
     /**
      * This method is a shortcut to login user dashboard.

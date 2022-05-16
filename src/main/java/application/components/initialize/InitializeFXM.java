@@ -43,6 +43,21 @@ public class InitializeFXM {
         controller.weatherMenu = false;
     }
     public void initializeProfile(Parent root, User user){
+        controller.from_myticket = (Label) root.lookup("#from_myticket");
+        controller.to_myticket = (Label) root.lookup("#to_myticket");
+        controller.seat_myticket = (Label) root.lookup("#seat_myticket");
+        controller.airline_myticket = (Label) root.lookup("#airline_myticket");
+        controller.flightno_myticket = (Label) root.lookup("#flightno_myticket");
+        controller.dep_date_myticket = (Label) root.lookup("#dep_date_myticket");
+        controller.des_date_myticket = (Label) root.lookup("#des_date_myticket");
+        controller.dep_time_myticket = (Label) root.lookup("#dep_time_myticket");
+        controller.des_time_myticket = (Label) root.lookup("#des_time_myticket");
+        controller.ttl_price_myticket = (Label) root.lookup("#ttl_price_myticket");
+        controller.err_msg_myticket = (Label) root.lookup("#err_msg_myticket");
+        controller.rfc_muticket = (Label) root.lookup("#rfc_muticket");
+        controller.checka_btn_myticket = (Button) root.lookup("#checka_btn_myticket");
+        controller.cancel_btn_my_ticket = (Button) root.lookup("#cancel_btn_my_ticket");
+
         //Profile info
         if (user != null) {
             controller.profile_image_imageview = (ImageView) root.lookup("#profile_image_imageview");
