@@ -112,6 +112,7 @@ public class UserControl {
         controller.world_map_scrollpane.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color:  #0E0E1B;");
         controller.world_map.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color:  #0E0E1B;");
         controller.setInfoIntoTableHistorik();
+        controller.exploreMode = false;
     }
 
     /**
@@ -122,28 +123,46 @@ public class UserControl {
      * @author Khabib.
      */
     public void noLoginRequired(ActionEvent e, Controller controller) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/Dashboard.fxml")));
-        initializeFXM.userInitializeFXML(controller.root, controller.user);
-        controller.flights_scrollpane = (ScrollPane) root.lookup("#flights_scrollpane");
-        controller.flights_scrollpane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        controller.booking_seat_anchorpane = (AnchorPane) root.lookup("#booking_seat_anchorpane");
-
-        controller.flight_display_vbox = (VBox) controller.flights_scrollpane.getContent();
-        controller.world_map_scrollpane = (ScrollPane) root.lookup("#world_map_scrollpane");
-        controller.world_map_scrollpane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        controller.world_map_scrollpane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        //root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("user/Dashboard.fxml")));
+        controller.root = controller.config.render(e,"user/Dashboard", "User Dashboard");
+        initializeFXM.userInitializeFXML(controller.root, null);
+        User user = new User("1", "E", "E", "E", "E", "E", "E", false, 1);
+        controller.initializeFXM.userInitializeFXML(controller.root, user);
+        controller.initializeFXM.initializeProfile(controller.root, user);
+        controller.initializeFXM.initializeWeather(controller.root);
+        controller.initializeFXM.initializeMusic(controller.root);
+        controller.weatherPaneBase.setClip(new Rectangle(186, 334));
         controller.create_world = new CreateWorld();
-        controller.world_map = controller.create_world.init(controller, db);
+        controller.world_map = controller.create_world.init(controller, controller.db);
+        controller.create_world.addWorldInMap(controller.world_map_scrollpane, user);
+        controller.world_map_scrollpane.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color:  #0E0E1B;");
+        controller.world_map.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color:  #0E0E1B;");
 
-        controller.world_map_scrollpane.setContent(new StackPane(controller.world_map));
-        controller.world_map_scrollpane.setBackground(new Background(new BackgroundFill(controller.world_map.getBackgroundColor(), CornerRadii.EMPTY, Insets.EMPTY)));
+        if(!controller.exploreMode) {
+            controller.setInfoIntoTableHistorik();
+        }
 
-        controller.username_lbl = (Label) root.lookup("#username_lbl");
-        controller.username_lbl.setText(null);
-        controller.main_stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-        controller.main_scene = new Scene(root);
-        controller.main_stage.setTitle("Test dashboard window");
-        controller.main_stage.setScene(controller.main_scene);
-        controller.main_stage.show();
+        controller.exploreMode = true;
+//        //controller.flights_scrollpane = (ScrollPane) root.lookup("#flights_scrollpane");
+//        //controller.flights_scrollpane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+//        //controller.booking_seat_anchorpane = (AnchorPane) root.lookup("#booking_seat_anchorpane");
+//
+//        //controller.flight_display_vbox = (VBox) controller.flights_scrollpane.getContent();
+//        //controller.world_map_scrollpane = (ScrollPane) root.lookup("#world_map_scrollpane");
+//        //controller.world_map_scrollpane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+//        //controller.world_map_scrollpane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+//        controller.create_world = new CreateWorld();
+//        controller.world_map = controller.create_world.init(controller, db);
+//
+//        controller.world_map_scrollpane.setContent(new StackPane(controller.world_map));
+//        controller.world_map_scrollpane.setBackground(new Background(new BackgroundFill(controller.world_map.getBackgroundColor(), CornerRadii.EMPTY, Insets.EMPTY)));
+//
+//        //controller.username_lbl = (Label) root.lookup("#username_lbl");
+//        controller.username_lbl.setText(null);
+//        controller.main_stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+//        controller.main_scene = new Scene(root);
+//        controller.main_stage.setTitle("Test dashboard window");
+//        controller.main_stage.setScene(controller.main_scene);
+//        controller.main_stage.show();
     }
 }
