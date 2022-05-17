@@ -28,9 +28,9 @@ public class UserEvent {
      */
     public void userDashboardEventHandler(ActionEvent e, Controller controller) throws ParseException {
         System.out.println("Hej");
-        controller.systemSound.pauseButton();
         if (e.getSource() == controller.menu_profile_btn) {
             if(!controller.exploreMode) {
+                controller.systemSound.pauseButton();
                 controller.profile_anchorpane.toFront();
                 controller.toggleMenuColor();
                 controller.playSound("Next page", "sounds/next_page.wav");
@@ -55,8 +55,8 @@ public class UserEvent {
         }
 
         else if (e.getSource() == controller.menu_history_btn) {
-            controller.systemSound.pauseButton();
             if(!controller.exploreMode) {
+                controller.systemSound.pauseButton();
                 controller.history_anchorpane.toFront();
                 controller.toggleMenuColor();
                 controller.menu_highlight_color_history.setVisible(true);
@@ -77,33 +77,22 @@ public class UserEvent {
         }
         else if(e.getSource() == controller.menu_support_btn){
             controller.systemSound.pauseButton();
-            if (!controller.exploreMode) {
-                controller.support_anchorpane.toFront();
-                controller.toggleMenuColor();
-                controller.menu_highlight_color_support.setVisible(true);
-                controller.support_menu_user_image.setOpacity(1);
-                controller.playSound("Next page", "sounds/next_page.wav");
-            } else {
-                controller.playSound("Error", "sounds/error.wav");
-                errorHandler.confirmThisAction("Information", "You must log in to go further!", "");
-            }
+            controller.support_anchorpane.toFront();
+            controller.toggleMenuColor();
+            controller.menu_highlight_color_support.setVisible(true);
+            controller.support_menu_user_image.setOpacity(1);
+            controller.playSound("Next page", "sounds/next_page.wav");
         }
         else if(e.getSource() == controller.menu_ceo_btn){
             controller.systemSound.playButton();
-            if (!controller.exploreMode) {
-                controller.ceo_anchorpane.toFront();
-                controller.toggleMenuColor();
-                controller.menu_highlight_color_ceo.setVisible(true);
-                controller.ceo_menu_user_image.setOpacity(1);
-                controller.playSound("Next page", "sounds/next_page.wav");
-            } else {
-                controller.playSound("Error", "sounds/error.wav");
-                errorHandler.confirmThisAction("Information", "You must log in to go further!", "");
-            }
+            controller.ceo_anchorpane.toFront();
+            controller.toggleMenuColor();
+            controller.menu_highlight_color_ceo.setVisible(true);
+            controller.ceo_menu_user_image.setOpacity(1);
         }
         else if(e.getSource() == controller.menu_my_tickets_btn){
-            controller.systemSound.pauseButton();
             if (!controller.exploreMode) {
+                controller.systemSound.pauseButton();
                 controller.my_ticket_anchorpane.toFront();
                 controller.toggleMenuColor();
                 controller.menu_highlight_color_my_ticket.setVisible(true);
