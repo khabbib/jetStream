@@ -57,6 +57,9 @@ public class InitializeFXM {
         controller.rfc_muticket = (Label) root.lookup("#rfc_muticket");
         controller.checka_btn_myticket = (Button) root.lookup("#checka_btn_myticket");
         controller.cancel_btn_my_ticket = (Button) root.lookup("#cancel_btn_my_ticket");
+        controller.rfc_smp_history = (Label) root.lookup("#rfc_smp_history");
+
+
 
         //Profile info
         if (user != null) {

@@ -13,7 +13,7 @@ import java.util.ArrayList;
  *
  */
 public class UserEvent {
-    public String rfc = null;
+    public String rfc;
     private ErrorHandler errorHandler;
 
     public UserEvent(Controller controller) {
@@ -168,12 +168,8 @@ public class UserEvent {
         // navigate to my ticket
         else if(e.getSource() == controller.detailes_btn_histroy){
             //controller.updateDashboardInfo();
-            System.out.println("Rfc = " + rfc);
-            ArrayList<UserHistory> list = controller.db.searchDataForTableHistory( -1, rfc, false);
-            if (list.size() >0){
-                controller.userControl.fillMyTicket(list);
-                controller.my_ticket_anchorpane.toFront();
-            }
+            System.out.println("Rfc = " + controller.rfc);
+            controller.pickTicketForDetailes();
         }
     }
 
