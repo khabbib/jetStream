@@ -243,6 +243,7 @@ public class Controller implements Initializable {
     public UserEvent userEvent;
     public BgMusic bgMusic;
     public Support support;
+    public SystemSound systemSound;
     public Config config;
     public Search search;
     public Db db;
@@ -269,6 +270,7 @@ public class Controller implements Initializable {
         purchaseHandler = new PurchaseHandler();
         flightsViewManager = new FlightsViewManager(this);
         bgMusic = new BgMusic(this);
+        systemSound = new SystemSound(this);
     }
 
     //----------------- HOME -----------------//
