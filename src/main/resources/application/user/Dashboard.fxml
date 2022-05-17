@@ -105,15 +105,251 @@
       </AnchorPane>
       <AnchorPane fx:id="my_ticket_anchorpane" layoutX="106.0" layoutY="7.0" prefHeight="693.0" prefWidth="1089.0" style="-fx-background-color: #112;">
          <children>
-            <Group layoutX="49.0" layoutY="77.0">
+            <AnchorPane fx:id="checkning_pnl" prefHeight="693.0" prefWidth="1089.0" style="-fx-background-color: #112;">
                <children>
-                  <Label layoutY="8.0" text="My tickets" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font>
-                  </Label>
+                  <VBox alignment="CENTER" layoutX="338.0" layoutY="137.0" spacing="30.0">
+                     <children>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/animated/animated.gif" />
+                           </image>
+                        </ImageView>
+                        <Label text="Thanks for checkning in online!" textFill="#80c34d">
+                           <font>
+                              <Font size="32.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER" spacing="10.0">
+                           <children>
+                              <Button fx:id="returnT_btn_checking" graphicTextGap="6.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" prefHeight="38.0" prefWidth="142.0" style="-fx-background-color: #ff7000;" text="Return to ticket" textFill="WHITE">
+                                 <padding>
+                                    <Insets bottom="10.0" left="25.0" right="25.0" top="10.0" />
+                                 </padding>
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                              <Button fx:id="returnD_btn_checking" graphicTextGap="6.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" prefHeight="38.0" prefWidth="194.0" style="-fx-background-color: #ff7000;" text="Return to dashboard" textFill="WHITE">
+                                 <padding>
+                                    <Insets bottom="10.0" left="25.0" right="25.0" top="10.0" />
+                                 </padding>
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
                </children>
-            </Group>
+            </AnchorPane>
+            <AnchorPane layoutX="16.0" layoutY="26.0" prefHeight="666.0" prefWidth="1072.0" style="-fx-background-color: #112;">
+               <children>
+                  <Group layoutX="105.0" layoutY="78.0">
+                     <children>
+                        <Label layoutY="8.0" text="Actual ticket" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Group>
+                  <VBox alignment="CENTER" layoutX="109.0" layoutY="143.0" spacing="20.0" style="-fx-background-color: #221E4E; -fx-background-radius: 5;">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="67.0" prefWidth="551.0">
+                           <children>
+                              <Label fx:id="from_myticket" alignment="CENTER" contentDisplay="CENTER" prefHeight="42.0" prefWidth="189.0" text="From" textFill="WHITE">
+                                 <font>
+                                    <Font size="34.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fitHeight="74.0" fitWidth="222.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../image/loader/loader%20(2).gif" />
+                                 </image>
+                              </ImageView>
+                              <Label fx:id="to_myticket" alignment="CENTER" prefHeight="42.0" prefWidth="180.0" text="To" textFill="WHITE">
+                                 <font>
+                                    <Font size="34.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox spacing="20.0">
+                           <children>
+                              <HBox spacing="20.0">
+                                 <children>
+                                    <VBox spacing="10.0">
+                                       <children>
+                                          <HBox spacing="10.0">
+                                             <children>
+                                                <Label text="Seat" textFill="#c6c6c6" />
+                                                <Label fx:id="seat_myticket" text="E28" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="System Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <HBox spacing="10.0">
+                                             <children>
+                                                <Label text="RFC (Reference no)" textFill="#c6c6c6" />
+                                                <Label fx:id="rfc_muticket" text="123123123123" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="System Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                    <Line endX="-122.62025451660156" endY="65.0796890258789" startX="-122.6192626953125" startY="-21.213205337524414" />
+                                    <VBox spacing="10.0">
+                                       <children>
+                                          <HBox spacing="10.0">
+                                             <children>
+                                                <Label text="Flight no" textFill="#c6c6c6" />
+                                                <Label fx:id="flightno_myticket" text="Ae3119" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="System Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <HBox spacing="10.0">
+                                             <children>
+                                                <Label text="Terminal" textFill="#c6c6c6" />
+                                                <Label fx:id="terminal_myticket" text="Check at airport" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="System Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <HBox layoutX="10.0" layoutY="38.0" spacing="10.0">
+                                             <children>
+                                                <Label text="Airline" textFill="#c6c6c6" />
+                                                <Label fx:id="airline_myticket" text="Pegasus" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="System Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                    <Line endX="-122.62025451660156" endY="65.0796890258789" startX="-122.6192626953125" startY="-21.213205337524414" />
+                                    <VBox spacing="10.0">
+                                       <children>
+                                          <HBox spacing="10.0">
+                                             <children>
+                                                <Label text="Departure date" textFill="#c6c6c6" />
+                                                <Label fx:id="dep_date_myticket" text="2022-06-12" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="System Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <HBox spacing="10.0">
+                                             <children>
+                                                <Label text="Departure time" textFill="#c6c6c6" />
+                                                <Label fx:id="dep_time_myticket" text="12:00" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="System Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                    <Line endX="-122.62025451660156" endY="65.0796890258789" startX="-122.6192626953125" startY="-21.213205337524414" />
+                                    <VBox spacing="10.0">
+                                       <children>
+                                          <HBox spacing="10.0">
+                                             <children>
+                                                <Label text="Destination date" textFill="#c6c6c6" />
+                                                <Label fx:id="des_date_myticket" text="2022-06-12" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="System Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <HBox spacing="10.0">
+                                             <children>
+                                                <Label text="Destination time" textFill="#c6c6c6" />
+                                                <Label fx:id="des_time_myticket" text="12:00" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="System Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                           <children>
+                              <Label text="Total price:" textFill="#d0d0d0">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="ttl_price_myticket" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                           <children>
+                              <Label fx:id="err_msg_myticket">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="cancel_btn_my_ticket" graphicTextGap="6.0" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" prefHeight="38.0" prefWidth="142.0" style="-fx-background-color: #ED276E;" text="Cancel my ticket" textFill="WHITE">
+                                 <padding>
+                                    <Insets bottom="10.0" left="25.0" right="25.0" top="10.0" />
+                                 </padding>
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                              <Button fx:id="checka_btn_myticket" graphicTextGap="6.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" prefHeight="38.0" prefWidth="142.0" style="-fx-background-color: #6BCB77 #6BCB77; -fx-border-color: #eee;" text="Check in" textFill="WHITE">
+                                 <padding>
+                                    <Insets bottom="10.0" left="25.0" right="25.0" top="10.0" />
+                                 </padding>
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="30.0" left="50.0" right="50.0" top="50.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </AnchorPane>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="ceo_anchorpane" layoutX="104.0" layoutY="3.0" prefHeight="693.0" prefWidth="1089.0" style="-fx-background-color: #112;">
@@ -535,7 +771,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button fx:id="issue_btn_sup" graphicTextGap="6.0" mnemonicParsing="false" onAction="#support_event_handler" prefHeight="43.0" prefWidth="149.0" style="-fx-background-color: #333;" text="Bugs" textFill="WHITE">
+                        <Button fx:id="issue_btn_sup" graphicTextGap="6.0" mnemonicParsing="false" onAction="#support_event_handler" prefHeight="43.0" prefWidth="149.0" style="-fx-background-color: #221E4E #221E4E;" text="Bugs" textFill="WHITE">
                            <padding>
                               <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
                            </padding>
@@ -543,7 +779,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button fx:id="contact_btn_sup" graphicTextGap="6.0" mnemonicParsing="false" onAction="#support_event_handler" prefHeight="43.0" prefWidth="149.0" style="-fx-background-color: #333;" text="Contact" textFill="WHITE">
+                        <Button fx:id="contact_btn_sup" graphicTextGap="6.0" mnemonicParsing="false" onAction="#support_event_handler" prefHeight="43.0" prefWidth="149.0" style="-fx-background-color: #221E4E #221E4E;" text="Contact" textFill="WHITE">
                            <padding>
                               <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
                            </padding>
@@ -930,7 +1166,7 @@
       </AnchorPane>
       <AnchorPane fx:id="history_anchorpane" layoutX="103.0" layoutY="-3.0" prefHeight="700.0" prefWidth="1089.0" style="-fx-background-color: #112;">
          <children>
-            <Label layoutX="50.0" layoutY="91.0" text="History (My Tickets)" textFill="WHITE">
+            <Label layoutX="50.0" layoutY="91.0" text="Purchased histroy" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -943,19 +1179,19 @@
             <Pane layoutX="627.0" layoutY="548.0" />
             <TableView fx:id="history_tableview" layoutX="50.0" layoutY="150.0" prefHeight="398.0" prefWidth="1008.0">
               <columns>
-                <TableColumn fx:id="no_col_table_historik" prefWidth="27.0" text="No" />
-                  <TableColumn fx:id="company_col_table_historik" prefWidth="105.0" text="Airline" />
+                <TableColumn fx:id="no_col_table_historik" prefWidth="39.451446533203125" text="No" />
+                  <TableColumn fx:id="company_col_table_historik" prefWidth="92.548583984375" text="Airline" />
                   <TableColumn fx:id="model_col_table_historik" prefWidth="75.0" text="Model" />
-                <TableColumn fx:id="rfc_col_table_historik" prefWidth="117.0" text="RFC no" />
-                  <TableColumn fx:id="flightid_col_table_historik" text="Flight id" />
-                  <TableColumn fx:id="from_col_table_historik" prefWidth="147.0" text="From" />
-                  <TableColumn fx:id="to_col_table_historik" prefWidth="141.0" text="To" />
+                <TableColumn fx:id="rfc_col_table_historik" prefWidth="130.48904418945312" text="RFC no" />
+                  <TableColumn fx:id="flightid_col_table_historik" prefWidth="80.01095581054688" text="Flight id" />
+                  <TableColumn fx:id="from_col_table_historik" prefWidth="139.1881103515625" text="From" />
+                  <TableColumn fx:id="to_col_table_historik" prefWidth="135.8118896484375" text="To" />
                   <TableColumn fx:id="seatno_col_table_historik" prefWidth="58.0" text="Seat" />
                   <TableColumn fx:id="date_col_table_historik" prefWidth="125.0" text="Paurchased Date" />
-                  <TableColumn fx:id="price_col_table_historik" prefWidth="99.0" text="Price" />
-                  <TableColumn fx:id="select_col_table_historik" prefWidth="84.0">
+                  <TableColumn fx:id="price_col_table_historik" prefWidth="80.3228759765625" text="Price" />
+                  <TableColumn fx:id="select_col_table_historik" prefWidth="27.3228759765625">
                      <graphic>
-                        <CheckBox fx:id="history_select_all_checkbox" mnemonicParsing="false" />
+                        <CheckBox fx:id="history_select_all_checkbox" mnemonicParsing="false" stylesheets="@../Styles/checkbox.css" />
                      </graphic>
                   </TableColumn>
               </columns>
@@ -964,13 +1200,13 @@
                   <URL value="@../Styles/ScrollStyle.css" />
                </stylesheets>
             </TableView>
-            <HBox layoutX="462.0" layoutY="558.0" spacing="15.0">
+            <HBox layoutX="303.0" layoutY="558.0" spacing="15.0">
                <children>
-                  <Button fx:id="history_display_flight_path_button" disable="true" mnemonicParsing="false" onAction="#displayFlightPaths" prefHeight="42.0" prefWidth="141.0" style="-fx-background-color: #151D3B#151D3B #151D3B#151D3B;" text="Display flight path" textFill="WHITE">
+                  <Button fx:id="detailes_btn_histroy" disable="true" mnemonicParsing="false" onAction="#userDashboardEventHandler" prefHeight="42.0" prefWidth="141.0" style="-fx-background-color: #fb3585;" text="Show detailes" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>
-                  <Button fx:id="history_multiple_delete_button" disable="true" graphicTextGap="6.0" mnemonicParsing="false" onAction="#userRemoveHistory" prefHeight="43.0" prefWidth="172.0" style="-fx-background-color: #151D3B#151D3B;" text="Remove all history" textFill="WHITE">
+                  <Button fx:id="history_multiple_delete_button" disable="true" graphicTextGap="6.0" mnemonicParsing="false" onAction="#userRemoveHistory" prefHeight="43.0" prefWidth="172.0" style="-fx-background-color: #fb3585;" text="Remove all history" textFill="WHITE">
                      <padding>
                         <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
                      </padding>
@@ -978,16 +1214,26 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="history_single_delete_button" disable="true" graphicTextGap="6.0" mnemonicParsing="false" onAction="#userRemoveHistory" prefHeight="43.0" prefWidth="253.0" style="-fx-background-color: #151D3B#151D3B;" text="Remove selected history" textFill="WHITE">
+                  <Button fx:id="history_single_delete_button" disable="true" graphicTextGap="6.0" mnemonicParsing="false" onAction="#userRemoveHistory" prefHeight="43.0" prefWidth="253.0" style="-fx-background-color: #fb3585;" text="Remove selected history" textFill="WHITE">
                      <padding>
                         <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
                      </padding>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="history_display_flight_path_button" disable="true" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#displayFlightPaths" prefHeight="42.0" prefWidth="141.0" style="-fx-background-color: #fb3585;" text="Display flight path" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
                </children>
             </HBox>
+            <Label fx:id="rfc_smp_history" layoutX="50.0" layoutY="571.0" opacity="0.0" textFill="#b9b9b9">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="booking_seat_anchorpane" layoutX="90.0" prefHeight="700.0" prefWidth="1107.0">
@@ -1504,7 +1750,7 @@
             <Group layoutX="16.0" layoutY="25.0">
                <children>
                   <ScrollPane fx:id="world_map_scrollpane" layoutY="39.0" prefHeight="420.0" prefWidth="655.0" style="-fx-background: #112; -fx-focus-traversable: false;" />
-                  <Pane prefHeight="39.0" prefWidth="230.0" style="-fx-background-color: #151D3B; -fx-background-radius: 10 10 0 0;">
+                  <Pane prefHeight="39.0" prefWidth="230.0" style="-fx-background-radius: 10 10 0 0;">
                      <children>
                         <Text fill="WHITE" layoutX="10.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #eee;" text="Choose a country" wrappingWidth="200.0">
                            <font>
@@ -1520,7 +1766,7 @@
             </Group>
             <Group layoutX="16.0" layoutY="498.0">
                <children>
-                  <Pane layoutY="2.0" prefHeight="39.0" prefWidth="230.0" style="-fx-background-color: #151D3B; -fx-background-radius: 10 10 0 0;">
+                  <Pane layoutY="2.0" prefHeight="39.0" prefWidth="230.0" style="-fx-background-radius: 10 10 0 0;">
                      <children>
                         <Text fill="WHITE" layoutX="10.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #eee;" text="Advanced search" wrappingWidth="200.0">
                            <font>
@@ -1532,7 +1778,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                   </Pane>
-                  <AnchorPane layoutY="40.0" prefHeight="141.0" prefWidth="655.0" style="-fx-background-color: #151D3B #151D3B; -fx-background-radius: 5;">
+                  <AnchorPane layoutY="40.0" prefHeight="141.0" prefWidth="655.0" style="-fx-background-color: #151D3B #151D3B #151D3B #151D3B; -fx-background-radius: 2;">
                      <children>
                         <VBox prefHeight="141.0" prefWidth="655.0" spacing="10.0">
                            <children>
@@ -1752,7 +1998,7 @@
                         </VBox>
                      </content>
                   </ScrollPane>
-                  <Pane layoutY="1.0" prefHeight="39.0" prefWidth="196.0" style="-fx-background-color: #151D3B; -fx-background-radius: 10 10 0 0;">
+                  <Pane layoutY="1.0" prefHeight="39.0" prefWidth="196.0" style="-fx-background-radius: 10 10 0 0;">
                      <children>
                         <Text fill="WHITE" layoutX="13.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #eee;" text="Available flights:">
                            <font>
@@ -1890,7 +2136,7 @@
             </Button>
          </children>
       </AnchorPane>
-      <Pane layoutY="-2.0" prefHeight="702.0" prefWidth="105.0" style="-fx-background-color: #151D3B; -fx-background-radius: 0 30 0 0;">
+      <Pane layoutY="-2.0" prefHeight="702.0" prefWidth="105.0" style="-fx-background-color: #221E4E #221E4E; -fx-background-radius: 0 30 0 0;">
          <children>
             <VBox layoutX="14.0" layoutY="23.0" spacing="15.0">
                <children>
@@ -1989,7 +2235,7 @@
                                           <ColorAdjust brightness="1.0" />
                                        </effect>
                                     </ImageView>
-                                    <Label opacity="0.5" text="Tickets" textFill="WHITE" />
+                                    <Label opacity="0.5" text="Ticket" textFill="WHITE" />
                                  </children>
                               </HBox>
                               <Button fx:id="menu_my_tickets_btn" layoutX="1.0" layoutY="2.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" opacity="0.0" prefHeight="25.0" prefWidth="94.0">

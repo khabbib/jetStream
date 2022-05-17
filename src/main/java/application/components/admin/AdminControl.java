@@ -218,7 +218,7 @@ public class AdminControl {
 
     }
     public void updateTicketTabel () throws SQLException {
-        ArrayList<UserHistory> list = db.searchDataForTableHistory(0, true);
+        ArrayList<UserHistory> list = db.searchDataForTableHistory(-1, null, true);
 
         controller.items_ticket_admin = FXCollections.observableArrayList(list);
         controller.table_tickets.setItems(controller.items_ticket_admin);

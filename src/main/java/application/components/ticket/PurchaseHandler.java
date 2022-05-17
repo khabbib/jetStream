@@ -238,7 +238,7 @@ public class PurchaseHandler {
                 controller.errorHandler.displayMessage(controller.booking_msg_lbl, "Firstname shall be 3-30 chars!", true);
             }
         }else if(e.getSource() == controller.success_purchase_to_dashboard_button){
-            controller.updateHistoryList();
+            controller.updateDashboardInfo();
             controller.flight_anchorpane.toFront();
             controller.restore_psgr_info();
             controller.success_purchase_anchorpane.toBack();

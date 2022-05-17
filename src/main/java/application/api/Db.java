@@ -744,7 +744,7 @@ public class Db {
      * @return
      */
     //////// fyl table history ///////////
-    public ArrayList<UserHistory> searchDataForTableHistory(int userID, boolean isAdmin) {
+    public ArrayList<UserHistory> searchDataForTableHistory(int userID, String rfc, boolean isAdmin) {
         ArrayList<UserHistory> flights = new ArrayList<>();
         try {
 
@@ -757,22 +757,30 @@ public class Db {
             if(isAdmin)
             {
                 flight = stmt.executeQuery("select * from History");
+            }else if(rfc != null && userID == -1){
+                flight = stmt.executeQuery("select * from History where b_rfc = '"+ rfc +"';");
             }
             else{
                 flight = stmt.executeQuery("select * from History where u_id = '"+ userID +"';");
             }
             int i = 1;
             while (flight.next()){
+                int userId = flight.getInt("u_id");
                 String compnay = flight.getString("p_company");
                 String model = flight.getString("p_model");
                 String referenceNo = flight.getString("b_rfc"); // most create a column in booked table for b_id/...
                 int f_id = flight.getInt("f_id");
                 String from = flight.getString("f_departure_name");
+                String dep_time = flight.getString("f_departure_time");
+                String des_time = flight.getString("f_destination_time");
+                String dep_date = flight.getString("f_departure_date");
+                String des_date = flight.getString("f_destination_date");
                 String to = flight.getString("f_destination_name");
                 String seat = flight.getString("b_seat");
                 String date_purchased_ticket = flight.getString("b_date"); // temporary can be the destination date later it should be changed to real date from booked table
                 double price = Double.parseDouble(flight.getString("f_price"));
-                flights.add(new UserHistory(i, compnay, model, referenceNo, f_id, from, to, seat, date_purchased_ticket, price));
+                boolean isChecked = flight.getBoolean("checkin");
+                flights.add(new UserHistory(userId, i, compnay, model, referenceNo, f_id, from, to, seat, date_purchased_ticket, price, dep_time, des_time, dep_date, des_date, isChecked));
                 i++;
             }
             con.close();
@@ -784,18 +792,19 @@ public class Db {
     }
 
     /**
-     * @param rfc_col_table_historik
+     * @param rfc
      * @return
      */
-    public boolean deleteHistoryByRFC(String rfc_col_table_historik) {
+    public boolean deleteHistoryByRFC(String rfc) {
         boolean deleted = false;
         try {
             java.sql.Connection con = Db.getDatabaseConnection();
             Statement stmt = con.createStatement();
-            System.out.println("reference number to delete: " +rfc_col_table_historik);
+            System.out.println("reference number to delete: " +rfc);
             stmt.executeUpdate("SET search_path TO jetstream;");
-            stmt.executeUpdate("delete from booked where b_rfc = '" + rfc_col_table_historik+"';");
+            stmt.executeUpdate("delete from booked where b_rfc = '" + rfc+"';");
             deleted = true;
+            System.out.println("WEnet to this point!");
             con.close();
             stmt.close();
         }catch (SQLException e){
@@ -910,6 +919,12 @@ public class Db {
         return seats;
     }
 
+    /**
+     * This method will fetch all seats that already booked in a particular flight.
+     * @param id will be a reference to find the booked seats in database
+     * @return it will return a list of String with already booked seats
+     * @author Habib Mohammadi
+     */
     public ArrayList<String> getBookedSeats(String id) {
         ArrayList<String> seat = new ArrayList<>();
         try {
@@ -930,7 +945,28 @@ public class Db {
         return seat;
     }
 
-
-
-
+    /**
+     * This method will be called when the used want to check in its ticket
+     * @param rfc is a reference number to booked ticket which is unique.
+     * @return will return a flag true or false to check if checking went threw or not.
+     * @author Habib Mohammadi
+     */
+    public boolean checking(String rfc) {
+        boolean checked = false;
+        try {
+            java.sql.Connection con = Db.getDatabaseConnection();
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate("SET search_path TO jetstream;");
+            int rs = stmt.executeUpdate("update booked set checkin = true where b_rfc = '"+ rfc +"'");
+            if (rs != -1){
+                checked = true;
+            }
+            con.close();
+            stmt.close();
+        }catch (SQLException e){
+            checked = false;
+            e.printStackTrace();
+        }
+        return checked;
+    }
 }
