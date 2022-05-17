@@ -508,7 +508,7 @@ public class Db {
                     String destination_time_get = flight.getString("f_destination_time");
                     String price_get = flight.getString("f_price");
                     System.out.println("id: " + id_get + ", departure: " +departure_name_get+ ", destination: " + destination_name_get);
-                    flights.add(new Flight(id_get,departure_name_get,departure_date_get,departure_time_get, destination_name_get,destination_date_get,destination_time_get,price_get, false, 0));
+                    flights.add(new Flight(id_get,departure_name_get,departure_date_get,departure_time_get, destination_name_get,destination_date_get,destination_time_get,price_get, false, 0, null));
                 }
             }
 
@@ -524,7 +524,7 @@ public class Db {
                     String destination_time_get = flightTur.getString("f_destination_time");
                     String price_get = flightTur.getString("f_price");
                     System.out.println("id: " + id_get + ", departure: " +departure_name_get+ ", destination: " + destination_name_get);
-                    flights.add(new Flight(id_get,departure_name_get,departure_date_get,departure_time_get, destination_name_get,destination_date_get,destination_time_get,price_get, true, 0));
+                    flights.add(new Flight(id_get,departure_name_get,departure_date_get,departure_time_get, destination_name_get,destination_date_get,destination_time_get,price_get, true, 0, null));
                 }
             }
 
@@ -539,7 +539,7 @@ public class Db {
                     String destination_time_get = flightReturn.getString("f_destination_time");
                     String price_get = flightReturn.getString("f_price");
                     System.out.println("id: " + id_get + ", departure: " +departure_name_get+ ", destination: " + destination_name_get);
-                    flights.add(new Flight(id_get,departure_name_get,departure_date_get,departure_time_get, destination_name_get,destination_date_get,destination_time_get,price_get, true, 0));
+                    flights.add(new Flight(id_get,departure_name_get,departure_date_get,departure_time_get, destination_name_get,destination_date_get,destination_time_get,price_get, true, 0, null));
                 }
             }
             con.close();
@@ -575,7 +575,7 @@ public class Db {
                 String destination_time_get = flight.getString("f_destination_time");
                 String price_get = flight.getString("f_price");
                 //System.out.println("Fetched info: \nid: " + id_get + "\nfrom: " + departure_name_get + "\ndestination: " + destination_name_get);
-                flights.add(new Flight(id_get,departure_name_get,departure_date_get,departure_time_get, destination_name_get,destination_date_get,destination_time_get,price_get, false, 0));
+                flights.add(new Flight(id_get,departure_name_get,departure_date_get,departure_time_get, destination_name_get,destination_date_get,destination_time_get,price_get, false, 0, null));
             }
 
             con.close();
@@ -693,9 +693,8 @@ public class Db {
                 String destination_date_get = flight.getString("f_destination_date");
                 String destination_time_get = flight.getString("f_destination_time");
                 String price_get = flight.getString("f_price");
-
-                flights.add(new Flight(id_get,departure_name_get,departure_date_get,departure_time_get, destination_name_get,destination_date_get,destination_time_get,price_get, false, i));
-
+                String p_id = flight.getString("p_id");
+                flights.add(new Flight(id_get, departure_name_get, departure_date_get,departure_time_get, destination_name_get, destination_date_get, destination_time_get, price_get, false, i, p_id));
             i++;
             }
             con.close();
@@ -839,8 +838,39 @@ public class Db {
     }
 
 
+    public boolean deleteFlight(String f_id) {
+        boolean deleted = false;
+        try {
+            java.sql.Connection con = Db.getDatabaseConnection();
+            Statement stmt = con.createStatement();
+            System.out.println("FlightID to delete: " + f_id);
+            stmt.executeUpdate("SET search_path TO jetstream;");
+            stmt.executeUpdate("delete from flight where f_id = '" + f_id + "';");
+            deleted = true;
+            con.close();
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return deleted;
+    }
 
-
+    public boolean deleteTicket(String b_rfc) {
+        boolean deleted = false;
+        try {
+            java.sql.Connection con = Db.getDatabaseConnection();
+            Statement stmt = con.createStatement();
+            System.out.println("Reference number to delete: " + b_rfc);
+            stmt.executeUpdate("SET search_path TO jetstream;");
+            stmt.executeUpdate("delete from booked where b_rfc = '" + b_rfc + "';");
+            deleted = true;
+            con.close();
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return deleted;
+    }
 
     /**
      * @return
