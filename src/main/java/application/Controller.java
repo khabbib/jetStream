@@ -110,7 +110,9 @@ public class Controller implements Initializable {
     public Scene main_scene;
     public static User user;
     public Parent root;
-    public String rfc;
+    //public String rfc;
+    public String rfc = String.valueOf(new AtomicInteger());
+
     //</editor-fold>
     //<editor-fold desc="========= FXML VARIABLES =========" >
 
@@ -186,7 +188,8 @@ public class Controller implements Initializable {
     ObservableList<UserHistory> history_items_list, history_flights;
     @FXML public TableView<UserHistory> history_tableview;
     @FXML private CheckBox history_select_all_checkbox;
-    @FXML public Label history_reference_number_lbl;
+    @FXML public Label history_reference_number_lbl, rfc_smp_history;
+
     //</editor-fold
     //<editor-fold desc="======== SEARCH VARIABLES ========">
     @FXML public Button date_previous_day_button, date_next_day_button, date_previous_day_return_button, date_next_day_return_button;
@@ -812,29 +815,29 @@ public class Controller implements Initializable {
         history_tableview.getColumns().get(9).setCellValueFactory(new PropertyValueFactory<>("price_col_table_historik"));
         history_tableview.getColumns().get(10).setCellValueFactory(new PropertyValueFactory<>("select_col_table_historik"));
         history_tableview.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        AtomicInteger rfc = new AtomicInteger();
         history_tableview.getSelectionModel().selectedItemProperty().addListener((ObservableList, oldValue, newValue) ->{
-            if (newValue.getSelect_col_table_historik().isSelected()){
-                newValue.getSelect_col_table_historik().setSelected(false);
-                history_display_flight_path_button.setDisable(true);
-                history_single_delete_button.setDisable(true);
-                detailes_btn_histroy.setDisable(true);
-                rfc.getAndIncrement();
-
-                //userEvent.rfc = null;
-            }if (!newValue.getSelect_col_table_historik().isSelected()){
+            if (newValue != null){
+                if (newValue.getSelect_col_table_historik().isSelected()){
+                    newValue.getSelect_col_table_historik().setSelected(false);
+                    history_display_flight_path_button.setDisable(true);
+                    history_single_delete_button.setDisable(true);
+                    detailes_btn_histroy.setDisable(true);
+                    rfc_smp_history.setText(null);
+                }if (!newValue.getSelect_col_table_historik().isSelected()){
                 newValue.getSelect_col_table_historik().setSelected(true);
                 history_display_flight_path_button.setDisable(false);
                 history_single_delete_button.setDisable(false);
                 detailes_btn_histroy.setDisable(false);
                 //rfc = newValue.getRfc_col_table_historik();
-                userEvent.setRfc(newValue.getRfc_col_table_historik());
-            }
-            if (userEvent.rfc == null){
-                System.out.println(" UserEvent is null");
-                history_display_flight_path_button.setDisable(false);
-                history_single_delete_button.setDisable(false);
-                detailes_btn_histroy.setDisable(false);
+                rfc_smp_history.setText(newValue.getRfc_col_table_historik());
+                System.out.println("true");
+                }
+                if (rfc_smp_history == null){
+                    System.out.println("Rfc is null");
+                    history_display_flight_path_button.setDisable(false);
+                    history_single_delete_button.setDisable(false);
+                    detailes_btn_histroy.setDisable(false);
+                }
             }
         });
         updateDashboardInfo();
@@ -864,6 +867,15 @@ public class Controller implements Initializable {
             }
         });
 
+    }
+
+    public void pickTicketForDetailes(){
+        System.out.println("rfc: " + rfc_smp_history.getText());
+        ArrayList<UserHistory> list = db.searchDataForTableHistory( -1, rfc_smp_history.getText(), false);
+        if (list.size() >0){
+            userControl.fillMyTicket(list);
+            my_ticket_anchorpane.toFront();
+        }
     }
 
     /**

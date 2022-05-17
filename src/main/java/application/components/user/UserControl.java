@@ -137,6 +137,12 @@ public class UserControl {
             controller.checka_btn_myticket.setText("Already checked");
             controller.checka_btn_myticket.setStyle("-fx-border: #fb3585; -fx-background-color: #fb3585; -fx-color: #112;");
             controller.cancel_btn_my_ticket.setStyle("-fx-background-color: #fb3585; -fx-color: #112");
+        }else {
+            controller.checka_btn_myticket.setDisable(false);
+            controller.cancel_btn_my_ticket.setDisable(false);
+            controller.checka_btn_myticket.setText("Check in");
+            controller.checka_btn_myticket.setStyle("-fx-border: #eee; -fx-background-color:  #6BCB77; -fx-color: #eee;");
+            controller.cancel_btn_my_ticket.setStyle("-fx-background-color:  #ED276E; -fx-color: #eee");
         }
         controller.exploreMode = false;
     }

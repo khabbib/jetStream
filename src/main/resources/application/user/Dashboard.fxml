@@ -209,6 +209,7 @@
                                           </HBox>
                                        </children>
                                     </VBox>
+                                    <Line endX="-122.62025451660156" endY="65.0796890258789" startX="-122.6192626953125" startY="-21.213205337524414" />
                                     <VBox spacing="10.0">
                                        <children>
                                           <HBox spacing="10.0">
@@ -243,6 +244,7 @@
                                           </HBox>
                                        </children>
                                     </VBox>
+                                    <Line endX="-122.62025451660156" endY="65.0796890258789" startX="-122.6192626953125" startY="-21.213205337524414" />
                                     <VBox spacing="10.0">
                                        <children>
                                           <HBox spacing="10.0">
@@ -267,6 +269,7 @@
                                           </HBox>
                                        </children>
                                     </VBox>
+                                    <Line endX="-122.62025451660156" endY="65.0796890258789" startX="-122.6192626953125" startY="-21.213205337524414" />
                                     <VBox spacing="10.0">
                                        <children>
                                           <HBox spacing="10.0">
@@ -1226,6 +1229,11 @@
                   </Button>
                </children>
             </HBox>
+            <Label fx:id="rfc_smp_history" layoutX="50.0" layoutY="571.0" opacity="0.0" textFill="#b9b9b9">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="booking_seat_anchorpane" layoutX="90.0" prefHeight="700.0" prefWidth="1107.0">
