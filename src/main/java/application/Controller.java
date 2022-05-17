@@ -223,6 +223,7 @@ public class Controller implements Initializable {
     public WeatherAPI weatherAPI;
     public UserEvent userEvent;
     public BgMusic bgMusic;
+    public SystemSound systemSound;
     public Support support;
     public Config config;
     public Search search;
@@ -250,6 +251,7 @@ public class Controller implements Initializable {
         purchaseHandler = new PurchaseHandler();
         flightsViewManager = new FlightsViewManager(this);
         bgMusic = new BgMusic(this);
+        systemSound = new SystemSound(this);
     }
 
     //----------------- HOME -----------------//

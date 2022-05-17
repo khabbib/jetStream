@@ -18,12 +18,14 @@ public class BgMusic implements Runnable {
     private boolean playing = false;
     private Controller controller;
     private int i = 0;
+
     public BgMusic(Controller controller) {
         this.controller = controller;
         files = new File("music").listFiles();
         thread = new Thread(this);
         mediaPlayer = new MediaPlayer(new Media(files[0].toURI().toString()));
     }
+
     public void nextButton() {
         playing = false;
         mediaPlayer = new MediaPlayer(new Media(files[nextSong()].toURI().toString()));
@@ -45,7 +47,6 @@ public class BgMusic implements Runnable {
         i = (i + 1) % files.length;
         return i;
     }
-
     private int prevSong() {
         i = (i + files.length - 1) % files.length;
         return i;
