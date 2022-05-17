@@ -41,7 +41,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.text.ParseException;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * This class is main class which connects all components, methods and variables together with FXML.
@@ -108,6 +110,9 @@ public class Controller implements Initializable {
     public Scene main_scene;
     public static User user;
     public Parent root;
+    //public String rfc;
+    public String rfc = String.valueOf(new AtomicInteger());
+
     //</editor-fold>
     //<editor-fold desc="========= FXML VARIABLES =========" >
 
@@ -174,12 +179,17 @@ public class Controller implements Initializable {
 
     //</editor-fold>
     //<editor-fold desc="======== HISTORY VARIABLES ========">
-    @FXML private Button history_multiple_delete_button, history_single_delete_button, history_display_flight_path_button;
+    @FXML private Button history_multiple_delete_button;
+    @FXML private Button history_single_delete_button;
+    @FXML private Button history_display_flight_path_button;
+    @FXML
+    public Button detailes_btn_histroy;
     @FXML public TableColumn<Book, String> from_col_table_historik,to_col_table_historik;
     ObservableList<UserHistory> history_items_list, history_flights;
     @FXML public TableView<UserHistory> history_tableview;
     @FXML private CheckBox history_select_all_checkbox;
-    @FXML public Label history_reference_number_lbl;
+    @FXML public Label history_reference_number_lbl, rfc_smp_history;
+
     //</editor-fold
     //<editor-fold desc="======== SEARCH VARIABLES ========">
     @FXML public Button date_previous_day_button, date_next_day_button, date_previous_day_return_button, date_next_day_return_button;
@@ -205,6 +215,15 @@ public class Controller implements Initializable {
     @FXML public Label sup_report_display_msg, sup_contact_display_msg, sup_feedback_display_msg;
     @FXML public AnchorPane issue_panel_sup, contact_panel_sup, feedback_panel_sup;
     //</editor-fold
+    //<editor-fold desc="======== SUPPORT WINDOW VARIABLES ========">
+    @FXML public Label from_myticket, to_myticket, seat_myticket,err_msg_myticket,
+            rfc_muticket, flightno_myticket, terminal_myticket, dep_date_myticket,
+            dep_time_myticket, des_date_myticket, des_time_myticket, airline_myticket, ttl_price_myticket;
+    @FXML public Button checka_btn_myticket, cancel_btn_my_ticket, returnD_btn_checking, returnT_btn_checking;
+    @FXML public AnchorPane checkning_pnl;
+
+    //</editor-fold>
+
     //</editor-fold>
     //<editor-fold desc="========= INSTANCES OF CLASSES =========" >
 
@@ -594,7 +613,7 @@ public class Controller implements Initializable {
      * User dashboard event handler.
      * @param e
      */
-    public void userDashboardEventHandler(ActionEvent e){
+    public void userDashboardEventHandler(ActionEvent e) throws ParseException {
        userEvent.userDashboardEventHandler(e,this);
     }
 
@@ -781,6 +800,7 @@ public class Controller implements Initializable {
      */
     public void setInfoIntoTableHistorik(){ // the method calls from user dashboard to load everything.
         history_single_delete_button = (Button) root.lookup("#history_single_delete_button");
+        detailes_btn_histroy = (Button) root.lookup("#detailes_btn_histroy");
         history_display_flight_path_button = (Button) root.lookup("#history_display_flight_path_button");
         history_multiple_delete_button = (Button) root.lookup("#history_multiple_delete_button");
         history_tableview = (TableView<UserHistory>) root.lookup("#history_tableview");
@@ -796,27 +816,36 @@ public class Controller implements Initializable {
         history_tableview.getColumns().get(8).setCellValueFactory(new PropertyValueFactory<>("date_col_table_historik"));
         history_tableview.getColumns().get(9).setCellValueFactory(new PropertyValueFactory<>("price_col_table_historik"));
         history_tableview.getColumns().get(10).setCellValueFactory(new PropertyValueFactory<>("select_col_table_historik"));
-        history_tableview.getSelectionModel().setSelectionMode(
-                SelectionMode.MULTIPLE
-        );
+        history_tableview.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         history_tableview.getSelectionModel().selectedItemProperty().addListener((ObservableList, oldValue, newValue) ->{
-
             if (newValue != null){
                 if (newValue.getSelect_col_table_historik().isSelected()){
                     newValue.getSelect_col_table_historik().setSelected(false);
-                }else
-                    newValue.getSelect_col_table_historik().setSelected(true);
-                System.out.println("selected item: " + newValue.getCompany_col_table_historik() + " value: " + newValue.getSelect_col_table_historik().isSelected());
-             }
-            history_single_delete_button.setDisable(false);
-            history_display_flight_path_button.setDisable(false);
-
+                    history_display_flight_path_button.setDisable(true);
+                    history_single_delete_button.setDisable(true);
+                    detailes_btn_histroy.setDisable(true);
+                    rfc_smp_history.setText(null);
+                }if (!newValue.getSelect_col_table_historik().isSelected()){
+                newValue.getSelect_col_table_historik().setSelected(true);
+                history_display_flight_path_button.setDisable(false);
+                history_single_delete_button.setDisable(false);
+                detailes_btn_histroy.setDisable(false);
+                //rfc = newValue.getRfc_col_table_historik();
+                rfc_smp_history.setText(newValue.getRfc_col_table_historik());
+                System.out.println("true");
+                }
+                if (rfc_smp_history == null){
+                    System.out.println("Rfc is null");
+                    history_display_flight_path_button.setDisable(false);
+                    history_single_delete_button.setDisable(false);
+                    detailes_btn_histroy.setDisable(false);
+                }
+            }
         });
-        updateHistoryList();
+        updateDashboardInfo();
         history_select_all_checkbox.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                System.out.println("selected all");
                 history_flights = history_tableview.getItems();
                 boolean selectedAllItems = false; // selected or not
 
@@ -824,17 +853,14 @@ public class Controller implements Initializable {
                     if (history_select_all_checkbox.isSelected()){
                         selectedAllItems = true;
                         item.getSelect_col_table_historik().setSelected(true);
-                        System.out.println(item.getSelect_col_table_historik().isSelected() + " state");
                     }else {
                         selectedAllItems = false;
                         item.getSelect_col_table_historik().setSelected(false);
-                        System.out.println(item.getSelect_col_table_historik().isSelected() + " state");
                     }
                 }
 
                 if (selectedAllItems){ // check if all items are selected
                     history_multiple_delete_button.setDisable(false);
-
                 }else {
                     history_multiple_delete_button.setDisable(true);
                     System.out.println("no content in the list");
@@ -845,14 +871,23 @@ public class Controller implements Initializable {
 
     }
 
+    public void pickTicketForDetailes(){
+        System.out.println("rfc: " + rfc_smp_history.getText());
+        ArrayList<UserHistory> list = db.searchDataForTableHistory( -1, rfc_smp_history.getText(), false);
+        if (list.size() >0){
+            userControl.fillMyTicket(list);
+            my_ticket_anchorpane.toFront();
+        }
+    }
+
     /**
      * separated method to use multiple times
      * it will update the historic table in user dashboard everytime an action happen or user want to navigate to the panel etc.
      */
-    public void updateHistoryList(){
-        ArrayList<UserHistory> list = db.searchDataForTableHistory(Integer.parseInt(user.getUserId()), false);
-
+    public void updateDashboardInfo(){
+        ArrayList<UserHistory> list = db.searchDataForTableHistory(Integer.parseInt(user.getUserId()), null , false);
         history_items_list = FXCollections.observableArrayList(list);
+        userControl.fillMyTicket(list);
         history_tableview.setItems(history_items_list);
     }
 
@@ -872,7 +907,7 @@ public class Controller implements Initializable {
                             if (item.getSelect_col_table_historik().isSelected()){ // check if the checkbox for one or more item is selected
                                 boolean ok = db.deleteHistoryByRFC(item.getRfc_col_table_historik()); // send the actual reference number as an argument to database to compare and delete
                                 if (ok){ // if database succeed to delete the item runs this statement
-                                    updateHistoryList(); // historic table updates
+                                    updateDashboardInfo(); // historic table updates
                                     System.out.println("Item has been deleted successfully!"); // show a success message for user
                                 }
                             }
@@ -890,7 +925,7 @@ public class Controller implements Initializable {
                         for (UserHistory item: history_flights){ // loop through all historic items
                             boolean ok = db.deleteHistoryByRFC(item.getRfc_col_table_historik()); // send the actual reference number as an argument to database to compare and delete
                             if (ok){ // if database succeed to delete the item runs this statement
-                                updateHistoryList(); // historic table updates
+                                updateDashboardInfo(); // historic table updates
                                 System.out.println("Item has been deleted successfully!"); // show a success message for user
                             }
                         }
