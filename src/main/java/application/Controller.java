@@ -402,30 +402,34 @@ public class Controller implements Initializable {
     }
 
     /**
+     * the method will render dashboard page for user
      * @param e
      * @param user
      * @throws IOException
      */
     public void renderDashboard(ActionEvent e, User user) {
         userControl.renderDashboard(e, user,this);
-    } // the method will render dashboard page for user
+    }
 
     /**
+     * shortcut login to user dashboard
      * @param e
      * @throws IOException
      */
     public void noLoginRequired(ActionEvent e) throws IOException {
         exploreMode = true;
         userControl.noLoginRequired(e,this);
-    }// shortcut login to user dashboard
+    }
 
     /**
+     * the method will switch the user to the registration page
      * @param e
      * @throws IOException
      */
     public void switchToRegistration(ActionEvent e) {
+        playSound("Next page", "sounds/next_page.wav");
         this.root = config.render(e, "user/Registration", "Registration");
-    }// the method will switch the user to the registration page
+    }
 
     /**
      * The method will register the user and return to the login page
@@ -452,6 +456,7 @@ public class Controller implements Initializable {
      */
     public void switchToLogin(ActionEvent e) {
         exploreMode = true;
+        systemSound.pauseButton();
         this.root = config.render(e, "user/Login", "Login");
         success_msg_lbl = (Label) root.lookup("#success_msg_lbl");
         if(user != null) {
