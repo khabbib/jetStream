@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
- *
+ * This class handle user events when clicking on a button.
  */
 public class UserEvent {
     public String rfc;
@@ -21,11 +21,14 @@ public class UserEvent {
     }
 
     /**
-     * @param e
-     * @param controller
+     * This method handles actions when a button is clicked.
+     * @param e actionevent.
+     * @param controller to connect methods and variables.
+     * @author Khabib. Developed by Sossio.
      */
     public void userDashboardEventHandler(ActionEvent e, Controller controller) throws ParseException {
         System.out.println("Hej");
+        controller.systemSound.pauseButton();
         if (e.getSource() == controller.menu_profile_btn) {
             if(!controller.exploreMode) {
                 controller.profile_anchorpane.toFront();
@@ -37,11 +40,13 @@ public class UserEvent {
             }
         }
         else if(e.getSource() == controller.booking_close_btn || e.getSource() == controller.booking_close_second_page_btn){
+            controller.systemSound.pauseButton();
             controller.booking_seat_anchorpane.toBack();
             controller.restore_psgr_info();
             controller.playSound("Next page", "sounds/next_page.wav");
         }
         else if(e.getSource() == controller.menu_flight_btn) {
+            controller.systemSound.pauseButton();
             controller.flight_anchorpane.toFront();
             controller.toggleMenuColor();
             controller.menu_highlight_color_flight.setVisible(true);
@@ -50,6 +55,7 @@ public class UserEvent {
         }
 
         else if (e.getSource() == controller.menu_history_btn) {
+            controller.systemSound.pauseButton();
             if(!controller.exploreMode) {
                 controller.history_anchorpane.toFront();
                 controller.toggleMenuColor();
@@ -62,6 +68,7 @@ public class UserEvent {
             }
         }
         else if(e.getSource() == controller.menu_entertainment_btn) {
+            controller.systemSound.pauseButton();
             controller.entertainment_anchorpane.toFront();
             controller.toggleMenuColor();
             controller.menu_highlight_color_entertainment.setVisible(true);
@@ -69,7 +76,7 @@ public class UserEvent {
             controller.playSound("Next page", "sounds/next_page.wav");
         }
         else if(e.getSource() == controller.menu_support_btn){
-
+            controller.systemSound.pauseButton();
             if (!controller.exploreMode) {
                 controller.support_anchorpane.toFront();
                 controller.toggleMenuColor();
@@ -82,7 +89,7 @@ public class UserEvent {
             }
         }
         else if(e.getSource() == controller.menu_ceo_btn){
-
+            controller.systemSound.playButton();
             if (!controller.exploreMode) {
                 controller.ceo_anchorpane.toFront();
                 controller.toggleMenuColor();
@@ -95,7 +102,7 @@ public class UserEvent {
             }
         }
         else if(e.getSource() == controller.menu_my_tickets_btn){
-
+            controller.systemSound.pauseButton();
             if (!controller.exploreMode) {
                 controller.my_ticket_anchorpane.toFront();
                 controller.toggleMenuColor();
