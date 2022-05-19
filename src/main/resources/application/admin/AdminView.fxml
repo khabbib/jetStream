@@ -256,40 +256,6 @@
             <Button fx:id="deleteTicketBtn_ticket_admin" layoutX="778.0" layoutY="558.0" mnemonicParsing="false" onAction="#removeTicket_admin" prefHeight="36.0" prefWidth="136.0" style="-fx-background-color: #f87000;" text="Delete selected ticket" textFill="WHITE" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="admin_members_anchorpane" layoutX="113.0" layoutY="6.0" prefHeight="694.0" prefWidth="1084.0" style="-fx-background-color: #112;">
-         <children>
-            <Label layoutX="14.0" layoutY="55.0" prefHeight="34.0" prefWidth="166.0" text="List of Members" textFill="WHITE">
-               <font>
-                  <Font size="23.0" />
-               </font>
-            </Label>
-            <Button fx:id="registerMemberBtn_admin" layoutX="20.0" layoutY="563.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="155.0" style="-fx-background-color: #f87000;" text="Register" textFill="WHITE" />
-            <Button fx:id="refreshMembersBtn_admin" layoutX="977.0" layoutY="554.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="74.0" style="-fx-background-color: #f87000;" text="Refresh" textFill="WHITE" />
-            <Group layoutX="259.0" layoutY="20.0" />
-            <TableView fx:id="table_member_admin" layoutX="28.0" layoutY="118.0" prefHeight="398.0" prefWidth="1036.0">
-               <columns>
-                  <TableColumn fx:id="no_col_mbr_admin" prefWidth="29.0" text="No" />
-                  <TableColumn fx:id="id_col_mbr_admin" prefWidth="83.0" text="User ID" />
-                  <TableColumn fx:id="fname_col_mbr_admin" prefWidth="126.0" text="First Name" />
-                  <TableColumn fx:id="lname_col_mbr_admin" prefWidth="127.0" text="Last Name" />
-                  <TableColumn fx:id="address_col_mbr_admin" prefWidth="216.0" text="Address" />
-                  <TableColumn fx:id="email_col_mbr_admin" prefWidth="207.0" text="Email" />
-                  <TableColumn fx:id="phonenr_col_mbr_admin" prefWidth="126.0" text="Phone Number" />
-                  <TableColumn fx:id="status_col_mbr_admin" prefWidth="70.0" text="IsAdmin" />
-                  <TableColumn fx:id="select_col_table_historik1" prefWidth="39.0">
-                     <graphic>
-                        <CheckBox fx:id="select_col_mbr_admin" mnemonicParsing="false" opacity="0.0" />
-                     </graphic>
-                  </TableColumn>
-               </columns>
-               <stylesheets>
-                  <URL value="@../Styles/Table.css" />
-                  <URL value="@../Styles/ScrollStyle.css" />
-               </stylesheets>
-            </TableView>
-            <Button fx:id="deletS_btn_mbr_admin" layoutX="210.0" layoutY="563.0" mnemonicParsing="false" onAction="#removeMember_admin" prefHeight="36.0" prefWidth="155.0" style="-fx-background-color: #f87000;" text="Delete selected member" textFill="WHITE" />
-         </children>
-      </AnchorPane>
       <AnchorPane fx:id="admin_flights_anchorpane" layoutX="109.0" layoutY="-1.0" prefHeight="700.0" prefWidth="1091.0" style="-fx-background-color: #112;">
          <children>
             <Label layoutX="26.0" layoutY="54.0" prefHeight="45.0" prefWidth="176.0" text="List of flights" textFill="WHITE">
@@ -432,7 +398,41 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <Pane prefHeight="702.0" prefWidth="105.0" style="-fx-background-color: #151D3B; -fx-background-radius: 0 30 0 0;">
+      <AnchorPane fx:id="admin_members_anchorpane" layoutX="113.0" layoutY="6.0" prefHeight="694.0" prefWidth="1084.0" style="-fx-background-color: #112;">
+         <children>
+            <Label layoutX="14.0" layoutY="55.0" prefHeight="34.0" prefWidth="166.0" text="List of Members" textFill="WHITE">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <Button fx:id="registerMemberBtn_admin" layoutX="20.0" layoutY="563.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="155.0" style="-fx-background-color: #f87000;" text="Register" textFill="WHITE" />
+            <Button fx:id="refreshMembersBtn_admin" layoutX="977.0" layoutY="554.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="74.0" style="-fx-background-color: #f87000;" text="Refresh" textFill="WHITE" />
+            <Group layoutX="259.0" layoutY="20.0" />
+            <TableView fx:id="table_member_admin" layoutX="28.0" layoutY="118.0" prefHeight="398.0" prefWidth="1036.0">
+               <columns>
+                  <TableColumn fx:id="no_col_mbr_admin" prefWidth="29.0" text="No" />
+                  <TableColumn fx:id="id_col_mbr_admin" prefWidth="83.0" text="User ID" />
+                  <TableColumn fx:id="fname_col_mbr_admin" prefWidth="126.0" text="First Name" />
+                  <TableColumn fx:id="lname_col_mbr_admin" prefWidth="127.0" text="Last Name" />
+                  <TableColumn fx:id="address_col_mbr_admin" prefWidth="216.0" text="Address" />
+                  <TableColumn fx:id="email_col_mbr_admin" prefWidth="207.0" text="Email" />
+                  <TableColumn fx:id="phonenr_col_mbr_admin" prefWidth="126.0" text="Phone Number" />
+                  <TableColumn fx:id="status_col_mbr_admin" prefWidth="70.0" text="IsAdmin" />
+                  <TableColumn fx:id="select_col_table_historik1" prefWidth="39.0">
+                     <graphic>
+                        <CheckBox fx:id="select_col_mbr_admin" mnemonicParsing="false" opacity="0.0" />
+                     </graphic>
+                  </TableColumn>
+               </columns>
+               <stylesheets>
+                  <URL value="@../Styles/Table.css" />
+                  <URL value="@../Styles/ScrollStyle.css" />
+               </stylesheets>
+            </TableView>
+            <Button fx:id="deletS_btn_mbr_admin" layoutX="210.0" layoutY="563.0" mnemonicParsing="false" onAction="#removeMember_admin" prefHeight="36.0" prefWidth="155.0" style="-fx-background-color: #f87000;" text="Delete selected member" textFill="WHITE" />
+         </children>
+      </AnchorPane>
+      <Pane prefHeight="702.0" prefWidth="105.0" style="-fx-background-color: #221E4E #221E4E; -fx-background-radius: 0 30 0 0;">
          <children>
             <VBox layoutX="14.0" layoutY="23.0" spacing="15.0">
                <children>
@@ -448,38 +448,20 @@
                   <Line endX="30.0" startX="-45.0" stroke="#656565" />
                </children>
             </VBox>
-            <VBox layoutY="112.0" prefHeight="214.0" prefWidth="89.0" spacing="15.0">
+            <VBox layoutY="112.0" prefHeight="125.0" prefWidth="111.0" spacing="15.0">
                <children>
                   <HBox spacing="10.0">
                      <children>
                         <Group>
                            <children>
-                              <Pane fx:id="menu_highlight_color_flight" prefHeight="27.0" prefWidth="5.0" style="-fx-background-color: #ff7000;" />
-                           </children>
-                        </Group>
-                     </children>
-                  </HBox>
-                  <HBox spacing="10.0">
-                     <children>
-                        <Group>
-                           <children>
-                              <Pane fx:id="menu_highlight_color_history" prefHeight="27.0" prefWidth="5.0" style="-fx-background-color: #ff7000;" visible="false" />
-                           </children>
-                        </Group>
-                     </children>
-                  </HBox>
-                  <HBox spacing="10.0">
-                     <children>
-                        <Group>
-                           <children>
-                              <Pane fx:id="menu_highlight_color_my_ticket" prefHeight="27.0" prefWidth="5.0" style="-fx-background-color: #ff7000;" visible="false" />
+                              <Pane fx:id="menu_admin_highlight_customers" prefHeight="27.0" prefWidth="5.0" style="-fx-background-color: #ff7000;" />
                            </children>
                         </Group>
                         <Group>
                            <children>
                               <HBox alignment="CENTER" prefHeight="24.0" prefWidth="88.0" spacing="10.0">
                                  <children>
-                                    <ImageView fx:id="history_menu_user_image" fitHeight="24.0" fitWidth="24.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="customers_menu_admin_img" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../image/admin/members.png" />
                                        </image>
@@ -487,7 +469,10 @@
                                           <ColorAdjust brightness="1.0" />
                                        </effect>
                                     </ImageView>
-                                    <Label opacity="0.5" text="Members" textFill="WHITE" />
+                                    <Label fx:id="customers_menu_admin_lbl" text="Customers" textFill="WHITE">
+                                       <font>
+                                          <Font size="10.0" />
+                                       </font></Label>
                                  </children>
                               </HBox>
                               <Button fx:id="admin_members_button" mnemonicParsing="false" onAction="#adminDashboardEventHandler" opacity="0.0" prefHeight="25.0" prefWidth="101.0">
@@ -499,51 +484,72 @@
                         </Group>
                      </children>
                   </HBox>
-                  <HBox spacing="10.0">
+                  <HBox>
                      <children>
                         <Group>
                            <children>
-                              <Pane fx:id="menu_highlight_color_entertainment" prefHeight="27.0" prefWidth="5.0" style="-fx-background-color: #ff7000;" visible="false" />
+                              <Pane fx:id="menu_admin_highlight_flights" prefHeight="27.0" prefWidth="5.0" style="-fx-background-color: #ff7000;" visible="false" />
+                           </children>
+                        </Group>
+                        <Group>
+                           <children>
+                              <HBox alignment="CENTER" prefHeight="22.0" prefWidth="100.0" spacing="10.0">
+                                 <children>
+                                    <ImageView fx:id="flights_menu_admin_img" fitHeight="22.0" fitWidth="29.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../image/collection/find.png" />
+                                       </image>
+                                       <effect>
+                                          <ColorAdjust brightness="1.0" />
+                                       </effect>
+                                    </ImageView>
+                                    <Label fx:id="flights_menu_admin_lbl" opacity="0.5" prefHeight="17.0" prefWidth="48.0" text="Flights" textFill="WHITE">
+                                       <font>
+                                          <Font size="10.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <Button fx:id="admin_flights_button" layoutY="-2.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" opacity="0.0" prefHeight="25.0" prefWidth="100.0">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
                            </children>
                         </Group>
                      </children>
                   </HBox>
-                  <HBox spacing="10.0">
+                  <HBox>
                      <children>
                         <Group>
                            <children>
-                              <Pane fx:id="menu_highlight_color_support" prefHeight="27.0" prefWidth="5.0" style="-fx-background-color: #ff7000;" visible="false" />
+                              <Pane fx:id="menu_admin_highlight_tickets" prefHeight="27.0" prefWidth="5.0" style="-fx-background-color: #ff7000;" visible="false" />
                            </children>
                         </Group>
-                     </children>
-                  </HBox>
-                  <Group>
-                     <children>
-                        <HBox alignment="CENTER" prefHeight="22.0" prefWidth="100.0" spacing="10.0">
-                           <children>
-                              <ImageView fx:id="map_menu_user_image" fitHeight="22.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../image/collection/find.png" />
-                                 </image>
-                                 <effect>
-                                    <ColorAdjust brightness="1.0" />
-                                 </effect>
-                              </ImageView>
-                              <Label prefHeight="17.0" prefWidth="48.0" text="Flights" textFill="WHITE" />
-                           </children>
-                        </HBox>
-                        <Button fx:id="admin_flights_button" layoutY="1.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" opacity="0.0" prefHeight="25.0" prefWidth="100.0">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                     </children>
-                  </Group>
-                  <HBox spacing="10.0">
-                     <children>
                         <Group>
                            <children>
-                              <Pane fx:id="menu_highlight_color_ceo" prefHeight="27.0" prefWidth="5.0" style="-fx-background-color: #ff7000;" visible="false" />
+                              <HBox alignment="CENTER" prefHeight="26.0" prefWidth="85.0" spacing="10.0">
+                                 <children>
+                                    <ImageView fx:id="tickets_menu_admin_img" fitHeight="26.0" fitWidth="28.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../image/collection/tickets.png" />
+                                       </image>
+                                       <effect>
+                                          <ColorAdjust brightness="1.0" />
+                                       </effect>
+                                    </ImageView>
+                                    <Label fx:id="tickets_menu_admin_lbl" opacity="0.5" text="Tickets" textFill="WHITE">
+                                       <font>
+                                          <Font size="10.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <Button fx:id="admin_tickets_button" layoutX="1.0" layoutY="2.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" opacity="0.0" prefHeight="25.0" prefWidth="93.0">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
                            </children>
                         </Group>
                      </children>
@@ -555,9 +561,9 @@
                   <Line endX="30.0" startX="-45.0" stroke="#656565" />
                   <Group>
                      <children>
-                        <Group>
+                        <Group layoutX="-2.0">
                            <children>
-                              <StackPane layoutX="25.0" layoutY="7.0" prefHeight="18.0" prefWidth="11.0">
+                              <StackPane layoutX="25.0" layoutY="8.0" prefHeight="18.0" prefWidth="11.0">
                                  <children>
                                     <Circle fill="#30448a" radius="16.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" style="-fx-background-color: #151D3B;" />
                                     <ImageView fx:id="profile_image_imageview" fitHeight="29.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
@@ -567,11 +573,6 @@
                                     </ImageView>
                                  </children>
                               </StackPane>
-                              <Label fx:id="username_lbl" contentDisplay="CENTER" layoutX="40.0" layoutY="13.0" opacity="0.0" prefHeight="20.0" prefWidth="42.0" text="First N" textAlignment="RIGHT" textFill="WHITE">
-                                 <font>
-                                    <Font size="10.0" />
-                                 </font>
-                              </Label>
                            </children>
                         </Group>
                         <Group layoutY="78.0">
@@ -588,7 +589,7 @@
                                  </cursor>
                               </ImageView>
                               <Label layoutX="34.0" layoutY="18.0" prefHeight="17.0" prefWidth="51.0" text="Logout" textFill="WHITE" />
-                              <Button fx:id="admin_logout_button" layoutX="-1.0" layoutY="14.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" opacity="0.0" prefHeight="25.0" prefWidth="88.0">
+                              <Button fx:id="admin_logout_button" layoutX="-1.0" layoutY="13.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" opacity="0.0" prefHeight="25.0" prefWidth="88.0">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
@@ -599,28 +600,6 @@
                   </Group>
                </children>
             </VBox>
-            <Group layoutX="7.0" layoutY="312.0">
-               <children>
-                  <HBox alignment="CENTER" prefHeight="26.0" prefWidth="85.0" spacing="10.0">
-                     <children>
-                        <ImageView fx:id="my_tickets_menu_user_image" fitHeight="26.0" fitWidth="28.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../image/collection/tickets.png" />
-                           </image>
-                           <effect>
-                              <ColorAdjust brightness="1.0" />
-                           </effect>
-                        </ImageView>
-                        <Label opacity="0.5" text="Tickets" textFill="WHITE" />
-                     </children>
-                  </HBox>
-                  <Button fx:id="admin_tickets_button" layoutX="1.0" layoutY="2.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" opacity="0.0" prefHeight="25.0" prefWidth="93.0">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-               </children>
-            </Group>
          </children>
       </Pane>
    </children>

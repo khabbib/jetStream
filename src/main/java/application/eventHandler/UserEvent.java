@@ -51,6 +51,7 @@ public class UserEvent {
             toggleMenuColor(controller);
             controller.menu_highlight_color_flight.setVisible(true);
             controller.map_menu_user_image.setOpacity(1);
+            controller.map_menu_user_lbl.setOpacity(1);
             controller.playSystemSound("Next page", "sounds/next_page.wav");
         }
         else if(e.getSource() == controller.menu_history_btn) {
@@ -59,6 +60,7 @@ public class UserEvent {
                 toggleMenuColor(controller);
                 controller.menu_highlight_color_history.setVisible(true);
                 controller.history_menu_user_image.setOpacity(1);
+                controller.history_menu_user_lbl.setOpacity(1);
                 controller.playSystemSound("Next page", "sounds/next_page.wav");
             } else {
                 controller.playSystemSound("Error", "sounds/error.wav");
@@ -70,6 +72,7 @@ public class UserEvent {
             toggleMenuColor(controller);
             controller.menu_highlight_color_entertainment.setVisible(true);
             controller.entertainment_menu_user_image.setOpacity(1);
+            controller.entertainment_menu_user_lbl.setOpacity(1);
             controller.playSystemSound("Next page", "sounds/next_page.wav");
         }
         else if(e.getSource() == controller.menu_support_btn){
@@ -77,6 +80,7 @@ public class UserEvent {
               toggleMenuColor(controller);
               controller.menu_highlight_color_support.setVisible(true);
               controller.support_menu_user_image.setOpacity(1);
+              controller.support_menu_user_lbl.setOpacity(1);
               controller.playSystemSound("Next page", "sounds/next_page.wav");
         }
         else if(e.getSource() == controller.menu_ceo_btn){
@@ -84,6 +88,7 @@ public class UserEvent {
               toggleMenuColor(controller);
               controller.menu_highlight_color_ceo.setVisible(true);
               controller.ceo_menu_user_image.setOpacity(1);
+              controller.ceo_menu_user_lbl.setOpacity(1);
               controller.playSystemSound("Next page", "sounds/next_page.wav");
         }
         else if(e.getSource() == controller.owner1_btn) {
@@ -104,6 +109,7 @@ public class UserEvent {
                 toggleMenuColor(controller);
                 controller.menu_highlight_color_my_ticket.setVisible(true);
                 controller.my_tickets_menu_user_image.setOpacity(1);
+                controller.my_tickets_menu_user_lbl.setOpacity(1);
                 controller.playSystemSound("Next page", "sounds/next_page.wav");
             } else {
                 controller.playSystemSound("Error", "sounds/error.wav");
@@ -378,6 +384,13 @@ public class UserEvent {
         controller.support_menu_user_image.setOpacity(0.5);
         controller.ceo_menu_user_image.setOpacity(0.5);
         controller.my_tickets_menu_user_image.setOpacity(0.5);
+
+        controller.map_menu_user_lbl.setOpacity(0.5);
+        controller.history_menu_user_lbl.setOpacity(0.5);
+        controller.entertainment_menu_user_lbl.setOpacity(0.5);
+        controller.support_menu_user_lbl.setOpacity(0.5);
+        controller.ceo_menu_user_lbl.setOpacity(0.5);
+        controller.my_tickets_menu_user_lbl.setOpacity(0.5);
     }
 
     /**
