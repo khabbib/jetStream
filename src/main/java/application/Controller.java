@@ -158,7 +158,7 @@ public class Controller implements Initializable {
     @FXML public AnchorPane success_purchase_anchorpane, booking_seat_anchorpane, booking_passenger_anchorpane,
             flight_seats_eco_anchorpane, flights_seats_business_anchorpane, payment_anchorpane;
     @FXML public TextField  card_nbr, card_fname, card_lname, card_month, card_year, card_cvc;
-    @FXML public Button     card_prev_btn, card_purchase_btn, seat_next_btn, success_purchase_to_dashboard_button, print_ticket_purchase_btn;     // FINAL BUTTONS AFTER PURCHASING THE TICKET
+    @FXML public Button     card_prev_btn, card_purchase_btn, seat_next_btn,logout_ticket_purchase_btn , success_purchase_to_dashboard_button, show_ticket_purchase_btn;     // FINAL BUTTONS AFTER PURCHASING THE TICKET
     @FXML public Label      card_counter_nbr, payment_err_msg;
     @FXML public ScrollPane business_seat_scrollpane, eco_seat_scrollpane;
     @FXML public TextField  booking_last_name_textfield, booking_first_name_textfield, booking_four_digits_textfield, booking_email_textfield;
@@ -578,24 +578,10 @@ public class Controller implements Initializable {
         bgMusic.mediaHandler(e);
     }
 
-    /**
-     * @param e
-     * @author Khabib. Developed by Sossio.
-     */
-    public void purchaseHandle(ActionEvent e){
-        purchaseHandler.purchaseHandle(e,this);
-    }
-
     public void confirmPurchase(String rfc) {
         purchaseHandler.confirmPurchase(rfc,this);
     }
 
-    /**
-     *
-     */
-    public void restore_psgr_info(){
-        purchaseHandler.restore_psgr_info(this);
-    }
 
     /**
      * Navigate to admin pages.
@@ -608,19 +594,14 @@ public class Controller implements Initializable {
     }
 
     /**
-     * User dashboard event handler.
-     * @param e
+     * User dashboard event handler take care of events in dashboard class.
+     * @param e e event is passed here from GFX and will be passed to new class
+     * @author Habib
      */
     public void userDashboardEventHandler(ActionEvent e) throws ParseException {
        userEvent.userDashboardEventHandler(e,this);
     }
 
-    /**
-     *
-     */
-    public void toggleMenuColor() {
-        userControl.toggleMenuColor(this);
-    }
 
     /**
      * Administrator dev.
@@ -968,15 +949,6 @@ public class Controller implements Initializable {
         }
     }
 
-
-    //----------------- GETTERS AND SETTERS -----------------//
-    public Scene getMain_scene() {
-        return main_scene;
-    }
-    public void setMain_scene(Scene main_scene) {
-        this.main_scene = main_scene;
-    }
-    public Stage getMain_stage(){return main_stage;}
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
