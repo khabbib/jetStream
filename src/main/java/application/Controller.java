@@ -31,8 +31,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import worldMapAPI.World;
@@ -143,10 +141,11 @@ public class Controller implements Initializable {
     //  MENU BUTTONS ETC.
     @FXML
     public Button menu_profile_btn, menu_flight_btn, menu_history_btn, menu_entertainment_btn, menu_support_btn,
-                  menu_ceo_btn, menu_my_tickets_btn, booking_close_btn, booking_close_second_page_btn;
+                  menu_ceo_btn, menu_my_tickets_btn, booking_close_btn, booking_close_second_page_btn, owner1_btn, owner2_btn, owner3_btn, owner4_btn;
     @FXML public AnchorPane profile_anchorpane, history_anchorpane, flight_anchorpane, entertainment_anchorpane, support_anchorpane, ceo_anchorpane, my_ticket_anchorpane;
     @FXML public Pane menu_highlight_color_support, menu_highlight_color_ceo, menu_highlight_color_my_ticket, menu_highlight_color_flight,
                       menu_highlight_color_history, menu_highlight_color_entertainment;
+    @FXML public HBox owner1_work, owner2_work, owner3_work, owner4_work;
 
     //</editor-fold>
     //<editor-fold desc="========= WEATHER VARIABLES =========" >
@@ -389,17 +388,8 @@ public class Controller implements Initializable {
         }
     }
 
-    /**
-     * This method plays sound on button actions.
-     * @param soundName takes the name of the sound as a string to print in concole.
-     * @param src is file path name.
-     * @author Sossio.
-     */
-    public void playSound(String soundName, String src) {
-        Media buzzer = new Media(getClass().getResource(src).toExternalForm());
-        MediaPlayer mediaPlayer = new MediaPlayer(buzzer);
-        mediaPlayer.play();
-        System.out.println("'" + soundName + "' fx played!");
+    public void playSystemSound(String soundName, String src) {
+        systemSound.playSystemSound(soundName, src);
     }
 
     /**
@@ -455,7 +445,7 @@ public class Controller implements Initializable {
      * @throws IOException
      */
     public void switchToRegistration(ActionEvent e) {
-        playSound("Next page", "sounds/next_page.wav");
+        playSystemSound("Next page", "sounds/next_page.wav");
         this.root = config.render(e, "user/Registration", "Registration");
     }
 
@@ -484,11 +474,10 @@ public class Controller implements Initializable {
      */
     public void switchToLogin(ActionEvent e) {
         exploreMode = true;
-        systemSound.pauseButton();
         this.root = config.render(e, "user/Login", "Login");
         success_msg_lbl = (Label) root.lookup("#success_msg_lbl");
         if(user != null) {
-            playSound("Logout", "sounds/logout.wav");
+            playSystemSound("Logout", "sounds/logout.wav");
         } else {
             user = null;
         }

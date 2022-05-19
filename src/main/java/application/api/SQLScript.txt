@@ -1,0 +1,146 @@
+==============================
+Script and tables for sql.
+
+Language: Swedish/English
+==============================
+
+Nedan visas sql-satser som används för: 
+att skapa tabeller
+ge behörighet till gruppmedlemmarna
+generera flygresor
+administrationsavdelning (den här projektet)
+Teamet har separat klass (FlightGen.java) som genererar resorna i jetstream. Klassen anses vara  utanför projektet och betraktas som en server till projektet. 
+
+Sats för admin
+-- Ta bort kund:
+DELETE FROM userr WHERE u_id = X;
+
+-- Lägg till kund:
+INSERT INTO user_info (f_name,l_name,email,phone_nr) VALUES (x,x,x,x);
+INSERT INTO user_login (u_id,u_name,u_pwd) VALUES (x,x,x);
+
+-- Ändra information:
+UPDATE user_login set x = x, x = x WHERE u_id = x; 
+UPDATE user_info set x = x, x = x WHERE u_id = x; 
+
+Sats för user 
+-- Se alla avgångar från land:
+SELECT * FROM flight WHERE f_departure_name = x;
+
+-- Se alla bokningar:
+SELECT * FROM booked WHERE u_id = x;
+
+Sats för server
+-- Återställ en serial sekvens:
+ALTER SEQUENCE x_seq RESTART WITH 1;
+
+-- Ge användare behörighet till sekvens:
+GRANT USAGE ON SEQUENCE x_seq TO x;
+
+Sats för åtkomst
+-- Ändra default schema (varje gång någon connectar)
+SET search_path TO jetstream
+
+-- Ge permission till alla medlemmar till alla tabeller
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA jetstream TO am1186;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA jetstream TO ak3685;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA jetstream TO am7360;
+GRANT USAGE, SELECT ON SEQUENCE flight_f_id_seq TO avändarnamn;
+
+Sats för tabeller
+-- Uppdaterad: 2022-04-08
+
+-- Skapa tabellen för User
+create table userr(
+	u_id serial,
+	f_name varchar(30) not null,
+	l_name varchar(30) not null,
+	u_address varchar(50) not null,
+	email varchar(30) not null unique,
+	phone_nr varchar(30) not null,
+	u_password varchar(30) not null,
+	u_isAdmin boolean not null default(false),
+	
+    primary key(u_id)
+);
+
+-- Skapa tabellen för Plane
+create table plane(
+	p_id serial not null,
+	p_model varchar(30) not null,
+	p_company varchar(30) not null,
+	p_seat_business int not null,
+	p_seat_economy int not null,
+	
+	primary key(p_id)
+);
+
+-- Skapa tabellen för Country
+create table country(
+	co_id serial not null unique,
+	co_name varchar(30) not null,
+	
+	primary key(co_id)
+);
+
+-- Skapa tabellen för Flight och koppla Plane och Country till den
+create table flight(
+	f_id serial not null,
+	
+	f_departure_name varchar(50) not null,
+	f_departure_date date not null,
+	f_departure_time time not null,
+	
+	f_destination_name varchar(50) not null,
+	f_destination_date date not null,
+	f_destination_time time not null,
+	
+	f_price int not null,
+	p_id int not null,
+	
+	primary key(f_id),
+	foreign key(p_id) references plane(p_id)
+);
+
+-- Skapa tabellen Booked och koppla User och Flight till den
+create table booked(
+	u_id int not null,
+	f_id int not null,
+	b_seat varchar(30) not null,
+	
+	foreign key(u_id) references user_login(u_id),
+	foreign key(f_id) references flight(f_id)
+);
+
+-- Skapa tabellen Profile Picture för att hämta bilden till user
+create table profile_picture(...);
+
+-- Select snabbåtkomst
+SET search_path TO jetstream;
+select * from userr;
+select * from country;
+select * from plane;
+select * from flight;
+select * from booked;
+select * from profile_picture;
+
+-- Mer verktyg
+Update userr
+Set u_f_name = 'Admin'
+where u_id = 2;
+select * from userr;
+
+delete from userr where u_id = 24;
+select * from userr;
+
+create table test_user_password_hash(
+	email varchar(50) not null,
+	pwd varchar(120) not null
+);
+
+insert into test_user_password_hash(email, pwd)
+values('hash@gmail.com', 'deb1536f480475f7d593219aa1afd74c');
+-- password is: myPassword
+
+select * from test_user_password_hash;
+select * from test_user_password_hash where email = 'hash@gmail.com' and pwd = 'deb1536f480475f7d593219aa1afd74c';

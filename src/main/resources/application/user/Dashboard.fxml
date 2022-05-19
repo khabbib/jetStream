@@ -153,14 +153,14 @@
                <children>
                   <Group layoutX="105.0" layoutY="78.0">
                      <children>
-                        <Label layoutY="8.0" text="Actual ticket" textFill="WHITE">
+                        <Label layoutX="-43.0" layoutY="8.0" text="Actual ticket" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
                      </children>
                   </Group>
-                  <VBox alignment="CENTER" layoutX="109.0" layoutY="143.0" spacing="20.0" style="-fx-background-color: #221E4E; -fx-background-radius: 5;">
+                  <VBox alignment="CENTER" layoutX="62.0" layoutY="143.0" spacing="20.0" style="-fx-background-color: #221E4E; -fx-background-radius: 5;">
                      <children>
                         <HBox alignment="CENTER" prefHeight="67.0" prefWidth="551.0">
                            <children>
@@ -354,7 +354,7 @@
       </AnchorPane>
       <AnchorPane fx:id="ceo_anchorpane" layoutX="104.0" layoutY="3.0" prefHeight="693.0" prefWidth="1089.0" style="-fx-background-color: #112;">
          <children>
-            <VBox alignment="CENTER_LEFT" layoutX="173.0" layoutY="192.0" spacing="2.0" style="-fx-background-radius: 5; -fx-background-color: #112;">
+            <VBox alignment="CENTER_LEFT" layoutX="72.0" layoutY="192.0" spacing="2.0" style="-fx-background-radius: 5; -fx-background-color: #112;">
                <children>
                   <HBox alignment="CENTER_LEFT" spacing="10.0" style="-fx-background-color: #1A1A40; -fx-background-radius: 5;">
                      <children>
@@ -374,7 +374,7 @@
                                     </Label>
                                     <HBox spacing="10.0">
                                        <children>
-                                          <Label text="Roll" textFill="WHITE">
+                                          <Label text="Role" textFill="WHITE">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
@@ -384,7 +384,7 @@
                                                 <Font size="14.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="44.0" layoutY="10.0" style="-fx-background-color: #210; -fx-background-radius: 5; -fx-padding: 2 10 2 10;" text="programmer" textFill="#ff8800">
+                                          <Label layoutX="44.0" layoutY="10.0" style="-fx-background-color: #210; -fx-background-radius: 5; -fx-padding: 2 10 2 10;" text="Programmer" textFill="#ff8800">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
@@ -467,7 +467,7 @@
                                     </Label>
                                     <HBox spacing="10.0">
                                        <children>
-                                          <Label text="Roll" textFill="WHITE">
+                                          <Label text="Role" textFill="WHITE">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
@@ -477,7 +477,7 @@
                                                 <Font size="14.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="44.0" layoutY="10.0" style="-fx-background-color: #210; -fx-background-radius: 5; -fx-padding: 2 10 2 10;" text="programmer" textFill="#ff8800">
+                                          <Label layoutX="44.0" layoutY="10.0" style="-fx-background-color: #210; -fx-background-radius: 5; -fx-padding: 2 10 2 10;" text="Programmer" textFill="#ff8800">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
@@ -560,7 +560,7 @@
                                     </Label>
                                     <HBox spacing="10.0">
                                        <children>
-                                          <Label text="Roll" textFill="WHITE">
+                                          <Label text="Role" textFill="WHITE">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
@@ -570,7 +570,7 @@
                                                 <Font size="14.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="44.0" layoutY="10.0" style="-fx-background-color: #210; -fx-background-radius: 5; -fx-padding: 2 10 2 10;" text="programmer" textFill="#ff8800">
+                                          <Label layoutX="44.0" layoutY="10.0" style="-fx-background-color: #210; -fx-background-radius: 5; -fx-padding: 2 10 2 10;" text="Programmer" textFill="#ff8800">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
@@ -653,7 +653,7 @@
                                     </Label>
                                     <HBox spacing="10.0">
                                        <children>
-                                          <Label text="Roll" textFill="WHITE">
+                                          <Label text="Role" textFill="WHITE">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
@@ -663,7 +663,7 @@
                                                 <Font size="14.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="44.0" layoutY="10.0" style="-fx-background-color: #210; -fx-background-radius: 5; -fx-padding: 2 10 2 10;" text="programmer" textFill="#ff8800">
+                                          <Label layoutX="44.0" layoutY="10.0" style="-fx-background-color: #210; -fx-background-radius: 5; -fx-padding: 2 10 2 10;" text="Programmer" textFill="#ff8800">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
@@ -733,13 +733,13 @@
                   <Insets bottom="30.0" left="20.0" right="20.0" top="30.0" />
                </padding>
             </VBox>
-            <Label layoutX="91.0" layoutY="70.0" text="Owner" textFill="WHITE">
+            <Label layoutX="91.0" layoutY="59.0" text="Owners" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Text fill="#bfbfbf" layoutX="91.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." wrappingWidth="610.0" />
-            <Button fx:id="donate_btn_owner" graphicTextGap="6.0" layoutX="545.0" layoutY="554.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="142.0" style="-fx-background-color: #1A1A40;" text="Donate" textFill="WHITE">
+            <Text fill="#bfbfbf" layoutX="91.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="485.0" />
+            <Button fx:id="donate_btn_owner" graphicTextGap="6.0" layoutX="429.0" layoutY="554.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="142.0" style="-fx-background-color: #1A1A40;" text="Donate" textFill="WHITE">
                <padding>
                   <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
                </padding>
@@ -750,6 +750,59 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
+            <HBox fx:id="owner1_work" alignment="CENTER_LEFT" layoutX="607.0" layoutY="222.0" prefHeight="304.0" prefWidth="309.0" spacing="10.0" style="-fx-background-color: #1A1A40; -fx-background-radius: 5;">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <children>
+                  <TextArea editable="false" opacity="0.65" prefHeight="284.0" prefWidth="297.0" text="== Obed ==&#10;&#10;Created:&#10;&#9;List of members&#10;&#9;List of flights&#10;&#9;List of tickets&#10;&#10;Developed:&#10;&#9;Admin view" />
+               </children>
+            </HBox>
+            <HBox fx:id="owner2_work" alignment="CENTER_LEFT" layoutX="607.0" layoutY="223.0" prefHeight="304.0" prefWidth="309.0" spacing="10.0" style="-fx-background-color: #1A1A40; -fx-background-radius: 5;">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <children>
+                  <TextArea editable="false" opacity="0.65" prefHeight="284.0" prefWidth="297.0" text="== Sossio ==&#10;&#10;Created:&#10;&#9;Database&#10;&#9;Password hash&#10;&#9;Admin/User Login&#10;&#9;Owners page&#10;&#10;Developed:&#10;&#9;Profile edit&#10;&#9;Explore&#10;&#9;Support&#10;&#9;Registration&#10;&#9;Login&#10;&#9;Database tables" />
+               </children>
+            </HBox>
+            <HBox fx:id="owner3_work" alignment="CENTER_LEFT" layoutX="607.0" layoutY="223.0" prefHeight="304.0" prefWidth="309.0" spacing="10.0" style="-fx-background-color: #1A1A40; -fx-background-radius: 5;">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <children>
+                  <TextArea editable="false" opacity="0.65" prefHeight="284.0" prefWidth="297.0" text="== Kasper ==&#10;&#10;Created:&#10;&#9;Profile edit&#10;&#9;Worldmap&#10;&#9;Games&#10;&#9;Bg music&#10;&#9;Weather&#10;&#9;Databse tables&#10;&#9;Track flight&#10;&#10;Developed:&#10;&#9;Worldmap" />
+               </children>
+            </HBox>
+            <HBox fx:id="owner4_work" alignment="CENTER_LEFT" layoutX="607.0" layoutY="223.0" prefHeight="304.0" prefWidth="309.0" spacing="10.0" style="-fx-background-color: #1A1A40; -fx-background-radius: 5;">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <children>
+                  <TextArea editable="false" opacity="0.65" prefHeight="284.0" prefWidth="297.0" text="== Khabib ==&#10;&#10;Created:&#10;&#9;Login&#10;&#9;Registration&#10;&#9;Explore&#10;&#9;Support&#10;&#9;History&#10;&#9;Ticket&#10;&#9;Payment&#10;&#9;Reservation&#10;&#9;Advanced search&#10;&#10;Developed:&#10;&#9;Owners page" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="607.0" layoutY="225.0" prefHeight="304.0" prefWidth="309.0" spacing="10.0" style="-fx-background-color: #1A1A40; -fx-background-radius: 5;">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </HBox>
+            <Button fx:id="owner1_btn" layoutX="90.0" layoutY="216.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" opacity="0.0" prefHeight="72.0" prefWidth="299.0" text="1">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Button fx:id="owner3_btn" layoutX="92.0" layoutY="378.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" opacity="0.0" prefHeight="72.0" prefWidth="299.0" text="3">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Button fx:id="owner2_btn" layoutX="91.0" layoutY="300.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" opacity="0.0" prefHeight="67.0" prefWidth="299.0" text="2">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Button fx:id="owner4_btn" layoutX="93.0" layoutY="458.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" opacity="0.0" prefHeight="72.0" prefWidth="299.0" text="4">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="support_anchorpane" layoutX="105.0" prefHeight="693.0" prefWidth="1089.0" style="-fx-background-color: #112;">
@@ -2331,7 +2384,7 @@
                                           <ColorAdjust brightness="1.0" />
                                        </effect>
                                     </ImageView>
-                                    <Label opacity="0.5" text="Owner" textFill="WHITE" />
+                                    <Label opacity="0.5" text="Owners" textFill="WHITE" />
                                  </children>
                               </HBox>
                               <Button fx:id="menu_ceo_btn" layoutX="1.0" layoutY="2.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" opacity="0.0" prefHeight="25.0" prefWidth="94.0">

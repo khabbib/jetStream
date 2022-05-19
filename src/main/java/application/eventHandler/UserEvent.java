@@ -2,14 +2,12 @@ package application.eventHandler;
 
 import application.Controller;
 import application.components.ticket.Purchase;
-import application.components.ticket.UserHistory;
 import application.ErrorHandler;
 import javafx.event.ActionEvent;
 
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 
 /**
  *This class is used to handle all events in user dashboard
@@ -35,76 +33,80 @@ public class UserEvent {
     public void userDashboardEventHandler(ActionEvent e, Controller controller) throws ParseException {
         if (e.getSource() == controller.menu_profile_btn) {
             if(!controller.exploreMode) {
-                controller.systemSound.pauseButton();
                 controller.profile_anchorpane.toFront();
                 toggleMenuColor(controller);
-                controller.playSound("Next page", "sounds/next_page.wav");
+                controller.playSystemSound("Next page", "sounds/next_page.wav");
             } else {
-                controller.playSound("Error", "sounds/error.wav");
+                controller.playSystemSound("Error", "sounds/error.wav");
                 errorHandler.confirmThisAction("Information", "You must log in to go further!", "");
             }
         }
         else if(e.getSource() == controller.booking_close_btn || e.getSource() == controller.booking_close_second_page_btn){
-            controller.systemSound.pauseButton();
             controller.booking_seat_anchorpane.toBack();
             restore_psgr_info(controller);
-            controller.playSound("Next page", "sounds/next_page.wav");
+            controller.playSystemSound("Next page", "sounds/next_page.wav");
         }
         else if(e.getSource() == controller.menu_flight_btn) {
-            controller.systemSound.pauseButton();
             controller.flight_anchorpane.toFront();
             toggleMenuColor(controller);
             controller.menu_highlight_color_flight.setVisible(true);
             controller.map_menu_user_image.setOpacity(1);
-            controller.playSound("Next page", "sounds/next_page.wav");
+            controller.playSystemSound("Next page", "sounds/next_page.wav");
         }
         else if(e.getSource() == controller.menu_history_btn) {
             if(!controller.exploreMode) {
-                controller.systemSound.pauseButton();
                 controller.history_anchorpane.toFront();
                 toggleMenuColor(controller);
                 controller.menu_highlight_color_history.setVisible(true);
                 controller.history_menu_user_image.setOpacity(1);
-                controller.playSound("Next page", "sounds/next_page.wav");
+                controller.playSystemSound("Next page", "sounds/next_page.wav");
             } else {
-                controller.playSound("Error", "sounds/error.wav");
+                controller.playSystemSound("Error", "sounds/error.wav");
                 errorHandler.confirmThisAction("Information", "You must log in to go further!", "");
             }
         }
         else if(e.getSource() == controller.menu_entertainment_btn) {
-            controller.systemSound.pauseButton();
             controller.entertainment_anchorpane.toFront();
             toggleMenuColor(controller);
             controller.menu_highlight_color_entertainment.setVisible(true);
             controller.entertainment_menu_user_image.setOpacity(1);
-            controller.playSound("Next page", "sounds/next_page.wav");
+            controller.playSystemSound("Next page", "sounds/next_page.wav");
         }
         else if(e.getSource() == controller.menu_support_btn){
-              controller.systemSound.pauseButton();
               controller.support_anchorpane.toFront();
               toggleMenuColor(controller);
               controller.menu_highlight_color_support.setVisible(true);
               controller.support_menu_user_image.setOpacity(1);
-              controller.playSound("Next page", "sounds/next_page.wav");
+              controller.playSystemSound("Next page", "sounds/next_page.wav");
         }
         else if(e.getSource() == controller.menu_ceo_btn){
-              controller.systemSound.playButton();
               controller.ceo_anchorpane.toFront();
               toggleMenuColor(controller);
               controller.menu_highlight_color_ceo.setVisible(true);
               controller.ceo_menu_user_image.setOpacity(1);
-              controller.playSound("Next page", "sounds/next_page.wav");
+              controller.playSystemSound("Next page", "sounds/next_page.wav");
+        }
+        else if(e.getSource() == controller.owner1_btn) {
+            controller.owner1_work.toFront();
+        }
+        else if(e.getSource() == controller.owner2_btn) {
+            controller.owner2_work.toFront();
+        }
+        else if(e.getSource() == controller.owner3_btn) {
+            controller.owner3_work.toFront();
+        }
+        else if(e.getSource() == controller.owner4_btn) {
+            controller.owner4_work.toFront();
         }
         else if(e.getSource() == controller.menu_my_tickets_btn){
             if (!controller.exploreMode) {
-                controller.systemSound.pauseButton();
                 controller.my_ticket_anchorpane.toFront();
                 toggleMenuColor(controller);
                 controller.menu_highlight_color_my_ticket.setVisible(true);
                 controller.my_tickets_menu_user_image.setOpacity(1);
-                controller.playSound("Next page", "sounds/next_page.wav");
+                controller.playSystemSound("Next page", "sounds/next_page.wav");
             } else {
-                controller.playSound("Error", "sounds/error.wav");
+                controller.playSystemSound("Error", "sounds/error.wav");
                 errorHandler.confirmThisAction("Information", "You must log in to go further!", "");
             }
 
@@ -176,11 +178,11 @@ public class UserEvent {
         else if(e.getSource() == controller.card_prev_btn){
             controller.booking_passenger_anchorpane.toFront();
             controller.payment_anchorpane.toBack();
-            controller.playSound("Next page", "sounds/next_page.wav");
+            controller.playSystemSound("Next page", "sounds/next_page.wav");
 
         }
         else if(e.getSource() == controller.card_purchase_btn){
-            controller.playSound("Next page", "sounds/next_page.wav");
+            controller.playSystemSound("Next page", "sounds/next_page.wav");
 
             String nbr = controller.card_nbr.getText();
             String name = controller.card_fname.getText();
@@ -202,7 +204,7 @@ public class UserEvent {
                                         boolean purchaseDone1 = false;
                                         boolean purchaseDone2 = false;
                                         String rfc1 = "", rfc2 = "";
-                                        controller.playSound("Success", "sounds/success.wav");
+                                        controller.playSystemSound("Success", "sounds/success.wav");
 
                                         if (controller.departure_seat != null) {
                                             for (int i = 0; i <= 1; i++) {
@@ -298,7 +300,7 @@ public class UserEvent {
                     if (fourdigit.length() == 12) {
                         if (email.length() >= 6 && email.length() <= 60 && email.contains("@") && email.contains("gmail")) {
                             if (!seat.isEmpty()) {
-                                controller.playSound("Next page", "sounds/next_page.wav");
+                                controller.playSystemSound("Next page", "sounds/next_page.wav");
                                 if (controller.round_trip_flights.size() == 1){
                                     System.out.println("Active tur");
                                     controller.departure_seat = controller.booking_seat_number_lbl.getText();
@@ -346,7 +348,7 @@ public class UserEvent {
             controller.updateDashboardInfo();
             controller.flight_anchorpane.toFront();
             arangeTheNavigation(controller);
-            controller.playSound("Next page", "sounds/next_page.wav");
+            controller.playSystemSound("Next page", "sounds/next_page.wav");
         }
         else if(e.getSource() == controller.show_ticket_purchase_btn){
             controller.success_purchase_anchorpane.toBack();

@@ -91,11 +91,11 @@ public class FlightsViewManager {
                                     controller.createThisSeat(flights, finalI1);
                                 }
                                 controller.booking_seat_anchorpane.toFront();
-                                controller.playSound("Next page", "sounds/next_page.wav");
+                                controller.playSystemSound("Next page", "sounds/next_page.wav");
                             }
 
                         } else {
-                            controller.playSound("Error", "sounds/error.wav");
+                            controller.playSystemSound("Error", "sounds/error.wav");
                             errorHandler.confirmThisAction("Information", "You must log in to go further!", "");
                         }
                     });
