@@ -1,7 +1,8 @@
 package application.components.flight;
 
-/**
- * #comment (comment this class and create javadoc to every method)
+/***
+ * Tedious handmade list of map coordinates for every country.
+ * @author Kasper.
  */
 public class Coordinates {
     public double[] convert(String s){

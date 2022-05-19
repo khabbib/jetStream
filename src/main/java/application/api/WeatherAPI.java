@@ -11,8 +11,9 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * #comment (comment this class and create javadoc to every method)
+/***
+ * Fetches weather information for desired country.
+ * @author Kasper.
  */
 public class WeatherAPI {
     public static void main(String[] args) throws IOException, InterruptedException {

@@ -27,6 +27,10 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Random;
 
+/***
+ * Music Quiz class. Runs thread with music and keeps count of guesses etc.
+ * @author Kasper.
+ */
 public class MPlayer extends Application implements Runnable {
 
     @FXML

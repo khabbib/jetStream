@@ -14,7 +14,10 @@ import javafx.stage.Stage;
 import javax.sound.midi.*;
 import java.util.HashMap;
 import java.util.Objects;
-
+/***
+ * Piano class. Plays music with synthesizer interface.
+ * @author Kasper.
+ */
 public class Piano extends Application {
     private Parent root;
     private boolean[] keyDown = new boolean[250];

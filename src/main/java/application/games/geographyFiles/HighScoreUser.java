@@ -1,5 +1,8 @@
 package application.games.geographyFiles;
-
+/***
+ * Creates Geography Quiz high scores for database storage.
+ * @author Kasper.
+ */
 public class HighScoreUser {
 
     private int rank;

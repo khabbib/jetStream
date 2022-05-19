@@ -294,10 +294,21 @@ public class Controller implements Initializable {
         flight_anchorpane.toFront();
     }
 
+    /***
+     * Fetches weather for selected country and displays in gui.
+     * @param country is selected country.
+     * @throws IOException
+     * @throws InterruptedException
+     * Author Kasper.
+     */
     public void forecast(String country) throws IOException, InterruptedException {
         weatherAPI.setInformation(this,country);
     }
 
+    /***
+     * Opens and closes weather menu in gui.
+     * Author Kasper.
+     */
     public void weatherButton() {
        weatherAPI.weatherMenu(this);
     }
@@ -319,10 +330,10 @@ public class Controller implements Initializable {
        password.syncPasswordShow(this);
     }
 
-    public void stopMusic(){
-        System.out.println("hello");
-    }
-
+    /***
+     * Starts Pong game.
+     * Author Kasper.
+     */
     public void playPong(){
         Pong pong = new Pong();
         try { Stage primary = new Stage(); pong.start(primary);
@@ -331,6 +342,10 @@ public class Controller implements Initializable {
         }
     }
 
+    /***
+     * Starts Geo Quiz game.
+     * Author Kasper.
+     */
     public void playGeoQuiz(){
         Geography geography = new Geography();
         try { Stage primary = new Stage(); geography.start(primary);
@@ -338,7 +353,10 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
     }
-
+    /***
+     * Starts Music Quiz game.
+     * Author Kasper.
+     */
     public void playQuiz(){
         MPlayer mPlayer = new MPlayer();
         try { Stage primary = new Stage(); mPlayer.start(primary);
@@ -346,6 +364,11 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
     }
+
+    /***
+     * Starts Piano game.
+     * Author Kasper.
+     */
     public void playPiano(){
         Piano piano = new Piano();
         try { Stage primary = new Stage(); piano.start(primary);
@@ -353,6 +376,11 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
     }
+
+    /***
+     * Starts 2048 game.
+     * Author Sossio.
+     */
     public void play2048(){
         Game2048Main game2048Main = new Game2048Main();
         try { Stage primary = new Stage(); game2048Main.start(primary);
@@ -582,6 +610,11 @@ public class Controller implements Initializable {
         profileManager.clickGrid(event,this);
     }
 
+    /***
+     * Plays or pauses music on dashboard.
+     * @param e
+     * @author Kasper.
+     */
     public void mediaHandler(ActionEvent e) {
         bgMusic.mediaHandler(e);
     }

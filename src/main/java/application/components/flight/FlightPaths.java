@@ -14,8 +14,9 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * #comment (comment this class and create javadoc to every method)
+/***
+ * Creates flight paths for dashboard world map.
+ * @author Kasper.
  */
 public class FlightPaths {
 

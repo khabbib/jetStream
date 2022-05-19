@@ -12,8 +12,8 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
 
-/**
- * This class connects java to pgadmin to claim data from database.
+/***
+ * Handles all connections with database.
  */
 public class Db {
     private Controller controller;

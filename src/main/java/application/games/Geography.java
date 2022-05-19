@@ -27,7 +27,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
-
+/***
+ * Geography Quiz class. Allows for game with guesses on world map etc.
+ * @author Kasper.
+ */
 public class Geography extends Application {
 
     @FXML
