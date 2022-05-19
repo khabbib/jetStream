@@ -23,7 +23,6 @@ public class ProfileManager {
     public void editProfile(Controller controller) throws SQLException {
         if (controller.is_editing_profile == false) {
             controller.profile_cancel_btn.setDisable(false);
-
             controller.profile_first_name_lbl.setDisable(false);
             controller.profile_last_name_lbl.setDisable(false);
             controller.profile_address_lbl.setDisable(false);
