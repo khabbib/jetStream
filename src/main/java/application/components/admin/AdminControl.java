@@ -44,7 +44,7 @@ public class AdminControl {
             try {
                 User user = db.authenticationAdmin(controller.login_email.getText(), controller.login_pass.getText());
                 if (user != null) {
-                    controller.playSound("Login", "sounds/login.wav");
+                    controller.playSystemSound("Login", "sounds/login.wav");
                     controller.main_stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
                     controller.main_scene = new Scene(controller.root);
                     controller.main_stage.setTitle("Admin window");

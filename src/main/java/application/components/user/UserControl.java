@@ -3,24 +3,15 @@ package application.components.user;
 import application.Controller;
 import application.api.Db;
 import application.components.flight.CreateWorld;
-import application.components.flight.Flight;
 import application.components.initialize.InitializeFXM;
 import application.components.ticket.UserHistory;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * This class handles user dashboard action and initialization of variables.
@@ -59,7 +50,7 @@ public class UserControl {
                 if (user != null) {
                     controller.renderDashboard(e, user);
                     controller.login_loader_flight.setVisible(true); // set loader to true
-                    controller.playSound("Login", "sounds/login.wav");
+                    controller.playSystemSound("Login", "sounds/login.wav");
                     try {
                         controller.profile_image_preview_imageview.setImage(controller.db.getProfilePicture(user));
                     } catch (SQLException ei) {

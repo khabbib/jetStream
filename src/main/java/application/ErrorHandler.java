@@ -1,6 +1,5 @@
 package application;
 
-import application.Controller;
 import javafx.animation.PauseTransition;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -8,7 +7,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 import java.util.Optional;
@@ -106,10 +104,10 @@ public class ErrorHandler {
         if (label != null){
             if(isError){
                 label.setStyle("-fx-text-fill:red");
-                controller.playSound("Error", "sounds/error.wav");
+                controller.playSystemSound("Error", "sounds/error.wav");
             } else {
                 label.setStyle("-fx-text-fill:green");
-                controller.playSound("Success", "sounds/success.wav");
+                controller.playSystemSound("Success", "sounds/success.wav");
             }
             label.setText(msg);
             PauseTransition pause = new PauseTransition(Duration.seconds(3));
