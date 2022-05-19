@@ -1,7 +1,7 @@
 package application.api;
 
 import application.Controller;
-import application.components.reservation.Book;
+import application.components.flight.Book;
 import application.components.flight.Flight;
 import application.components.user.User;
 import application.components.ticket.UserHistory;
@@ -322,25 +322,6 @@ public class Db {
         return userlist;
     }
 
-        public ArrayList<Book> getAllTickets() throws SQLException {
-            ArrayList<Book> ticketlist = new ArrayList<>();
-            java.sql.Connection con = getDatabaseConnection();
-            Statement stmt = con.createStatement();
-            int counter = 1;
-            stmt.executeUpdate("SET search_path TO jetstream;");
-            ResultSet rs = stmt.executeQuery("select * from history;");
-            while (rs.next()) {
-                String id = rs.getString(("u_id"));
-                String flight_id = rs.getString(("f_id"));
-                String refNr = rs.getString(("b_rfc"));
-                String date = rs.getString(("b_date"));
-                boolean seats = rs.getBoolean(("b_seat"));
-                ticketlist.add(new Book(id, flight_id, refNr, date, seats, counter));
-                counter++;
-            }
-            con.close();
-            return ticketlist;
-        }
     /**
      * @param u_id
      * @return
@@ -696,38 +677,6 @@ public class Db {
                 String p_id = flight.getString("p_id");
                 flights.add(new Flight(id_get, departure_name_get, departure_date_get,departure_time_get, destination_name_get, destination_date_get, destination_time_get, price_get, false, i, p_id));
             i++;
-            }
-            con.close();
-            stmt.close();
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-        return flights;
-    }
-
-
-    /**
-     * @return
-     */
-    public ArrayList<Book> searchTicket() {
-        ArrayList<Book> flights = new ArrayList<>();
-        try {
-
-            java.sql.Connection con = Db.getDatabaseConnection();
-            Statement stmt = con.createStatement();
-            ResultSet flight;
-
-            flights.clear();
-            stmt.executeUpdate("SET search_path TO jetstream;");
-            flight = stmt.executeQuery("select * from booked");
-
-            while (flight.next()){
-                String f_id = flight.getString("f_id");
-                String u_id = flight.getString(("u_id"));
-                String b_seat = flight.getString("b_seat");
-
-                flights.add(new Book(f_id, u_id, b_seat, null, false, 0));
-
             }
             con.close();
             stmt.close();

@@ -267,7 +267,6 @@ public class Coordinates {
         }
         return coordinates;
     }
-
     private double[] setCoordinates(double i, double i1) {
         double coordinates[] = new double[2];
         if (i == 0 || i1 == 0){

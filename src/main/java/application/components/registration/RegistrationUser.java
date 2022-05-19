@@ -13,23 +13,23 @@ import java.sql.SQLException;
  * This class registers only users and handles errors.
  */
 public class RegistrationUser {
+    private ErrorHandler errorHandler;
     private Controller controller;
     private Config config;
     private Db db;
-
-    private ErrorHandler errorHandler;
 
     /**
      * Class constructor.
      * @param controller connects variables and methods.
      * @param db connects to database.
      * @param config connects to root.
+     *
      */
     public RegistrationUser(Controller controller, Db db, Config config){
-        this.controller = controller;
-        this.db = db;
-        this.config = config;
         errorHandler = new ErrorHandler(controller);
+        this.controller = controller;
+        this.config = config;
+        this.db = db;
     }
 
     /**
@@ -37,7 +37,7 @@ public class RegistrationUser {
      * It checks if all text fields is verified with its specific limitation.
      * @return boolean.
      * @throws SQLException if any sql issue occur.
-     * @author Khabib and Sossio. Developed by Sossio.
+     * @author Khabib Developed by Sossio.
      */
     public boolean registerUser() {
         boolean registered = false;

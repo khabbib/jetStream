@@ -77,7 +77,7 @@ public class UserControl {
     public void renderDashboard(ActionEvent e, User user, Controller controller) {
         controller.user = user;
         controller.root = controller.config.render(e,"user/Dashboard", "User Dashboard");
-        controller.initializeFXM.userInitializeFXML(controller.root, user);
+        controller.initializeFXM.userInitializeFXML(controller.root);
         controller.initializeFXM.initializeProfile(controller.root, user);
         controller.initializeFXM.initializeWeather(controller.root);
         controller.initializeFXM.initializeMusic(controller.root);
@@ -135,9 +135,9 @@ public class UserControl {
      */
     public void noLoginRequired(ActionEvent e, Controller controller) {
         controller.root = controller.config.render(e,"user/Dashboard", "User Dashboard");
-        initializeFXM.userInitializeFXML(controller.root, null);
+        initializeFXM.userInitializeFXML(controller.root);
         User user = new User("1", "E", "E", "E", "E", "E", "E", false, 1);
-        controller.initializeFXM.userInitializeFXML(controller.root, user);
+        controller.initializeFXM.userInitializeFXML(controller.root);
         controller.initializeFXM.initializeProfile(controller.root, user);
         controller.initializeFXM.initializeWeather(controller.root);
         controller.initializeFXM.initializeMusic(controller.root);

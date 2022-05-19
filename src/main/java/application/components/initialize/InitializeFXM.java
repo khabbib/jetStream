@@ -13,20 +13,38 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 /***
- * Initializes FXML elements.
+ * This class is only for initializing FXML elements.
+ * @author Khabib developed by Kasper and Sossio
  */
 public class InitializeFXM {
     private Controller controller;
     private Db db;
 
+    /**
+     * Constructor to InitializeFXM
+     * @param controller instance of control class
+     * @param db instance of db (Database) class.
+     * @author Khabib
+     */
     public InitializeFXM(Controller controller, Db db){
         this.controller = controller;
         this.db = db;
     }
 
+    /**
+     * This method initialize music element
+     * @param root instance of home root.
+     * @author Sossio
+     */
     public void initializeMusic(Parent root) {
         controller.play_button_image = (ImageView) root.lookup("#play_button_image");
     }
+
+    /**
+     * This method initialize weather elements
+     * @param root instance of home root
+     * @author Kasper
+     */
     public void initializeWeather(Parent root) {
         controller.lblForecastA = (Label) root.lookup("#lblForecastA");
         controller.lblForecastB = (Label) root.lookup("#lblForecastB");
@@ -42,24 +60,14 @@ public class InitializeFXM {
         controller.weatherPane.setPickOnBounds(false);
         controller.weatherMenu = false;
     }
+
+    /**
+     * This method initialize FXML elements and do some operation to profile page.
+     * @param root instance of home root.
+     * @param user instance of User class.
+     * @author Kasper. Developed by ....
+     */
     public void initializeProfile(Parent root, User user){
-        controller.from_myticket = (Label) root.lookup("#from_myticket");
-        controller.to_myticket = (Label) root.lookup("#to_myticket");
-        controller.seat_myticket = (Label) root.lookup("#seat_myticket");
-        controller.airline_myticket = (Label) root.lookup("#airline_myticket");
-        controller.flightno_myticket = (Label) root.lookup("#flightno_myticket");
-        controller.dep_date_myticket = (Label) root.lookup("#dep_date_myticket");
-        controller.des_date_myticket = (Label) root.lookup("#des_date_myticket");
-        controller.dep_time_myticket = (Label) root.lookup("#dep_time_myticket");
-        controller.des_time_myticket = (Label) root.lookup("#des_time_myticket");
-        controller.ttl_price_myticket = (Label) root.lookup("#ttl_price_myticket");
-        controller.err_msg_myticket = (Label) root.lookup("#err_msg_myticket");
-        controller.rfc_muticket = (Label) root.lookup("#rfc_muticket");
-        controller.checka_btn_myticket = (Button) root.lookup("#checka_btn_myticket");
-        controller.cancel_btn_my_ticket = (Button) root.lookup("#cancel_btn_my_ticket");
-        controller.rfc_smp_history = (Label) root.lookup("#rfc_smp_history");
-
-
 
         //Profile info
         if (user != null) {
@@ -126,12 +134,26 @@ public class InitializeFXM {
     }
 
     /**
-     * This method initialize FXML components to user variables.
-     * @param root ir root.
-     * @param user is user.
-     * @author Khabib. Developed by Kasper and Sossio.
+     * This method initialize global FXML elements.
+     * @param root instance of home root
+     * @author Khabib developed by ....
      */
-    public void userInitializeFXML(Parent root, User user){
+    public void userInitializeFXML(Parent root){
+        controller.from_myticket = (Label) root.lookup("#from_myticket");
+        controller.to_myticket = (Label) root.lookup("#to_myticket");
+        controller.seat_myticket = (Label) root.lookup("#seat_myticket");
+        controller.airline_myticket = (Label) root.lookup("#airline_myticket");
+        controller.flightno_myticket = (Label) root.lookup("#flightno_myticket");
+        controller.dep_date_myticket = (Label) root.lookup("#dep_date_myticket");
+        controller.des_date_myticket = (Label) root.lookup("#des_date_myticket");
+        controller.dep_time_myticket = (Label) root.lookup("#dep_time_myticket");
+        controller.des_time_myticket = (Label) root.lookup("#des_time_myticket");
+        controller.ttl_price_myticket = (Label) root.lookup("#ttl_price_myticket");
+        controller.err_msg_myticket = (Label) root.lookup("#err_msg_myticket");
+        controller.rfc_muticket = (Label) root.lookup("#rfc_muticket");
+        controller.checka_btn_myticket = (Button) root.lookup("#checka_btn_myticket");
+        controller.cancel_btn_my_ticket = (Button) root.lookup("#cancel_btn_my_ticket");
+        controller.rfc_smp_history = (Label) root.lookup("#rfc_smp_history");
         // flight list related variables
         controller.nbr_of_available_flights = (Label) root.lookup("#nbr_of_available_flights");
 
@@ -220,9 +242,5 @@ public class InitializeFXM {
         controller.world_map_scrollpane = (ScrollPane) root.lookup("#world_map_scrollpane");
         controller.search_f_name = (TextField) root.lookup("#search_f_name");
         controller.booking_profile_image = (ImageView) root.lookup("#booking_profile_image");
-
-        // loader in login
-        //controller.login_loader_flight = (ImageView) root.lookup("#login_loader_flight");
-        //controller.login_loader_flight.setVisible(false); // set loader to false
     }
 }
