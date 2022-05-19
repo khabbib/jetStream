@@ -13,7 +13,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
+/***
+ * Pong class. Runs pong game.
+ * @author Kasper.
+ */
 public class Pong extends Application {
 
     private static final int width = 1000;

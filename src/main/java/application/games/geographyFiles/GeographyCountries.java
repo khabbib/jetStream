@@ -1,5 +1,8 @@
 package application.games.geographyFiles;
-
+/***
+ * List of countries that are not impossible to guess for Geography Quiz.
+ * @author Kasper.
+ */
 public enum GeographyCountries {
     Afghanistan,
     Algeria,

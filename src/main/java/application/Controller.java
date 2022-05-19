@@ -31,8 +31,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import worldMapAPI.World;
@@ -73,7 +71,7 @@ public class Controller implements Initializable {
     //<editor-fold desc="======== DASHBOARD VARIABLES ========">
     @FXML public AnchorPane     admin_flights_anchorpane, admin_tickets_anchorpane, admin_members_anchorpane, admin_register_anchorpane;
     @FXML public Button         admin_flights_button, admin_members_button, admin_tickets_button, admin_logout_button, registerCommitBtn_admin,
-                                registerMemberBtn_admin, returnToMemberListBtn_admin, refreshMembersBtn_admin, search_input_flight_admin,
+                                registerMemberBtn_admin, returnToMemberListBtn_admin, refreshMembersBtn_admin,
                                 prev_tur_date_flight_admin, next_tur_date_flight_admin;
     //</editor-fold>
     //<editor-fold desc="======== TABLE VARIABLES ========">
@@ -92,9 +90,10 @@ public class Controller implements Initializable {
 
     //flights table variables
     public ObservableList<Flight> fetchedList_flight_admin, items_flight_admin;
-    @FXML public Button delete_singelFlightBtn_admin, delete_allFlightsBtn_admin, refreshFlightsBtn_admin, addFlightsBtn_admin;
+    @FXML public Button delete_singelFlightBtn_admin, delete_allFlightsBtn_admin, refreshFlightsBtn_admin, addFlightsBtn_admin, search_input_flight_admin;
     @FXML public TableView<Flight> table_flight_admin;
-    @FXML public CheckBox select_all_box_flight_admin;
+    @FXML public CheckBox select_all_box_flight_admin, select_col_flight_admin;
+    @FXML public TextField from_input_flight_admin, disc_input_flight_admin;
     //</editor-fold>
     //</editor-fold>
 
@@ -142,10 +141,11 @@ public class Controller implements Initializable {
     //  MENU BUTTONS ETC.
     @FXML
     public Button menu_profile_btn, menu_flight_btn, menu_history_btn, menu_entertainment_btn, menu_support_btn,
-                  menu_ceo_btn, menu_my_tickets_btn, booking_close_btn, booking_close_second_page_btn;
+                  menu_ceo_btn, menu_my_tickets_btn, booking_close_btn, booking_close_second_page_btn, owner1_btn, owner2_btn, owner3_btn, owner4_btn;
     @FXML public AnchorPane profile_anchorpane, history_anchorpane, flight_anchorpane, entertainment_anchorpane, support_anchorpane, ceo_anchorpane, my_ticket_anchorpane;
     @FXML public Pane menu_highlight_color_support, menu_highlight_color_ceo, menu_highlight_color_my_ticket, menu_highlight_color_flight,
                       menu_highlight_color_history, menu_highlight_color_entertainment;
+    @FXML public HBox owner1_work, owner2_work, owner3_work, owner4_work;
 
     //</editor-fold>
     //<editor-fold desc="========= WEATHER VARIABLES =========" >
@@ -243,6 +243,7 @@ public class Controller implements Initializable {
     public UserEvent userEvent;
     public BgMusic bgMusic;
     public Support support;
+    public SystemSound systemSound;
     public Config config;
     public Search search;
     public Db db;
@@ -269,6 +270,7 @@ public class Controller implements Initializable {
         purchaseHandler = new PurchaseHandler();
         flightsViewManager = new FlightsViewManager(this);
         bgMusic = new BgMusic(this);
+        systemSound = new SystemSound(this);
     }
 
     //----------------- HOME -----------------//
@@ -291,10 +293,21 @@ public class Controller implements Initializable {
         flight_anchorpane.toFront();
     }
 
+    /***
+     * Fetches weather for selected country and displays in gui.
+     * @param country is selected country.
+     * @throws IOException
+     * @throws InterruptedException
+     * Author Kasper.
+     */
     public void forecast(String country) throws IOException, InterruptedException {
         weatherAPI.setInformation(this,country);
     }
 
+    /***
+     * Opens and closes weather menu in gui.
+     * Author Kasper.
+     */
     public void weatherButton() {
        weatherAPI.weatherMenu(this);
     }
@@ -316,10 +329,10 @@ public class Controller implements Initializable {
        password.syncPasswordShow(this);
     }
 
-    public void stopMusic(){
-        System.out.println("hello");
-    }
-
+    /***
+     * Starts Pong game.
+     * Author Kasper.
+     */
     public void playPong(){
         Pong pong = new Pong();
         try { Stage primary = new Stage(); pong.start(primary);
@@ -328,6 +341,10 @@ public class Controller implements Initializable {
         }
     }
 
+    /***
+     * Starts Geo Quiz game.
+     * Author Kasper.
+     */
     public void playGeoQuiz(){
         Geography geography = new Geography();
         try { Stage primary = new Stage(); geography.start(primary);
@@ -335,7 +352,10 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
     }
-
+    /***
+     * Starts Music Quiz game.
+     * Author Kasper.
+     */
     public void playQuiz(){
         MPlayer mPlayer = new MPlayer();
         try { Stage primary = new Stage(); mPlayer.start(primary);
@@ -343,6 +363,11 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
     }
+
+    /***
+     * Starts Piano game.
+     * Author Kasper.
+     */
     public void playPiano(){
         Piano piano = new Piano();
         try { Stage primary = new Stage(); piano.start(primary);
@@ -350,6 +375,11 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
     }
+
+    /***
+     * Starts 2048 game.
+     * Author Sossio.
+     */
     public void play2048(){
         Game2048Main game2048Main = new Game2048Main();
         try { Stage primary = new Stage(); game2048Main.start(primary);
@@ -358,17 +388,8 @@ public class Controller implements Initializable {
         }
     }
 
-    /**
-     * This method plays sound on button actions.
-     * @param soundName takes the name of the sound as a string to print in concole.
-     * @param src is file path name.
-     * @author Sossio.
-     */
-    public void playSound(String soundName, String src) {
-        Media buzzer = new Media(getClass().getResource(src).toExternalForm());
-        MediaPlayer mediaPlayer = new MediaPlayer(buzzer);
-        mediaPlayer.play();
-        System.out.println("'" + soundName + "' fx played!");
+    public void playSystemSound(String soundName, String src) {
+        systemSound.playSystemSound(soundName, src);
     }
 
     /**
@@ -399,30 +420,34 @@ public class Controller implements Initializable {
     }
 
     /**
+     * the method will render dashboard page for user
      * @param e
      * @param user
      * @throws IOException
      */
     public void renderDashboard(ActionEvent e, User user) {
         userControl.renderDashboard(e, user,this);
-    } // the method will render dashboard page for user
+    }
 
     /**
+     * shortcut login to user dashboard
      * @param e
      * @throws IOException
      */
     public void noLoginRequired(ActionEvent e) throws IOException {
         exploreMode = true;
         userControl.noLoginRequired(e,this);
-    }// shortcut login to user dashboard
+    }
 
     /**
+     * the method will switch the user to the registration page
      * @param e
      * @throws IOException
      */
     public void switchToRegistration(ActionEvent e) {
+        playSystemSound("Next page", "sounds/next_page.wav");
         this.root = config.render(e, "user/Registration", "Registration");
-    }// the method will switch the user to the registration page
+    }
 
     /**
      * The method will register the user and return to the login page
@@ -452,7 +477,7 @@ public class Controller implements Initializable {
         this.root = config.render(e, "user/Login", "Login");
         success_msg_lbl = (Label) root.lookup("#success_msg_lbl");
         if(user != null) {
-            playSound("Logout", "sounds/logout.wav");
+            playSystemSound("Logout", "sounds/logout.wav");
         } else {
             user = null;
         }
@@ -574,6 +599,11 @@ public class Controller implements Initializable {
         profileManager.clickGrid(event,this);
     }
 
+    /***
+     * Plays or pauses music on dashboard.
+     * @param e
+     * @author Kasper.
+     */
     public void mediaHandler(ActionEvent e) {
         bgMusic.mediaHandler(e);
     }
@@ -621,6 +651,9 @@ public class Controller implements Initializable {
     public void searchFlight(ActionEvent e) {
         search.searchFlight();
     }
+
+
+
     public void checkboxEvent(ActionEvent e){
         search.checkboxEvent(e);
     }
@@ -632,6 +665,8 @@ public class Controller implements Initializable {
     public void searchHit(){
         search.searchHit();
     }
+
+
 
     /**
      *
@@ -924,7 +959,7 @@ public class Controller implements Initializable {
      * @throws SQLException
      * @author Obed
      */
-    public void removemember_admin(ActionEvent e) throws SQLException {
+    public void removeMember_admin(ActionEvent e) throws SQLException {
         if (table_member_admin.getItems().size() > 0) { // check if there is any items before running the operation.
             if (e.getSource() == deletS_btn_mbr_admin) { // if single remove button clicked
                 items_member_admin = table_member_admin.getItems(); // get the whole tables items into an observable list to compare.
@@ -948,7 +983,55 @@ public class Controller implements Initializable {
             }
         }
     }
+       public void removeTicket_admin(ActionEvent e) throws SQLException {
+         if (table_tickets.getItems().size() > 0) { // check if there is any items before running the operation.
+               if (e.getSource() == deleteTicketBtn_ticket_admin) { // if single remove button clicked
+                   items_ticket_admin = table_tickets.getItems(); // get the whole tables items into an observable list to compare.
+                   if (items_ticket_admin != null) { // if observable items has item
+                       // show a confirmation message to user
+                       boolean confirmed = errorHandler.confirmThisAction("Confirm to delete selected item", "Do you want to proceed?", "The selected items will be deleted!");
+                       if (confirmed) { // if user confirm the action
+                           for (UserHistory item : items_ticket_admin) { // loop through all historic items
+                               if (item.getSelect_col_table_historik().isSelected()) { // check if the checkbox for one or more item is selected
+                                   boolean ok = db.deleteTicket(item.getRfc_col_table_historik()); // send the actual reference number as an argument to database to compare and delete
+                                   if (ok) { // if database succeed to delete the item runs this statement
+                                       adminControl.updateTicketTabel(); // historic table updates
+                                       System.out.println("Item has been deleted successfully!"); // show a success message for user
+                                   }
+                               }
+                           }
+                       } else { // if user not confirm the action
+                           System.out.println("not deleted screen message");
+                       }
+                   }
+               }
 
+           }
+       }
+       public void removeFlight_admin(ActionEvent e) throws SQLException {
+       if (table_flight_admin.getItems().size() > 0) { // check if there is any items before running the operation.
+            if (e.getSource() == delete_singelFlightBtn_admin) { // if single remove button clicked
+                items_flight_admin = table_flight_admin.getItems(); // get the whole tables items into an observable list to compare.
+                if (items_flight_admin != null) { // if observable items has item
+                    // show a confirmation message to user
+                    boolean confirmed = errorHandler.confirmThisAction("Confirm to delete selected item", "Do you want to proceed?", "The selected items will be deleted!");
+                    if (confirmed) { // if user confirm the action
+                        for (Flight item : items_flight_admin) { // loop through all historic items
+                            if (item.getFlightBox().isSelected()) { // check if the checkbox for one or more item is selected
+                                boolean ok = db.deleteFlight(item.getId()); // send the actual reference number as an argument to database to compare and delete
+                                if (ok) { // if database succeed to delete the item runs this statement
+                                    adminControl.updateFlightTable(); // historic table updates
+                                    System.out.println("Item has been deleted successfully!"); // show a success message for user
+                                }
+                            }
+                        }
+                    } else { // if user not confirm the action
+                        System.out.println("not deleted screen message");
+                    }
+                }
+            }
+        }
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

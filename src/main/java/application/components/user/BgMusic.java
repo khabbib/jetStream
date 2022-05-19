@@ -8,8 +8,9 @@ import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
 
-/**
- * #comment (comment this class and create javadoc to every method)
+/***
+ * Background music class. Runs thread with music for dashboard.
+ * @author Kasper.
  */
 public class BgMusic implements Runnable {
     private MediaPlayer mediaPlayer;

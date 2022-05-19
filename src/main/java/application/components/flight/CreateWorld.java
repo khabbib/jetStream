@@ -14,7 +14,6 @@ import worldMapAPI.*;
 import javafx.scene.paint.Color;
 
 /**
- * #comment (comment this class and create javadoc to every method)
  * This class creates world map to application were the user can search for flight trips.
  */
 public class CreateWorld {

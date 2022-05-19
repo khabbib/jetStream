@@ -12,8 +12,8 @@ import javafx.scene.layout.*;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
-/**
- * #comment (comment this class and create javadoc to every method)
+/***
+ * Initializes FXML elements.
  */
 public class InitializeFXM {
     private Controller controller;

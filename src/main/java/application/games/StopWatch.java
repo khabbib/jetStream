@@ -1,5 +1,8 @@
 package application.games;
-
+/***
+ * Stopwatch class. Keeps track of time for Geography Quiz game.
+ * @author Kasper.
+ */
 public class StopWatch {
     private final long nanoSecondsPerMillisecond = 1000000;
     private final long nanoSecondsPerSecond = 1000000000;
