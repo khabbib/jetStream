@@ -1,6 +1,5 @@
 package application.config;
 
-import application.Controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -11,32 +10,31 @@ import javafx.stage.Stage;
 import java.util.Objects;
 
 /**
- * #comment (comment this class and create javadoc to every method)
- * This class ... configurates?
+ * This class render FXML file dynamically.
+ * @author Khabib
  */
 public class Config {
-    private Controller controller;
     private Stage stage;
     private Scene scene;
     private Parent root;
 
     /**
-     * @param controller
+     * Constructor to Config
      * @param root
      * @param stage
+     * @author Khabib
      */
-    public Config(Controller controller,Parent root,Stage stage ){
-        this.controller = controller;
+    public Config(Parent root,Stage stage ){
         this.root = root;
         this.stage = stage;
     }
 
     /**
-     * //////// FXML RENDER //////////
-     * @param e
-     * @param name
-     * @param title
-     * @return
+     * The method render FXML pages on screen.
+     * @param e event
+     * @param name name of FXML file
+     * @param title a title for the FXML file
+     * @return return home root.
      * @author Khabib.
      */
     public Parent render(ActionEvent e, String name, String title){
@@ -56,10 +54,4 @@ public class Config {
         return root;
     }
 
-    /**
-     * @return
-     */
-    public Parent getRoot() {
-        return this.root;
-    }
 }

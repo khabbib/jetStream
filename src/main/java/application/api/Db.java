@@ -1,12 +1,10 @@
 package application.api;
 
 import application.Controller;
-import application.components.flight.Book;
 import application.components.flight.Flight;
 import application.components.user.User;
 import application.components.ticket.UserHistory;
 import javafx.scene.image.Image;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
@@ -16,24 +14,16 @@ import java.util.ArrayList;
  * Handles all connections with database.
  */
 public class Db {
-    private Controller controller;
-    public Db(Controller controller) {
-        this.controller = controller;
-    }
-
     /**
      * Get the database connection.
      * @return connection of the database.
      * @author Sossio.
      */
     public static java.sql.Connection getDatabaseConnection() {
-
         String url = "jdbc:postgresql://pgserver.mau.se:5432/am2510";
         String user = "am2510";
         String password = "zyvl0ir7";
-
         java.sql.Connection con = null;
-
         try {
             con = DriverManager.getConnection(url, user, password);
             return con;
@@ -81,40 +71,6 @@ public class Db {
         //System.out.println("Encrypted password using MD5: " + encryptedpassword);
 
         return encryptedpassword;
-    }
-
-    /**
-     * A test method. This method is used to check hashed password!
-     * @param email  email
-     * @param password password
-     * @return true or false
-     */
-    public boolean hashAuthTest(String email, String password) {
-        boolean ok = false;
-
-        try {
-            java.sql.Connection con = getDatabaseConnection();
-            Statement stmt = con.createStatement();
-            stmt.executeUpdate("SET search_path TO jetstream;");
-            ResultSet rs = stmt.executeQuery("select * from test_user_password_hash where email = '" + email +"' and pwd = '"+ hashPassword(password) + "'");
-
-            while (rs.next()){
-                //System.out.println(hashPassword(password));
-                if (rs.getString("email").equals(email) && rs.getString("pwd").equals(hashPassword(password))) {
-                    System.out.println("User registered!");
-                    ok = true;
-                } else {
-                    System.out.println("Not registeed!");
-                    //System.out.println(hashPassword(password));
-                }
-            }
-            con.close();
-            stmt.close();
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-
-        return ok;
     }
 
     /**
@@ -197,31 +153,6 @@ public class Db {
         stmt.executeUpdate("UPDATE userr SET u_address = '" + user.getAddress() + "' where u_id = " + user.getUserId() + ";");
         con.close();
         stmt.close();
-    }
-    // ====== LET BE !
-    public boolean updateUserEmail(User user, String dbEmail) throws SQLException {
-        boolean uniqueEmail = true;
-        java.sql.Connection con = getDatabaseConnection();
-        Statement stmt = con.createStatement();
-        stmt.executeUpdate("SET search_path TO jetstream;");
-        ResultSet rs = stmt.executeQuery("select u_email from userr");
-
-        while(rs.next()) {
-            if(rs.getString("u_email").equals(user.getEmail()) && !rs.getString("u_email").equals(dbEmail)) {
-                System.out.println("Email found!");
-                uniqueEmail = false;
-                break;
-            } else{
-                System.out.println("Email not found!");
-            }
-            con.close();
-        }
-
-        if(uniqueEmail) {
-            stmt.executeUpdate("UPDATE userr SET u_email = '" + user.getEmail() + "' where u_id = " + user.getUserId() + ";");
-        } //else { System.out.println("Error message! Email is not unique!");}
-
-        return uniqueEmail;
     }
     public void updateUserPhoneNumber(User user) throws SQLException {
         java.sql.Connection con = getDatabaseConnection();
@@ -379,27 +310,6 @@ public class Db {
         con.close();
         stmt.close();
         return address;
-    }
-
-    /**
-     * @param u_id gets userId from user.
-     * @return 'old' email.
-     * @throws SQLException if any sql issue occurs.
-     * @author Sossio.
-     */
-    public String getUserDatabaseEmail(String u_id) throws SQLException {
-        java.sql.Connection con = getDatabaseConnection();
-        Statement stmt = con.createStatement();
-        stmt.executeUpdate("SET search_path TO jetstream;");
-
-        String email = null;
-        ResultSet rs = stmt.executeQuery("select u_email from userr where u_id = " + u_id + ";");
-        while(rs.next()) {
-            email = rs.getString(("u_email"));
-        }
-        con.close();
-        stmt.close();
-        return email;
     }
 
     /**
@@ -651,9 +561,8 @@ public class Db {
         con.close();
     }
 
-
-    public ArrayList<Flight> getAllFlights()
-    {
+    // Obed's part
+    public ArrayList<Flight> getAllFlights() {
         ArrayList<Flight> flights = new ArrayList<>();
         try {
 
@@ -692,7 +601,6 @@ public class Db {
      * @param userID
      * @return
      */
-    //////// fyl table history ///////////
     public ArrayList<UserHistory> searchDataForTableHistory(int userID, String rfc, boolean isAdmin) {
         ArrayList<UserHistory> flights = new ArrayList<>();
         try {
@@ -872,7 +780,7 @@ public class Db {
      * This method will fetch all seats that already booked in a particular flight.
      * @param id will be a reference to find the booked seats in database
      * @return it will return a list of String with already booked seats
-     * @author Habib Mohammadi
+     * @author Habib
      */
     public ArrayList<String> getBookedSeats(String id) {
         ArrayList<String> seat = new ArrayList<>();
@@ -898,7 +806,7 @@ public class Db {
      * This method will be called when the used want to check in its ticket
      * @param rfc is a reference number to booked ticket which is unique.
      * @return will return a flag true or false to check if checking went threw or not.
-     * @author Habib Mohammadi
+     * @author Habib
      */
     public boolean checking(String rfc) {
         boolean checked = false;

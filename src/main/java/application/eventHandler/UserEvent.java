@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter;
 
 /**
  *This class is used to handle all events in user dashboard
+ * @author Habib
  */
 public class UserEvent {
     public String rfc;
@@ -397,7 +398,7 @@ public class UserEvent {
     /**
      * This method will reset the navigation setting
      * @param controller refer to the control class
-     * @author Habib Mohammadi
+     * @author Habib
      */
     private void arangeTheNavigation(Controller controller) {
         controller.updateDashboardInfo();

@@ -252,9 +252,14 @@ public class Controller {
     //</editor-fold>
 
     //----------------- HOME -----------------//
+
+    /**
+     * Constructor to Controller class
+     * @author Khabib
+     */
     public Controller(){
-        db = new Db(this);
-        config = new Config(this, root, main_stage);
+        db = new Db();
+        config = new Config(root, main_stage);
         support = new Support(this);
         errorHandler = new ErrorHandler(this);
         search = new Search(this, db, errorHandler);
@@ -279,16 +284,16 @@ public class Controller {
 
     /**
      * the method will switch the user to the Home page
-     * @param e
-     * @throws IOException
+     * @param e event
+     * @author Khabib
      */
     public void switchToHome(ActionEvent e) {
         config.render(e,"Home", "Home");
     }
 
-    /***
+    /**
      * Creates and animates flightpaths on world map.
-     * Author: Kasper
+     * @author Kasper
      */
     public void displayFlightPaths() {
         flightPaths.start();

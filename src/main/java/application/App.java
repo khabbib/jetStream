@@ -15,14 +15,15 @@ import java.util.Objects;
 
 /**
  * This class executes the program.
+ * @author khabib
  */
 public class App extends Application {
 
     @FXML public StackPane pane;
 
     /**
-     * #comment
-     * @param stage
+     * The overwrite method will start the application extended JavaFX.
+     * @param stage javaFX stage
      * @author Khabib.
      */
     @Override public void start(Stage stage) {
@@ -50,7 +51,10 @@ public class App extends Application {
         }
     }
 
-    // Main application runs here
+    /**
+     * Start application
+     * @param args argument
+     */
     public static void main(String[] args) {
         launch(args);
     }

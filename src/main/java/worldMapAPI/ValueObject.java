@@ -2,7 +2,7 @@
 package worldMapAPI;
 
 /**
- * @author Andres Almiray
+ * @author Kasper
  */
 public interface ValueObject {
 }

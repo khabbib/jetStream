@@ -17,14 +17,18 @@ public class Mail {
     private String from = "web@gmail.com";
     private String host = "localhost";
 
+    /**
+     * Main program to run the sample
+     * @param args argument
+     */
     public static void main(String[] args) {
-        Mail mail = new Mail("kadestalkasper@gmail.com","kadestalkasper@gmail.com","localhost");
+        new Mail("kadestalkasper@gmail.com","kadestalkasper@gmail.com","localhost");
     }
 
     /**
-     * Class constructor.
-     * @param to user
-     * @param from user.
+     * Constructor to Mail
+     * @param to receiver
+     * @param from sender
      * @param host is host of email.
      */
     public Mail(String to, String from, String host) {

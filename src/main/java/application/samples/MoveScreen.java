@@ -5,8 +5,9 @@ import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+
 /**
- * This is a test class to move a scene.
+ * This is a test class to move a scene on click.
  * @author Khabib.
  */
 public class MoveScreen {
@@ -17,8 +18,9 @@ public class MoveScreen {
      * Class constructor.
      * @param root ir root.
      * @param stage is parent stage.
+     * @author Khabib
      */
-    public static void moveScreen(Parent root, Stage stage){
+    public MoveScreen(Parent root, Stage stage){
         root.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -35,4 +37,14 @@ public class MoveScreen {
             }
         });
     }
+
+    /**
+     * Main method to run the sample
+     * @param args argument
+     * @author Khabib
+     */
+    public static void main(String[]args){
+        new MoveScreen(null, null); // Need to be replaced with real arguments
+    }
+
 }
