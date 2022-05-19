@@ -1,21 +1,22 @@
 package application.components.user;
 import application.Controller;
 import application.ErrorHandler;
-import application.components.ticket.Purchase;
+import application.components.Email.SupportEmail;
 import javafx.event.ActionEvent;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 /**
- * This class handles support path, where users can send email to admin.
+ * This class handles support windows, where users can send email to admin.
  */
 public class Support {
     private Controller controller;
     private ErrorHandler errorHandler;
 
     /**
-     * Class constructor.
-     * @param controller connects all methods and variables.
+     * Constructor to Support.
+     * @param controller instance of control class
+     * @author Habib
      */
     public Support(Controller controller){
         this.controller = controller;
@@ -54,8 +55,8 @@ public class Support {
 
             boolean ok = checkFields(title, email, msg);
             if(ok) {
-                if(Purchase.sendSupportEmail(email, title, msg)) {
-                    Purchase.sendAutoConfirmEmailSupport(email);
+                if(SupportEmail.send(email, title, msg)) {
+                    SupportEmail.sendAutoEmail(email);
                     errorHandler.displayMessage(controller.sup_report_display_msg, "Report issue sent!", false);
                     resetText(controller.title_issue_txt_sup, controller.email_issue_txt_sup, controller.msg_issue_txt_sup);
                 }
@@ -71,8 +72,8 @@ public class Support {
 
             boolean ok = checkFields(title, email, msg);
             if(ok) {
-                if(Purchase.sendSupportEmail(email, title, msg)) {
-                    Purchase.sendAutoConfirmEmailSupport(email);
+                if(SupportEmail.send(email, title, msg)) {
+                    SupportEmail.sendAutoEmail(email);
                     errorHandler.displayMessage(controller.sup_feedback_display_msg, "Feedback sent!", false);
                     resetText(controller.subject_fb_txt_sup, controller.email_fb_txt_sup, controller.msg_fb_txt_sup);
                 }
@@ -88,8 +89,8 @@ public class Support {
 
             boolean ok = checkFields(title, email, msg);
             if(ok) {
-                if(Purchase.sendSupportEmail(email, title, msg)) {
-                    Purchase.sendAutoConfirmEmailSupport(email);
+                if(SupportEmail.send(email, title, msg)) {
+                    SupportEmail.sendAutoEmail(email);
                     errorHandler.displayMessage(controller.sup_contact_display_msg, "Contact sent!", false);
                     resetText(controller.subject_contact_txt_sup, controller.email_contact_txt_sup, controller.msg_contact_txt_sup);
                 }
@@ -112,10 +113,10 @@ public class Support {
 
     /**
      * This method checks if text fields is empty or not.
-     * @param title text.
-     * @param email text.
-     * @param msg text.
-     * @return true if its not empty.
+     * @param title title : string
+     * @param email email address : string
+     * @param msg message : string
+     * @return return a true or false value after checking : boolean
      * @author Sossio.
      */
     private boolean checkFields(String title, String email, String msg) {
@@ -127,10 +128,10 @@ public class Support {
     }
 
     /**
-     * This method will reset all text in text fields.
-     * @param textField1 fxml id.
-     * @param textField2 fxml id.
-     * @param textArea fxml id.
+     * This method will reset all text fields in support form.
+     * @param textField1 text field 1 : FXML textField
+     * @param textField2 text field 2 : FXML textField
+     * @param textArea text field 3 : FXML textField
      * @author Sossio.
      */
     private void resetText(TextField textField1, TextField textField2, TextArea textArea) {

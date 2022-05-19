@@ -1,15 +1,14 @@
 package application.eventHandler;
 
 import application.Controller;
-import application.components.ticket.Purchase;
-import application.components.ticket.UserHistory;
+import application.components.Email.TicketEmail;
 import application.ErrorHandler;
+import application.components.ticket.CardValidation;
 import javafx.event.ActionEvent;
 
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 
 /**
  *This class is used to handle all events in user dashboard
@@ -201,7 +200,7 @@ public class UserEvent {
                             if (!month.isEmpty()) {
                                 if (!cvc.isEmpty()) {
 
-                                    boolean validCard = Purchase.purchaseTicket(nbr, name, lname, month, year, cvc);
+                                    boolean validCard = CardValidation.purchaseTicket(nbr, name, lname, month, year, cvc);
                                     if (validCard) {
                                         System.out.println("Card is valid!");
                                         boolean purchaseDone1 = false;
