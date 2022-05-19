@@ -44,25 +44,7 @@ public class UserControl {
         initializeFXM = new InitializeFXM(controller, db);
     }
 
-    /**
-     * This method shows which menu is active on user dashboard.
-     * @author Khabib.
-     */
-    public void toggleMenuColor(Controller controller) {
-        controller.menu_highlight_color_flight.setVisible(false);
-        controller.menu_highlight_color_history.setVisible(false);
-        controller.menu_highlight_color_entertainment.setVisible(false);
-        controller.menu_highlight_color_support.setVisible(false);
-        controller.menu_highlight_color_ceo.setVisible(false);
-        controller.menu_highlight_color_my_ticket.setVisible(false);
 
-        controller.map_menu_user_image.setOpacity(0.5);
-        controller.history_menu_user_image.setOpacity(0.5);
-        controller.entertainment_menu_user_image.setOpacity(0.5);
-        controller.support_menu_user_image.setOpacity(0.5);
-        controller.ceo_menu_user_image.setOpacity(0.5);
-        controller.my_tickets_menu_user_image.setOpacity(0.5);
-    }
 
     /**
      * This method will switch the user to the dashboard page.
@@ -118,6 +100,10 @@ public class UserControl {
 
     }
 
+    /**
+     *
+     * @param list
+     */
     public void fillMyTicket(ArrayList<UserHistory> list) {
         controller.from_myticket.setText(list.get(0).getFrom_col_table_historik());
         controller.to_myticket.setText(list.get(0).getTo_col_table_historik());
