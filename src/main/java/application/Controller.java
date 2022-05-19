@@ -145,6 +145,7 @@ public class Controller implements Initializable {
     @FXML public AnchorPane profile_anchorpane, history_anchorpane, flight_anchorpane, entertainment_anchorpane, support_anchorpane, ceo_anchorpane, my_ticket_anchorpane;
     @FXML public Pane menu_highlight_color_support, menu_highlight_color_ceo, menu_highlight_color_my_ticket, menu_highlight_color_flight,
                       menu_highlight_color_history, menu_highlight_color_entertainment;
+    @FXML public Pane menu_admin_highlight_customers, menu_admin_highlight_flights, menu_admin_highlight_tickets; // Admin side
     @FXML public HBox owner1_work, owner2_work, owner3_work, owner4_work;
 
     //</editor-fold>
@@ -168,6 +169,9 @@ public class Controller implements Initializable {
     @FXML public VBox       booking_info_vbox;
     @FXML public ImageView  support_menu_user_image, ceo_menu_user_image, my_tickets_menu_user_image,
             booking_profile_image, map_menu_user_image, history_menu_user_image, entertainment_menu_user_image;
+    @FXML public Label map_menu_user_lbl, history_menu_user_lbl, entertainment_menu_user_lbl, support_menu_user_lbl, ceo_menu_user_lbl, my_tickets_menu_user_lbl;
+    @FXML public Label customers_menu_admin_lbl, flights_menu_admin_lbl, tickets_menu_admin_lbl; //Admin path
+    @FXML public ImageView customers_menu_admin_img, flights_menu_admin_img, tickets_menu_admin_img; //Admin path
     public ArrayList<String> taken_seat_business = new ArrayList<>();
     public ArrayList<String> taken_seat_economy = new ArrayList<>();
     public ArrayList<Flight> round_trip_flights = new ArrayList<>();

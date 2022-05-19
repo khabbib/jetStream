@@ -2229,7 +2229,7 @@
                                           <ColorAdjust brightness="1.0" />
                                        </effect>
                                     </ImageView>
-                                    <Label text="Flights" textFill="WHITE" />
+                                    <Label fx:id="map_menu_user_lbl" text="Flights" textFill="WHITE" />
                                  </children>
                               </HBox>
                               <Button fx:id="menu_flight_btn" layoutY="1.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" opacity="0.0" prefHeight="25.0" prefWidth="91.0">
@@ -2260,7 +2260,7 @@
                                           <ColorAdjust brightness="1.0" />
                                        </effect>
                                     </ImageView>
-                                    <Label opacity="0.5" text="History" textFill="WHITE" />
+                                    <Label fx:id="history_menu_user_lbl" opacity="0.5" text="History" textFill="WHITE" />
                                  </children>
                               </HBox>
                               <Button fx:id="menu_history_btn" mnemonicParsing="false" onAction="#userDashboardEventHandler" opacity="0.0" prefHeight="22.0" prefWidth="91.0">
@@ -2291,7 +2291,7 @@
                                           <ColorAdjust brightness="1.0" />
                                        </effect>
                                     </ImageView>
-                                    <Label opacity="0.5" text="Ticket" textFill="WHITE" />
+                                    <Label fx:id="my_tickets_menu_user_lbl" opacity="0.5" text="Ticket" textFill="WHITE" />
                                  </children>
                               </HBox>
                               <Button fx:id="menu_my_tickets_btn" layoutX="1.0" layoutY="2.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" opacity="0.0" prefHeight="25.0" prefWidth="94.0">
@@ -2322,7 +2322,7 @@
                                           <ColorAdjust brightness="1.0" />
                                        </effect>
                                     </ImageView>
-                                    <Label opacity="0.5" text="Games" textFill="WHITE" />
+                                    <Label fx:id="entertainment_menu_user_lbl" opacity="0.5" text="Games" textFill="WHITE" />
                                  </children>
                               </HBox>
                               <Button fx:id="menu_entertainment_btn" layoutX="1.0" layoutY="1.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" opacity="0.0" prefHeight="25.0" prefWidth="90.0">
@@ -2353,7 +2353,7 @@
                                           <ColorAdjust brightness="1.0" />
                                        </effect>
                                     </ImageView>
-                                    <Label opacity="0.5" text="Support" textFill="WHITE" />
+                                    <Label fx:id="support_menu_user_lbl" opacity="0.5" text="Support" textFill="WHITE" />
                                  </children>
                               </HBox>
                               <Button fx:id="menu_support_btn" layoutX="1.0" layoutY="2.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" opacity="0.0" prefHeight="25.0" prefWidth="94.0">
@@ -2384,7 +2384,7 @@
                                           <ColorAdjust brightness="1.0" />
                                        </effect>
                                     </ImageView>
-                                    <Label opacity="0.5" text="Owners" textFill="WHITE" />
+                                    <Label fx:id="ceo_menu_user_lbl" opacity="0.5" text="Owners" textFill="WHITE" />
                                  </children>
                               </HBox>
                               <Button fx:id="menu_ceo_btn" layoutX="1.0" layoutY="2.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" opacity="0.0" prefHeight="25.0" prefWidth="94.0">

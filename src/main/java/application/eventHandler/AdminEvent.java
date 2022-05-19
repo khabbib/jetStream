@@ -20,6 +20,7 @@ public class AdminEvent {
         if(e.getSource() == controller.admin_logout_button) {
             controller.switchToLogin(e);
         }
+
         else if(e.getSource() == controller.refreshMembersBtn_admin){
             controller.adminControl.updateMemberTable();
         }
@@ -36,16 +37,48 @@ public class AdminEvent {
             controller.admin_register_anchorpane.toFront();
         }
 
+
+
+        else if(e.getSource() == controller.admin_members_button) {
+            controller.admin_members_anchorpane.toFront();
+            toggleMenuColor(controller);
+            controller.menu_admin_highlight_customers.setVisible(true);
+            controller.customers_menu_admin_img.setOpacity(1);
+            controller.customers_menu_admin_lbl.setOpacity(1);
+            controller.playSystemSound("Next page", "sounds/next_page.wav");
+        }
+
         else if(e.getSource() == controller.admin_flights_button) {
             controller.admin_flights_anchorpane.toFront();
+            toggleMenuColor(controller);
+            controller.menu_admin_highlight_flights.setVisible(true);
+            controller.flights_menu_admin_img.setOpacity(1);
+            controller.flights_menu_admin_lbl.setOpacity(1);
+            controller.playSystemSound("Next page", "sounds/next_page.wav");
         }
 
         else if(e.getSource() == controller.admin_tickets_button) {
             controller.admin_tickets_anchorpane.toFront();
+            toggleMenuColor(controller);
+            controller.menu_admin_highlight_tickets.setVisible(true);
+            controller.tickets_menu_admin_img.setOpacity(1);
+            controller.tickets_menu_admin_lbl.setOpacity(1);
+            controller.playSystemSound("Next page", "sounds/next_page.wav");
         }
 
-        else if(e.getSource() == controller.admin_members_button) {
-            controller.admin_members_anchorpane.toFront();
-        }
+    }
+
+    public void toggleMenuColor(Controller controller) {
+        controller.menu_admin_highlight_customers.setVisible(false);
+        controller.menu_admin_highlight_flights.setVisible(false);
+        controller.menu_admin_highlight_tickets.setVisible(false);
+
+        controller.customers_menu_admin_img.setOpacity(0.5);
+        controller.flights_menu_admin_img.setOpacity(0.5);
+        controller.tickets_menu_admin_img.setOpacity(0.5);
+
+        controller.customers_menu_admin_lbl.setOpacity(0.5);
+        controller.flights_menu_admin_lbl.setOpacity(0.5);
+        controller.tickets_menu_admin_lbl.setOpacity(0.5);
     }
 }
