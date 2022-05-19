@@ -7,7 +7,7 @@ import javafx.scene.control.CheckBox;
  */
 public class Flight {
     private int size = 1;
-    private String id, departure_name, destination_name, departure_date, destination_date,  departure_time, destination_time, price;
+    private String id, departure_name, destination_name, departure_date, destination_date,  departure_time, destination_time, price, p_id;
     private boolean rTur = false;
     private CheckBox box;
     /**
@@ -20,7 +20,7 @@ public class Flight {
      * @param destination_time time.
      * @param price of flight.
      */
-    public Flight(String id, String departure_name, String departure_date, String departure_time,String destination_name, String destination_date, String destination_time, String price, boolean rTur, int size){
+    public Flight( String id, String departure_name, String departure_date, String departure_time,String destination_name, String destination_date, String destination_time, String price, boolean rTur, int size, String p_id){
         this.size = size;
         this.id = id;
         this.rTur = rTur;
@@ -31,6 +31,7 @@ public class Flight {
         this.destination_date = destination_date;
         this.destination_time = destination_time;
         this.price = price;
+        this.p_id = p_id;
         this.box = new CheckBox();
     }
 
@@ -62,6 +63,10 @@ public class Flight {
     }
     public String getPrice() {
         return price;
+    }
+    public String getP_id()
+    {
+        return p_id;
     }
     public CheckBox getFlightBox()
     {

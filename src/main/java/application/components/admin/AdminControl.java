@@ -220,13 +220,13 @@ public class AdminControl {
     public void updateTicketTabel () throws SQLException {
         ArrayList<UserHistory> list = db.searchDataForTableHistory(-1, null, true);
 
-        controller.fetchedList_ticket_admin = FXCollections.observableArrayList(list);
-        controller.table_tickets.setItems(controller.fetchedList_ticket_admin);
+        controller.items_ticket_admin = FXCollections.observableArrayList(list);
+        controller.table_tickets.setItems(controller.items_ticket_admin);
     }
 
     public void fillTableFlights(Parent root) throws SQLException {
 
-        controller.select_all_box_flight_admin = (CheckBox) root.lookup("#select_all_box_flight_admin");
+        controller.select_all_box_flight_admin = (CheckBox) root.lookup("#select_col_flight_admin");
         controller.delete_singelFlightBtn_admin = (Button) root.lookup("#delete_singelFlightBtn_admin");
         controller.table_flight_admin = (TableView<Flight>) root.lookup("#table_flight_admin");
 
@@ -240,7 +240,8 @@ public class AdminControl {
         controller.table_flight_admin.getColumns().get(7).setCellValueFactory(new PropertyValueFactory<>("destination_time"));
         controller.table_flight_admin.getColumns().get(8).setCellValueFactory(new PropertyValueFactory<>("price"));
         controller.table_flight_admin.getColumns().get(9).setCellValueFactory(new PropertyValueFactory<>("rTur"));
-        controller.table_flight_admin.getColumns().get(10).setCellValueFactory(new PropertyValueFactory<>("select_col_table_flight"));
+        controller.table_flight_admin.getColumns().get(9).setCellValueFactory(new PropertyValueFactory<>("p_id"));
+        controller.table_flight_admin.getColumns().get(10).setCellValueFactory(new PropertyValueFactory<>("box"));
 
 
         controller.table_flight_admin.getSelectionModel().selectedItemProperty().addListener((ObservableList, oldValue, newValue) -> {
@@ -257,7 +258,7 @@ public class AdminControl {
         });
 
         updateFlightTable();
-        controller.select_all_box_flight_admin.selectedProperty().addListener(new ChangeListener<Boolean>() {
+        controller.select_col_flight_admin.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 System.out.println("selected all");
@@ -265,7 +266,7 @@ public class AdminControl {
                 boolean selectedAllItems = false; // selected or not
 
                 for (Flight item : controller.items_flight_admin) {
-                    if (controller.select_all_box_flight_admin.isSelected()) {
+                    if (controller.select_col_flight_admin.isSelected()) {
                         selectedAllItems = true;
                         item.getFlightBox().setSelected(true);
                         System.out.println(item.getFlightBox().isSelected() + " state");
@@ -292,7 +293,13 @@ public class AdminControl {
     public void updateFlightTable() throws SQLException {
         ArrayList<Flight> list = db.getAllFlights();
 
-        controller.fetchedList_flight_admin = FXCollections.observableArrayList(list);
-        controller.table_flight_admin.setItems(controller.fetchedList_flight_admin);
+        controller.items_flight_admin = FXCollections.observableArrayList(list);
+        controller.table_flight_admin.setItems(controller.items_flight_admin);
     }
+
+
+
+
+
+
 }

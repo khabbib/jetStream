@@ -73,7 +73,7 @@ public class Controller implements Initializable {
     //<editor-fold desc="======== DASHBOARD VARIABLES ========">
     @FXML public AnchorPane     admin_flights_anchorpane, admin_tickets_anchorpane, admin_members_anchorpane, admin_register_anchorpane;
     @FXML public Button         admin_flights_button, admin_members_button, admin_tickets_button, admin_logout_button, registerCommitBtn_admin,
-                                registerMemberBtn_admin, returnToMemberListBtn_admin, refreshMembersBtn_admin, search_input_flight_admin,
+                                registerMemberBtn_admin, returnToMemberListBtn_admin, refreshMembersBtn_admin,
                                 prev_tur_date_flight_admin, next_tur_date_flight_admin;
     //</editor-fold>
     //<editor-fold desc="======== TABLE VARIABLES ========">
@@ -92,9 +92,10 @@ public class Controller implements Initializable {
 
     //flights table variables
     public ObservableList<Flight> fetchedList_flight_admin, items_flight_admin;
-    @FXML public Button delete_singelFlightBtn_admin, delete_allFlightsBtn_admin, refreshFlightsBtn_admin, addFlightsBtn_admin;
+    @FXML public Button delete_singelFlightBtn_admin, delete_allFlightsBtn_admin, refreshFlightsBtn_admin, addFlightsBtn_admin, search_input_flight_admin;
     @FXML public TableView<Flight> table_flight_admin;
-    @FXML public CheckBox select_all_box_flight_admin;
+    @FXML public CheckBox select_all_box_flight_admin, select_col_flight_admin;
+    @FXML public TextField from_input_flight_admin, disc_input_flight_admin;
     //</editor-fold>
     //</editor-fold>
 
@@ -243,6 +244,7 @@ public class Controller implements Initializable {
     public UserEvent userEvent;
     public BgMusic bgMusic;
     public Support support;
+    public SystemSound systemSound;
     public Config config;
     public Search search;
     public Db db;
@@ -269,6 +271,7 @@ public class Controller implements Initializable {
         purchaseHandler = new PurchaseHandler();
         flightsViewManager = new FlightsViewManager(this);
         bgMusic = new BgMusic(this);
+        systemSound = new SystemSound(this);
     }
 
     //----------------- HOME -----------------//
@@ -399,30 +402,34 @@ public class Controller implements Initializable {
     }
 
     /**
+     * the method will render dashboard page for user
      * @param e
      * @param user
      * @throws IOException
      */
     public void renderDashboard(ActionEvent e, User user) {
         userControl.renderDashboard(e, user,this);
-    } // the method will render dashboard page for user
+    }
 
     /**
+     * shortcut login to user dashboard
      * @param e
      * @throws IOException
      */
     public void noLoginRequired(ActionEvent e) throws IOException {
         exploreMode = true;
         userControl.noLoginRequired(e,this);
-    }// shortcut login to user dashboard
+    }
 
     /**
+     * the method will switch the user to the registration page
      * @param e
      * @throws IOException
      */
     public void switchToRegistration(ActionEvent e) {
+        playSound("Next page", "sounds/next_page.wav");
         this.root = config.render(e, "user/Registration", "Registration");
-    }// the method will switch the user to the registration page
+    }
 
     /**
      * The method will register the user and return to the login page
@@ -449,6 +456,7 @@ public class Controller implements Initializable {
      */
     public void switchToLogin(ActionEvent e) {
         exploreMode = true;
+        systemSound.pauseButton();
         this.root = config.render(e, "user/Login", "Login");
         success_msg_lbl = (Label) root.lookup("#success_msg_lbl");
         if(user != null) {
@@ -621,6 +629,9 @@ public class Controller implements Initializable {
     public void searchFlight(ActionEvent e) {
         search.searchFlight();
     }
+
+
+
     public void checkboxEvent(ActionEvent e){
         search.checkboxEvent(e);
     }
@@ -632,6 +643,8 @@ public class Controller implements Initializable {
     public void searchHit(){
         search.searchHit();
     }
+
+
 
     /**
      *
@@ -924,7 +937,7 @@ public class Controller implements Initializable {
      * @throws SQLException
      * @author Obed
      */
-    public void removemember_admin(ActionEvent e) throws SQLException {
+    public void removeMember_admin(ActionEvent e) throws SQLException {
         if (table_member_admin.getItems().size() > 0) { // check if there is any items before running the operation.
             if (e.getSource() == deletS_btn_mbr_admin) { // if single remove button clicked
                 items_member_admin = table_member_admin.getItems(); // get the whole tables items into an observable list to compare.
@@ -948,7 +961,55 @@ public class Controller implements Initializable {
             }
         }
     }
+       public void removeTicket_admin(ActionEvent e) throws SQLException {
+         if (table_tickets.getItems().size() > 0) { // check if there is any items before running the operation.
+               if (e.getSource() == deleteTicketBtn_ticket_admin) { // if single remove button clicked
+                   items_ticket_admin = table_tickets.getItems(); // get the whole tables items into an observable list to compare.
+                   if (items_ticket_admin != null) { // if observable items has item
+                       // show a confirmation message to user
+                       boolean confirmed = errorHandler.confirmThisAction("Confirm to delete selected item", "Do you want to proceed?", "The selected items will be deleted!");
+                       if (confirmed) { // if user confirm the action
+                           for (UserHistory item : items_ticket_admin) { // loop through all historic items
+                               if (item.getSelect_col_table_historik().isSelected()) { // check if the checkbox for one or more item is selected
+                                   boolean ok = db.deleteTicket(item.getRfc_col_table_historik()); // send the actual reference number as an argument to database to compare and delete
+                                   if (ok) { // if database succeed to delete the item runs this statement
+                                       adminControl.updateTicketTabel(); // historic table updates
+                                       System.out.println("Item has been deleted successfully!"); // show a success message for user
+                                   }
+                               }
+                           }
+                       } else { // if user not confirm the action
+                           System.out.println("not deleted screen message");
+                       }
+                   }
+               }
 
+           }
+       }
+       public void removeFlight_admin(ActionEvent e) throws SQLException {
+       if (table_flight_admin.getItems().size() > 0) { // check if there is any items before running the operation.
+            if (e.getSource() == delete_singelFlightBtn_admin) { // if single remove button clicked
+                items_flight_admin = table_flight_admin.getItems(); // get the whole tables items into an observable list to compare.
+                if (items_flight_admin != null) { // if observable items has item
+                    // show a confirmation message to user
+                    boolean confirmed = errorHandler.confirmThisAction("Confirm to delete selected item", "Do you want to proceed?", "The selected items will be deleted!");
+                    if (confirmed) { // if user confirm the action
+                        for (Flight item : items_flight_admin) { // loop through all historic items
+                            if (item.getFlightBox().isSelected()) { // check if the checkbox for one or more item is selected
+                                boolean ok = db.deleteFlight(item.getId()); // send the actual reference number as an argument to database to compare and delete
+                                if (ok) { // if database succeed to delete the item runs this statement
+                                    adminControl.updateFlightTable(); // historic table updates
+                                    System.out.println("Item has been deleted successfully!"); // show a success message for user
+                                }
+                            }
+                        }
+                    } else { // if user not confirm the action
+                        System.out.println("not deleted screen message");
+                    }
+                }
+            }
+        }
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

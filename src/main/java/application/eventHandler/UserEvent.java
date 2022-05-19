@@ -30,11 +30,12 @@ public class UserEvent {
      * The method will handle the events
      * @param e event which passes here from GUI and control class
      * @param controller refer to control class as an instance
-     * @author Habib developed by Alla
+     * @author Habib. Developed by All.
      */
     public void userDashboardEventHandler(ActionEvent e, Controller controller) throws ParseException {
         if (e.getSource() == controller.menu_profile_btn) {
             if(!controller.exploreMode) {
+                controller.systemSound.pauseButton();
                 controller.profile_anchorpane.toFront();
                 toggleMenuColor(controller);
                 controller.playSound("Next page", "sounds/next_page.wav");
@@ -44,11 +45,13 @@ public class UserEvent {
             }
         }
         else if(e.getSource() == controller.booking_close_btn || e.getSource() == controller.booking_close_second_page_btn){
+            controller.systemSound.pauseButton();
             controller.booking_seat_anchorpane.toBack();
             restore_psgr_info(controller);
             controller.playSound("Next page", "sounds/next_page.wav");
         }
         else if(e.getSource() == controller.menu_flight_btn) {
+            controller.systemSound.pauseButton();
             controller.flight_anchorpane.toFront();
             toggleMenuColor(controller);
             controller.menu_highlight_color_flight.setVisible(true);
@@ -57,6 +60,7 @@ public class UserEvent {
         }
         else if(e.getSource() == controller.menu_history_btn) {
             if(!controller.exploreMode) {
+                controller.systemSound.pauseButton();
                 controller.history_anchorpane.toFront();
                 toggleMenuColor(controller);
                 controller.menu_highlight_color_history.setVisible(true);
@@ -68,6 +72,7 @@ public class UserEvent {
             }
         }
         else if(e.getSource() == controller.menu_entertainment_btn) {
+            controller.systemSound.pauseButton();
             controller.entertainment_anchorpane.toFront();
             toggleMenuColor(controller);
             controller.menu_highlight_color_entertainment.setVisible(true);
@@ -75,34 +80,24 @@ public class UserEvent {
             controller.playSound("Next page", "sounds/next_page.wav");
         }
         else if(e.getSource() == controller.menu_support_btn){
-
-            if (!controller.exploreMode) {
-                controller.support_anchorpane.toFront();
-                toggleMenuColor(controller);
-                controller.menu_highlight_color_support.setVisible(true);
-                controller.support_menu_user_image.setOpacity(1);
-                controller.playSound("Next page", "sounds/next_page.wav");
-            } else {
-                controller.playSound("Error", "sounds/error.wav");
-                errorHandler.confirmThisAction("Information", "You must log in to go further!", "");
-            }
+              controller.systemSound.pauseButton();
+              controller.support_anchorpane.toFront();
+              toggleMenuColor(controller);
+              controller.menu_highlight_color_support.setVisible(true);
+              controller.support_menu_user_image.setOpacity(1);
+              controller.playSound("Next page", "sounds/next_page.wav");
         }
         else if(e.getSource() == controller.menu_ceo_btn){
-
-            if (!controller.exploreMode) {
-                controller.ceo_anchorpane.toFront();
-                toggleMenuColor(controller);
-                controller.menu_highlight_color_ceo.setVisible(true);
-                controller.ceo_menu_user_image.setOpacity(1);
-                controller.playSound("Next page", "sounds/next_page.wav");
-            } else {
-                controller.playSound("Error", "sounds/error.wav");
-                errorHandler.confirmThisAction("Information", "You must log in to go further!", "");
-            }
+              controller.systemSound.playButton();
+              controller.ceo_anchorpane.toFront();
+              toggleMenuColor(controller);
+              controller.menu_highlight_color_ceo.setVisible(true);
+              controller.ceo_menu_user_image.setOpacity(1);
+              controller.playSound("Next page", "sounds/next_page.wav");
         }
         else if(e.getSource() == controller.menu_my_tickets_btn){
-
             if (!controller.exploreMode) {
+                controller.systemSound.pauseButton();
                 controller.my_ticket_anchorpane.toFront();
                 toggleMenuColor(controller);
                 controller.menu_highlight_color_my_ticket.setVisible(true);
