@@ -19,18 +19,20 @@ public class ErrorHandler {
     private Controller controller;
 
     /**
-     * @param controller
+     * Constructor to ErrorHandler
+     * @param controller instance of control class
      */
     public ErrorHandler(Controller controller){
         this.controller = controller;
     }
 
     /**
-     * The following method will open a confirmation window to the user to confirm an action.
+     * This method is used for critical actions for instance if a ticket needs to be canceled, it needs a confirmation of user.
      * @param title // is the conformation windows title
      * @param message // is a question to the user if the user willing to confirm the action or not.
      * @param content // is more detail information about the actual action
      * @return // return a status of true or false which means if the user confirm the action or not.
+     * @author Habib Mohammad
      */
     public boolean confirmThisAction(String title, String message, String content){
         boolean confirm = false;
@@ -94,10 +96,10 @@ public class ErrorHandler {
     }
 
     /**
-     * Display error on screen by its tag
-     * @param label
-     * @param msg
-     * @param isError
+     * Display error or success message in the whole program
+     * @param label Label panel : Label
+     * @param msg message to display : String
+     * @param isError is an error? : boolean
      * @author Khabib. Developed by Sossio and Khabib.
      */
     public void displayMessage(Label label, String msg, boolean isError) {

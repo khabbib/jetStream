@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 
 /**
  * This class creates world map to application were the user can search for flight trips.
+ * @author Khabib
  */
 public class CreateWorld {
     static World world;
@@ -22,8 +23,9 @@ public class CreateWorld {
 
     /**
      * Build the world
-     * @param controller
-     * @return
+     * @param controller instance of control class
+     * @return world object
+     * @author Kasper
      */
     public World init(Controller controller, Db db) {
         this.controller = controller;
@@ -43,6 +45,12 @@ public class CreateWorld {
         return world;
     }
 
+    /**
+     * The method create world object for geography game
+     * @param geography instance of geography
+     * @return world object
+     * @author Kasper
+     */
     public World init(Geography geography) {
         this.controller = controller;
         world = WorldBuilder.create()
@@ -57,11 +65,15 @@ public class CreateWorld {
                 .zoomEnabled(true)
                 .selectionEnabled(true)
                 .build(geography);
-
         return world;
     }
 
-
+    /**
+     * The method add the map in user dashboard.
+     * @param scrollPane fxml element.
+     * @param user instance of User class.
+     * @author Kasper
+     */
     public void addWorldInMap(ScrollPane scrollPane, User user) {
         StackPane stackPane = new StackPane(world);
         stackPane.setStyle("-fx-background-color: #0E0E1B;");
@@ -71,8 +83,6 @@ public class CreateWorld {
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
-
         controller.username_lbl.setText(user.getFirstName());
-        //controller.u_id.setText(user.getUserId());
     }
 }

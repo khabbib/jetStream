@@ -16,36 +16,19 @@ import java.util.Objects;
  * This class manages booking system of seats.
  */
 public class SeatManager {
-    private static GridPane grid = new GridPane(); //Layout
     private static AnchorPane pane = new AnchorPane();
-    private static VBox seatBox = new VBox();
-    private static Label label = new Label();      // Label
+    private static GridPane grid = new GridPane();
     private static Label showSeat = new Label();
+    private static Label label = new Label();
+    private static VBox seatBox = new VBox();
+    private static String returnSeat;
     private static int height = 600;
     private static int width = 600;
     private static int pixel = 30;
-    private static String returnSeat;
-    private static int plat;
     private static Stage stage;
     private static Scene scene;
+    private static int plat;
 
-    /**
-     * @return
-     */
-    public static String addSeatPlace() {
-        stage = new Stage();
-        grid.setGridLinesVisible(true);
-        stage.initModality(Modality.WINDOW_MODAL);
-        stage.setTitle("Choose seat");
-        scene = new Scene(seatBox, width, height);
-        grid.setGridLinesVisible(true);
-        FillingLayoutWithLabels(80);
-        setupWindow();
-        stage.setScene(scene);
-        stage.show();
-
-        return returnSeat;
-    }
 
     private static HBox seatHbox;
     private static Label newSeat = new Label();

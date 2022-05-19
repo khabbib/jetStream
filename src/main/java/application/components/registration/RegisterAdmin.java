@@ -10,6 +10,7 @@ import java.sql.SQLException;
 
 /**
  * This class registers both users admins and handles errors.
+ *
  */
 public class RegisterAdmin {
     private Controller controller;

@@ -11,8 +11,7 @@ public class UserHistory {
                         flightid_col_table_historik, userId;
     private String      company_col_table_historik,model_col_table_historik,
                         rfc_col_table_historik, from_col_table_historik, to_col_table_historik,
-                        date_col_table_historik, seatno_col_table_historik, dep_date, des_date , dep_time, des_time;
-    private double      price_col_table_historik;
+                        date_col_table_historik, seatno_col_table_historik, dep_date, des_date , dep_time, des_time, price_col_table_historik;
     private CheckBox    select_col_table_historik;
     private boolean     checkedIn;
 
@@ -28,7 +27,7 @@ public class UserHistory {
      * @param to_col_table_historik destination name : string
      * @param seatno_col_table_historik seat number : string
      * @param date_col_table_historik date of ticket : string
-     * @param price_col_table_historik price of ticket : double
+     * @param price_col_table_historik price of ticket : String
      * @param dep_time departure time : string
      * @param des_time destination time : string
      * @param dep_date departure date : string
@@ -50,7 +49,7 @@ public class UserHistory {
         this.to_col_table_historik          = to_col_table_historik;
         this.seatno_col_table_historik      = seatno_col_table_historik;
         this.date_col_table_historik        = date_col_table_historik;
-        this.price_col_table_historik       = price_col_table_historik;
+        this.price_col_table_historik       = price_col_table_historik + " SEK";
         this.select_col_table_historik      = new CheckBox();
         this.dep_time                       = dep_time;
         this.des_time                       = des_time;
@@ -63,6 +62,18 @@ public class UserHistory {
     // ----- GETTER AND SETTERS ----- //
     public String getSeatno_col_table_historik() {
         return seatno_col_table_historik;
+    }
+
+    public int getNo_col_table_historik() {
+        return no_col_table_historik;
+    }
+
+    public String getCompany_col_table_historik() {
+        return company_col_table_historik;
+    }
+
+    public String getDate_col_table_historik() {
+        return date_col_table_historik;
     }
 
     public int getFlightid_col_table_historik() {
@@ -86,7 +97,7 @@ public class UserHistory {
     }
 
 
-    public double getPrice_col_table_historik() {
+    public String getPrice_col_table_historik() {
         return price_col_table_historik;
     }
 

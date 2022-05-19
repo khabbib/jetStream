@@ -27,7 +27,7 @@ public class Support {
      * This method sends specific email to chosen part such as report issue, feedback and contact.
      * Method also handles error if text fields is empty etc.
      * @param e is event listener for buttons
-     * @author Sossio and Khabib.
+     * @author Khabib developed by sossio.
      */
     public void supportInfo(ActionEvent e){
         System.out.println(e.getSource());

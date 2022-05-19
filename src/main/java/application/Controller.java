@@ -6,7 +6,7 @@ import application.components.flight.*;
 import application.components.initialize.InitializeFXM;
 import application.components.user.*;
 import application.components.login.ShowPasswordField;
-import application.components.reservation.Book;
+import application.components.flight.Book;
 import application.components.ticket.PurchaseHandler;
 import application.components.ticket.UserHistory;
 import application.components.registration.RegistrationUser;
@@ -22,7 +22,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -37,7 +36,6 @@ import worldMapAPI.World;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.sql.*;
 import java.text.ParseException;
 import java.util.*;
@@ -46,7 +44,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * This class is main class which connects all components, methods and variables together with FXML.
  */
-public class Controller implements Initializable {
+public class Controller {
 
     //<editor-fold desc="========= GLOBAL VARIABLES =========" >
     //<editor-fold desc="======== LOGIN WINDOW VARIABLES ========">
@@ -804,7 +802,9 @@ public class Controller implements Initializable {
     //----------------- Support -----------------//
 
     /**
-     * @param e
+     * This method redirect us to support class which handle support events.
+     * @param e events
+     * @author Habib
      */
     public void support_event_handler(ActionEvent e){
         support.supportInfo(e);
@@ -814,7 +814,8 @@ public class Controller implements Initializable {
     //----------------- History  -----------------//
 
     /**
-     *
+     * The method fill information into user history table in user dashboard.
+     * @author Habib
      */
     public void setInfoIntoTableHistorik(){ // the method calls from user dashboard to load everything.
         history_single_delete_button = (Button) root.lookup("#history_single_delete_button");
@@ -889,6 +890,10 @@ public class Controller implements Initializable {
 
     }
 
+    /**
+     * This method display the actual ticket in "My Ticket" window for checking or further more functions that a user can do with it's ticket.
+     * @author Habib
+     */
     public void pickTicketForDetailes(){
         System.out.println("rfc: " + rfc_smp_history.getText());
         ArrayList<UserHistory> list = db.searchDataForTableHistory( -1, rfc_smp_history.getText(), false);
@@ -901,6 +906,7 @@ public class Controller implements Initializable {
     /**
      * separated method to use multiple times
      * it will update the historic table in user dashboard everytime an action happen or user want to navigate to the panel etc.
+     * @author Habib
      */
     public void updateDashboardInfo(){
         ArrayList<UserHistory> list = db.searchDataForTableHistory(Integer.parseInt(user.getUserId()), null , false);
@@ -912,6 +918,7 @@ public class Controller implements Initializable {
     /**
      * the method will handle delete option in history panel.
      * @param e event
+     * @author Habib
      */
     public void userRemoveHistory(ActionEvent e){
         if (history_tableview.getItems().size() > 0){ // check if there is any items before running the operation.
@@ -987,7 +994,7 @@ public class Controller implements Initializable {
             }
         }
     }
-       public void removeTicket_admin(ActionEvent e) throws SQLException {
+    public void removeTicket_admin(ActionEvent e) throws SQLException {
          if (table_tickets.getItems().size() > 0) { // check if there is any items before running the operation.
                if (e.getSource() == deleteTicketBtn_ticket_admin) { // if single remove button clicked
                    items_ticket_admin = table_tickets.getItems(); // get the whole tables items into an observable list to compare.
@@ -1012,7 +1019,7 @@ public class Controller implements Initializable {
 
            }
        }
-       public void removeFlight_admin(ActionEvent e) throws SQLException {
+    public void removeFlight_admin(ActionEvent e) throws SQLException {
        if (table_flight_admin.getItems().size() > 0) { // check if there is any items before running the operation.
             if (e.getSource() == delete_singelFlightBtn_admin) { // if single remove button clicked
                 items_flight_admin = table_flight_admin.getItems(); // get the whole tables items into an observable list to compare.
@@ -1037,8 +1044,5 @@ public class Controller implements Initializable {
         }
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
 
-    }
 }
