@@ -1994,7 +1994,7 @@
                                                 <Insets right="20.0" />
                                              </padding>
                                           </HBox>
-                                          <Button fx:id="search_input_flight" graphicTextGap="6.0" mnemonicParsing="false" onAction="#searchFlight" prefHeight="38.0" prefWidth="142.0" style="-fx-background-color: #ff7000;" text="Search flight" textFill="WHITE">
+                                          <Button fx:id="search_input_flight" graphicTextGap="6.0" mnemonicParsing="false" onAction="#advanceSearch" prefHeight="38.0" prefWidth="142.0" style="-fx-background-color: #ff7000;" text="Search flight" textFill="WHITE">
                                              <padding>
                                                 <Insets bottom="10.0" left="25.0" right="25.0" top="10.0" />
                                              </padding>
