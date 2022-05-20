@@ -90,7 +90,7 @@ public class Controller {
     public ObservableList<Flight> fetchedList_flight_admin, items_flight_admin;
     @FXML public Button delete_singelFlightBtn_admin, delete_allFlightsBtn_admin, refreshFlightsBtn_admin, addFlightsBtn_admin, search_input_flight_admin;
     @FXML public TableView<Flight> table_flight_admin;
-    @FXML public CheckBox select_all_box_flight_admin, select_col_flight_admin;
+    @FXML public CheckBox  select_col_flight_admin;
     @FXML public TextField from_input_flight_admin, disc_input_flight_admin;
     //</editor-fold>
     //</editor-fold>

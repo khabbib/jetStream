@@ -23,10 +23,19 @@ import javafx.util.Duration;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * This class is responsible for almost every command in the admin-dashboard
+ * @author Obed
+ */
 public class AdminControl {
     private Controller controller;
     private Db db;
 
+    /**
+     * The constructor of this class runs instans of controller and database
+     * @param controller
+     * @param db
+     */
     public AdminControl(Controller controller, Db db) {
         this.controller = controller;
         this.db = db;
@@ -80,6 +89,7 @@ public class AdminControl {
      * There is also a updated object inside the metod, that updates the tableview if refresh button is selected
      *  @param root
      * @throws SQLException
+     * @author Obed
      */
     public void fillMemmbersTable(Parent root) throws SQLException {
 
@@ -146,7 +156,11 @@ public class AdminControl {
 
     }
 
-    //This metod updates membertabel
+    /**
+     *This metod takes the newly updated userr table in database then updates members table with it
+     * @throws SQLException
+     * @author Obed
+     */
     public void updateMemberTable() throws SQLException {
         ArrayList<User> list = db.getAllUsers();
 
@@ -154,6 +168,12 @@ public class AdminControl {
         controller.table_member_admin.setItems(controller.items_member_admin);
     }
 
+    /**
+     * This metod files every column in table ticket with infomation from database
+     * @param root
+     * @throws SQLException
+     * @author Obed
+     */
     public void fillTicketTable(Parent root) throws SQLException {
 
         controller.select_col_ticket_admin = (CheckBox) root.lookup("#select_col_ticket_admin");
@@ -224,9 +244,16 @@ public class AdminControl {
         controller.table_tickets.setItems(controller.items_ticket_admin);
     }
 
+    /**
+     * This metod fills flightView with infomation from flight in the database.
+     * This metod even generates checkboxes for the last column in the table
+     * @param root
+     * @throws SQLException
+     * @author Obed
+     */
     public void fillTableFlights(Parent root) throws SQLException {
 
-        controller.select_all_box_flight_admin = (CheckBox) root.lookup("#select_col_flight_admin");
+        controller.select_col_flight_admin = (CheckBox) root.lookup("#select_col_flight_admin");
         controller.delete_singelFlightBtn_admin = (Button) root.lookup("#delete_singelFlightBtn_admin");
         controller.table_flight_admin = (TableView<Flight>) root.lookup("#table_flight_admin");
 
@@ -239,9 +266,9 @@ public class AdminControl {
         controller.table_flight_admin.getColumns().get(6).setCellValueFactory(new PropertyValueFactory<>("destination_date"));
         controller.table_flight_admin.getColumns().get(7).setCellValueFactory(new PropertyValueFactory<>("destination_time"));
         controller.table_flight_admin.getColumns().get(8).setCellValueFactory(new PropertyValueFactory<>("price"));
-        controller.table_flight_admin.getColumns().get(9).setCellValueFactory(new PropertyValueFactory<>("rTur"));
+       // controller.table_flight_admin.getColumns().get(9).setCellValueFactory(new PropertyValueFactory<>("rTur"));
         controller.table_flight_admin.getColumns().get(9).setCellValueFactory(new PropertyValueFactory<>("p_id"));
-        controller.table_flight_admin.getColumns().get(10).setCellValueFactory(new PropertyValueFactory<>("box"));
+        controller.table_flight_admin.getColumns().get(10).setCellValueFactory(new PropertyValueFactory<>("select_col_flight_admin"));
 
 
         controller.table_flight_admin.getSelectionModel().selectedItemProperty().addListener((ObservableList, oldValue, newValue) -> {
@@ -290,16 +317,16 @@ public class AdminControl {
 
     }
 
+    /**
+     * This metod updates flights tableview with infomation from flight in database
+     * @throws SQLException
+     * @author Obed
+     */
     public void updateFlightTable() throws SQLException {
         ArrayList<Flight> list = db.getAllFlights();
 
         controller.items_flight_admin = FXCollections.observableArrayList(list);
         controller.table_flight_admin.setItems(controller.items_flight_admin);
     }
-
-
-
-
-
 
 }

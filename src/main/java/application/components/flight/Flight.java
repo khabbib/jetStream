@@ -9,7 +9,7 @@ public class Flight {
     private int size = 1;
     private String id, departure_name, destination_name, departure_date, destination_date,  departure_time, destination_time, price, p_id;
     private boolean rTur = false;
-    private CheckBox box;
+    private CheckBox select_col_flight_admin;
 
     /**
      * Constructor to Flight
@@ -37,7 +37,7 @@ public class Flight {
         this.destination_time = destination_time;
         this.price = price;
         this.p_id = p_id;
-        this.box = new CheckBox();
+        this.select_col_flight_admin = new CheckBox();
     }
 
     // ----- GETTER AND SETTERS ----- //
@@ -75,7 +75,7 @@ public class Flight {
     }
     public CheckBox getFlightBox()
     {
-        return box;
+        return select_col_flight_admin;
     }
     public boolean isrTur() {
         return rTur;
