@@ -262,9 +262,10 @@ public class Db {
     }
 
     /**
-     * @return
-     * @throws SQLException
-     * @autor Khabib and Obed.
+     * The method fetch a list of all users in database in admin page.
+     * @throws SQLException Sql exception.
+     * @return return a list of users.
+     * @autor Obed.
      */
     public ArrayList<User> getAllUsers() throws SQLException {
         ArrayList<User> userlist = new ArrayList<>();
@@ -402,10 +403,13 @@ public class Db {
     // ------------------------- SEARCH FLIGHTS ------------------------- //
 
     /**
-     * @param departure
-     * @param destination
-     * @param date
-     * @return
+     * The method fetch flights and return a list of flights based on advanced search.
+     * @param departure departure name.
+     * @param destination destination name.
+     * @param date tur date.
+     * @param dateR return date.
+     * @return list of flights.
+     * @author Khabib.
      */
     public ArrayList<Flight> searchFlight(String departure, String destination, String date, String dateR) {
         ArrayList<Flight> flights = new ArrayList<>();
@@ -487,8 +491,10 @@ public class Db {
     }
 
     /**
-     * @param name
-     * @return
+     * The method fetch flights based on country name.
+     * @param name country name.
+     * @return a list of flights.
+     * @author Khabib.
      */
     public ArrayList<Flight> seachFlightFromSearchField(String name) {
         ArrayList<Flight> flights = new ArrayList<>();
@@ -524,13 +530,15 @@ public class Db {
     }
 
     /**
-     * @param u_id
-     * @param flight_id
-     * @param seatNbr
-     * @param business
-     * @return
+     * The method will save purchased ticket in database.
+     * @param u_id user's id.
+     * @param flight_id flight's id.
+     * @param seatNbr seat number.
+     * @param business is business?
+     * @return return status of saved database.
+     * @author Khabib.
      */
-    public  boolean savePurchasedTicket(String u_id, String flight_id, String rfc, String date, String seatNbr, boolean business) {
+    public boolean savePurchasedTicket(String u_id, String flight_id, String rfc, String date, String seatNbr, boolean business) {
         boolean saved = false;
         try {
 
@@ -612,7 +620,11 @@ public class Db {
         con.close();
     }
 
-    // Obed's part
+    /**
+     * The method fetch all flights.
+     * @return return a list of all flights that exist.
+     * @author Obed.
+     */
     public ArrayList<Flight> getAllFlights() {
         ArrayList<Flight> flights = new ArrayList<>();
         try {
@@ -646,11 +658,11 @@ public class Db {
         return flights;
     }
 
-
-
     /**
-     * @param userID
-     * @return
+     * The method fetch specific information about booked tickets for specific user.
+     * @param userID user's id.
+     * @return return a list of flights.
+     * @author Khabib & Kasper.
      */
     public ArrayList<UserHistory> searchDataForTableHistory(int userID, String rfc, boolean isAdmin) {
         ArrayList<UserHistory> flights = new ArrayList<>();
@@ -700,8 +712,10 @@ public class Db {
     }
 
     /**
-     * @param rfc
-     * @return
+     * The method delete a specific booked ticket.
+     * @param rfc reference number to ticket.
+     * @return return status of delete.
+     * @author Khabib.
      */
     public boolean deleteHistoryByRFC(String rfc) {
         boolean deleted = false;
@@ -721,11 +735,10 @@ public class Db {
         return deleted;
     }
 
-
     /**
-     * This metod deletes member at the column that has the request id
+     * This method deletes member at the column that has the request id.
      * @param id_col_mbr_admin
-     * @return
+     * @return return status of delete.
      * @author Obed
      */
     public boolean deleteMember(String id_col_mbr_admin) {
@@ -745,7 +758,12 @@ public class Db {
         return deleted;
     }
 
-
+    /**
+     * The method will delete a flight based on flight's id by an Admin.
+     * @param f_id flight's id.
+     * @return return status of delete.
+     * @author Obed.
+     */
     public boolean deleteFlight(String f_id) {
         boolean deleted = false;
         try {
@@ -763,6 +781,12 @@ public class Db {
         return deleted;
     }
 
+    /**
+     * The method will delete a ticket based on reference number by an Admin.
+     * @param b_rfc reference number.
+     * @return return status of delete.
+     * @author Obed.
+     */
     public boolean deleteTicket(String b_rfc) {
         boolean deleted = false;
         try {
@@ -781,7 +805,9 @@ public class Db {
     }
 
     /**
-     * @return
+     * The method generate a random unique reference number for each ticket.
+     * @return return value of generated RFC.
+     * @author Khabib & Sossio.
      */
     public static StringBuilder generateRandomRFC() {
         StringBuilder s = new StringBuilder();
@@ -797,20 +823,20 @@ public class Db {
         return s;
     }
 
-    // not used
 
     /**
-     * To fetch seats number
-     * @param id
-     * @return
+     * The method fetch all seats available for a specific flight based on flight's id.
+     * @param flightId flight's id.
+     * @return return list of business and economy seats.
+     * @author Khabib.
      */
-    public  int[] getSeatNumber(String id) {
+    public int[] getSeatNumber(String flightId) {
         int[] seats = new int[2];
         try {
             java.sql.Connection con = Db.getDatabaseConnection();
             Statement stmt = con.createStatement();
             stmt.executeUpdate("SET search_path TO jetstream;");
-            ResultSet rs = stmt.executeQuery("select * from seats where f_id = '"+ id+"'");
+            ResultSet rs = stmt.executeQuery("select * from seats where f_id = '"+ flightId+"'");
             while (rs.next()){
                 int eco_seats = rs.getInt("p_seat_business");
                 int bus_seats = rs.getInt("p_seat_economy");
