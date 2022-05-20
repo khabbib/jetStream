@@ -53,7 +53,7 @@ public class FlightsViewManager {
      */
     public void resetSearchCountry() {
         controller.search_f_name.setText(null);
-        controller.search_list_appear.setVisible(false);
+        controller.search_list_suggestion.setVisible(false);
     }
 
 

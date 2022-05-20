@@ -230,7 +230,7 @@ public class InitializeFXM {
         controller.booking_email_textfield = (TextField) root.lookup("#booking_email_textfield");
         //controller.u_id = (Label) root.lookup("#u_id");
         controller.return_date_pick_hbox = (HBox)root.lookup("return_date_pick_hbox");
-        controller.search_list_appear = (ListView<String>) root.lookup("#searchListAprear");
+        controller.search_list_suggestion = (ListView<String>) root.lookup("#searchListAprear");
         controller.search_list_appear_second = (ListView<String>) root.lookup("#searchListAprear2");
         controller.search_list_appear_third = (ListView<String>) root.lookup("#searchListAprear3");
 

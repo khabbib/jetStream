@@ -194,7 +194,7 @@ public class Controller {
     //</editor-fold
     //<editor-fold desc="======== SEARCH VARIABLES ========">
     @FXML public Button date_previous_day_button, date_next_day_button, date_previous_day_return_button, date_next_day_return_button;
-    @FXML public ListView<String> search_list_appear, search_list_appear_second, search_list_appear_third;
+    @FXML public ListView<String> search_list_suggestion, search_list_appear_second, search_list_appear_third;
     @FXML public TextField from_input_flight_textfield, display_input_flights, search_f_name;
     @FXML public Label nbr_of_available_flights, search_flight_error_lbl;
     public ArrayList<Flight> available_flights_list = new ArrayList<>();
@@ -531,7 +531,7 @@ public class Controller {
      * Shows available profile images using a grid.
      * @author Kasper.
      */
-    public void changeImage() {
+    public void changeProfileImage() {
         profileManager.changeImage(this);
     }
 
@@ -540,7 +540,7 @@ public class Controller {
      * @param event event.
      * @author Kasper. Developed by Sossio.
      */
-    public void clickGrid(MouseEvent event) {
+    public void profileImageClickGrid(MouseEvent event) {
         profileManager.clickGrid(event,this);
     }
 
@@ -628,7 +628,7 @@ public class Controller {
      * The method change value of departure with destination.
      * @author Khabib.
      */
-    public void change_search_info(){
+    public void changeSearchInfo(){
         if (from_input_flight_textfield != null || display_input_flights != null ){
             String from = from_input_flight_textfield.getText();
             String to = display_input_flights.getText();
@@ -644,30 +644,30 @@ public class Controller {
      * The method validate and control search recommendation on key pressed.
      * @author Khabib.
      */
-    public void searchAppear(){
+    public void searchAlternativeSuggestion(){
         if (search_f_name != null){
             ObservableList<String> searchAprear = FXCollections.observableList(propareSearchTerm(search_f_name.getText().toLowerCase()));
             if (!searchAprear.isEmpty()){
-                if (search_list_appear != null){
-                    search_list_appear.getItems().removeAll();
+                if (search_list_suggestion != null){
+                    search_list_suggestion.getItems().removeAll();
                 }
-                search_list_appear.setVisible(true);
-                search_list_appear.setItems(searchAprear);
-                search_list_appear.getSelectionModel().selectedItemProperty().addListener(e ->{
-                    search_f_name.setText(search_list_appear.getSelectionModel().getSelectedItem());
-                        search_list_appear.setVisible(false);
+                search_list_suggestion.setVisible(true);
+                search_list_suggestion.setItems(searchAprear);
+                search_list_suggestion.getSelectionModel().selectedItemProperty().addListener(e ->{
+                    search_f_name.setText(search_list_suggestion.getSelectionModel().getSelectedItem());
+                        search_list_suggestion.setVisible(false);
             });
             }
         }
 
-        hidePopupSearch(search_f_name.getText(), search_list_appear);
+        hidePopupSearch(search_f_name.getText(), search_list_suggestion);
     }
 
     /**
      * The method handle the departure search recommendation.
      * @author Khabib.
      */
-    public void departureNameAppear(){
+    public void departureSuggestions(){
         if (from_input_flight_textfield != null){
             ObservableList<String> searchAprear = FXCollections.observableList(propareSearchTerm(from_input_flight_textfield.getText().toLowerCase()));
             System.out.println("Typed ===== " + from_input_flight_textfield.getText());
@@ -692,7 +692,7 @@ public class Controller {
      * The method handle the destination search recommendation.
      * @author Khabib.
      */
-    public void destinationNameAppear(){
+    public void destinationSuggestions(){
         if (display_input_flights != null){
             ObservableList<String> searchAprear = FXCollections.observableList(propareSearchTerm(display_input_flights.getText().toLowerCase()));
             if (!searchAprear.isEmpty()){
