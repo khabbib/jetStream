@@ -2,6 +2,7 @@ package application.eventHandler;
 
 import application.Controller;
 import application.ErrorHandler;
+import application.components.flight.FlightsViewManager;
 import application.components.ticket.CardValidation;
 import javafx.event.ActionEvent;
 
@@ -16,13 +17,15 @@ import java.time.format.DateTimeFormatter;
 public class UserEvent {
     public String rfc;
     private ErrorHandler errorHandler;
-
+    private FlightsViewManager flightsViewManager;
     /**
      * Constructor for UserEvent
      * @param controller refer to control class to know each other
      */
-    public UserEvent(Controller controller) {
+    public UserEvent(Controller controller, FlightsViewManager flightsViewManager) {
         errorHandler = new ErrorHandler(controller);
+        this.flightsViewManager = flightsViewManager;
+
     }
 
     /**
@@ -318,7 +321,7 @@ public class UserEvent {
                                     controller.booking_price_lbl.setText(null);
 
                                     // clear the operation - preperBeforeCreatingSeats
-                                    boolean build = controller.preperBeforeCreatingSeats();
+                                    boolean build = flightsViewManager.preperBeforeCreatingSeats();
                                     if (build){
                                         controller.booking_departure_lbl.setText(controller.round_trip_flights.get(0).getDeparture_name());
                                         controller.booking_destination_lbl.setText(controller.round_trip_flights.get(0).getDestination_name());
@@ -327,7 +330,7 @@ public class UserEvent {
                                         controller.booking_flight_number_lbl.setText(controller.round_trip_flights.get(0).getId());
                                         controller.seat_price = Double.parseDouble(controller.round_trip_flights.get(0).getPrice());
                                         controller.booking_price_lbl.setText(String.valueOf(controller.seat_price));
-                                        controller.createThisSeat(controller.round_trip_flights, 0);
+                                        flightsViewManager.createThisSeat(controller.round_trip_flights, 0);
                                         controller.round_trip_flights.clear();
                                     }
                                 } else {

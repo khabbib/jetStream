@@ -626,9 +626,9 @@ public class World extends Region {
 
                         flights = db.seachFlightFromSearchField(convert(COUNTRY_NAME));
                         if (!flights.isEmpty()){
-                            controller.fillFlights(flights);
+                            controller.fetchFlights(flights);
                         }else {
-                            controller.fillFlights(null);
+                            controller.fetchFlights(null);
                         }
                     } else {
                         System.out.println("country");

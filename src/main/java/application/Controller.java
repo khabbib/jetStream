@@ -22,7 +22,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -30,7 +29,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import worldMapAPI.World;
 
@@ -252,7 +250,6 @@ public class Controller {
     public Db db;
     //</editor-fold>
 
-    //----------------- HOME -----------------//
 
     /**
      * Constructor to Controller class
@@ -273,10 +270,10 @@ public class Controller {
         profileManager = new ProfileManager();
         password = new ShowPasswordField();
         adminControl = new AdminControl(this, db);
-        userEvent = new UserEvent(this);
         adminEvent = new AdminEvent();
         purchaseHandler = new PurchaseHandler();
         flightsViewManager = new FlightsViewManager(this);
+        userEvent = new UserEvent(this, flightsViewManager);
         bgMusic = new BgMusic(this);
         systemSound = new SystemSound(this);
     }
@@ -306,7 +303,7 @@ public class Controller {
      * @param country is selected country.
      * @throws IOException io exception
      * @throws InterruptedException
-     * Author Kasper.
+     * @author Kasper.
      */
     public void forecast(String country) throws IOException, InterruptedException {
         weatherAPI.setInformation(this,country);
@@ -423,7 +420,7 @@ public class Controller {
      * @author Sossio.
      */
     public void resetSearchFromTo() {
-        flightsViewManager.resetSearchFromTo(this);
+        flightsViewManager.resetSearchFromTo();
     }
 
     /**
@@ -431,7 +428,7 @@ public class Controller {
      * @author Sossio.
      */
     public void resetSearchCountry() {
-        flightsViewManager.resetSearchCountry(this);
+        flightsViewManager.resetSearchCountry();
     }
 
     /**
@@ -504,86 +501,12 @@ public class Controller {
      * @param flights a list of flights from database
      * @author Khabib
      */
-    public void fillFlights (ArrayList <Flight> flights) {
-        flightsViewManager.fillFlights(flights,this);
+    public void fetchFlights(ArrayList <Flight> flights) {
+        flightsViewManager.fetchFlights(flights);
     }
 
-    /**
-     * The method take a specific flight's seats and display it in the application
-     * @param flights
-     * @param finalI1
-     */
-    public void createThisSeat(ArrayList<Flight> flights, int finalI1) {
-        flightsViewManager.createThisSeat(flights,finalI1,this);
-    }
 
-    public boolean preperBeforeCreatingSeats() {
-        return flightsViewManager.preperBeforeCreatingSeats(this);
-    }
 
-    // check if there is any flight for searched name
-    public boolean checkFlightExistance(ArrayList<Flight> flights) {
-        return flightsViewManager.checkFlightExistance(flights,this);
-    }
-
-    // create content of the flights list
-    public HBox createFlightsContent(ArrayList<Flight> flights, int i) {
-        return flightsViewManager.createFlightsContent(flights,i);
-    }
-
-    // fill information to seat pnl.
-    public void fillInfoSeatPnl(ArrayList<Flight> flights, int finalI1) {
-        flightsViewManager.fillInfoSeatPnl(flights,finalI1,this);
-    }
-
-    /**
-     * create seats
-     * @param econonySeats
-     * @param businessSeats
-     */
-    public boolean chooseSeat(int econonySeats, int businessSeats) throws InterruptedException {
-        return flightsViewManager.chooseSeat(econonySeats,businessSeats,this);
-    }// the method will show the chosen seat on the screen
-
-    /**
-     * @param columnIndex
-     * @param rowIndex
-     * @param business
-     */
-    public void build_eco_seats(int rowIndex, int columnIndex, boolean business) {
-        flightsViewManager.build_eco_seats(rowIndex,columnIndex,business,this);
-    }
-
-    /**
-     *
-     */
-    public void toggleSeatColor() {
-        for (int ge = 0; ge < economy_seat_gridpane.getChildren().size(); ge++){ // ge store for grid-economy
-            if (!taken_seat_economy.contains(economy_seat_gridpane.getChildren().get(ge).getId())){
-                economy_seat_gridpane.getChildren().get(ge).setOpacity(1);
-                //gridE.getChildren().get(ge).setStyle("-fx-background-color: #AEFF47; -fx-background-radius: 5; -fx-opacity: 1;"); // restore all seats
-            }
-        }
-        for (int gb = 0; gb < business_seat_gridpane.getChildren().size(); gb++){ // gb stor for grid-business
-            if (!taken_seat_business.contains(business_seat_gridpane.getChildren().get(gb).getId())){
-                business_seat_gridpane.getChildren().get(gb).setOpacity(1);
-                //gridB.getChildren().get(gb).setStyle("-fx-background-color: #AEFF47; -fx-background-radius: 5; -fx-opacity: 1;"); // restore all seats
-            }
-        }
-    }
-
-    /**
-     * @return
-     */
-    public Label createSeatItem(){
-        Label label = new Label();
-        label.setMinWidth(30);
-        label.setMinHeight(30);
-        label.setText(label.getId());
-        label.setBackground(new Background(new BackgroundFill(Color.WHITE, new CornerRadii(5), Insets.EMPTY)));
-        label.setBorder(new Border(new BorderStroke(Color.WHITE, BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(0))));
-        return label;
-    }
 
 
     /**
@@ -614,7 +537,7 @@ public class Controller {
 
     /**
      * Edits the profile picture of a user.
-     * @param event
+     * @param event event.
      * @author Kasper. Developed by Sossio.
      */
     public void clickGrid(MouseEvent event) {
@@ -623,13 +546,18 @@ public class Controller {
 
     /***
      * Plays or pauses music on dashboard.
-     * @param e
+     * @param e event.
      * @author Kasper.
      */
     public void mediaHandler(ActionEvent e) {
         bgMusic.mediaHandler(e);
     }
 
+    /**
+     * The method validate and confirm the tickets purchase.
+     * @param rfc reference number to ticket.
+     * @author Khabib.
+     */
     public void confirmPurchase(String rfc) {
         purchaseHandler.confirmPurchase(rfc,this);
     }
@@ -665,36 +593,42 @@ public class Controller {
         adminEvent.adminDashboardEventHandler(e,this);
     }
 
-    //----------------- SEARCH FLIGHTS -----------------//
 
     /**
-     * @param e
+     * The method search flights based on filters and date.
+     * @param e event.
+     * @author Khabib.
      */
-    public void searchFlight(ActionEvent e) {
-        search.searchFlight();
+    public void advanceSearch(ActionEvent e) {
+        search.advanceSearch();
     }
 
 
-
+    /**
+     * The method handle the checkbox for return trip.
+     * @param e event.
+     * @author Khabib
+     */
     public void checkboxEvent(ActionEvent e){
         search.checkboxEvent(e);
     }
-    //----------------- SEARCH FIELD -----------------//
+
+
 
     /**
-     *
+     * The method called from GUI on enter and mouse clicked.
+     * @author Khabib.
      */
     public void searchHit(){
         search.searchHit();
     }
 
 
-
     /**
-     *
+     * The method change value of departure with destination.
+     * @author Khabib.
      */
     public void change_search_info(){
-
         if (from_input_flight_textfield != null || display_input_flights != null ){
             String from = from_input_flight_textfield.getText();
             String to = display_input_flights.getText();
@@ -707,7 +641,7 @@ public class Controller {
     }
 
     /**
-     * On key pressed search and show name.
+     * The method validate and control search recommendation on key pressed.
      * @author Khabib.
      */
     public void searchAppear(){
@@ -730,7 +664,7 @@ public class Controller {
     }
 
     /**
-     * On key pressed search and show name.
+     * The method handle the departure search recommendation.
      * @author Khabib.
      */
     public void departureNameAppear(){
@@ -755,7 +689,7 @@ public class Controller {
     }
 
     /**
-     * On key pressed search and show name.
+     * The method handle the destination search recommendation.
      * @author Khabib.
      */
     public void destinationNameAppear(){
@@ -778,8 +712,9 @@ public class Controller {
     }
 
     /**
-     * @param text
-     * @param popupWindow
+     * The method hide/visible the popup search recommendation on search key.
+     * @param text search term.
+     * @param popupWindow javaFX element : ListView
      * @author Khabib and Sossio.
      */
     public void hidePopupSearch(String text, ListView popupWindow) {
@@ -789,24 +724,28 @@ public class Controller {
     }
 
     /**
-     * @param srch
-     * @return
+     * The method validate search key.
+     * @param searchkey search key.
+     * @return list of country name.
+     * @author Khabib
      */
-    private ArrayList<String> propareSearchTerm(String srch){
+    private ArrayList<String> propareSearchTerm(String searchkey){
         ArrayList<String> obs;
-        if (srch.length() > 1){
-            String searchTarget = srch.substring(0, 1).toUpperCase() + srch.substring(1); // convert first character to Uppercase
+        if (searchkey.length() > 1){
+            String searchTarget = searchkey.substring(0, 1).toUpperCase() + searchkey.substring(1); // convert first character to Uppercase
             obs = compareSearchKey(searchTarget);
         }else {
-            String searchTarget = srch.toUpperCase();
+            String searchTarget = searchkey.toUpperCase();
             obs = compareSearchKey(searchTarget);
         }
         return obs;
     }
 
     /**
-     * @param searchTargetKey
-     * @return
+     * The method compare searched key and recommend a country name based on country list.
+     * @param searchTargetKey searched key.
+     * @return list of names.
+     * @author Khabib.
      */
     private ArrayList<String> compareSearchKey(String searchTargetKey) {
         ArrayList<String> obs  = new ArrayList<>();
