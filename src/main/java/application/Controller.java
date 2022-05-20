@@ -42,6 +42,7 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
+ * #move ---> There is methods that can be separated from controller to new or exiting class.
  * This class is main class which connects all components, methods and variables together with FXML.
  */
 public class Controller {
@@ -819,8 +820,9 @@ public class Controller {
     //----------------- History  -----------------//
 
     /**
+     * #move
      * The method fill information into user history table in user dashboard.
-     * @author Habib
+     * @author Habib.
      */
     public void setInfoIntoTableHistorik(){ // the method calls from user dashboard to load everything.
         history_single_delete_button = (Button) root.lookup("#history_single_delete_button");
@@ -921,9 +923,10 @@ public class Controller {
     }
 
     /**
-     * the method will handle delete option in history panel.
+     * #move
+     * The method will handle delete option in history panel.
      * @param e event
-     * @author Habib
+     * @author Habib.
      */
     public void userRemoveHistory(ActionEvent e){
         if (history_tableview.getItems().size() > 0){ // check if there is any items before running the operation.
@@ -970,10 +973,11 @@ public class Controller {
     }
 
     /**
+     * #move
      * This metod deletes member from database if deletebutton is selected
      * @param e
      * @throws SQLException
-     * @author Obed
+     * @author Obed.
      */
     public void removeMember_admin(ActionEvent e) throws SQLException {
         if (table_member_admin.getItems().size() > 0) { // check if there is any items before running the operation.

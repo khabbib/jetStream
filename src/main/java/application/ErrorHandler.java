@@ -12,8 +12,7 @@ import javafx.util.Duration;
 import java.util.Optional;
 
 /**
- * #comment (comment this class and create javadoc to every method)
- *  This class is used to warn if the user really want to confirm an action.
+ * This class is used to warn if the user really want to confirm an action.
  */
 public class ErrorHandler {
     private Controller controller;
@@ -63,7 +62,7 @@ public class ErrorHandler {
      * This method validates the input from text fields and checks if it's limitation is correct.
      * @param textField comes from fxml text field id.
      * @param limitType indicates which text shall be validated.
-     * @return true if its okay.
+     * @return true if it's okay.
      * @author Sossio.
      */
     public static boolean validateInputLimit(TextField textField, String limitType) {
@@ -116,7 +115,7 @@ public class ErrorHandler {
             pause.setOnFinished(a -> label.setText(null));
             pause.play();
         }else {
-            System.out.println("SUCESS REGISTRATION! display msg on screen!");
+            System.out.println("SUCCESS REGISTRATION! display msg on screen!");
         }
     }
 }

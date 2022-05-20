@@ -263,7 +263,7 @@ public class ProfileManager {
             System.out.println(profilePic);
 
             try {
-                controller.db.setProfilePictureIdk(profilePic, controller.user);
+                controller.db.updateProfilePicture(profilePic, controller.user);
             } catch (SQLException e) {
                 e.printStackTrace();
             }

@@ -1,6 +1,5 @@
 package application.api;
 
-import application.Controller;
 import application.components.flight.Flight;
 import application.components.user.User;
 import application.components.ticket.UserHistory;
@@ -10,12 +9,14 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
 
-/***
- * Handles all connections with database.
+
+/**
+ * This class is head class to communicate with database.
  */
 public class Db {
+
     /**
-     * Get the database connection.
+     * This method gets the database connection.
      * @return connection of the database.
      * @author Sossio.
      */
@@ -74,10 +75,15 @@ public class Db {
     }
 
     /**
-     * Registers a new user.
-     * @param
-     * @return
-     * @throws SQLException
+     * This method registers a new user.
+     * @param first_name_reg first name of user.
+     * @param last_name_reg last name of user.
+     * @param address_reg address.
+     * @param email_reg email.
+     * @param phone_number_reg phone number.
+     * @param password_reg password (which then will be crypted).
+     * @param isAdmin boolean (default is false).
+     * @return boolean statement if its true or either false.
      * @author Khabib. Developed by Sossio.
      */
     public boolean saveUser(String first_name_reg, String last_name_reg, String address_reg, String email_reg, String phone_number_reg, String password_reg, boolean isAdmin){
@@ -107,7 +113,7 @@ public class Db {
                 while (rs.next()){
                     user = new User(rs.getString("u_id"), rs.getString("u_l_name"), rs.getString("u_f_name"), rs.getString("u_address"), rs.getString("u_email"), rs.getString("u_phone_nr"), rs.getString("u_password"), rs.getBoolean("u_isAdmin"), 0);
                     try {
-                        setProfilePictureIdk("resources/application/image/user.png", user);
+                        updateProfilePicture("resources/application/image/user.png", user);
                     } catch (SQLException ex) {
                         ex.printStackTrace();
                     }
@@ -125,10 +131,10 @@ public class Db {
     }
 
     /**
-     * // Old one --> stmt.executeUpdate("UPDATE userr SET u_f_name = '" + user.getFirstName() + "', u_l_name = '" + user.getLastName() + "', u_address = '" + user.getAddress() + "', u_email = '" + user.getEmail() + "', u_phone_nr = '" + user.getPhoneNumber() + "', u_password = '" + user.getPassword() + "'  WHERE u_id = " + user.getUserId() + ";");
+     * This method updates user firstname in database.
      * @param user takes as a parameter to edit user information.
      * @throws SQLException if any sql issue occurs.
-     * @author Kasper. Developed by Sossio.
+     * @author Sossio.
      */
     public void updateUserFirstName(User user) throws SQLException {
         java.sql.Connection con = getDatabaseConnection();
@@ -138,6 +144,13 @@ public class Db {
         con.close();
         stmt.close();
     }
+
+    /**
+     * This method updates user lastname in database.
+     * @param user takes as a parameter to edit user information.
+     * @throws SQLException if any sql issue occurs.
+     * @author Sossio.
+     */
     public void updateUserLastName(User user) throws SQLException {
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
@@ -146,6 +159,13 @@ public class Db {
         con.close();
         stmt.close();
     }
+
+    /**
+     * This method updates user address in database.
+     * @param user takes as a parameter to edit user information.
+     * @throws SQLException if any sql issue occurs.
+     * @author Sossio.
+     */
     public void updateUserAddress(User user) throws SQLException {
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
@@ -154,6 +174,13 @@ public class Db {
         con.close();
         stmt.close();
     }
+
+    /**
+     * This method updates user phone number in database.
+     * @param user takes as a parameter to edit user information.
+     * @throws SQLException if any sql issue occurs.
+     * @author Sossio.
+     */
     public void updateUserPhoneNumber(User user) throws SQLException {
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
@@ -162,6 +189,13 @@ public class Db {
         con.close();
         stmt.close();
     }
+
+    /**
+     * This method updates user password in database.
+     * @param user takes as a parameter to edit user information.
+     * @throws SQLException if any sql issue occurs.
+     * @author Sossio.
+     */
     public void updateUserPassword(User user) throws SQLException {
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
@@ -172,10 +206,11 @@ public class Db {
     }
 
     /**
-     * authenticate the USER with email and password.
-     * @param email
-     * @param password
-     * @return
+     * This method authenticate the USER with email and password.
+     * @param email user email.
+     * @param password user password.
+     * @return user.
+     * @author Khabib. Developed by Sossio.
      */
     public User authenticationUser(String email, String password){
         User user = null;
@@ -199,10 +234,11 @@ public class Db {
     }
 
     /**
-     * Authenticate the ADMIN with email and password
-     * @param email
-     * @param password
-     * @return
+     * This method authenticate the ADMIN with email and password.
+     * @param email admin email.
+     * @param password admin password.
+     * @return user.
+     * @author Sossio.
      */
     public  User authenticationAdmin(String email, String password){
         User user = null;
@@ -254,12 +290,12 @@ public class Db {
     }
 
     /**
-     * @param u_id
-     * @return
-     * @throws SQLException
+     * This method gets user firstname to show in application user edit.
+     * @param u_id is to bring current user data.
+     * @return data of string.
+     * @throws SQLException if any sql error occurs.
      * @author Sossio.
      */
-
     public String getUserDatabaseFirstName(String u_id) throws SQLException {
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
@@ -275,7 +311,13 @@ public class Db {
         return firstName;
     }
 
-
+    /**
+     * This method gets user lastname to show in application user edit.
+     * @param u_id is to bring current user data.
+     * @return data of string.
+     * @throws SQLException if any sql error occurs.
+     * @author Sossio.
+     */
     public String getUserDatabaseLastName(String u_id) throws SQLException {
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
@@ -292,9 +334,10 @@ public class Db {
     }
 
     /**
-     * @param u_id
-     * @return
-     * @throws SQLException
+     * This method gets user address to show in application user edit.
+     * @param u_id is to bring current user data.
+     * @return data of string.
+     * @throws SQLException if any sql error occurs.
      * @author Sossio.
      */
     public String getUserDatabaseAddress(String u_id) throws SQLException {
@@ -313,9 +356,10 @@ public class Db {
     }
 
     /**
-     * @param u_id
-     * @return
-     * @throws SQLException
+     * This method gets user phone number to show in application user edit.
+     * @param u_id is to bring current user data.
+     * @return data of string.
+     * @throws SQLException if any sql error occurs.
      * @author Sossio.
      */
     public String getUserDatabasePhoneNumber(String u_id) throws SQLException {
@@ -334,9 +378,10 @@ public class Db {
     }
 
     /**
-     * @param u_id
-     * @return
-     * @throws SQLException
+     * This method gets user password to show in application user edit.
+     * @param u_id is to bring current user data.
+     * @return data of string.
+     * @throws SQLException if any sql error occurs.
      * @author Sossio.
      */
     public String getUserDatabasePassword(String u_id) throws SQLException {
@@ -512,9 +557,11 @@ public class Db {
     }
 
     /**
-     * @param user
-     * @return
-     * @throws SQLException
+     * This method returns image of user from database when user/admin is logged in.
+     * @param user to get user id.
+     * @return image of user/admin.
+     * @throws SQLException if any sql error occurs.
+     * @author Kasper. Developed by Sossio.
      */
     public Image getProfilePicture(User user) throws SQLException {
         Image image = null;
@@ -532,11 +579,13 @@ public class Db {
     }
 
     /**
-     * @param src
-     * @param user
-     * @throws SQLException
+     * This method updated users image when user wants to change it.
+     * @param src path to image.
+     * @param user user.
+     * @throws SQLException if any sql error occurs.
+     * @author Sossio.
      */
-    public void setProfilePictureIdk(String src, User user) throws SQLException {
+    public void updateProfilePicture(String src, User user) throws SQLException {
         Image image = null;
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
@@ -547,9 +596,11 @@ public class Db {
     }
 
     /**
-     * @param pfpImageSrc
-     * @param email
-     * @throws SQLException
+     * This method sets a default profile picture when a new user is registered.
+     * @param pfpImageSrc path to image.
+     * @param email which is unique.
+     * @throws SQLException if any sql error occurs.
+     * @author Sossio.
      */
     public void setProfilePicture(String pfpImageSrc, String email) throws SQLException {
         Image image = null;

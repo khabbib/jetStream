@@ -1,7 +1,6 @@
 package application.eventHandler;
 
 import application.Controller;
-import application.components.Email.TicketEmail;
 import application.ErrorHandler;
 import application.components.ticket.CardValidation;
 import javafx.event.ActionEvent;
@@ -36,7 +35,7 @@ public class UserEvent {
         if (e.getSource() == controller.menu_profile_btn) {
             if(!controller.exploreMode) {
                 controller.profile_anchorpane.toFront();
-                toggleMenuColor(controller);
+                toggleUserMenuColor(controller);
                 controller.playSystemSound("Next page", "sounds/next_page.wav");
             } else {
                 controller.playSystemSound("Error", "sounds/error.wav");
@@ -50,7 +49,7 @@ public class UserEvent {
         }
         else if(e.getSource() == controller.menu_flight_btn) {
             controller.flight_anchorpane.toFront();
-            toggleMenuColor(controller);
+            toggleUserMenuColor(controller);
             controller.menu_highlight_color_flight.setVisible(true);
             controller.map_menu_user_image.setOpacity(1);
             controller.map_menu_user_lbl.setOpacity(1);
@@ -59,7 +58,7 @@ public class UserEvent {
         else if(e.getSource() == controller.menu_history_btn) {
             if(!controller.exploreMode) {
                 controller.history_anchorpane.toFront();
-                toggleMenuColor(controller);
+                toggleUserMenuColor(controller);
                 controller.menu_highlight_color_history.setVisible(true);
                 controller.history_menu_user_image.setOpacity(1);
                 controller.history_menu_user_lbl.setOpacity(1);
@@ -71,7 +70,7 @@ public class UserEvent {
         }
         else if(e.getSource() == controller.menu_entertainment_btn) {
             controller.entertainment_anchorpane.toFront();
-            toggleMenuColor(controller);
+            toggleUserMenuColor(controller);
             controller.menu_highlight_color_entertainment.setVisible(true);
             controller.entertainment_menu_user_image.setOpacity(1);
             controller.entertainment_menu_user_lbl.setOpacity(1);
@@ -79,7 +78,7 @@ public class UserEvent {
         }
         else if(e.getSource() == controller.menu_support_btn){
               controller.support_anchorpane.toFront();
-              toggleMenuColor(controller);
+              toggleUserMenuColor(controller);
               controller.menu_highlight_color_support.setVisible(true);
               controller.support_menu_user_image.setOpacity(1);
               controller.support_menu_user_lbl.setOpacity(1);
@@ -87,7 +86,7 @@ public class UserEvent {
         }
         else if(e.getSource() == controller.menu_ceo_btn){
               controller.ceo_anchorpane.toFront();
-              toggleMenuColor(controller);
+              toggleUserMenuColor(controller);
               controller.menu_highlight_color_ceo.setVisible(true);
               controller.ceo_menu_user_image.setOpacity(1);
               controller.ceo_menu_user_lbl.setOpacity(1);
@@ -108,7 +107,7 @@ public class UserEvent {
         else if(e.getSource() == controller.menu_my_tickets_btn){
             if (!controller.exploreMode) {
                 controller.my_ticket_anchorpane.toFront();
-                toggleMenuColor(controller);
+                toggleUserMenuColor(controller);
                 controller.menu_highlight_color_my_ticket.setVisible(true);
                 controller.my_tickets_menu_user_image.setOpacity(1);
                 controller.my_tickets_menu_user_lbl.setOpacity(1);
@@ -372,7 +371,7 @@ public class UserEvent {
      * This method shows which menu is active on user dashboard.
      * @author Habib.
      */
-    public void toggleMenuColor(Controller controller) {
+    public void toggleUserMenuColor(Controller controller) {
         controller.menu_highlight_color_flight.setVisible(false);
         controller.menu_highlight_color_history.setVisible(false);
         controller.menu_highlight_color_entertainment.setVisible(false);
