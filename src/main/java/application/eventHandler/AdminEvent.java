@@ -6,12 +6,13 @@ import javafx.event.ActionEvent;
 import java.io.IOException;
 import java.sql.SQLException;
 
+
 /**
- *
+ * This class is has alla control over every event button clicked.
  */
 public class AdminEvent {
     /**
-     * Administrator dev.
+     * This metod is responsible for alla the button clicks in admin-dashboard plsu every other anchorpane
      * @param e
      * @throws IOException
      * @autor Obed.

@@ -230,7 +230,7 @@
                </font>
             </Label>
             <Button fx:id="refreshTicketsBtn_ticket_admin" layoutX="969.0" layoutY="558.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="97.0" style="-fx-background-color: #f87000;" text="Refresh" textFill="WHITE" />
-            <TableView fx:id="table_tickets" layoutX="58.0" layoutY="138.0" prefHeight="398.0" prefWidth="1008.0">
+            <TableView fx:id="table_tickets" layoutX="28.0" layoutY="118.0" prefHeight="398.0" prefWidth="1036.0">
                <columns>
                   <TableColumn fx:id="nr_col_ticket_admin" prefWidth="75.0" text="No" />
                   <TableColumn fx:id="airline_col_ticket_admin" prefWidth="75.0" text="Airline" />
@@ -263,19 +263,19 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <TableView fx:id="table_flight_admin" layoutX="7.0" layoutY="135.0" prefHeight="383.0" prefWidth="1084.0">
+            <TableView fx:id="table_flight_admin" layoutX="28.0" layoutY="118.0" prefHeight="398.0" prefWidth="1036.0">
                <columns>
-                  <TableColumn fx:id="counter_col_flight_admin" prefWidth="55.0" text="Numb" />
-                  <TableColumn fx:id="flightID_col_flight_admin" text="Flight ID" />
-                  <TableColumn fx:id="DepartureName_col_flight_admin" prefWidth="114.0" text="Departure name" />
-                  <TableColumn fx:id="DepartureDate_col_flight_admin" prefWidth="111.0" text="Departure date" />
-                  <TableColumn fx:id="DepartureTime_col_flight_admin" prefWidth="116.0" text="Departure time" />
-                  <TableColumn fx:id="DestinationName_col_flight_admin" prefWidth="151.0" text="Destination name" />
-                  <TableColumn fx:id="DestinationDate_col_flight_admin" prefWidth="139.0" text="Destination date" />
-                  <TableColumn fx:id="DestinationTime_col_flight_admin" prefWidth="138.0" text="Destination time" />
-                  <TableColumn fx:id="price_col_flight_admin" minWidth="0.0" prefWidth="60.0" text="Price" />
-                  <TableColumn fx:id="p_id_col_flight_admin" prefWidth="71.0" text="Plane id" />
-                  <TableColumn fx:id="select_col_table_flights" minWidth="0.0" prefWidth="48.0">
+                  <TableColumn fx:id="counter_col_flight_admin" prefWidth="42.0" text="Numb" />
+                  <TableColumn fx:id="flightID_col_flight_admin" prefWidth="58.0" text="Flight ID" />
+                  <TableColumn fx:id="DepartureName_col_flight_admin" prefWidth="149.0" text="Departure name" />
+                  <TableColumn fx:id="DepartureDate_col_flight_admin" prefWidth="91.0" text="Departure date" />
+                  <TableColumn fx:id="DepartureTime_col_flight_admin" prefWidth="105.0" text="Departure time" />
+                  <TableColumn fx:id="DestinationName_col_flight_admin" prefWidth="118.0" text="Destination name" />
+                  <TableColumn fx:id="DestinationDate_col_flight_admin" prefWidth="117.0" text="Destination date" />
+                  <TableColumn fx:id="DestinationTime_col_flight_admin" prefWidth="166.0" text="Destination time" />
+                  <TableColumn fx:id="price_col_flight_admin" minWidth="0.0" prefWidth="93.0" text="Price" />
+                  <TableColumn fx:id="p_id_col_flight_admin" prefWidth="63.0" text="Plane id" />
+                  <TableColumn fx:id="select_col_table_flights" minWidth="0.0" prefWidth="81.0">
                      <graphic>
                         <CheckBox fx:id="select_col_flight_admin" mnemonicParsing="false" prefHeight="17.0" prefWidth="31.0" />
                      </graphic>
@@ -286,7 +286,7 @@
                   <URL value="@../Styles/ScrollStyle.css" />
                </stylesheets>
             </TableView>
-            <AnchorPane layoutX="63.0" layoutY="539.0" prefHeight="137.0" prefWidth="1002.0" style="-fx-background-color: #151D3B #151D3B; -fx-background-radius: 5;">
+            <AnchorPane layoutX="45.0" layoutY="540.0" prefHeight="137.0" prefWidth="1002.0" style="-fx-background-color: #151D3B #151D3B; -fx-background-radius: 5;">
                <children>
                   <VBox prefHeight="102.0" prefWidth="665.0" spacing="10.0">
                      <children>
