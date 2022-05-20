@@ -13,31 +13,26 @@ public class StopWatch {
     private long stopWatchStopTime = 0;
     private boolean stopWatchRunning = false;
 
-
+    /***
+     * Starts the timer.
+     */
     public void start() {
         this.stopWatchStartTime = System.nanoTime();
         this.stopWatchRunning = true;
     }
 
-
+    /***
+     * Stops the timer.
+     */
     public void stop() {
         this.stopWatchStopTime = System.nanoTime();
         this.stopWatchRunning = false;
     }
 
-
-    public long getElapsedMilliseconds() {
-        long elapsedTime;
-
-        if (stopWatchRunning)
-            elapsedTime = (System.nanoTime() - stopWatchStartTime);
-        else
-            elapsedTime = (stopWatchStopTime - stopWatchStartTime);
-
-        return elapsedTime / nanoSecondsPerMillisecond;
-    }
-
-
+    /***
+     * Gets time in seconds.
+     * @return seconds.
+     */
     public long getElapsedSeconds() {
         long elapsedTime;
 
@@ -48,27 +43,4 @@ public class StopWatch {
 
         return elapsedTime / nanoSecondsPerSecond;
     }
-
-
-    public long getElapsedMinutes() {
-        long elapsedTime;
-        if (stopWatchRunning)
-            elapsedTime = (System.nanoTime() - stopWatchStartTime);
-        else
-            elapsedTime = (stopWatchStopTime - stopWatchStartTime);
-
-        return elapsedTime / nanoSecondsPerMinute;
-    }
-
-
-    public long getElapsedHours() {
-        long elapsedTime;
-        if (stopWatchRunning)
-            elapsedTime = (System.nanoTime() - stopWatchStartTime);
-        else
-            elapsedTime = (stopWatchStopTime - stopWatchStartTime);
-
-        return elapsedTime / nanoSecondsPerHour;
-    }
-
 }

@@ -73,6 +73,14 @@ public class Geography extends Application {
        launch(args);
     }
 
+    /***
+     * Starts application.
+     * @param primaryStage the primary stage for this application, onto which
+     * the application scene can be set.
+     * Applications may create other stages, if needed, but they will not be
+     * primary stages.
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Geography.fxml")));
@@ -84,15 +92,24 @@ public class Geography extends Application {
         setUp();
     }
 
+    /***
+     * Stops time.
+     */
     private void stopTime(){
         stopWatch.stop();
     }
 
+    /***
+     * Starts time.
+     */
     private void startTime(){
         stopWatch = new StopWatch();
         stopWatch.start();
     }
 
+    /***
+     * Creates and sets world.
+     */
     private void setWorld(){
         CreateWorld createWorld = new CreateWorld();
         world = createWorld.init(this);
@@ -101,6 +118,10 @@ public class Geography extends Application {
         world_scrollpane.setContent(stackpane);
     }
 
+    /***
+     * Starts game.
+     * @param actionEvent
+     */
     public void startGame(ActionEvent actionEvent) {
         if (!game) {
             round_pane.setVisible(true);
@@ -118,6 +139,9 @@ public class Geography extends Application {
         }
     }
 
+    /***
+     * Checks if username is correct.
+     */
     public void continueToGame() {
         System.out.println(user_textfield.getText());
         if (user_textfield.getText().length() <= 0 || user_textfield.getText().length() >= 12) {
@@ -128,6 +152,10 @@ public class Geography extends Application {
         }
     }
 
+    /***
+     * Checks guess.
+     * @param country_name
+     */
     public void guess(String country_name) {
         System.out.println(country_name);
         System.out.println(game);
@@ -146,11 +174,17 @@ public class Geography extends Application {
 
     }
 
+    /***
+     * Generates random country.
+     */
     public void newCountry() {
         country_to_guess = countries.get(random.nextInt(countries.size())).toString();
         country_lbl.setText("Country: " + country_to_guess.replace("_"," "));
     }
 
+    /***
+     * Keeps track of games.
+     */
     private void checkGame() {
         if (rounds == 10) {
             stopTime();
@@ -169,6 +203,9 @@ public class Geography extends Application {
         }
     }
 
+    /***
+     * Gets high score from DB.
+     */
     public void getHighScore() {
         Connection c;
         highScoreUsers = new ArrayList<HighScoreUser>();
@@ -190,6 +227,10 @@ public class Geography extends Application {
         }
     }
 
+    /***
+     * Sends score to DB.
+     * @throws SQLException
+     */
     public void sendScore() throws SQLException {
         Connection con = Db.getDatabaseConnection();
         Statement stmt = con.createStatement();
@@ -198,6 +239,9 @@ public class Geography extends Application {
         con.close();
     }
 
+    /***
+     * Initializes FXML.
+     */
     public void fxmlInit(){
         geography_pane = (Pane) root.lookup("#geography_pane");
         world_scrollpane = (ScrollPane) root.lookup("#world_scrollpane");
@@ -213,6 +257,9 @@ public class Geography extends Application {
         user_textfield = (TextField) root.lookup("#user_textfield");
     }
 
+    /***
+     * Setup for variables.
+     */
     public void setUp(){
         imageview.setImage(new Image("application/image/canberra/canberra.png"));
         tc1 = (TableColumn<HighScoreUser, Integer>) ranking_table.getColumns().get(0);
