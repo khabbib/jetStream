@@ -122,7 +122,7 @@ public class UserControl {
             controller.checka_btn_myticket.setStyle("-fx-border: #eee; -fx-background-color:  #6BCB77; -fx-color: #eee;");
             controller.cancel_btn_my_ticket.setStyle("-fx-background-color:  #ED276E; -fx-color: #eee");
         }
-        controller.exploreMode = false;
+        controller.explore_mode = false;
     }
 
 
@@ -148,10 +148,10 @@ public class UserControl {
         controller.world_map_scrollpane.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color:  #0E0E1B;");
         controller.world_map.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color:  #0E0E1B;");
 
-        if(!controller.exploreMode) {
+        if(!controller.explore_mode) {
             controller.setInfoIntoTableHistorik();
         }
 
-        controller.exploreMode = true;
+        controller.explore_mode = true;
     }
 }

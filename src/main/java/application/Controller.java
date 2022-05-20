@@ -51,7 +51,7 @@ public class Controller {
     @FXML public Label error_message_lbl, success_msg_lbl; // ERRORS HANDLER
     @FXML private Button forgot_password_login;
     @FXML public CheckBox show_pasword_login;
-    public static boolean exploreMode = true; // If explore mode is off, it means user is logged in.
+    public static boolean explore_mode = true; // If explore mode is off, it means user is logged in.
 
     //</editor-fold>
 
@@ -411,7 +411,7 @@ public class Controller {
      * @author Khabib
      */
     public void switchToUserDashboard(ActionEvent e) {
-        exploreMode = false;
+        explore_mode = false;
         userControl.switchToUserDashboard(e,this);
     }
 
@@ -447,7 +447,7 @@ public class Controller {
      * @author Khabib
      */
     public void noLoginRequired(ActionEvent e) {
-        exploreMode = true;
+        explore_mode = true;
         userControl.noLoginRequired(e,this);
     }
 
@@ -486,7 +486,7 @@ public class Controller {
      * @author Khabib
      */
     public void switchToLogin(ActionEvent e) {
-        exploreMode = true;
+        explore_mode = true;
         this.root = config.render(e, "user/Login", "Login");
         success_msg_lbl = (Label) root.lookup("#success_msg_lbl");
         if(user != null) {

@@ -105,7 +105,7 @@ public class InitializeFXM {
             controller.profile_address_lbl.setText(user.getAddress());
             controller.profile_phone_lbl.setText(user.getPhoneNumber());
 
-            if (!controller.exploreMode) {
+            if (!controller.explore_mode) {
                 try {
                     Image image = db.getProfilePicture(user);
                     controller.profile_image_imageview.setImage(image);

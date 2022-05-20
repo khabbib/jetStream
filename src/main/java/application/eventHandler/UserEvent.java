@@ -36,7 +36,7 @@ public class UserEvent {
      */
     public void userDashboardEventHandler(ActionEvent e, Controller controller) throws ParseException {
         if (e.getSource() == controller.menu_profile_btn) {
-            if(!controller.exploreMode) {
+            if(!controller.explore_mode) {
                 controller.profile_anchorpane.toFront();
                 toggleUserMenuColor(controller);
                 controller.playSystemSound("Next page", "sounds/next_page.wav");
@@ -59,7 +59,7 @@ public class UserEvent {
             controller.playSystemSound("Next page", "sounds/next_page.wav");
         }
         else if(e.getSource() == controller.menu_history_btn) {
-            if(!controller.exploreMode) {
+            if(!controller.explore_mode) {
                 controller.history_anchorpane.toFront();
                 toggleUserMenuColor(controller);
                 controller.menu_highlight_color_history.setVisible(true);
@@ -108,7 +108,7 @@ public class UserEvent {
             controller.owner4_work.toFront();
         }
         else if(e.getSource() == controller.menu_my_tickets_btn){
-            if (!controller.exploreMode) {
+            if (!controller.explore_mode) {
                 controller.my_ticket_anchorpane.toFront();
                 toggleUserMenuColor(controller);
                 controller.menu_highlight_color_my_ticket.setVisible(true);

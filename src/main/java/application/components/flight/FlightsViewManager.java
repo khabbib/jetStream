@@ -69,7 +69,7 @@ public class FlightsViewManager {
             controller.flights_scrollpane.setVvalue(0);
             controller.nbr_of_available_flights.setText(String.valueOf(flights.size()));
 
-            if(!controller.exploreMode) {
+            if(!controller.explore_mode) {
                 try {
                     controller.booking_profile_image.setImage(controller.db.getProfilePicture(controller.user));
                 } catch (SQLException ex) {
@@ -89,7 +89,7 @@ public class FlightsViewManager {
                 }
                 int finalI1 = i;
                     hbox.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
-                        if (!controller.exploreMode) {
+                        if (!controller.explore_mode) {
                             boolean ready = preperBeforeCreatingSeats();
                             if (ready){
                                 if (flights.get(finalI1).isrTur()){ // chose two-way
