@@ -292,7 +292,7 @@ public class Controller {
     }
 
     /**
-     * Creates and animates flightpaths on world map.
+     * Creates and animates flightpath on world map.
      * @author Kasper
      */
     public void displayFlightPaths() {
@@ -303,7 +303,7 @@ public class Controller {
     /***
      * Fetches weather for selected country and displays in gui.
      * @param country is selected country.
-     * @throws IOException
+     * @throws IOException io exception
      * @throws InterruptedException
      * Author Kasper.
      */
@@ -313,7 +313,7 @@ public class Controller {
 
     /***
      * Opens and closes weather menu in gui.
-     * Author Kasper.
+     * @author Kasper.
      */
     public void weatherButton() {
        weatherAPI.weatherMenu(this);
@@ -322,7 +322,7 @@ public class Controller {
 
     /**
      * Login operation (show password )
-     * @param e
+     * @param e event
      * @author Khabib.
      */
     public void showPassword(ActionEvent e){
@@ -330,15 +330,16 @@ public class Controller {
     }
 
     /**
+     * The method calls from login page, and it will redirect to password class to make password visible for user.
      * @author Khabib.
      */
-    public void syncPasswordShow(){
-       password.syncPasswordShow(this);
+    public void showPassFieldLogin(){
+       password.showPassFieldLogin(this);
     }
 
     /***
      * Starts Pong game.
-     * Author Kasper.
+     * @author Kasper.
      */
     public void playPong(){
         Pong pong = new Pong();
@@ -350,7 +351,7 @@ public class Controller {
 
     /***
      * Starts Geo Quiz game.
-     * Author Kasper.
+     * @author Kasper.
      */
     public void playGeoQuiz(){
         Geography geography = new Geography();
@@ -361,7 +362,7 @@ public class Controller {
     }
     /***
      * Starts Music Quiz game.
-     * Author Kasper.
+     * @author Kasper.
      */
     public void playQuiz(){
         MPlayer mPlayer = new MPlayer();
@@ -373,7 +374,7 @@ public class Controller {
 
     /***
      * Starts Piano game.
-     * Author Kasper.
+     * @author Kasper.
      */
     public void playPiano(){
         Piano piano = new Piano();
@@ -385,7 +386,7 @@ public class Controller {
 
     /***
      * Starts 2048 game.
-     * Author Sossio.
+     * @author Sossio.
      */
     public void play2048(){
         Game2048Main game2048Main = new Game2048Main();
@@ -395,6 +396,12 @@ public class Controller {
         }
     }
 
+    /**
+     * the method will play the background music in application.
+     * @param soundName name of file/music
+     * @param src file/music path
+     * @author Sossio
+     */
     public void playSystemSound(String soundName, String src) {
         systemSound.playSystemSound(soundName, src);
     }
@@ -402,16 +409,16 @@ public class Controller {
     /**
      * the method will switch the user to the dashboard page
      * navigate to dashboard pages
-     * @param e
-     * @throws IOException
+     * @param e event
+     * @author Khabib
      */
-    public void switchToUserDashboard(ActionEvent e) throws IOException {
+    public void switchToUserDashboard(ActionEvent e) {
         exploreMode = false;
         userControl.switchToUserDashboard(e,this);
     }
 
     /**
-     * Resets the text in textfield from-to.
+     * Resets the text in text-field from-to in advanced search - user dashboard.
      * @author Sossio.
      */
     public void resetSearchFromTo() {
@@ -419,7 +426,7 @@ public class Controller {
     }
 
     /**
-     * Resets the text in textfield country name.
+     * Resets the text in text-field country name.
      * @author Sossio.
      */
     public void resetSearchCountry() {
@@ -428,28 +435,28 @@ public class Controller {
 
     /**
      * the method will render dashboard page for user
-     * @param e
-     * @param user
-     * @throws IOException
+     * @param e event
+     * @param user instance of User class
+     * @author Khabib
      */
     public void renderDashboard(ActionEvent e, User user) {
         userControl.renderDashboard(e, user,this);
     }
 
     /**
-     * shortcut login to user dashboard
-     * @param e
-     * @throws IOException
+     * Navigate to user dashboard without login
+     * @param e event
+     * @author Khabib
      */
-    public void noLoginRequired(ActionEvent e) throws IOException {
+    public void noLoginRequired(ActionEvent e) {
         exploreMode = true;
         userControl.noLoginRequired(e,this);
     }
 
     /**
-     * the method will switch the user to the registration page
-     * @param e
-     * @throws IOException
+     * the method will switch the user to register page
+     * @param e event
+     * @author Khabib
      */
     public void switchToRegistration(ActionEvent e) {
         playSystemSound("Next page", "sounds/next_page.wav");
@@ -457,18 +464,19 @@ public class Controller {
     }
 
     /**
-     * The method will register the user and return to the login page
-     * @param e
-     * @throws SQLException
-     * @throws IOException
+     * The method will register the user and return to login page
+     * @param e event
+     * @author Khabib
      */
     public void registerUserButton(ActionEvent e) {
         registrationUser.registerUserBtnAction(e,this);
     }
 
     /**
-     * @param e
-     * @throws SQLException
+     * The method register a user from admin page
+     * @param e event
+     * @throws SQLException exception
+     * @author Obed
      */
     public void registerUserAdminBtnAction(ActionEvent e) throws SQLException {
         registerAdmin.registerUserAdminBtnAction(e,this);
@@ -476,8 +484,8 @@ public class Controller {
 
     /**
      * the method will switch the user to the login page
-     * @param e
-     * @throws IOException
+     * @param e event
+     * @author Khabib
      */
     public void switchToLogin(ActionEvent e) {
         exploreMode = true;
@@ -491,13 +499,19 @@ public class Controller {
     }
 
     /**
-     * flight lists dashboard
-     * @param flights
+     * The method take a list of flights and fill up in the flight list in the application.
+     * @param flights a list of flights from database
+     * @author Khabib
      */
     public void fillFlights (ArrayList <Flight> flights) {
         flightsViewManager.fillFlights(flights,this);
-    } // the method will show the flights list on the right side of the dashboard when a user choose a country
+    }
 
+    /**
+     * The method take a specific flight's seats and display it in the application
+     * @param flights
+     * @param finalI1
+     */
     public void createThisSeat(ArrayList<Flight> flights, int finalI1) {
         flightsViewManager.createThisSeat(flights,finalI1,this);
     }

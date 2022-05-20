@@ -26,7 +26,7 @@ public class ShowPasswordField {
      * This method handle the operation for showing the password to user.
      * @param controller instance of control class.
      */
-    public void syncPasswordShow(Controller controller){
+    public void showPassFieldLogin(Controller controller){
         int maxLength = 15;
         if (controller.show_pasword_login.isSelected()){
             controller.show_password_field_login.setDisable(false);
