@@ -226,6 +226,7 @@ public class Controller {
     //</editor-fold>
 
     //</editor-fold>
+
     //<editor-fold desc="========= INSTANCES OF CLASSES =========" >
 
     public FlightsViewManager flightsViewManager;
@@ -249,7 +250,6 @@ public class Controller {
     public Search search;
     public Db db;
     //</editor-fold>
-
 
     /**
      * Constructor to Controller class
@@ -278,7 +278,7 @@ public class Controller {
         systemSound = new SystemSound(this);
     }
 
-    //----------------- HOME -----------------//
+    //<editor-fold desc="============= SWITCH WINDOWS">
 
     /**
      * the method will switch the user to the Home page
@@ -288,6 +288,68 @@ public class Controller {
     public void switchToHome(ActionEvent e) {
         config.render(e,"Home", "Home");
     }
+
+    /**
+     * the method will switch the user to the dashboard page
+     * navigate to dashboard pages.
+     * @param e event.
+     * @author Khabib developed by Kasper.
+     */
+    public void switchToUserDashboard(ActionEvent e) {
+        explore_mode = false;
+        userControl.switchToUserDashboard(e,this);
+    }
+
+    /**
+     * the method will switch the user to the login page
+     * @param e event
+     * @author Khabib
+     */
+    public void switchToLogin(ActionEvent e) {
+        explore_mode = true;
+        this.root = config.render(e, "user/Login", "Login");
+        success_msg_lbl = (Label) root.lookup("#success_msg_lbl");
+        if(user != null) {
+            playSystemSound("Logout", "sounds/logout.wav");
+        } else {
+            user = null;
+        }
+    }
+
+
+    /**
+     * the method will switch the user to register page.
+     * @param e event.
+     * @author Khabib developed by Sossio.
+     */
+    public void switchToRegistration(ActionEvent e) {
+        playSystemSound("Next page", "sounds/next_page.wav");
+        this.root = config.render(e, "user/Registration", "Registration");
+    }
+
+
+    /**
+     * the method will render dashboard page for user.
+     * @param e event.
+     * @param user instance of User class.
+     * @author Khabib developed by Kasper.
+     */
+    public void renderDashboard(ActionEvent e, User user) {
+        userControl.renderDashboard(e, user,this);
+    }
+
+    /**
+     * Navigate to user dashboard without login.
+     * @param e event.
+     * @author Khabib developed by Sossio.
+     */
+    public void noLoginRequired(ActionEvent e) {
+        explore_mode = true;
+        userControl.noLoginRequired(e,this);
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="============= GAME METHODS"
 
     /**
      * Creates and animates flightpath on world map.
@@ -314,26 +376,9 @@ public class Controller {
      * @author Kasper.
      */
     public void weatherButton() {
-       weatherAPI.weatherMenu(this);
+        weatherAPI.weatherMenu(this);
     }
 
-
-    /**
-     * Login operation (show password )
-     * @param e event
-     * @author Khabib.
-     */
-    public void showPassword(ActionEvent e){
-        password.showPassword(e,this);
-    }
-
-    /**
-     * The method calls from login page, and it will redirect to password class to make password visible for user.
-     * @author Khabib.
-     */
-    public void showPassFieldLogin(){
-       password.showPassFieldLogin(this);
-    }
 
     /***
      * Starts Pong game.
@@ -393,108 +438,74 @@ public class Controller {
             e.printStackTrace();
         }
     }
+    //</editor-fold>
+
+    //<editor-fold desc="============= Dashboard event and update">
+
+    /**
+     * User dashboard event handler take care of events in dashboard class.
+     * @param e e event is passed here from GFX and will be passed to new class
+     * @author Habib
+     */
+    public void userDashboardEventHandler(ActionEvent e) throws ParseException {
+        userEvent.userDashboardEventHandler(e,this);
+    }
+
+    /**
+     * separated method to use multiple times
+     * it will update the historic table in user dashboard everytime an action happen or user want to navigate to the panel etc.
+     * @author Habib
+     */
+    public void updateDashboardInfo(){
+        ArrayList<UserHistory> list = db.searchDataForTableHistory(Integer.parseInt(user.getUserId()), null , false);
+        history_items_list = FXCollections.observableArrayList(list);
+        userControl.fillMyTicket(list);
+        history_tableview.setItems(history_items_list);
+    }
+
+    //</editor-fold>
+
+    //<editor-fold desc="============= Login methods + system sound">
+
+    /**
+     * Login operation (show password )
+     * @param e event
+     * @author Khabib.
+     */
+    public void showPassword(ActionEvent e){
+        password.showPassword(e,this);
+    }
+
+    /**
+     * The method calls from login page, and it will redirect to password class to make password visible for user.
+     * @author Khabib.
+     */
+    public void showPassFieldLogin(){
+        password.showPassFieldLogin(this);
+    }
 
     /**
      * the method will play the background music in application.
-     * @param soundName name of file/music
-     * @param src file/music path
-     * @author Sossio
+     * @param soundName name of file/music.
+     * @param src file/music path.
+     * @author Sossio.
      */
     public void playSystemSound(String soundName, String src) {
         systemSound.playSystemSound(soundName, src);
     }
 
     /**
-     * the method will switch the user to the dashboard page
-     * navigate to dashboard pages
-     * @param e event
-     * @author Khabib
-     */
-    public void switchToUserDashboard(ActionEvent e) {
-        explore_mode = false;
-        userControl.switchToUserDashboard(e,this);
-    }
-
-    /**
-     * Resets the text in text-field from-to in advanced search - user dashboard.
-     * @author Sossio.
-     */
-    public void resetSearchFromTo() {
-        flightsViewManager.resetSearchFromTo();
-    }
-
-    /**
-     * Resets the text in text-field country name.
-     * @author Sossio.
-     */
-    public void resetSearchCountry() {
-        flightsViewManager.resetSearchCountry();
-    }
-
-    /**
-     * the method will render dashboard page for user
-     * @param e event
-     * @param user instance of User class
-     * @author Khabib
-     */
-    public void renderDashboard(ActionEvent e, User user) {
-        userControl.renderDashboard(e, user,this);
-    }
-
-    /**
-     * Navigate to user dashboard without login
-     * @param e event
-     * @author Khabib
-     */
-    public void noLoginRequired(ActionEvent e) {
-        explore_mode = true;
-        userControl.noLoginRequired(e,this);
-    }
-
-    /**
-     * the method will switch the user to register page
-     * @param e event
-     * @author Khabib
-     */
-    public void switchToRegistration(ActionEvent e) {
-        playSystemSound("Next page", "sounds/next_page.wav");
-        this.root = config.render(e, "user/Registration", "Registration");
-    }
-
-    /**
-     * The method will register the user and return to login page
-     * @param e event
-     * @author Khabib
+     * The method will register the user and return to login page.
+     * @param e event.
+     * @author Khabib.
      */
     public void registerUserButton(ActionEvent e) {
         registrationUser.registerUserBtnAction(e,this);
     }
 
-    /**
-     * The method register a user from admin page
-     * @param e event
-     * @throws SQLException exception
-     * @author Obed
-     */
-    public void registerUserAdminBtnAction(ActionEvent e) throws SQLException {
-        registerAdmin.registerUserAdminBtnAction(e,this);
-    }
+    //</editor-fold>
 
-    /**
-     * the method will switch the user to the login page
-     * @param e event
-     * @author Khabib
-     */
-    public void switchToLogin(ActionEvent e) {
-        explore_mode = true;
-        this.root = config.render(e, "user/Login", "Login");
-        success_msg_lbl = (Label) root.lookup("#success_msg_lbl");
-        if(user != null) {
-            playSystemSound("Logout", "sounds/logout.wav");
-        } else {
-            user = null;
-        }
-    }
+    //<editor-fold desc="============= Ticket purchase + seat">
 
     /**
      * The method take a list of flights and fill up in the flight list in the application.
@@ -506,8 +517,18 @@ public class Controller {
     }
 
 
+    /**
+     * The method validate and confirm the tickets purchase.
+     * @param rfc reference number to ticket.
+     * @author Khabib.
+     */
+    public void confirmPurchase(String rfc) {
+        purchaseHandler.confirmPurchase(rfc,this);
+    }
 
+    //</editor-fold>
 
+    //<editor-fold desc="============= Profile">
 
     /**
      * This method edits profile information to later save in the database.
@@ -518,6 +539,7 @@ public class Controller {
         profileManager.editProfile(this);
     }
 
+
     /**
      * This method cancels editing profile.
      * @throws SQLException if any error occurs.
@@ -527,6 +549,7 @@ public class Controller {
         profileManager.editProfileCancel(this);
     }
 
+
     /**
      * Shows available profile images using a grid.
      * @author Kasper.
@@ -534,6 +557,7 @@ public class Controller {
     public void changeProfileImage() {
         profileManager.changeImage(this);
     }
+
 
     /**
      * Edits the profile picture of a user.
@@ -544,6 +568,7 @@ public class Controller {
         profileManager.clickGrid(event,this);
     }
 
+
     /***
      * Plays or pauses music on dashboard.
      * @param e event.
@@ -553,45 +578,9 @@ public class Controller {
         bgMusic.mediaHandler(e);
     }
 
-    /**
-     * The method validate and confirm the tickets purchase.
-     * @param rfc reference number to ticket.
-     * @author Khabib.
-     */
-    public void confirmPurchase(String rfc) {
-        purchaseHandler.confirmPurchase(rfc,this);
-    }
+    //</editor-fold>
 
-
-    /**
-     * Navigate to admin pages.
-     * @param e
-     * @author Obed.
-     */
-    public void switchToAdminView(ActionEvent e) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("admin/AdminView.fxml")));
-        adminControl.switchToAdminView(e, this);
-    }
-
-    /**
-     * User dashboard event handler take care of events in dashboard class.
-     * @param e e event is passed here from GFX and will be passed to new class
-     * @author Habib
-     */
-    public void userDashboardEventHandler(ActionEvent e) throws ParseException {
-       userEvent.userDashboardEventHandler(e,this);
-    }
-
-
-    /**
-     * Administrator dev.
-     * @param e
-     * @throws IOException
-     * @autor Obed.
-     */
-    public void adminDashboardEventHandler(ActionEvent e) throws SQLException {
-        adminEvent.adminDashboardEventHandler(e,this);
-    }
+    //<editor-fold desc="============= Search">
 
 
     /**
@@ -758,8 +747,25 @@ public class Controller {
         return obs;
     }
 
-    //----------------- Support -----------------//
+    /**
+     * Resets the text in text-field from-to in advanced search - user dashboard.
+     * @author Sossio.
+     */
+    public void resetSearchFromTo() {
+        flightsViewManager.resetSearchFromTo();
+    }
 
+    /**
+     * Resets the text in text-field country name.
+     * @author Sossio.
+     */
+    public void resetSearchCountry() {
+        flightsViewManager.resetSearchCountry();
+    }
+
+    //</editor-fold>
+
+    //<editor-fold desc="============= Support">
     /**
      * This method redirect us to support class which handle support events.
      * @param e events
@@ -769,8 +775,10 @@ public class Controller {
         support.supportInfo(e);
     }
 
+    //</editor-fold>
 
-    //----------------- History  -----------------//
+    //<editor-fold desc="============= History">
+
 
     /**
      * #move
@@ -863,17 +871,6 @@ public class Controller {
         }
     }
 
-    /**
-     * separated method to use multiple times
-     * it will update the historic table in user dashboard everytime an action happen or user want to navigate to the panel etc.
-     * @author Habib
-     */
-    public void updateDashboardInfo(){
-        ArrayList<UserHistory> list = db.searchDataForTableHistory(Integer.parseInt(user.getUserId()), null , false);
-        history_items_list = FXCollections.observableArrayList(list);
-        userControl.fillMyTicket(list);
-        history_tableview.setItems(history_items_list);
-    }
 
     /**
      * #move
@@ -925,11 +922,50 @@ public class Controller {
         }
     }
 
+
+    //</editor-fold>
+
+    // ADMIN PAGE
+    //<editor-fold desc="************* ADMIN METHODS *************"
+
+    /**
+     * The method navigate to admin dashboard.
+     * @param e event.
+     * @throws IOException javaIO exception.
+     * @author Obed.
+     */
+    public void switchToAdminView(ActionEvent e) throws IOException {
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("admin/AdminView.fxml")));
+        adminControl.switchToAdminView(e, this);
+    }
+
+    /**
+     * The method handle admin events.
+     * @param e event.
+     * @throws SQLException sql exception.
+     * @author Obed.
+     */
+    public void adminDashboardEventHandler(ActionEvent e) throws SQLException {
+        adminEvent.adminDashboardEventHandler(e,this);
+    }
+
+
+    /**
+     * The method register a user from admin page
+     * @param e event
+     * @throws SQLException exception
+     * @author Obed
+     */
+    public void registerUserAdminBtnAction(ActionEvent e) throws SQLException {
+        registerAdmin.registerUserAdminBtnAction(e,this);
+    }
+
+
     /**
      * #move
-     * This metod deletes member from database if deletebutton is selected
-     * @param e
-     * @throws SQLException
+     * This method deletes member from database if delete-button is selected.
+     * @param e event.
+     * @throws SQLException sql exception.
      * @author Obed.
      */
     public void removeMember_admin(ActionEvent e) throws SQLException {
@@ -956,6 +992,13 @@ public class Controller {
             }
         }
     }
+
+    /**
+     * The method delete a ticket by admin.
+     * @param e event.
+     * @throws SQLException sql exception.
+     * @author Obed.
+     */
     public void removeTicket_admin(ActionEvent e) throws SQLException {
          if (table_tickets.getItems().size() > 0) { // check if there is any items before running the operation.
                if (e.getSource() == deleteTicketBtn_ticket_admin) { // if single remove button clicked
@@ -981,6 +1024,12 @@ public class Controller {
 
            }
        }
+    /**
+     * The method delete a flight by admin.
+     * @param e event.
+     * @throws SQLException sql exception.
+     * @author Obed.
+     */
     public void removeFlight_admin(ActionEvent e) throws SQLException {
        if (table_flight_admin.getItems().size() > 0) { // check if there is any items before running the operation.
             if (e.getSource() == delete_singelFlightBtn_admin) { // if single remove button clicked
@@ -1006,5 +1055,5 @@ public class Controller {
         }
     }
 
-
+    //</editor-fold>
 }
