@@ -4,7 +4,6 @@ import javafx.scene.control.CheckBox;
 /**
  *
  * This class saves data to user history of booked tickets.
- * @author Khabib
  */
 public class UserHistory {
     private int         no_col_table_historik,
@@ -33,7 +32,7 @@ public class UserHistory {
      * @param dep_date departure date : string
      * @param des_date destination date : string
      * @param checkedIn check in status : boolean
-     * @author Khabib
+     * @author Habib
      */
     public UserHistory(int userId, int no_col_table_historik, String company_col_table_historik, String model_col_table_historik, String rfc_col_table_historik,
                        int flightid_col_table_historik, String from_col_table_historik, String to_col_table_historik,

@@ -35,9 +35,7 @@ public class App extends Application {
             stage.setResizable(false);
             Image img = new Image("./application/image/officialLogo.png");
             stage.getIcons().add(img);
-
             //stage.initStyle(StageStyle.UNDECORATED); // to remove windows border
-
             stage.setTitle("Home");
             stage.show();
 

@@ -13,7 +13,7 @@ public class CardValidation {
      * @param month cardholder month : string
      * @param year cardholder year : string
      * @param cvc cardholder cvc (secrete number 3 digit) : string
-     * @return
+     * @return return status of validation : boolean
      */
     public static boolean purchaseTicket(String nbr, String firstName, String lastName, String month, String year, String cvc) {
         // CAN BE DEVELOPED MORE...
