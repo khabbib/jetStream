@@ -517,6 +517,11 @@ public class Controller {
         flightsViewManager.fetchFlights(flights);
     }
 
+    /***
+     * Executes a asynchronous task to fill flights from DB.
+     * @param country is the country to fetch flights from.
+     * @Author Kasper.
+     */
     public void prepareFlightList(String country) {
         flightsViewManager.fillFlights(country, db);
     }

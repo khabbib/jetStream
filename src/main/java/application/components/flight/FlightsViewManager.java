@@ -132,7 +132,12 @@ public class FlightsViewManager {
             controller.nbr_of_available_flights.setText("0");
         }
     }
-
+    
+    /***
+     * Executes a asynchronous task to fill flights from DB.
+     * @param country is the country to fetch flights from.
+     * @Author Kasper.
+     */
     public void fillFlights(String country, Db db) {
         Task<ArrayList<Flight>> task = new Task<ArrayList<Flight>>() {
             @Override
