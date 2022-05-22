@@ -518,7 +518,7 @@ public class Controller {
     }
 
     /***
-     * Executes a asynchronous task to fill flights from DB.
+     * Executes an asynchronous task to fill flights from DB.
      * @param country is the country to fetch flights from.
      * @Author Kasper.
      */
