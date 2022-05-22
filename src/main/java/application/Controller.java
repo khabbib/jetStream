@@ -19,6 +19,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -514,6 +515,10 @@ public class Controller {
      */
     public void fetchFlights(ArrayList <Flight> flights) {
         flightsViewManager.fetchFlights(flights);
+    }
+
+    public void prepareFlightList(String country) {
+        flightsViewManager.fillFlights(country, db);
     }
 
 

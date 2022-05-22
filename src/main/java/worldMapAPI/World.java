@@ -574,7 +574,6 @@ public class World extends Region {
         setTranslateY(getTranslateY() - Y);
     }
 
-    private static ArrayList<Flight> flights = new ArrayList<>();
     private void handleMouseEvent(final MouseEvent EVENT, final EventHandler<MouseEvent> HANDLER) {
         final CountryPath       COUNTRY_PATH = (CountryPath) EVENT.getSource();
         final String            COUNTRY_NAME = COUNTRY_PATH.getName();
@@ -623,13 +622,7 @@ public class World extends Region {
                                 throw new RuntimeException(e);
                             }
                         }
-
-                        flights = db.seachFlightFromSearchField(convert(COUNTRY_NAME));
-                        if (!flights.isEmpty()){
-                            controller.fetchFlights(flights);
-                        }else {
-                            controller.fetchFlights(null);
-                        }
+                       controller.prepareFlightList(convert(COUNTRY_NAME));
                     } else {
                         System.out.println("country");
                     geography.guess(convert(COUNTRY_NAME));

@@ -2,6 +2,8 @@ package application.components.flight;
 
 import application.Controller;
 import application.ErrorHandler;
+import application.api.Db;
+import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -25,6 +27,9 @@ import java.util.Objects;
 public class FlightsViewManager {
     private ErrorHandler errorHandler;
     private Controller controller;
+
+    private ArrayList<Flight> flights;
+
 
     /**
      * Constructor to FlightsViewManager.
@@ -128,6 +133,26 @@ public class FlightsViewManager {
         }
     }
 
+    public void fillFlights(String country, Db db) {
+        Task<ArrayList<Flight>> task = new Task<ArrayList<Flight>>() {
+            @Override
+            public ArrayList<Flight> call() throws Exception {
+                flights = new ArrayList<>();
+                flights = db.seachFlightFromSearchField(country);
+                return flights;
+            }
+        };
+
+        task.setOnSucceeded(event -> {
+            if (!flights.isEmpty()) {
+                fetchFlights(flights);
+            } else {
+                fetchFlights(null);
+            }
+        });
+
+        new Thread(task).run();
+    }
 
 
     /**
