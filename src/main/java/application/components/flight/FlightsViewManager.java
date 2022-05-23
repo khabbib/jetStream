@@ -84,6 +84,7 @@ public class FlightsViewManager {
 
             for (int i = 0; i < flights.size();i++){
                 HBox hbox = createFlightsContent(flights, i);
+                hbox.setStyle("-fx-cursor: hand;");
                 StackPane stackholer = new StackPane();
                 stackholer.getChildren().add(hbox);
                 stackholer.setAlignment(Pos.TOP_LEFT);
