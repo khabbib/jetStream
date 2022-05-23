@@ -57,7 +57,14 @@ public class MPlayer extends Application implements Runnable {
     private Parent root;
     private Thread thread;
 
-
+    /***
+     * Starts the application.
+     * @param primaryStage the primary stage for this application, onto which
+     * the application scene can be set.
+     * Applications may create other stages, if needed, but they will not be
+     * primary stages.
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.initStyle(StageStyle.UNDECORATED);
@@ -70,6 +77,10 @@ public class MPlayer extends Application implements Runnable {
         initRounds();
     }
 
+    /***
+     * Starts the game.
+     * @throws InterruptedException
+     */
     public void startGame() throws InterruptedException {
         if (secondGame) {
             titleLabel.setText("Game already started.");
@@ -84,12 +95,20 @@ public class MPlayer extends Application implements Runnable {
         }
     }
 
+    /***
+     * Closes the application.
+     * @param event
+     */
     public void closeApplication(ActionEvent event){
         secondGame = false;
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
     }
 
+    /***
+     * Keeps track of ongoing game.
+     * @throws InterruptedException
+     */
     private void game() throws InterruptedException {
         if (round == maxRounds) {
             reset();
@@ -106,6 +125,9 @@ public class MPlayer extends Application implements Runnable {
         }
     }
 
+    /***
+     * Adds rounds.
+     */
     private void initRounds() {
         ArrayList roundsArray = new ArrayList();
         for (int i = 1; i < 11; i++) {
@@ -116,11 +138,19 @@ public class MPlayer extends Application implements Runnable {
         rounds.getSelectionModel().select(0);
     }
 
+    /***
+     * Resets after game is complete.
+     */
     private void reset() {
         mediaPlayer.stop();
         song = null;
         alternatives.getItems().removeAll(alternativesList);
     }
+
+    /***
+     * Fills alternatives list.
+     * @param correct
+     */
     public void fillAlternatives(File correct) {
         alternativesList = new ArrayList();
         alternativesList.add(correct.getName().substring(0,correct.getName().length()-4));
@@ -137,17 +167,32 @@ public class MPlayer extends Application implements Runnable {
 
         alternatives.getItems().addAll(alternativesList);
     }
+
+    /***
+     * Generates random song.
+     * @return song file.
+     */
     public File randomSong() {
         File[] files = new File("music").listFiles();
         Random rand = new Random();
         File song = files[rand.nextInt(files.length)];
         return song;
     }
+
+    /***
+     * Gets next song.
+     * @param currentSong
+     */
     public void nextSong(File currentSong) {
         song = currentSong;
         newSong = true;
         fillAlternatives(currentSong);
     }
+
+    /***
+     * Checks guess.
+     * @throws InterruptedException
+     */
     public void guess() throws InterruptedException {
         if (alternatives.getSelectionModel().getSelectedItem().toString().substring(0,alternatives.getSelectionModel().getSelectedItem().toString().length() - 4).equals(song.getName().substring(0,alternatives.getSelectionModel().getSelectedItem().toString().length() - 4))) {
             System.out.println(alternatives.getSelectionModel().getSelectedItem().toString().substring(0,alternatives.getSelectionModel().getSelectedItem().toString().length() - 4));
@@ -165,6 +210,9 @@ public class MPlayer extends Application implements Runnable {
         launch(args);
     }
 
+    /***
+     * Runs the music player.
+     */
     @Override
     public void run() {
         while (secondGame) {

@@ -32,6 +32,7 @@ public class ProfileManager {
             controller.profile_new_password_textfield.setDisable(false);
             controller.profile_confirm_password_textfield.setDisable(false);
             controller.profile_edit_btn.setText("Confirm");
+            controller.profile_edit_btn.setStyle("-fx-background-color: #6BCB77;");
             controller.is_editing_profile = true;
         } else {
 
@@ -180,6 +181,7 @@ public class ProfileManager {
             controller.profile_confirm_password_textfield.setDisable(true);
             controller.is_editing_profile = false;
             controller.profile_edit_btn.setText("Edit");
+            controller.profile_edit_btn.setStyle("-fx-background-color: #4193C7;");
             controller.profile_cancel_btn.setDisable(true);
         }
     }
@@ -263,7 +265,7 @@ public class ProfileManager {
             System.out.println(profilePic);
 
             try {
-                controller.db.setProfilePictureIdk(profilePic, controller.user);
+                controller.db.updateProfilePicture(profilePic, controller.user);
             } catch (SQLException e) {
                 e.printStackTrace();
             }

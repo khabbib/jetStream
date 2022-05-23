@@ -7,7 +7,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -18,12 +17,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #112;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
@@ -193,28 +190,27 @@
                            <font>
                               <Font size="15.0" />
                            </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </CheckBox>
                      </children>
                   </HBox>
                </children>
             </VBox>
-            <Button fx:id="registerCommitBtn_admin" layoutX="607.0" layoutY="374.0" mnemonicParsing="false" onAction="#registerUserAdminBtnAction" prefHeight="36.0" prefWidth="260.0" style="-fx-background-color: #f87000;" text="Register" textFill="WHITE" />
-            <Button fx:id="returnToMemberListBtn_admin" layoutX="607.0" layoutY="451.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="260.0" style="-fx-background-color: #f87000;" text="Return to member list" textFill="WHITE" />
+            <Button fx:id="registerCommitBtn_admin" layoutX="607.0" layoutY="374.0" mnemonicParsing="false" onAction="#registerUserAdminBtnAction" prefHeight="36.0" prefWidth="260.0" style="-fx-background-color: #6BCB77;" text="Register" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Button fx:id="returnToMemberListBtn_admin" layoutX="607.0" layoutY="451.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="260.0" style="-fx-background-color: #4193C7;" text="Return to member list" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
             <Label layoutX="81.0" layoutY="40.0" text="Registration a user" textFill="#f87000">
                <font>
                   <Font size="32.0" />
                </font>
             </Label>
-            <Text fill="WHITE" layoutX="911.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JetStream">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </Text>
-            <ImageView fx:id="logo" fitHeight="44.0" fitWidth="36.0" layoutX="988.0" layoutY="27.0" onMouseClicked="#switchToHome" preserveRatio="true">
-               <image>
-                  <Image url="@../image/jetStream.png" />
-               </image>
-            </ImageView>
             <Label fx:id="registration_error_admin" layoutX="608.0" layoutY="530.0" prefHeight="20.0" prefWidth="258.0" textFill="#e1e1e1">
                <font>
                   <Font size="14.0" />
@@ -229,8 +225,11 @@
                   <Font size="27.0" />
                </font>
             </Label>
-            <Button fx:id="refreshTicketsBtn_ticket_admin" layoutX="969.0" layoutY="558.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="97.0" style="-fx-background-color: #f87000;" text="Refresh" textFill="WHITE" />
-            <TableView fx:id="table_tickets" layoutX="58.0" layoutY="138.0" prefHeight="398.0" prefWidth="1008.0">
+            <Button fx:id="refreshTicketsBtn_ticket_admin" layoutX="896.0" layoutY="623.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="97.0" style="-fx-background-color: #4193C7;" text="Refresh" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <TableView fx:id="table_tickets" layoutX="24.0" layoutY="107.0" prefHeight="480.0" prefWidth="1036.0">
                <columns>
                   <TableColumn fx:id="nr_col_ticket_admin" prefWidth="75.0" text="No" />
                   <TableColumn fx:id="airline_col_ticket_admin" prefWidth="75.0" text="Airline" />
@@ -253,7 +252,10 @@
                   <URL value="@../Styles/ScrollStyle.css" />
                </stylesheets>
             </TableView>
-            <Button fx:id="deleteTicketBtn_ticket_admin" layoutX="778.0" layoutY="558.0" mnemonicParsing="false" onAction="#removeTicket_admin" prefHeight="36.0" prefWidth="136.0" style="-fx-background-color: #f87000;" text="Delete selected ticket" textFill="WHITE" />
+            <Button fx:id="deleteTicketBtn_ticket_admin" layoutX="703.0" layoutY="623.0" mnemonicParsing="false" onAction="#removeTicket_admin" prefHeight="36.0" prefWidth="136.0" style="-fx-background-color: #F43F4A;" text="Delete selected ticket" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="admin_flights_anchorpane" layoutX="109.0" layoutY="-1.0" prefHeight="700.0" prefWidth="1091.0" style="-fx-background-color: #112;">
@@ -263,19 +265,19 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <TableView fx:id="table_flight_admin" layoutX="7.0" layoutY="135.0" prefHeight="383.0" prefWidth="1084.0">
+            <TableView fx:id="table_flight_admin" layoutX="24.0" layoutY="107.0" prefHeight="480.0" prefWidth="1036.0">
                <columns>
-                  <TableColumn fx:id="counter_col_flight_admin" prefWidth="55.0" text="Numb" />
-                  <TableColumn fx:id="flightID_col_flight_admin" text="Flight ID" />
-                  <TableColumn fx:id="DepartureName_col_flight_admin" prefWidth="114.0" text="Departure name" />
-                  <TableColumn fx:id="DepartureDate_col_flight_admin" prefWidth="111.0" text="Departure date" />
-                  <TableColumn fx:id="DepartureTime_col_flight_admin" prefWidth="116.0" text="Departure time" />
-                  <TableColumn fx:id="DestinationName_col_flight_admin" prefWidth="151.0" text="Destination name" />
-                  <TableColumn fx:id="DestinationDate_col_flight_admin" prefWidth="139.0" text="Destination date" />
-                  <TableColumn fx:id="DestinationTime_col_flight_admin" prefWidth="138.0" text="Destination time" />
-                  <TableColumn fx:id="price_col_flight_admin" minWidth="0.0" prefWidth="60.0" text="Price" />
-                  <TableColumn fx:id="p_id_col_flight_admin" prefWidth="71.0" text="Plane id" />
-                  <TableColumn fx:id="select_col_table_flights" minWidth="0.0" prefWidth="48.0">
+                  <TableColumn fx:id="counter_col_flight_admin" prefWidth="42.0" text="Numb" />
+                  <TableColumn fx:id="flightID_col_flight_admin" prefWidth="58.0" text="Flight ID" />
+                  <TableColumn fx:id="DepartureName_col_flight_admin" prefWidth="149.0" text="Departure name" />
+                  <TableColumn fx:id="DepartureDate_col_flight_admin" prefWidth="91.0" text="Departure date" />
+                  <TableColumn fx:id="DepartureTime_col_flight_admin" prefWidth="105.0" text="Departure time" />
+                  <TableColumn fx:id="DestinationName_col_flight_admin" prefWidth="118.0" text="Destination name" />
+                  <TableColumn fx:id="DestinationDate_col_flight_admin" prefWidth="117.0" text="Destination date" />
+                  <TableColumn fx:id="DestinationTime_col_flight_admin" prefWidth="166.0" text="Destination time" />
+                  <TableColumn fx:id="price_col_flight_admin" minWidth="0.0" prefWidth="93.0" text="Price" />
+                  <TableColumn fx:id="p_id_col_flight_admin" prefWidth="63.0" text="Plane id" />
+                  <TableColumn fx:id="select_col_table_flights" minWidth="0.0" prefWidth="81.0">
                      <graphic>
                         <CheckBox fx:id="select_col_flight_admin" mnemonicParsing="false" prefHeight="17.0" prefWidth="31.0" />
                      </graphic>
@@ -286,129 +288,36 @@
                   <URL value="@../Styles/ScrollStyle.css" />
                </stylesheets>
             </TableView>
-            <AnchorPane layoutX="63.0" layoutY="539.0" prefHeight="137.0" prefWidth="1002.0" style="-fx-background-color: #151D3B #151D3B; -fx-background-radius: 5;">
-               <children>
-                  <VBox prefHeight="102.0" prefWidth="665.0" spacing="10.0">
-                     <children>
-                        <HBox prefHeight="82.0" prefWidth="659.0" spacing="10.0">
-                           <children>
-                              <VBox prefHeight="100.0" prefWidth="215.0" spacing="10.0">
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
-                                 <children>
-                                    <TextField fx:id="from_input_flight_admin" onKeyTyped="#departureNameAppear" prefHeight="34.0" prefWidth="182.0" promptText="From" style="-fx-background-color: #0E0E1B #0E0E1B; -fx-text-fill: #eee;">
-                                       <padding>
-                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                       </padding>
-                                    </TextField>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="171.0" spacing="10.0" />
-                                 </children>
-                              </VBox>
-                              <ImageView fx:id="exchange_search_flight" fitHeight="27.0" fitWidth="25.0" onMouseClicked="#change_search_info" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../image/share.png" />
-                                 </image>
-                                 <effect>
-                                    <ColorAdjust brightness="1.0" contrast="0.21" hue="-0.36" saturation="-0.38" />
-                                 </effect>
-                                 <HBox.margin>
-                                    <Insets top="6.0" />
-                                 </HBox.margin>
-                              </ImageView>
-                              <VBox prefHeight="73.0" prefWidth="225.0" spacing="10.0">
-                                 <children>
-                                    <TextField fx:id="disc_input_flight_admin" onKeyTyped="#destinationNameAppear" prefHeight="34.0" prefWidth="174.0" promptText="To" style="-fx-background-color: #0E0E1B #0E0E1B; -fx-text-fill: #eee;">
-                                       <padding>
-                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                       </padding>
-                                    </TextField>
-                                    <HBox fx:id="return_date_pick_hbox" alignment="CENTER_LEFT" disable="true" prefHeight="19.0" prefWidth="200.0" spacing="10.0" />
-                                 </children>
-                              </VBox>
-                              <Pane>
-                                 <children>
-                                    <Group layoutY="4.0">
-                                       <children>
-                                          <StackPane layoutY="1.0" prefHeight="27.0" prefWidth="25.0" style="-fx-background-color: #0E0E1B #0E0E1B; -fx-background-radius: 5;">
-                                             <children>
-                                                <ImageView fitHeight="12.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@../image/close.png" />
-                                                   </image>
-                                                </ImageView>
-                                             </children>
-                                             <padding>
-                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                             </padding>
-                                          </StackPane>
-                                          <Button layoutX="2.0" mnemonicParsing="false" onAction="#resetSearchFromTo" opacity="0.0" prefHeight="23.0" prefWidth="24.0" style="-fx-background-color: #112;" text="0" textFill="WHITE">
-                                             <cursor>
-                                                <Cursor fx:constant="HAND" />
-                                             </cursor>
-                                          </Button>
-                                       </children>
-                                    </Group>
-                                 </children>
-                              </Pane>
-                              <Button fx:id="search_input_flight_admin" graphicTextGap="6.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="142.0" style="-fx-background-color: #ff7000;" text="Search flight" textFill="WHITE">
-                                 <padding>
-                                    <Insets bottom="10.0" left="25.0" right="25.0" top="10.0" />
-                                 </padding>
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </Button>
-                           </children>
-                           <padding>
-                              <Insets left="10.0" top="10.0" />
-                           </padding>
-                        </HBox>
-                        <HBox alignment="CENTER" prefHeight="35.0" prefWidth="552.0">
-                           <padding>
-                              <Insets left="10.0" right="10.0" />
-                           </padding>
-                        </HBox>
-                     </children>
-                  </VBox>
-                  <ListView fx:id="search_list_appear_second" layoutX="19.0" layoutY="55.0" prefHeight="82.0" prefWidth="241.0" style="-fx-background-color: #151D3B; -fx-background-radius: 5;" visible="false">
-                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </padding>
-                     <stylesheets>
-                        <URL value="@../Styles/ListView.css" />
-                        <URL value="@../Styles/ScrollStyle.css" />
-                     </stylesheets>
-                  </ListView>
-                  <ListView fx:id="search_list_appear_third" layoutX="219.0" layoutY="55.0" prefHeight="82.0" prefWidth="231.0" style="-fx-background-color: #151D3B; -fx-background-radius: 5;" visible="false">
-                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </padding>
-                     <stylesheets>
-                        <URL value="@../Styles/ListView.css" />
-                        <URL value="@../Styles/ScrollStyle.css" />
-                     </stylesheets>
-                  </ListView>
-                  <Button fx:id="delete_singelFlightBtn_admin" layoutX="703.0" layoutY="14.0" mnemonicParsing="false" onAction="#removeFlight_admin" prefHeight="36.0" prefWidth="176.0" style="-fx-background-color: #f87000;" text="Delete selected singel Flight" textFill="WHITE" />
-                  <Button fx:id="refreshFlightsBtn_admin" layoutX="897.0" layoutY="14.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="97.0" style="-fx-background-color: #f87000;" text="Refresh" textFill="WHITE" />
-               </children>
-            </AnchorPane>
+            <Button fx:id="refreshFlightsBtn_admin" layoutX="887.0" layoutY="620.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="97.0" style="-fx-background-color: #4193C7;" text="Refresh" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="delete_singelFlightBtn_admin" layoutX="681.0" layoutY="620.0" mnemonicParsing="false" onAction="#removeFlight_admin" prefHeight="36.0" prefWidth="176.0" style="-fx-background-color: #F43F4A;" text="Delete selected singel Flight" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="admin_members_anchorpane" layoutX="113.0" layoutY="6.0" prefHeight="694.0" prefWidth="1084.0" style="-fx-background-color: #112;">
+      <AnchorPane fx:id="admin_members_anchorpane" layoutX="113.0" layoutY="6.0" prefHeight="686.0" prefWidth="1084.0" style="-fx-background-color: #112;">
          <children>
-            <Label layoutX="14.0" layoutY="55.0" prefHeight="34.0" prefWidth="166.0" text="List of Members" textFill="WHITE">
+            <Label layoutX="14.0" layoutY="55.0" prefHeight="34.0" prefWidth="176.0" text="List of Members" textFill="WHITE">
                <font>
                   <Font size="23.0" />
                </font>
             </Label>
-            <Button fx:id="registerMemberBtn_admin" layoutX="20.0" layoutY="563.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="155.0" style="-fx-background-color: #f87000;" text="Register" textFill="WHITE" />
-            <Button fx:id="refreshMembersBtn_admin" layoutX="977.0" layoutY="554.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="74.0" style="-fx-background-color: #f87000;" text="Refresh" textFill="WHITE" />
-            <Group layoutX="259.0" layoutY="20.0" />
-            <TableView fx:id="table_member_admin" layoutX="28.0" layoutY="118.0" prefHeight="398.0" prefWidth="1036.0">
+            <Button fx:id="registerMemberBtn_admin" layoutX="20.0" layoutY="611.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="155.0" style="-fx-background-color: #6BCB77;" text="Register" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="refreshMembersBtn_admin" layoutX="909.0" layoutY="611.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="74.0" style="-fx-background-color: #4193C7;" text="Refresh" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <TableView fx:id="table_member_admin" layoutX="24.0" layoutY="107.0" prefHeight="480.0" prefWidth="1036.0">
                <columns>
                   <TableColumn fx:id="no_col_mbr_admin" prefWidth="29.0" text="No" />
                   <TableColumn fx:id="id_col_mbr_admin" prefWidth="83.0" text="User ID" />
@@ -429,7 +338,11 @@
                   <URL value="@../Styles/ScrollStyle.css" />
                </stylesheets>
             </TableView>
-            <Button fx:id="deletS_btn_mbr_admin" layoutX="210.0" layoutY="563.0" mnemonicParsing="false" onAction="#removeMember_admin" prefHeight="36.0" prefWidth="155.0" style="-fx-background-color: #f87000;" text="Delete selected member" textFill="WHITE" />
+            <Button fx:id="deletS_btn_mbr_admin" layoutX="712.0" layoutY="611.0" mnemonicParsing="false" onAction="#removeMember_admin" prefHeight="36.0" prefWidth="155.0" style="-fx-background-color: #F43F4A;" text="Delete selected member" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
          </children>
       </AnchorPane>
       <Pane prefHeight="702.0" prefWidth="105.0" style="-fx-background-color: #221E4E #221E4E; -fx-background-radius: 0 30 0 0;">
@@ -556,25 +469,11 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox alignment="TOP_CENTER" layoutX="11.0" layoutY="566.5" spacing="15.0">
+            <VBox alignment="TOP_CENTER" layoutX="9.0" layoutY="637.0" prefHeight="57.0" prefWidth="88.0" spacing="15.0">
                <children>
                   <Line endX="30.0" startX="-45.0" stroke="#656565" />
                   <Group>
                      <children>
-                        <Group layoutX="-2.0">
-                           <children>
-                              <StackPane layoutX="25.0" layoutY="8.0" prefHeight="18.0" prefWidth="11.0">
-                                 <children>
-                                    <Circle fill="#30448a" radius="16.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" style="-fx-background-color: #151D3B;" />
-                                    <ImageView fx:id="profile_image_imageview" fitHeight="29.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../image/user.png" />
-                                       </image>
-                                    </ImageView>
-                                 </children>
-                              </StackPane>
-                           </children>
-                        </Group>
                         <Group layoutY="78.0">
                            <children>
                               <ImageView fitHeight="18.0" fitWidth="18.0" layoutX="1.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
@@ -600,6 +499,12 @@
                   </Group>
                </children>
             </VBox>
+            <ImageView fx:id="profile_image_imageview" fitHeight="29.0" fitWidth="33.0" layoutX="38.0" layoutY="492.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/user.png" />
+               </image>
+            </ImageView>
+            <Circle fill="#30448a" layoutX="53.0" layoutY="476.0" opacity="0.0" radius="16.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" style="-fx-background-color: #151D3B;" />
          </children>
       </Pane>
    </children>

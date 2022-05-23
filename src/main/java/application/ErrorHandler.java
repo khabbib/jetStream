@@ -12,25 +12,26 @@ import javafx.util.Duration;
 import java.util.Optional;
 
 /**
- * #comment (comment this class and create javadoc to every method)
- *  This class is used to warn if the user really want to confirm an action.
+ * This class is used to warn if the user really want to confirm an action.
  */
 public class ErrorHandler {
     private Controller controller;
 
     /**
-     * @param controller
+     * Constructor to ErrorHandler
+     * @param controller instance of control class
      */
     public ErrorHandler(Controller controller){
         this.controller = controller;
     }
 
     /**
-     * The following method will open a confirmation window to the user to confirm an action.
+     * This method is used for critical actions for instance if a ticket needs to be canceled, it needs a confirmation of user.
      * @param title // is the conformation windows title
      * @param message // is a question to the user if the user willing to confirm the action or not.
      * @param content // is more detail information about the actual action
      * @return // return a status of true or false which means if the user confirm the action or not.
+     * @author Habib Mohammad
      */
     public boolean confirmThisAction(String title, String message, String content){
         boolean confirm = false;
@@ -61,7 +62,7 @@ public class ErrorHandler {
      * This method validates the input from text fields and checks if it's limitation is correct.
      * @param textField comes from fxml text field id.
      * @param limitType indicates which text shall be validated.
-     * @return true if its okay.
+     * @return true if it's okay.
      * @author Sossio.
      */
     public static boolean validateInputLimit(TextField textField, String limitType) {
@@ -94,10 +95,10 @@ public class ErrorHandler {
     }
 
     /**
-     * Display error on screen by its tag
-     * @param label
-     * @param msg
-     * @param isError
+     * Display error or success message in the whole program
+     * @param label Label panel : Label
+     * @param msg message to display : String
+     * @param isError is an error? : boolean
      * @author Khabib. Developed by Sossio and Khabib.
      */
     public void displayMessage(Label label, String msg, boolean isError) {
@@ -114,7 +115,7 @@ public class ErrorHandler {
             pause.setOnFinished(a -> label.setText(null));
             pause.play();
         }else {
-            System.out.println("SUCESS REGISTRATION! display msg on screen!");
+            System.out.println("SUCCESS REGISTRATION! display msg on screen!");
         }
     }
 }

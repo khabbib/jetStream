@@ -6,7 +6,7 @@ import application.components.flight.*;
 import application.components.initialize.InitializeFXM;
 import application.components.user.*;
 import application.components.login.ShowPasswordField;
-import application.components.reservation.Book;
+import application.components.flight.Book;
 import application.components.ticket.PurchaseHandler;
 import application.components.ticket.UserHistory;
 import application.components.registration.RegistrationUser;
@@ -19,11 +19,10 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -31,30 +30,30 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import worldMapAPI.World;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.sql.*;
 import java.text.ParseException;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
+ * #move ---> There is methods that can be separated from controller to new or exiting class.
  * This class is main class which connects all components, methods and variables together with FXML.
  */
-public class Controller implements Initializable {
+public class Controller {
 
     //<editor-fold desc="========= GLOBAL VARIABLES =========" >
     //<editor-fold desc="======== LOGIN WINDOW VARIABLES ========">
     @FXML public TextField login_pass, login_email, show_password_field_login;
     @FXML public Label error_message_lbl, success_msg_lbl; // ERRORS HANDLER
     @FXML private Button forgot_password_login;
+    @FXML public AnchorPane login_anchorpane, forgot_password_anchorpane;
     @FXML public CheckBox show_pasword_login;
-    public static boolean exploreMode = true; // If explore mode is off, it means user is logged in.
+    public static boolean explore_mode = true; // If explore mode is off, it means user is logged in.
 
     //</editor-fold>
 
@@ -92,7 +91,7 @@ public class Controller implements Initializable {
     public ObservableList<Flight> fetchedList_flight_admin, items_flight_admin;
     @FXML public Button delete_singelFlightBtn_admin, delete_allFlightsBtn_admin, refreshFlightsBtn_admin, addFlightsBtn_admin, search_input_flight_admin;
     @FXML public TableView<Flight> table_flight_admin;
-    @FXML public CheckBox select_all_box_flight_admin, select_col_flight_admin;
+    @FXML public CheckBox  select_col_flight_admin;
     @FXML public TextField from_input_flight_admin, disc_input_flight_admin;
     //</editor-fold>
     //</editor-fold>
@@ -153,6 +152,8 @@ public class Controller implements Initializable {
     @FXML public static Label lblForecastA,lblForecastB,lblForecastC,lblForecastD,lblForecastE,lblForecastF;
     @FXML public static ImageView weatherIcon, play_button_image;
     @FXML public static Pane weatherPane, weatherPaneBase;
+
+    @FXML public Button weather_btn;
     public static boolean weatherMenu;
     //</editor-fold>
     //<editor-fold desc="======== TICKET-PROCESS VARIABLES ========">
@@ -197,7 +198,7 @@ public class Controller implements Initializable {
     //</editor-fold
     //<editor-fold desc="======== SEARCH VARIABLES ========">
     @FXML public Button date_previous_day_button, date_next_day_button, date_previous_day_return_button, date_next_day_return_button;
-    @FXML public ListView<String> search_list_appear, search_list_appear_second, search_list_appear_third;
+    @FXML public ListView<String> search_list_suggestion, search_list_appear_second, search_list_appear_third;
     @FXML public TextField from_input_flight_textfield, display_input_flights, search_f_name;
     @FXML public Label nbr_of_available_flights, search_flight_error_lbl;
     public ArrayList<Flight> available_flights_list = new ArrayList<>();
@@ -229,6 +230,7 @@ public class Controller implements Initializable {
     //</editor-fold>
 
     //</editor-fold>
+
     //<editor-fold desc="========= INSTANCES OF CLASSES =========" >
 
     public FlightsViewManager flightsViewManager;
@@ -253,10 +255,13 @@ public class Controller implements Initializable {
     public Db db;
     //</editor-fold>
 
-    //----------------- HOME -----------------//
+    /**
+     * Constructor to Controller class
+     * @author Khabib
+     */
     public Controller(){
-        db = new Db(this);
-        config = new Config(this, root, main_stage);
+        db = new Db();
+        config = new Config(root, main_stage);
         support = new Support(this);
         errorHandler = new ErrorHandler(this);
         search = new Search(this, db, errorHandler);
@@ -269,28 +274,112 @@ public class Controller implements Initializable {
         profileManager = new ProfileManager();
         password = new ShowPasswordField();
         adminControl = new AdminControl(this, db);
-        userEvent = new UserEvent(this);
         adminEvent = new AdminEvent();
         purchaseHandler = new PurchaseHandler();
         flightsViewManager = new FlightsViewManager(this);
+        userEvent = new UserEvent(this, flightsViewManager);
         bgMusic = new BgMusic(this);
         systemSound = new SystemSound(this);
     }
 
-    //----------------- HOME -----------------//
+    //<editor-fold desc="============= SWITCH WINDOWS">
 
     /**
      * the method will switch the user to the Home page
-     * @param e
-     * @throws IOException
+     * @param e event
+     * @author Khabib
      */
     public void switchToHome(ActionEvent e) {
         config.render(e,"Home", "Home");
     }
 
-    /***
-     * Creates and animates flightpaths on world map.
-     * Author: Kasper
+    /**
+     * the method will switch the user to the dashboard page
+     * navigate to dashboard pages.
+     * @param e event.
+     * @author Khabib developed by Kasper.
+     */
+    public void switchToUserDashboard(ActionEvent e) {
+        explore_mode = false;
+        userControl.switchToUserDashboard(e,this);
+    }
+
+    /**
+     * the method will switch the user to the login page
+     * @param e event
+     * @author Khabib
+     */
+    public void switchToLogin(ActionEvent e) {
+        explore_mode = true;
+        this.root = config.render(e, "user/Login", "Login");
+        success_msg_lbl = (Label) root.lookup("#success_msg_lbl");
+        login_anchorpane = (AnchorPane) root.lookup("#login_anchorpane");
+        forgot_password_anchorpane = (AnchorPane) root.lookup("#forgot_password_anchorpane");
+        if(user != null) {
+            playSystemSound("Logout", "sounds/logout.wav");
+        } else {
+            user = null;
+        }
+    }
+
+    /**
+     * This method will handle forget password ....
+     * ...
+     * @param e event.
+     * @author Sossio.
+     */
+    public void switchToForgotPassword(ActionEvent e) {
+        forgot_password_login.toFront();
+    }
+
+    /**
+     * This method will ....
+     * ...
+     * @param e event.
+     * @author Sossio.
+     */
+    public void bringLoginToFront(ActionEvent e) {
+        login_anchorpane.toFront();
+    }
+
+
+    /**
+     * the method will switch the user to register page.
+     * @param e event.
+     * @author Khabib developed by Sossio.
+     */
+    public void switchToRegistration(ActionEvent e) {
+        playSystemSound("Next page", "sounds/next_page.wav");
+        this.root = config.render(e, "user/Registration", "Registration");
+    }
+
+
+    /**
+     * the method will render dashboard page for user.
+     * @param e event.
+     * @param user instance of User class.
+     * @author Khabib developed by Kasper.
+     */
+    public void renderDashboard(ActionEvent e, User user) {
+        userControl.renderDashboard(e, user,this);
+    }
+
+    /**
+     * Navigate to user dashboard without login.
+     * @param e event.
+     * @author Khabib developed by Sossio.
+     */
+    public void noLoginRequired(ActionEvent e) {
+        explore_mode = true;
+        userControl.noLoginRequired(e,this);
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="============= GAME METHODS"
+
+    /**
+     * Creates and animates flightpath on world map.
+     * @author Kasper
      */
     public void displayFlightPaths() {
         flightPaths.start();
@@ -300,9 +389,9 @@ public class Controller implements Initializable {
     /***
      * Fetches weather for selected country and displays in gui.
      * @param country is selected country.
-     * @throws IOException
+     * @throws IOException io exception
      * @throws InterruptedException
-     * Author Kasper.
+     * @author Kasper.
      */
     public void forecast(String country) throws IOException, InterruptedException {
         weatherAPI.setInformation(this,country);
@@ -310,32 +399,16 @@ public class Controller implements Initializable {
 
     /***
      * Opens and closes weather menu in gui.
-     * Author Kasper.
+     * @author Kasper.
      */
     public void weatherButton() {
-       weatherAPI.weatherMenu(this);
+        weatherAPI.weatherMenu(this);
     }
 
-
-    /**
-     * Login operation (show password )
-     * @param e
-     * @author Khabib.
-     */
-    public void showPassword(ActionEvent e){
-        password.showPassword(e,this);
-    }
-
-    /**
-     * @author Khabib.
-     */
-    public void syncPasswordShow(){
-       password.syncPasswordShow(this);
-    }
 
     /***
      * Starts Pong game.
-     * Author Kasper.
+     * @author Kasper.
      */
     public void playPong(){
         Pong pong = new Pong();
@@ -347,7 +420,7 @@ public class Controller implements Initializable {
 
     /***
      * Starts Geo Quiz game.
-     * Author Kasper.
+     * @author Kasper.
      */
     public void playGeoQuiz(){
         Geography geography = new Geography();
@@ -358,7 +431,7 @@ public class Controller implements Initializable {
     }
     /***
      * Starts Music Quiz game.
-     * Author Kasper.
+     * @author Kasper.
      */
     public void playQuiz(){
         MPlayer mPlayer = new MPlayer();
@@ -370,7 +443,7 @@ public class Controller implements Initializable {
 
     /***
      * Starts Piano game.
-     * Author Kasper.
+     * @author Kasper.
      */
     public void playPiano(){
         Piano piano = new Piano();
@@ -382,7 +455,7 @@ public class Controller implements Initializable {
 
     /***
      * Starts 2048 game.
-     * Author Sossio.
+     * @author Sossio.
      */
     public void play2048(){
         Game2048Main game2048Main = new Game2048Main();
@@ -391,182 +464,106 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
     }
+    //</editor-fold>
 
+    //<editor-fold desc="============= Dashboard event and update">
+
+    /**
+     * User dashboard event handler take care of events in dashboard class.
+     * @param e e event is passed here from GFX and will be passed to new class
+     * @author Habib
+     */
+    public void userDashboardEventHandler(ActionEvent e) throws ParseException {
+        userEvent.userDashboardEventHandler(e,this);
+    }
+
+    /**
+     * separated method to use multiple times
+     * it will update the historic table in user dashboard everytime an action happen or user want to navigate to the panel etc.
+     * @author Habib
+     */
+    public void updateDashboardInfo(){
+        ArrayList<UserHistory> list = db.searchDataForTableHistory(Integer.parseInt(user.getUserId()), null , false);
+        history_items_list = FXCollections.observableArrayList(list);
+        userControl.fillMyTicket(list);
+        history_tableview.setItems(history_items_list);
+    }
+
+    //</editor-fold>
+
+    //<editor-fold desc="============= Login methods + system sound">
+
+    /**
+     * Login operation (show password )
+     * @param e event
+     * @author Khabib.
+     */
+    public void showPassword(ActionEvent e){
+        password.showPassword(e,this);
+    }
+
+    /**
+     * The method calls from login page, and it will redirect to password class to make password visible for user.
+     * @author Khabib.
+     */
+    public void showPassFieldLogin(){
+        password.showPassFieldLogin(this);
+    }
+
+    /**
+     * the method will play the background music in application.
+     * @param soundName name of file/music.
+     * @param src file/music path.
+     * @author Sossio.
+     */
     public void playSystemSound(String soundName, String src) {
         systemSound.playSystemSound(soundName, src);
     }
 
     /**
-     * the method will switch the user to the dashboard page
-     * navigate to dashboard pages
-     * @param e
-     * @throws IOException
-     */
-    public void switchToUserDashboard(ActionEvent e) throws IOException {
-        exploreMode = false;
-        userControl.switchToUserDashboard(e,this);
-    }
-
-    /**
-     * Resets the text in textfield from-to.
-     * @author Sossio.
-     */
-    public void resetSearchFromTo() {
-        flightsViewManager.resetSearchFromTo(this);
-    }
-
-    /**
-     * Resets the text in textfield country name.
-     * @author Sossio.
-     */
-    public void resetSearchCountry() {
-        flightsViewManager.resetSearchCountry(this);
-    }
-
-    /**
-     * the method will render dashboard page for user
-     * @param e
-     * @param user
-     * @throws IOException
-     */
-    public void renderDashboard(ActionEvent e, User user) {
-        userControl.renderDashboard(e, user,this);
-    }
-
-    /**
-     * shortcut login to user dashboard
-     * @param e
-     * @throws IOException
-     */
-    public void noLoginRequired(ActionEvent e) throws IOException {
-        exploreMode = true;
-        userControl.noLoginRequired(e,this);
-    }
-
-    /**
-     * the method will switch the user to the registration page
-     * @param e
-     * @throws IOException
-     */
-    public void switchToRegistration(ActionEvent e) {
-        playSystemSound("Next page", "sounds/next_page.wav");
-        this.root = config.render(e, "user/Registration", "Registration");
-    }
-
-    /**
-     * The method will register the user and return to the login page
-     * @param e
-     * @throws SQLException
-     * @throws IOException
+     * The method will register the user and return to login page.
+     * @param e event.
+     * @author Khabib.
      */
     public void registerUserButton(ActionEvent e) {
         registrationUser.registerUserBtnAction(e,this);
     }
 
-    /**
-     * @param e
-     * @throws SQLException
-     */
-    public void registerUserAdminBtnAction(ActionEvent e) throws SQLException {
-        registerAdmin.registerUserAdminBtnAction(e,this);
-    }
+    //</editor-fold>
+
+    //<editor-fold desc="============= Ticket purchase + seat">
 
     /**
-     * the method will switch the user to the login page
-     * @param e
-     * @throws IOException
+     * The method take a list of flights and fill up in the flight list in the application.
+     * @param flights a list of flights from database
+     * @author Khabib
      */
-    public void switchToLogin(ActionEvent e) {
-        exploreMode = true;
-        this.root = config.render(e, "user/Login", "Login");
-        success_msg_lbl = (Label) root.lookup("#success_msg_lbl");
-        if(user != null) {
-            playSystemSound("Logout", "sounds/logout.wav");
-        } else {
-            user = null;
-        }
+    public void fetchFlights(ArrayList <Flight> flights) {
+        flightsViewManager.fetchFlights(flights);
     }
+
+    /***
+     * Executes an asynchronous task to fill flights from DB.
+     * @param country is the country to fetch flights from.
+     * @Author Kasper.
+     */
+    public void prepareFlightList(String country) {
+        flightsViewManager.fillFlights(country, db);
+    }
+
 
     /**
-     * flight lists dashboard
-     * @param flights
+     * The method validate and confirm the tickets purchase.
+     * @param rfc reference number to ticket.
+     * @author Khabib.
      */
-    public void fillFlights (ArrayList <Flight> flights) {
-        flightsViewManager.fillFlights(flights,this);
-    } // the method will show the flights list on the right side of the dashboard when a user choose a country
-
-    public void createThisSeat(ArrayList<Flight> flights, int finalI1) {
-        flightsViewManager.createThisSeat(flights,finalI1,this);
+    public void confirmPurchase(String rfc) {
+        purchaseHandler.confirmPurchase(rfc,this);
     }
 
-    public boolean preperBeforeCreatingSeats() {
-        return flightsViewManager.preperBeforeCreatingSeats(this);
-    }
+    //</editor-fold>
 
-    // check if there is any flight for searched name
-    public boolean checkFlightExistance(ArrayList<Flight> flights) {
-        return flightsViewManager.checkFlightExistance(flights,this);
-    }
-
-    // create content of the flights list
-    public HBox createFlightsContent(ArrayList<Flight> flights, int i) {
-        return flightsViewManager.createFlightsContent(flights,i);
-    }
-
-    // fill information to seat pnl.
-    public void fillInfoSeatPnl(ArrayList<Flight> flights, int finalI1) {
-        flightsViewManager.fillInfoSeatPnl(flights,finalI1,this);
-    }
-
-    /**
-     * create seats
-     * @param econonySeats
-     * @param businessSeats
-     */
-    public boolean chooseSeat(int econonySeats, int businessSeats) throws InterruptedException {
-        return flightsViewManager.chooseSeat(econonySeats,businessSeats,this);
-    }// the method will show the chosen seat on the screen
-
-    /**
-     * @param columnIndex
-     * @param rowIndex
-     * @param business
-     */
-    public void build_eco_seats(int rowIndex, int columnIndex, boolean business) {
-        flightsViewManager.build_eco_seats(rowIndex,columnIndex,business,this);
-    }
-
-    /**
-     *
-     */
-    public void toggleSeatColor() {
-        for (int ge = 0; ge < economy_seat_gridpane.getChildren().size(); ge++){ // ge store for grid-economy
-            if (!taken_seat_economy.contains(economy_seat_gridpane.getChildren().get(ge).getId())){
-                economy_seat_gridpane.getChildren().get(ge).setOpacity(1);
-                //gridE.getChildren().get(ge).setStyle("-fx-background-color: #AEFF47; -fx-background-radius: 5; -fx-opacity: 1;"); // restore all seats
-            }
-        }
-        for (int gb = 0; gb < business_seat_gridpane.getChildren().size(); gb++){ // gb stor for grid-business
-            if (!taken_seat_business.contains(business_seat_gridpane.getChildren().get(gb).getId())){
-                business_seat_gridpane.getChildren().get(gb).setOpacity(1);
-                //gridB.getChildren().get(gb).setStyle("-fx-background-color: #AEFF47; -fx-background-radius: 5; -fx-opacity: 1;"); // restore all seats
-            }
-        }
-    }
-
-    /**
-     * @return
-     */
-    public Label createSeatItem(){
-        Label label = new Label();
-        label.setMinWidth(30);
-        label.setMinHeight(30);
-        label.setText(label.getId());
-        label.setBackground(new Background(new BackgroundFill(Color.WHITE, new CornerRadii(5), Insets.EMPTY)));
-        label.setBorder(new Border(new BorderStroke(Color.WHITE, BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(0))));
-        return label;
-    }
-
+    //<editor-fold desc="============= Profile">
 
     /**
      * This method edits profile information to later save in the database.
@@ -577,6 +574,7 @@ public class Controller implements Initializable {
         profileManager.editProfile(this);
     }
 
+
     /**
      * This method cancels editing profile.
      * @throws SQLException if any error occurs.
@@ -586,97 +584,75 @@ public class Controller implements Initializable {
         profileManager.editProfileCancel(this);
     }
 
+
     /**
      * Shows available profile images using a grid.
      * @author Kasper.
      */
-    public void changeImage() {
+    public void changeProfileImage() {
         profileManager.changeImage(this);
     }
 
+
     /**
      * Edits the profile picture of a user.
-     * @param event
+     * @param event event.
      * @author Kasper. Developed by Sossio.
      */
-    public void clickGrid(MouseEvent event) {
+    public void profileImageClickGrid(MouseEvent event) {
         profileManager.clickGrid(event,this);
     }
 
+
     /***
      * Plays or pauses music on dashboard.
-     * @param e
+     * @param e event.
      * @author Kasper.
      */
     public void mediaHandler(ActionEvent e) {
         bgMusic.mediaHandler(e);
     }
 
-    public void confirmPurchase(String rfc) {
-        purchaseHandler.confirmPurchase(rfc,this);
+    //</editor-fold>
+
+    //<editor-fold desc="============= Search">
+
+
+    /**
+     * The method search flights based on filters and date.
+     * @param e event.
+     * @author Khabib.
+     */
+    public void advanceSearch(ActionEvent e) {
+        search.advanceSearch();
     }
 
 
     /**
-     * Navigate to admin pages.
-     * @param e
-     * @author Obed.
+     * The method handle the checkbox for return trip.
+     * @param e event.
+     * @author Khabib
      */
-    public void switchToAdminView(ActionEvent e) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("admin/AdminView.fxml")));
-        adminControl.switchToAdminView(e, this);
-    }
-
-    /**
-     * User dashboard event handler take care of events in dashboard class.
-     * @param e e event is passed here from GFX and will be passed to new class
-     * @author Habib
-     */
-    public void userDashboardEventHandler(ActionEvent e) throws ParseException {
-       userEvent.userDashboardEventHandler(e,this);
-    }
-
-
-    /**
-     * Administrator dev.
-     * @param e
-     * @throws IOException
-     * @autor Obed.
-     */
-    public void adminDashboardEventHandler(ActionEvent e) throws SQLException {
-        adminEvent.adminDashboardEventHandler(e,this);
-    }
-
-    //----------------- SEARCH FLIGHTS -----------------//
-
-    /**
-     * @param e
-     */
-    public void searchFlight(ActionEvent e) {
-        search.searchFlight();
-    }
-
-
-
     public void checkboxEvent(ActionEvent e){
         search.checkboxEvent(e);
     }
-    //----------------- SEARCH FIELD -----------------//
+
+
 
     /**
-     *
+     * The method called from GUI on enter and mouse clicked.
+     * @author Khabib.
      */
     public void searchHit(){
         search.searchHit();
     }
 
 
-
     /**
-     *
+     * The method change value of departure with destination.
+     * @author Khabib.
      */
-    public void change_search_info(){
-
+    public void changeSearchInfo(){
         if (from_input_flight_textfield != null || display_input_flights != null ){
             String from = from_input_flight_textfield.getText();
             String to = display_input_flights.getText();
@@ -689,33 +665,33 @@ public class Controller implements Initializable {
     }
 
     /**
-     * On key pressed search and show name.
+     * The method validate and control search recommendation on key pressed.
      * @author Khabib.
      */
-    public void searchAppear(){
+    public void searchAlternativeSuggestion(){
         if (search_f_name != null){
             ObservableList<String> searchAprear = FXCollections.observableList(propareSearchTerm(search_f_name.getText().toLowerCase()));
             if (!searchAprear.isEmpty()){
-                if (search_list_appear != null){
-                    search_list_appear.getItems().removeAll();
+                if (search_list_suggestion != null){
+                    search_list_suggestion.getItems().removeAll();
                 }
-                search_list_appear.setVisible(true);
-                search_list_appear.setItems(searchAprear);
-                search_list_appear.getSelectionModel().selectedItemProperty().addListener(e ->{
-                    search_f_name.setText(search_list_appear.getSelectionModel().getSelectedItem());
-                        search_list_appear.setVisible(false);
+                search_list_suggestion.setVisible(true);
+                search_list_suggestion.setItems(searchAprear);
+                search_list_suggestion.getSelectionModel().selectedItemProperty().addListener(e ->{
+                    search_f_name.setText(search_list_suggestion.getSelectionModel().getSelectedItem());
+                        search_list_suggestion.setVisible(false);
             });
             }
         }
 
-        hidePopupSearch(search_f_name.getText(), search_list_appear);
+        hidePopupSearch(search_f_name.getText(), search_list_suggestion);
     }
 
     /**
-     * On key pressed search and show name.
+     * The method handle the departure search recommendation.
      * @author Khabib.
      */
-    public void departureNameAppear(){
+    public void departureSuggestions(){
         if (from_input_flight_textfield != null){
             ObservableList<String> searchAprear = FXCollections.observableList(propareSearchTerm(from_input_flight_textfield.getText().toLowerCase()));
             System.out.println("Typed ===== " + from_input_flight_textfield.getText());
@@ -737,10 +713,10 @@ public class Controller implements Initializable {
     }
 
     /**
-     * On key pressed search and show name.
+     * The method handle the destination search recommendation.
      * @author Khabib.
      */
-    public void destinationNameAppear(){
+    public void destinationSuggestions(){
         if (display_input_flights != null){
             ObservableList<String> searchAprear = FXCollections.observableList(propareSearchTerm(display_input_flights.getText().toLowerCase()));
             if (!searchAprear.isEmpty()){
@@ -760,8 +736,9 @@ public class Controller implements Initializable {
     }
 
     /**
-     * @param text
-     * @param popupWindow
+     * The method hide/visible the popup search recommendation on search key.
+     * @param text search term.
+     * @param popupWindow javaFX element : ListView
      * @author Khabib and Sossio.
      */
     public void hidePopupSearch(String text, ListView popupWindow) {
@@ -771,24 +748,28 @@ public class Controller implements Initializable {
     }
 
     /**
-     * @param srch
-     * @return
+     * The method validate search key.
+     * @param searchkey search key.
+     * @return list of country name.
+     * @author Khabib
      */
-    private ArrayList<String> propareSearchTerm(String srch){
+    private ArrayList<String> propareSearchTerm(String searchkey){
         ArrayList<String> obs;
-        if (srch.length() > 1){
-            String searchTarget = srch.substring(0, 1).toUpperCase() + srch.substring(1); // convert first character to Uppercase
+        if (searchkey.length() > 1){
+            String searchTarget = searchkey.substring(0, 1).toUpperCase() + searchkey.substring(1); // convert first character to Uppercase
             obs = compareSearchKey(searchTarget);
         }else {
-            String searchTarget = srch.toUpperCase();
+            String searchTarget = searchkey.toUpperCase();
             obs = compareSearchKey(searchTarget);
         }
         return obs;
     }
 
     /**
-     * @param searchTargetKey
-     * @return
+     * The method compare searched key and recommend a country name based on country list.
+     * @param searchTargetKey searched key.
+     * @return list of names.
+     * @author Khabib.
      */
     private ArrayList<String> compareSearchKey(String searchTargetKey) {
         ArrayList<String> obs  = new ArrayList<>();
@@ -801,20 +782,43 @@ public class Controller implements Initializable {
         return obs;
     }
 
-    //----------------- Support -----------------//
+    /**
+     * Resets the text in text-field from-to in advanced search - user dashboard.
+     * @author Sossio.
+     */
+    public void resetSearchFromTo() {
+        flightsViewManager.resetSearchFromTo();
+    }
 
     /**
-     * @param e
+     * Resets the text in text-field country name.
+     * @author Sossio.
+     */
+    public void resetSearchCountry() {
+        flightsViewManager.resetSearchCountry();
+    }
+
+    //</editor-fold>
+
+    //<editor-fold desc="============= Support">
+    /**
+     * This method redirect us to support class which handle support events.
+     * @param e events
+     * @author Habib
      */
     public void support_event_handler(ActionEvent e){
         support.supportInfo(e);
     }
 
+    //</editor-fold>
 
-    //----------------- History  -----------------//
+    //<editor-fold desc="============= History">
+
 
     /**
-     *
+     * #move
+     * The method fill information into user history table in user dashboard.
+     * @author Habib.
      */
     public void setInfoIntoTableHistorik(){ // the method calls from user dashboard to load everything.
         history_single_delete_button = (Button) root.lookup("#history_single_delete_button");
@@ -889,6 +893,10 @@ public class Controller implements Initializable {
 
     }
 
+    /**
+     * This method display the actual ticket in "My Ticket" window for checking or further more functions that a user can do with it's ticket.
+     * @author Habib
+     */
     public void pickTicketForDetailes(){
         System.out.println("rfc: " + rfc_smp_history.getText());
         ArrayList<UserHistory> list = db.searchDataForTableHistory( -1, rfc_smp_history.getText(), false);
@@ -898,20 +906,12 @@ public class Controller implements Initializable {
         }
     }
 
-    /**
-     * separated method to use multiple times
-     * it will update the historic table in user dashboard everytime an action happen or user want to navigate to the panel etc.
-     */
-    public void updateDashboardInfo(){
-        ArrayList<UserHistory> list = db.searchDataForTableHistory(Integer.parseInt(user.getUserId()), null , false);
-        history_items_list = FXCollections.observableArrayList(list);
-        userControl.fillMyTicket(list);
-        history_tableview.setItems(history_items_list);
-    }
 
     /**
-     * the method will handle delete option in history panel.
+     * #move
+     * The method will handle delete option in history panel.
      * @param e event
+     * @author Habib.
      */
     public void userRemoveHistory(ActionEvent e){
         if (history_tableview.getItems().size() > 0){ // check if there is any items before running the operation.
@@ -957,11 +957,51 @@ public class Controller implements Initializable {
         }
     }
 
+
+    //</editor-fold>
+
+    // ADMIN PAGE
+    //<editor-fold desc="************* ADMIN METHODS *************"
+
     /**
-     * This metod deletes member from database if deletebutton is selected
-     * @param e
-     * @throws SQLException
+     * The method navigate to admin dashboard.
+     * @param e event.
+     * @throws IOException javaIO exception.
+     * @author Obed.
+     */
+    public void switchToAdminView(ActionEvent e) throws IOException {
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("admin/AdminView.fxml")));
+        adminControl.switchToAdminView(e, this);
+    }
+
+    /**
+     * The method handle admin events.
+     * @param e event.
+     * @throws SQLException sql exception.
+     * @author Obed.
+     */
+    public void adminDashboardEventHandler(ActionEvent e) throws SQLException {
+        adminEvent.adminDashboardEventHandler(e,this);
+    }
+
+
+    /**
+     * The method register a user from admin page
+     * @param e event
+     * @throws SQLException exception
      * @author Obed
+     */
+    public void registerUserAdminBtnAction(ActionEvent e) throws SQLException {
+        registerAdmin.registerUserAdminBtnAction(e,this);
+    }
+
+
+    /**
+     * #move
+     * This method deletes member from database if delete-button is selected.
+     * @param e event.
+     * @throws SQLException sql exception.
+     * @author Obed.
      */
     public void removeMember_admin(ActionEvent e) throws SQLException {
         if (table_member_admin.getItems().size() > 0) { // check if there is any items before running the operation.
@@ -987,7 +1027,14 @@ public class Controller implements Initializable {
             }
         }
     }
-       public void removeTicket_admin(ActionEvent e) throws SQLException {
+
+    /**
+     * The method delete a ticket by admin.
+     * @param e event.
+     * @throws SQLException sql exception.
+     * @author Obed.
+     */
+    public void removeTicket_admin(ActionEvent e) throws SQLException {
          if (table_tickets.getItems().size() > 0) { // check if there is any items before running the operation.
                if (e.getSource() == deleteTicketBtn_ticket_admin) { // if single remove button clicked
                    items_ticket_admin = table_tickets.getItems(); // get the whole tables items into an observable list to compare.
@@ -1012,7 +1059,13 @@ public class Controller implements Initializable {
 
            }
        }
-       public void removeFlight_admin(ActionEvent e) throws SQLException {
+    /**
+     * The method delete a flight by admin.
+     * @param e event.
+     * @throws SQLException sql exception.
+     * @author Obed.
+     */
+    public void removeFlight_admin(ActionEvent e) throws SQLException {
        if (table_flight_admin.getItems().size() > 0) { // check if there is any items before running the operation.
             if (e.getSource() == delete_singelFlightBtn_admin) { // if single remove button clicked
                 items_flight_admin = table_flight_admin.getItems(); // get the whole tables items into an observable list to compare.
@@ -1037,8 +1090,5 @@ public class Controller implements Initializable {
         }
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
+    //</editor-fold>
 }

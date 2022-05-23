@@ -6,45 +6,53 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #112;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+<AnchorPane prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #112;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
-      <Text fill="WHITE" layoutX="494.0" layoutY="421.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fly fast. Fly smart.">
+      <Text fill="WHITE" layoutX="495.0" layoutY="359.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fly fast. Fly smart.">
          <font>
             <Font size="25.0" />
          </font></Text>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="514.0" layoutY="213.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="516.0" layoutY="172.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@image/animated/animated.gif" />
          </image></ImageView>
-      <Button layoutX="484.0" layoutY="484.0" mnemonicParsing="false" onAction="#noLoginRequired" prefHeight="37.0" prefWidth="114.0" style="-fx-background-color: #ff8000 #ff8000;" text="Explore" textFill="WHITE">
-         <padding>
-            <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
-         </padding>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
 
-      <Text fill="#949494" layoutX="543.0" layoutY="661.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Version 0.14.8">
+      <Text fill="#949494" layoutX="543.0" layoutY="661.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Version 0.16.5">
          <font>
             <Font size="16.0" />
          </font>
       </Text>
-      <Text fill="#ffb92e" layoutX="521.0" layoutY="451.0" strokeType="OUTSIDE" strokeWidth="0.0" text="With JetStream.">
+      <Text fill="#ff8000" layoutX="522.0" layoutY="389.0" strokeType="OUTSIDE" strokeWidth="0.0" text="With JetStream.">
          <font>
             <Font size="22.0" />
          </font>
       </Text>
-      <Button fx:id="login" layoutX="607.0" layoutY="484.0" mnemonicParsing="false" onAction="#switchToLogin" style="-fx-background-color: #ff8000 #ff8000;" text="Login" textFill="WHITE">
-         <padding>
-            <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
-         </padding>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
+      <VBox layoutX="495.0" layoutY="454.0" prefHeight="114.0" prefWidth="194.0">
+         <children>
+            <Button fx:id="login" mnemonicParsing="false" onAction="#switchToLogin" prefHeight="38.0" prefWidth="213.0" style="-fx-background-color: #ff8000;" text="Login" textFill="WHITE">
+               <padding>
+                  <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
+               </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#noLoginRequired" prefHeight="38.0" prefWidth="238.0" style="-fx-background-color: #4193C7;" text="Explore" textFill="WHITE">
+               <padding>
+                  <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
+               </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

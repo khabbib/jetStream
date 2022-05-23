@@ -6,17 +6,27 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 
 /**
- * #comment (comment this class and create javadoc to every method)
+ * This class handle the login page password. Show the password if user wants it.
+ * @author khabib
  */
 public class ShowPasswordField {
-
+    /**
+     * Constructor to ShowPasswordField.
+     * @param e event for login page.
+     * @param controller instance of control class.
+     * @author Khabib
+     */
     public void showPassword(ActionEvent e, Controller controller){
         if (e.getSource() == controller.show_pasword_login){
             controller.login_pass.setVisible(true);
         }
     }
 
-    public void syncPasswordShow(Controller controller){
+    /**
+     * This method handle the operation for showing the password to user.
+     * @param controller instance of control class.
+     */
+    public void showPassFieldLogin(Controller controller){
         int maxLength = 15;
         if (controller.show_pasword_login.isSelected()){
             controller.show_password_field_login.setDisable(false);

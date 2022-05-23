@@ -77,7 +77,7 @@ public class UserControl {
     public void renderDashboard(ActionEvent e, User user, Controller controller) {
         controller.user = user;
         controller.root = controller.config.render(e,"user/Dashboard", "User Dashboard");
-        controller.initializeFXM.userInitializeFXML(controller.root, user);
+        controller.initializeFXM.userInitializeFXML(controller.root);
         controller.initializeFXM.initializeProfile(controller.root, user);
         controller.initializeFXM.initializeWeather(controller.root);
         controller.initializeFXM.initializeMusic(controller.root);
@@ -122,7 +122,7 @@ public class UserControl {
             controller.checka_btn_myticket.setStyle("-fx-border: #eee; -fx-background-color:  #6BCB77; -fx-color: #eee;");
             controller.cancel_btn_my_ticket.setStyle("-fx-background-color:  #ED276E; -fx-color: #eee");
         }
-        controller.exploreMode = false;
+        controller.explore_mode = false;
     }
 
 
@@ -135,9 +135,9 @@ public class UserControl {
      */
     public void noLoginRequired(ActionEvent e, Controller controller) {
         controller.root = controller.config.render(e,"user/Dashboard", "User Dashboard");
-        initializeFXM.userInitializeFXML(controller.root, null);
+        initializeFXM.userInitializeFXML(controller.root);
         User user = new User("1", "E", "E", "E", "E", "E", "E", false, 1);
-        controller.initializeFXM.userInitializeFXML(controller.root, user);
+        controller.initializeFXM.userInitializeFXML(controller.root);
         controller.initializeFXM.initializeProfile(controller.root, user);
         controller.initializeFXM.initializeWeather(controller.root);
         controller.initializeFXM.initializeMusic(controller.root);
@@ -148,10 +148,10 @@ public class UserControl {
         controller.world_map_scrollpane.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color:  #0E0E1B;");
         controller.world_map.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color:  #0E0E1B;");
 
-        if(!controller.exploreMode) {
+        if(!controller.explore_mode) {
             controller.setInfoIntoTableHistorik();
         }
 
-        controller.exploreMode = true;
+        controller.explore_mode = true;
     }
 }

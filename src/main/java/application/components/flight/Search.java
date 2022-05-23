@@ -8,19 +8,31 @@ import javafx.event.ActionEvent;
 import java.time.LocalDate;
 
 /**
- * #comment (comment this class and create javadoc to every method)
+ * This class made for handling the search terms in application.
  */
 public class Search {
+    private ErrorHandler errorHandler;
     private Controller controller;
     private Db db;
-    private ErrorHandler errorHandler;
 
+    /**
+     * Constructor to Search.
+     * @param controller instance of control class.
+     * @param db instance of Db (database) class.
+     * @param errorHandler instance of ErrorHandler class.
+     * @author Khabib.
+     */
     public Search(Controller controller, Db db, ErrorHandler errorHandler){
+        this.errorHandler = errorHandler;
         this.controller = controller;
         this.db = db;
-        this.errorHandler = errorHandler;
     }
 
+    /**
+     * The method check for return trip.
+     * @param e event.
+     * @author Khabib.
+     */
     public void checkboxEvent(ActionEvent e){
         if (controller.round_trip_checkbox.isSelected()){
             controller.return_date_pick_hbox.setDisable(false);
@@ -34,13 +46,15 @@ public class Search {
 
     }
 
-    public void searchFlight() {
-        System.out.println(controller.round_trip_checkbox.isSelected() + " checkbox");
-
+    /**
+     * The method search flights based on date and trip.
+     * @author Khabib.
+     */
+    public void advanceSearch() {
         String from = controller.from_input_flight_textfield.getText();
+        LocalDate Rd = controller.dateR_input_flight.getValue();
         String to = controller.display_input_flights.getText();
         LocalDate d = controller.date_input_flight.getValue();
-        LocalDate Rd = controller.dateR_input_flight.getValue();
 
         if (!controller.round_trip_checkbox.isSelected()){
             if (!(from.isEmpty()) && !(to.isEmpty())){
@@ -64,22 +78,24 @@ public class Search {
 
         // fill out the flights on  screen
         if (controller.available_flights_list.isEmpty()){
-            controller.fillFlights(null);
+            controller.fetchFlights(null);
         }else {
             System.out.println(controller.available_flights_list.size() );
-            controller.fillFlights(controller.available_flights_list);
+            controller.fetchFlights(controller.available_flights_list);
         }
     }
 
 
-
+    /**
+     * The method called from "Search field" in GUI. It fetches flights from Db based on search term.
+     * @author Khabib.
+     */
     public void searchHit() {
         if (!controller.search_f_name.getText().isEmpty()){
             controller.available_flights_list.clear();
-            System.out.println("search from controll " + controller.search_f_name.getText());
             controller.available_flights_list = db.seachFlightFromSearchField(controller.search_f_name.getText());
             if (!controller.available_flights_list.isEmpty()){
-                controller.fillFlights(controller.available_flights_list);
+                controller.fetchFlights(controller.available_flights_list);
             }
         }
     }

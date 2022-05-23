@@ -28,6 +28,10 @@ public class FlightPaths {
         this.controller = controller;
     }
 
+    /***
+     * Starts the process of creating flight paths.
+     * @Author Kasper.
+     */
     public void start(){
         resetPaths();
         pane = new Pane();
@@ -35,6 +39,9 @@ public class FlightPaths {
         flightsInHistory();
     }
 
+    /***
+     * Setup for the appropriate javaFX/needed variables.
+     */
     public void createVariables(){
         pane.setPickOnBounds(false);
         controller.world_map.getChildren().add(pane);
@@ -43,6 +50,15 @@ public class FlightPaths {
         list = new ArrayList<PathTransition>();
     }
 
+    /***
+     * Calculates appropriate duration as to synchronize speed for all flight paths.
+     * @param x
+     * @param y
+     * @param x2
+     * @param y2
+     * @return the amount of duration from a to b.
+     * @Author Kasper.
+     */
     public Duration calculateDuration(double x, double y, double x2, double y2){
         if (x >= x2){ x = x - x2; } else { x = x2 - x; }
         if (y >= y2){ y = y - y2; } else { y = y2 - y; }
@@ -52,6 +68,10 @@ public class FlightPaths {
         return duration;
     }
 
+    /***
+     * Fetches all selected flights from history list.
+     * @Author Kasper.
+     */
     public void flightsInHistory(){
         Coordinates coordinates = new Coordinates();
         for (int i = 0; i < controller.history_tableview.getItems().size(); i++) {
@@ -64,6 +84,10 @@ public class FlightPaths {
         }
     }
 
+    /***
+     * Resets all flight paths.
+     * @Author Kasper.
+     */
     public void resetPaths() {
         if (list!=null) {
             for (int a = 0; a < list.size(); a++) {
@@ -73,6 +97,12 @@ public class FlightPaths {
         }
     }
 
+    /***
+     * Creates animations.
+     * @param from starting ccountries.
+     * @param to destination countries.
+     * @Author Kasper.
+     */
     public void createAnimation(double[] from, double[] to){
         Line line = createPaths(from, to);
 
@@ -98,6 +128,12 @@ public class FlightPaths {
         list.add(pt);
     }
 
+    /***
+     * Creates the path between countries.
+     * @param to destination countries.
+     * @param from starting countries.
+     * @return Line.
+     */
     public Line createPaths(double[] to, double[] from) {
         if (to != null && from != null) {
 
@@ -119,6 +155,11 @@ public class FlightPaths {
         return null;
     }
 
+    /***
+     * Gets pane.
+     * @return Pane.
+     * @Author Kasper.
+     */
     public Pane getPane() {
         return pane;
     }

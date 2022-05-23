@@ -22,6 +22,14 @@ public class WeatherAPI {
 
     }
 
+    /***
+     * Returns Array containing all information based on weatherAPI results.
+     * @param country is the desired country to seek information about.
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     * @Author Kasper.
+     */
     public ArrayList<String> weatherForecast(String country) throws IOException, InterruptedException {
         System.out.println(country);
         switch (country) {
@@ -82,6 +90,14 @@ public class WeatherAPI {
         return forecast;
     }
 
+    /***
+     * Sets the information in gui weather panel.
+     * @param controller is controller.
+     * @param country is desired country.
+     * @throws IOException
+     * @throws InterruptedException
+     * @Author Kasper.
+     */
     public void setInformation(Controller controller, String country) throws IOException, InterruptedException {
         ArrayList<String> arrayList = weatherForecast(country);
         if (country.contains("United States")) { country = "USA"; }
@@ -94,6 +110,10 @@ public class WeatherAPI {
         controller. weatherIcon.setImage(new Image("http://openweathermap.org/img/wn/"+arrayList.get(0).replace(" ","")+"@2x.png"));
     }
 
+    /***
+     * Opens and closes the weather panel in gui.
+     * @param controller is controller.
+     */
     public void weatherMenu(Controller controller) {
         if (!controller.weatherMenu) {
             controller.weatherPane.setVisible(true);
@@ -105,6 +125,13 @@ public class WeatherAPI {
             controller.weatherMenu = false;
         }
     }
+
+    /***
+     * Converts weather strings to appropriate images for weather panel.
+     * @param weather is weather that needs conversion.
+     * @return image url string.
+     * @Author Kasper.
+     */
     private String convert(String weather){
 
         switch (weather) {

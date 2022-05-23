@@ -36,6 +36,14 @@ public class Pong extends Application {
     private int playerOneXPos = 0;
     private double playerTwoXPos = width - PLAYER_WIDTH*2;
 
+    /***
+     * Starts the application.
+     * @param stage the primary stage for this application, onto which
+     * the application scene can be set.
+     * Applications may create other stages, if needed, but they will not be
+     * primary stages.
+     * @throws Exception
+     */
     public void start(Stage stage) throws Exception {
         Canvas canvas = new Canvas(width, height);
         GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -49,6 +57,10 @@ public class Pong extends Application {
         tl.play();
     }
 
+    /***
+     * Runs the game.
+     * @param gc GraphicsContext
+     */
     private void run(GraphicsContext gc) {
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, width, height);

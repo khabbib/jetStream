@@ -25,6 +25,7 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.CacheHint;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
@@ -574,7 +575,6 @@ public class World extends Region {
         setTranslateY(getTranslateY() - Y);
     }
 
-    private static ArrayList<Flight> flights = new ArrayList<>();
     private void handleMouseEvent(final MouseEvent EVENT, final EventHandler<MouseEvent> HANDLER) {
         final CountryPath       COUNTRY_PATH = (CountryPath) EVENT.getSource();
         final String            COUNTRY_NAME = COUNTRY_PATH.getName();
@@ -623,13 +623,7 @@ public class World extends Region {
                                 throw new RuntimeException(e);
                             }
                         }
-
-                        flights = db.seachFlightFromSearchField(convert(COUNTRY_NAME));
-                        if (!flights.isEmpty()){
-                            controller.fillFlights(flights);
-                        }else {
-                            controller.fillFlights(null);
-                        }
+                       controller.prepareFlightList(convert(COUNTRY_NAME));
                     } else {
                         System.out.println("country");
                     geography.guess(convert(COUNTRY_NAME));
@@ -647,11 +641,11 @@ public class World extends Region {
             }
         } else if (MOUSE_EXITED == TYPE) {
             if (isHoverEnabled()) {
-            Color color = isSelectionEnabled() && COUNTRY.equals(getSelectedCountry()) ? getSelectedColor() : getFillColor();
+                         Color color = isSelectionEnabled() && COUNTRY.equals(getSelectedCountry()) ? getSelectedColor() : getFillColor();
             for (SVGPath path : PATHS) {
                 path.setFill(null == COUNTRY.getColor() || COUNTRY == getSelectedCountry() ? color : COUNTRY.getColor());
             }
-        }
+            }
         }
 
         if (null != HANDLER) HANDLER.handle(EVENT);

@@ -1,24 +1,29 @@
 package application.components.flight;
-
 import javafx.scene.control.CheckBox;
 
 /**
- * This class saves data to flight.
+ * This class saves data as an object of flight ticket.
+ * @author Khabib
  */
 public class Flight {
     private int size = 1;
     private String id, departure_name, destination_name, departure_date, destination_date,  departure_time, destination_time, price, p_id;
     private boolean rTur = false;
-    private CheckBox box;
+    private CheckBox select_col_flight_admin;
+
     /**
-     * @param id of flight.
-     * @param departure_name text.
-     * @param departure_date date.
-     * @param departure_time time.
-     * @param destination_name text.
-     * @param destination_date date.
-     * @param destination_time time.
-     * @param price of flight.
+     * Constructor to Flight
+     * @param id id refer to database table's row. : string
+     * @param departure_name departure name : string
+     * @param departure_date departure date : string
+     * @param departure_time departure time : string
+     * @param destination_name destination name : string
+     * @param destination_date destination date : string
+     * @param destination_time destination time : string
+     * @param price price of ticket : string
+     * @param rTur return flight : boolean
+     * @param size flight's counter : int
+     * @param p_id airplane's id : string
      */
     public Flight( String id, String departure_name, String departure_date, String departure_time,String destination_name, String destination_date, String destination_time, String price, boolean rTur, int size, String p_id){
         this.size = size;
@@ -32,7 +37,7 @@ public class Flight {
         this.destination_time = destination_time;
         this.price = price;
         this.p_id = p_id;
-        this.box = new CheckBox();
+        this.select_col_flight_admin = new CheckBox();
     }
 
     // ----- GETTER AND SETTERS ----- //
@@ -70,7 +75,7 @@ public class Flight {
     }
     public CheckBox getFlightBox()
     {
-        return box;
+        return select_col_flight_admin;
     }
     public boolean isrTur() {
         return rTur;

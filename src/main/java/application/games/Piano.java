@@ -30,6 +30,14 @@ public class Piano extends Application {
     int instNum = 88;
     int midiChannel = 7;
 
+    /***
+     * Start the application.
+     * @param primaryStage the primary stage for this application, onto which
+     * the application scene can be set.
+     * Applications may create other stages, if needed, but they will not be
+     * primary stages.
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
 
@@ -198,6 +206,9 @@ public class Piano extends Application {
 
     }
 
+    /***
+     * Creates the piano configuration.
+     */
     public Piano() {
         setKeys(notes);
         try {
@@ -212,16 +223,29 @@ public class Piano extends Application {
         }
     }
 
+    /***
+     * Plays the sound.
+     * @param noteNumber note.
+     * @param velocity speed.
+     */
     public void makeSound(int noteNumber, int velocity) {
         //Plays a note with specified note number
         this.midChannel[midiChannel].noteOn(noteNumber, velocity);
     }
 
+    /***
+     * Stops sound.
+     * @param noteNumber note.
+     */
     public void stopSound(int noteNumber) {
         //Stops specified note number
         this.midChannel[midiChannel].noteOff(noteNumber);
     }
 
+    /***
+     * Initializes keys to each piano key.
+     * @param map key map.
+     */
     public void setKeys(HashMap<Character, Integer> map) {
         // Maps notes to keys
         map.put('A', 48);
@@ -243,6 +267,10 @@ public class Piano extends Application {
         map.put('.', 64);
     }
 
+    /***
+     * Seyts the instrument.
+     * @param value instrument.
+     */
     public void setInstrument(int value) {
         midChannel[midiChannel].programChange(value);
     }

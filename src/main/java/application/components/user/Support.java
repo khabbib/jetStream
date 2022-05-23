@@ -27,24 +27,24 @@ public class Support {
      * This method sends specific email to chosen part such as report issue, feedback and contact.
      * Method also handles error if text fields is empty etc.
      * @param e is event listener for buttons
-     * @author Sossio and Khabib.
+     * @author Khabib developed by sossio.
      */
     public void supportInfo(ActionEvent e){
         System.out.println(e.getSource());
         System.out.println(controller.issue_btn_sup);
 
         if (e.getSource() == controller.issue_btn_sup){
-            activeBtn();
+            unactiveBtn();
             controller.issue_btn_sup.setStyle("-fx-background-color: #ff7000; -fx-text-fill: #fff");
             controller.issue_panel_sup.toFront();
 
         }else if(e.getSource() == controller.feedback_btn_sup){
-            activeBtn();
+            unactiveBtn();
             controller.feedback_btn_sup.setStyle("-fx-background-color: #ff7000; -fx-text-fill: #fff");
             controller.feedback_panel_sup.toFront();
 
         }else if(e.getSource() == controller.contact_btn_sup){
-            activeBtn();
+            unactiveBtn();
             controller.contact_btn_sup.setStyle("-fx-background-color: #ff7000; -fx-text-fill: #fff");
             controller.contact_panel_sup.toFront();
         } else if(e.getSource() == controller.send_issue_btn_sup) {
@@ -105,10 +105,10 @@ public class Support {
      * This method shows which button is active.
      * @author Khabib and Sossio.
      */
-    private void activeBtn() {
-        controller.issue_btn_sup.setStyle("-fx-background-color: #333; -fx-text-fill: #fff");
-        controller.feedback_btn_sup.setStyle("-fx-background-color: #333; -fx-text-fill: #fff");
-        controller.contact_btn_sup.setStyle("-fx-background-color: #333; -fx-text-fill: #fff");
+    private void unactiveBtn() {
+        controller.issue_btn_sup.setStyle("-fx-background-color: #221E4E; -fx-text-fill: #fff");
+        controller.feedback_btn_sup.setStyle("-fx-background-color: #221E4E; -fx-text-fill: #fff");
+        controller.contact_btn_sup.setStyle("-fx-background-color: #221E4E; -fx-text-fill: #fff");
     }
 
     /**

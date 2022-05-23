@@ -2,7 +2,7 @@ package application.components.flight;
 
 /**
  * Enumeration for country names.
- * @autor Kasper and Sossio.
+ * @author Habib
  */
 public enum CountryList {
     Afghanistan,

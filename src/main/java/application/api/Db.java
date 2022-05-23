@@ -1,39 +1,30 @@
 package application.api;
 
-import application.Controller;
-import application.components.reservation.Book;
 import application.components.flight.Flight;
 import application.components.user.User;
 import application.components.ticket.UserHistory;
 import javafx.scene.image.Image;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
 
-/***
- * Handles all connections with database.
+
+/**
+ * This class is head class to communicate with database. Important!
  */
 public class Db {
-    private Controller controller;
-    public Db(Controller controller) {
-        this.controller = controller;
-    }
 
     /**
-     * Get the database connection.
+     * This method gets the database connection.
      * @return connection of the database.
      * @author Sossio.
      */
     public static java.sql.Connection getDatabaseConnection() {
-
         String url = "jdbc:postgresql://pgserver.mau.se:5432/am2510";
         String user = "am2510";
         String password = "zyvl0ir7";
-
         java.sql.Connection con = null;
-
         try {
             con = DriverManager.getConnection(url, user, password);
             return con;
@@ -84,44 +75,15 @@ public class Db {
     }
 
     /**
-     * A test method. This method is used to check hashed password!
-     * @param email  email
-     * @param password password
-     * @return true or false
-     */
-    public boolean hashAuthTest(String email, String password) {
-        boolean ok = false;
-
-        try {
-            java.sql.Connection con = getDatabaseConnection();
-            Statement stmt = con.createStatement();
-            stmt.executeUpdate("SET search_path TO jetstream;");
-            ResultSet rs = stmt.executeQuery("select * from test_user_password_hash where email = '" + email +"' and pwd = '"+ hashPassword(password) + "'");
-
-            while (rs.next()){
-                //System.out.println(hashPassword(password));
-                if (rs.getString("email").equals(email) && rs.getString("pwd").equals(hashPassword(password))) {
-                    System.out.println("User registered!");
-                    ok = true;
-                } else {
-                    System.out.println("Not registeed!");
-                    //System.out.println(hashPassword(password));
-                }
-            }
-            con.close();
-            stmt.close();
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-
-        return ok;
-    }
-
-    /**
-     * Registers a new user.
-     * @param
-     * @return
-     * @throws SQLException
+     * This method registers a new user.
+     * @param first_name_reg first name of user.
+     * @param last_name_reg last name of user.
+     * @param address_reg address.
+     * @param email_reg email.
+     * @param phone_number_reg phone number.
+     * @param password_reg password (which then will be crypted).
+     * @param isAdmin boolean (default is false).
+     * @return boolean statement if its true or either false.
      * @author Khabib. Developed by Sossio.
      */
     public boolean saveUser(String first_name_reg, String last_name_reg, String address_reg, String email_reg, String phone_number_reg, String password_reg, boolean isAdmin){
@@ -151,7 +113,7 @@ public class Db {
                 while (rs.next()){
                     user = new User(rs.getString("u_id"), rs.getString("u_l_name"), rs.getString("u_f_name"), rs.getString("u_address"), rs.getString("u_email"), rs.getString("u_phone_nr"), rs.getString("u_password"), rs.getBoolean("u_isAdmin"), 0);
                     try {
-                        setProfilePictureIdk("resources/application/image/user.png", user);
+                        updateProfilePicture("resources/application/image/user.png", user);
                     } catch (SQLException ex) {
                         ex.printStackTrace();
                     }
@@ -169,10 +131,10 @@ public class Db {
     }
 
     /**
-     * // Old one --> stmt.executeUpdate("UPDATE userr SET u_f_name = '" + user.getFirstName() + "', u_l_name = '" + user.getLastName() + "', u_address = '" + user.getAddress() + "', u_email = '" + user.getEmail() + "', u_phone_nr = '" + user.getPhoneNumber() + "', u_password = '" + user.getPassword() + "'  WHERE u_id = " + user.getUserId() + ";");
+     * This method updates user firstname in database.
      * @param user takes as a parameter to edit user information.
      * @throws SQLException if any sql issue occurs.
-     * @author Kasper. Developed by Sossio.
+     * @author Sossio.
      */
     public void updateUserFirstName(User user) throws SQLException {
         java.sql.Connection con = getDatabaseConnection();
@@ -182,6 +144,13 @@ public class Db {
         con.close();
         stmt.close();
     }
+
+    /**
+     * This method updates user lastname in database.
+     * @param user takes as a parameter to edit user information.
+     * @throws SQLException if any sql issue occurs.
+     * @author Sossio.
+     */
     public void updateUserLastName(User user) throws SQLException {
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
@@ -190,6 +159,13 @@ public class Db {
         con.close();
         stmt.close();
     }
+
+    /**
+     * This method updates user address in database.
+     * @param user takes as a parameter to edit user information.
+     * @throws SQLException if any sql issue occurs.
+     * @author Sossio.
+     */
     public void updateUserAddress(User user) throws SQLException {
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
@@ -198,31 +174,13 @@ public class Db {
         con.close();
         stmt.close();
     }
-    // ====== LET BE !
-    public boolean updateUserEmail(User user, String dbEmail) throws SQLException {
-        boolean uniqueEmail = true;
-        java.sql.Connection con = getDatabaseConnection();
-        Statement stmt = con.createStatement();
-        stmt.executeUpdate("SET search_path TO jetstream;");
-        ResultSet rs = stmt.executeQuery("select u_email from userr");
 
-        while(rs.next()) {
-            if(rs.getString("u_email").equals(user.getEmail()) && !rs.getString("u_email").equals(dbEmail)) {
-                System.out.println("Email found!");
-                uniqueEmail = false;
-                break;
-            } else{
-                System.out.println("Email not found!");
-            }
-            con.close();
-        }
-
-        if(uniqueEmail) {
-            stmt.executeUpdate("UPDATE userr SET u_email = '" + user.getEmail() + "' where u_id = " + user.getUserId() + ";");
-        } //else { System.out.println("Error message! Email is not unique!");}
-
-        return uniqueEmail;
-    }
+    /**
+     * This method updates user phone number in database.
+     * @param user takes as a parameter to edit user information.
+     * @throws SQLException if any sql issue occurs.
+     * @author Sossio.
+     */
     public void updateUserPhoneNumber(User user) throws SQLException {
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
@@ -231,6 +189,13 @@ public class Db {
         con.close();
         stmt.close();
     }
+
+    /**
+     * This method updates user password in database.
+     * @param user takes as a parameter to edit user information.
+     * @throws SQLException if any sql issue occurs.
+     * @author Sossio.
+     */
     public void updateUserPassword(User user) throws SQLException {
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
@@ -241,10 +206,11 @@ public class Db {
     }
 
     /**
-     * authenticate the USER with email and password.
-     * @param email
-     * @param password
-     * @return
+     * This method authenticate the USER with email and password.
+     * @param email user email.
+     * @param password user password.
+     * @return user.
+     * @author Khabib. Developed by Sossio.
      */
     public User authenticationUser(String email, String password){
         User user = null;
@@ -268,10 +234,11 @@ public class Db {
     }
 
     /**
-     * Authenticate the ADMIN with email and password
-     * @param email
-     * @param password
-     * @return
+     * This method authenticate the ADMIN with email and password.
+     * @param email admin email.
+     * @param password admin password.
+     * @return user.
+     * @author Sossio.
      */
     public  User authenticationAdmin(String email, String password){
         User user = null;
@@ -295,9 +262,10 @@ public class Db {
     }
 
     /**
-     * @return
-     * @throws SQLException
-     * @autor Khabib and Obed.
+     * The method fetch a list of all users in database in admin page.
+     * @throws SQLException Sql exception.
+     * @return return a list of users.
+     * @autor Obed.
      */
     public ArrayList<User> getAllUsers() throws SQLException {
         ArrayList<User> userlist = new ArrayList<>();
@@ -322,32 +290,13 @@ public class Db {
         return userlist;
     }
 
-        public ArrayList<Book> getAllTickets() throws SQLException {
-            ArrayList<Book> ticketlist = new ArrayList<>();
-            java.sql.Connection con = getDatabaseConnection();
-            Statement stmt = con.createStatement();
-            int counter = 1;
-            stmt.executeUpdate("SET search_path TO jetstream;");
-            ResultSet rs = stmt.executeQuery("select * from history;");
-            while (rs.next()) {
-                String id = rs.getString(("u_id"));
-                String flight_id = rs.getString(("f_id"));
-                String refNr = rs.getString(("b_rfc"));
-                String date = rs.getString(("b_date"));
-                boolean seats = rs.getBoolean(("b_seat"));
-                ticketlist.add(new Book(id, flight_id, refNr, date, seats, counter));
-                counter++;
-            }
-            con.close();
-            return ticketlist;
-        }
     /**
-     * @param u_id
-     * @return
-     * @throws SQLException
+     * This method gets user firstname to show in application user edit.
+     * @param u_id is to bring current user data.
+     * @return data of string.
+     * @throws SQLException if any sql error occurs.
      * @author Sossio.
      */
-
     public String getUserDatabaseFirstName(String u_id) throws SQLException {
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
@@ -363,7 +312,13 @@ public class Db {
         return firstName;
     }
 
-
+    /**
+     * This method gets user lastname to show in application user edit.
+     * @param u_id is to bring current user data.
+     * @return data of string.
+     * @throws SQLException if any sql error occurs.
+     * @author Sossio.
+     */
     public String getUserDatabaseLastName(String u_id) throws SQLException {
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
@@ -380,9 +335,10 @@ public class Db {
     }
 
     /**
-     * @param u_id
-     * @return
-     * @throws SQLException
+     * This method gets user address to show in application user edit.
+     * @param u_id is to bring current user data.
+     * @return data of string.
+     * @throws SQLException if any sql error occurs.
      * @author Sossio.
      */
     public String getUserDatabaseAddress(String u_id) throws SQLException {
@@ -401,30 +357,10 @@ public class Db {
     }
 
     /**
-     * @param u_id gets userId from user.
-     * @return 'old' email.
-     * @throws SQLException if any sql issue occurs.
-     * @author Sossio.
-     */
-    public String getUserDatabaseEmail(String u_id) throws SQLException {
-        java.sql.Connection con = getDatabaseConnection();
-        Statement stmt = con.createStatement();
-        stmt.executeUpdate("SET search_path TO jetstream;");
-
-        String email = null;
-        ResultSet rs = stmt.executeQuery("select u_email from userr where u_id = " + u_id + ";");
-        while(rs.next()) {
-            email = rs.getString(("u_email"));
-        }
-        con.close();
-        stmt.close();
-        return email;
-    }
-
-    /**
-     * @param u_id
-     * @return
-     * @throws SQLException
+     * This method gets user phone number to show in application user edit.
+     * @param u_id is to bring current user data.
+     * @return data of string.
+     * @throws SQLException if any sql error occurs.
      * @author Sossio.
      */
     public String getUserDatabasePhoneNumber(String u_id) throws SQLException {
@@ -443,9 +379,10 @@ public class Db {
     }
 
     /**
-     * @param u_id
-     * @return
-     * @throws SQLException
+     * This method gets user password to show in application user edit.
+     * @param u_id is to bring current user data.
+     * @return data of string.
+     * @throws SQLException if any sql error occurs.
      * @author Sossio.
      */
     public String getUserDatabasePassword(String u_id) throws SQLException {
@@ -466,10 +403,13 @@ public class Db {
     // ------------------------- SEARCH FLIGHTS ------------------------- //
 
     /**
-     * @param departure
-     * @param destination
-     * @param date
-     * @return
+     * The method fetch flights and return a list of flights based on advanced search.
+     * @param departure departure name.
+     * @param destination destination name.
+     * @param date tur date.
+     * @param dateR return date.
+     * @return list of flights.
+     * @author Khabib.
      */
     public ArrayList<Flight> searchFlight(String departure, String destination, String date, String dateR) {
         ArrayList<Flight> flights = new ArrayList<>();
@@ -551,8 +491,10 @@ public class Db {
     }
 
     /**
-     * @param name
-     * @return
+     * The method fetch flights based on country name.
+     * @param name country name.
+     * @return a list of flights.
+     * @author Khabib.
      */
     public ArrayList<Flight> seachFlightFromSearchField(String name) {
         ArrayList<Flight> flights = new ArrayList<>();
@@ -588,13 +530,15 @@ public class Db {
     }
 
     /**
-     * @param u_id
-     * @param flight_id
-     * @param seatNbr
-     * @param business
-     * @return
+     * The method will save purchased ticket in database.
+     * @param u_id user's id.
+     * @param flight_id flight's id.
+     * @param seatNbr seat number.
+     * @param business is business?
+     * @return return status of saved database.
+     * @author Khabib.
      */
-    public  boolean savePurchasedTicket(String u_id, String flight_id, String rfc, String date, String seatNbr, boolean business) {
+    public boolean savePurchasedTicket(String u_id, String flight_id, String rfc, String date, String seatNbr, boolean business) {
         boolean saved = false;
         try {
 
@@ -621,9 +565,11 @@ public class Db {
     }
 
     /**
-     * @param user
-     * @return
-     * @throws SQLException
+     * This method returns image of user from database when user/admin is logged in.
+     * @param user to get user id.
+     * @return image of user/admin.
+     * @throws SQLException if any sql error occurs.
+     * @author Kasper. Developed by Sossio.
      */
     public Image getProfilePicture(User user) throws SQLException {
         Image image = null;
@@ -641,11 +587,13 @@ public class Db {
     }
 
     /**
-     * @param src
-     * @param user
-     * @throws SQLException
+     * This method updated users image when user wants to change it.
+     * @param src path to image.
+     * @param user user.
+     * @throws SQLException if any sql error occurs.
+     * @author Sossio.
      */
-    public void setProfilePictureIdk(String src, User user) throws SQLException {
+    public void updateProfilePicture(String src, User user) throws SQLException {
         Image image = null;
         java.sql.Connection con = getDatabaseConnection();
         Statement stmt = con.createStatement();
@@ -656,9 +604,11 @@ public class Db {
     }
 
     /**
-     * @param pfpImageSrc
-     * @param email
-     * @throws SQLException
+     * This method sets a default profile picture when a new user is registered.
+     * @param pfpImageSrc path to image.
+     * @param email which is unique.
+     * @throws SQLException if any sql error occurs.
+     * @author Sossio.
      */
     public void setProfilePicture(String pfpImageSrc, String email) throws SQLException {
         Image image = null;
@@ -670,9 +620,12 @@ public class Db {
         con.close();
     }
 
-
-    public ArrayList<Flight> getAllFlights()
-    {
+    /**
+     * The method fetch all flights.
+     * @return return a list of all flights that exist.
+     * @author Obed.
+     */
+    public ArrayList<Flight> getAllFlights() {
         ArrayList<Flight> flights = new ArrayList<>();
         try {
 
@@ -705,45 +658,12 @@ public class Db {
         return flights;
     }
 
-
     /**
-     * @return
+     * The method fetch specific information about booked tickets for specific user.
+     * @param userID user's id.
+     * @return return a list of flights.
+     * @author Khabib & Kasper.
      */
-    public ArrayList<Book> searchTicket() {
-        ArrayList<Book> flights = new ArrayList<>();
-        try {
-
-            java.sql.Connection con = Db.getDatabaseConnection();
-            Statement stmt = con.createStatement();
-            ResultSet flight;
-
-            flights.clear();
-            stmt.executeUpdate("SET search_path TO jetstream;");
-            flight = stmt.executeQuery("select * from booked");
-
-            while (flight.next()){
-                String f_id = flight.getString("f_id");
-                String u_id = flight.getString(("u_id"));
-                String b_seat = flight.getString("b_seat");
-
-                flights.add(new Book(f_id, u_id, b_seat, null, false, 0));
-
-            }
-            con.close();
-            stmt.close();
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-        return flights;
-    }
-
-
-
-    /**
-     * @param userID
-     * @return
-     */
-    //////// fyl table history ///////////
     public ArrayList<UserHistory> searchDataForTableHistory(int userID, String rfc, boolean isAdmin) {
         ArrayList<UserHistory> flights = new ArrayList<>();
         try {
@@ -792,8 +712,10 @@ public class Db {
     }
 
     /**
-     * @param rfc
-     * @return
+     * The method delete a specific booked ticket.
+     * @param rfc reference number to ticket.
+     * @return return status of delete.
+     * @author Khabib.
      */
     public boolean deleteHistoryByRFC(String rfc) {
         boolean deleted = false;
@@ -813,11 +735,10 @@ public class Db {
         return deleted;
     }
 
-
     /**
-     * This metod deletes member at the column that has the request id
+     * This method deletes member at the column that has the request id.
      * @param id_col_mbr_admin
-     * @return
+     * @return return status of delete.
      * @author Obed
      */
     public boolean deleteMember(String id_col_mbr_admin) {
@@ -837,7 +758,12 @@ public class Db {
         return deleted;
     }
 
-
+    /**
+     * The method will delete a flight based on flight's id by an Admin.
+     * @param f_id flight's id.
+     * @return return status of delete.
+     * @author Obed.
+     */
     public boolean deleteFlight(String f_id) {
         boolean deleted = false;
         try {
@@ -855,6 +781,12 @@ public class Db {
         return deleted;
     }
 
+    /**
+     * The method will delete a ticket based on reference number by an Admin.
+     * @param b_rfc reference number.
+     * @return return status of delete.
+     * @author Obed.
+     */
     public boolean deleteTicket(String b_rfc) {
         boolean deleted = false;
         try {
@@ -873,7 +805,9 @@ public class Db {
     }
 
     /**
-     * @return
+     * The method generate a random unique reference number for each ticket.
+     * @return return value of generated RFC.
+     * @author Khabib & Sossio.
      */
     public static StringBuilder generateRandomRFC() {
         StringBuilder s = new StringBuilder();
@@ -889,20 +823,20 @@ public class Db {
         return s;
     }
 
-    // not used
 
     /**
-     * To fetch seats number
-     * @param id
-     * @return
+     * The method fetch all seats available for a specific flight based on flight's id.
+     * @param flightId flight's id.
+     * @return return list of business and economy seats.
+     * @author Khabib.
      */
-    public  int[] getSeatNumber(String id) {
+    public int[] getSeatNumber(String flightId) {
         int[] seats = new int[2];
         try {
             java.sql.Connection con = Db.getDatabaseConnection();
             Statement stmt = con.createStatement();
             stmt.executeUpdate("SET search_path TO jetstream;");
-            ResultSet rs = stmt.executeQuery("select * from seats where f_id = '"+ id+"'");
+            ResultSet rs = stmt.executeQuery("select * from seats where f_id = '"+ flightId+"'");
             while (rs.next()){
                 int eco_seats = rs.getInt("p_seat_business");
                 int bus_seats = rs.getInt("p_seat_economy");
@@ -923,7 +857,7 @@ public class Db {
      * This method will fetch all seats that already booked in a particular flight.
      * @param id will be a reference to find the booked seats in database
      * @return it will return a list of String with already booked seats
-     * @author Habib Mohammadi
+     * @author Habib
      */
     public ArrayList<String> getBookedSeats(String id) {
         ArrayList<String> seat = new ArrayList<>();
@@ -949,7 +883,7 @@ public class Db {
      * This method will be called when the used want to check in its ticket
      * @param rfc is a reference number to booked ticket which is unique.
      * @return will return a flag true or false to check if checking went threw or not.
-     * @author Habib Mohammadi
+     * @author Habib
      */
     public boolean checking(String rfc) {
         boolean checked = false;

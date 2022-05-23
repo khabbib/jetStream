@@ -1,8 +1,8 @@
 package application.eventHandler;
 
 import application.Controller;
-import application.components.Email.TicketEmail;
 import application.ErrorHandler;
+import application.components.flight.FlightsViewManager;
 import application.components.ticket.CardValidation;
 import javafx.event.ActionEvent;
 
@@ -12,17 +12,20 @@ import java.time.format.DateTimeFormatter;
 
 /**
  *This class is used to handle all events in user dashboard
+ * @author Habib
  */
 public class UserEvent {
     public String rfc;
     private ErrorHandler errorHandler;
-
+    private FlightsViewManager flightsViewManager;
     /**
      * Constructor for UserEvent
      * @param controller refer to control class to know each other
      */
-    public UserEvent(Controller controller) {
+    public UserEvent(Controller controller, FlightsViewManager flightsViewManager) {
         errorHandler = new ErrorHandler(controller);
+        this.flightsViewManager = flightsViewManager;
+
     }
 
     /**
@@ -33,9 +36,9 @@ public class UserEvent {
      */
     public void userDashboardEventHandler(ActionEvent e, Controller controller) throws ParseException {
         if (e.getSource() == controller.menu_profile_btn) {
-            if(!controller.exploreMode) {
+            if(!controller.explore_mode) {
                 controller.profile_anchorpane.toFront();
-                toggleMenuColor(controller);
+                toggleUserMenuColor(controller);
                 controller.playSystemSound("Next page", "sounds/next_page.wav");
             } else {
                 controller.playSystemSound("Error", "sounds/error.wav");
@@ -44,21 +47,22 @@ public class UserEvent {
         }
         else if(e.getSource() == controller.booking_close_btn || e.getSource() == controller.booking_close_second_page_btn){
             controller.booking_seat_anchorpane.toBack();
+            controller.payment_anchorpane.toBack();
             restore_psgr_info(controller);
             controller.playSystemSound("Next page", "sounds/next_page.wav");
         }
         else if(e.getSource() == controller.menu_flight_btn) {
             controller.flight_anchorpane.toFront();
-            toggleMenuColor(controller);
+            toggleUserMenuColor(controller);
             controller.menu_highlight_color_flight.setVisible(true);
             controller.map_menu_user_image.setOpacity(1);
             controller.map_menu_user_lbl.setOpacity(1);
             controller.playSystemSound("Next page", "sounds/next_page.wav");
         }
         else if(e.getSource() == controller.menu_history_btn) {
-            if(!controller.exploreMode) {
+            if(!controller.explore_mode) {
                 controller.history_anchorpane.toFront();
-                toggleMenuColor(controller);
+                toggleUserMenuColor(controller);
                 controller.menu_highlight_color_history.setVisible(true);
                 controller.history_menu_user_image.setOpacity(1);
                 controller.history_menu_user_lbl.setOpacity(1);
@@ -70,7 +74,7 @@ public class UserEvent {
         }
         else if(e.getSource() == controller.menu_entertainment_btn) {
             controller.entertainment_anchorpane.toFront();
-            toggleMenuColor(controller);
+            toggleUserMenuColor(controller);
             controller.menu_highlight_color_entertainment.setVisible(true);
             controller.entertainment_menu_user_image.setOpacity(1);
             controller.entertainment_menu_user_lbl.setOpacity(1);
@@ -78,7 +82,7 @@ public class UserEvent {
         }
         else if(e.getSource() == controller.menu_support_btn){
               controller.support_anchorpane.toFront();
-              toggleMenuColor(controller);
+              toggleUserMenuColor(controller);
               controller.menu_highlight_color_support.setVisible(true);
               controller.support_menu_user_image.setOpacity(1);
               controller.support_menu_user_lbl.setOpacity(1);
@@ -86,7 +90,7 @@ public class UserEvent {
         }
         else if(e.getSource() == controller.menu_ceo_btn){
               controller.ceo_anchorpane.toFront();
-              toggleMenuColor(controller);
+              toggleUserMenuColor(controller);
               controller.menu_highlight_color_ceo.setVisible(true);
               controller.ceo_menu_user_image.setOpacity(1);
               controller.ceo_menu_user_lbl.setOpacity(1);
@@ -105,9 +109,9 @@ public class UserEvent {
             controller.owner4_work.toFront();
         }
         else if(e.getSource() == controller.menu_my_tickets_btn){
-            if (!controller.exploreMode) {
+            if (!controller.explore_mode) {
                 controller.my_ticket_anchorpane.toFront();
-                toggleMenuColor(controller);
+                toggleUserMenuColor(controller);
                 controller.menu_highlight_color_my_ticket.setVisible(true);
                 controller.my_tickets_menu_user_image.setOpacity(1);
                 controller.my_tickets_menu_user_lbl.setOpacity(1);
@@ -318,7 +322,7 @@ public class UserEvent {
                                     controller.booking_price_lbl.setText(null);
 
                                     // clear the operation - preperBeforeCreatingSeats
-                                    boolean build = controller.preperBeforeCreatingSeats();
+                                    boolean build = flightsViewManager.preperBeforeCreatingSeats();
                                     if (build){
                                         controller.booking_departure_lbl.setText(controller.round_trip_flights.get(0).getDeparture_name());
                                         controller.booking_destination_lbl.setText(controller.round_trip_flights.get(0).getDestination_name());
@@ -327,7 +331,7 @@ public class UserEvent {
                                         controller.booking_flight_number_lbl.setText(controller.round_trip_flights.get(0).getId());
                                         controller.seat_price = Double.parseDouble(controller.round_trip_flights.get(0).getPrice());
                                         controller.booking_price_lbl.setText(String.valueOf(controller.seat_price));
-                                        controller.createThisSeat(controller.round_trip_flights, 0);
+                                        flightsViewManager.createThisSeat(controller.round_trip_flights, 0);
                                         controller.round_trip_flights.clear();
                                     }
                                 } else {
@@ -371,7 +375,7 @@ public class UserEvent {
      * This method shows which menu is active on user dashboard.
      * @author Habib.
      */
-    public void toggleMenuColor(Controller controller) {
+    public void toggleUserMenuColor(Controller controller) {
         controller.menu_highlight_color_flight.setVisible(false);
         controller.menu_highlight_color_history.setVisible(false);
         controller.menu_highlight_color_entertainment.setVisible(false);
@@ -397,7 +401,7 @@ public class UserEvent {
     /**
      * This method will reset the navigation setting
      * @param controller refer to the control class
-     * @author Habib Mohammadi
+     * @author Habib
      */
     private void arangeTheNavigation(Controller controller) {
         controller.updateDashboardInfo();
