@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 
 /**
- * This class is head class to communicate with database.
+ * This class is head class to communicate with database. Important!
  */
 public class Db {
 
