@@ -25,6 +25,7 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.CacheHint;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
@@ -584,6 +585,7 @@ public class World extends Region {
         if (MOUSE_ENTERED == TYPE) {
             if (isHoverEnabled()) {
             Color color = isSelectionEnabled() && COUNTRY.equals(getSelectedCountry()) ? getSelectedColor() : getHoverColor();
+            this.setStyle("-fx-cursor: hand;");
             for (SVGPath path : PATHS) { path.setFill(color); }
             }
         } else if (MOUSE_PRESSED == TYPE) {
@@ -641,6 +643,7 @@ public class World extends Region {
         } else if (MOUSE_EXITED == TYPE) {
             if (isHoverEnabled()) {
             Color color = isSelectionEnabled() && COUNTRY.equals(getSelectedCountry()) ? getSelectedColor() : getFillColor();
+            this.setStyle("-fx-cursor: default;");
             for (SVGPath path : PATHS) {
                 path.setFill(null == COUNTRY.getColor() || COUNTRY == getSelectedCountry() ? color : COUNTRY.getColor());
             }
