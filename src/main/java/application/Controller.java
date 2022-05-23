@@ -151,6 +151,8 @@ public class Controller {
     @FXML public static Label lblForecastA,lblForecastB,lblForecastC,lblForecastD,lblForecastE,lblForecastF;
     @FXML public static ImageView weatherIcon, play_button_image;
     @FXML public static Pane weatherPane, weatherPaneBase;
+
+    @FXML public Button weather_btn;
     public static boolean weatherMenu;
     //</editor-fold>
     //<editor-fold desc="======== TICKET-PROCESS VARIABLES ========">

@@ -52,6 +52,7 @@ public class InitializeFXM {
         controller.lblForecastD = (Label) root.lookup("#lblForecastD");
         controller.lblForecastE = (Label) root.lookup("#lblForecastE");
         controller.lblForecastF = (Label) root.lookup("#lblForecastF");
+        controller.weather_btn = (Button) root.lookup("weather_btn");
         controller.weatherIcon = (ImageView) root.lookup("#weatherIcon");
         controller.weatherPane = (Pane) root.lookup("#weatherPane");
         controller.weatherPaneBase = (Pane) root.lookup("#weatherPaneBase");

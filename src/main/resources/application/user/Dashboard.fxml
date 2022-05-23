@@ -35,7 +35,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #112;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #112;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
       <AnchorPane fx:id="support_anchorpane" layoutX="105.0" prefHeight="693.0" prefWidth="1089.0" style="-fx-background-color: #112;">
          <children>
@@ -2111,7 +2111,7 @@
                   <Button fx:id="play" layoutX="75.0" layoutY="36.0" mnemonicParsing="false" onAction="#mediaHandler" opacity="0.0" prefHeight="43.0" prefWidth="39.0" style="-fx-cursor: hand;" text="Button" />
                </children>
             </Pane>
-            <Button layoutX="875.0" layoutY="635.0" mnemonicParsing="false" onAction="#weatherButton" prefHeight="38.0" prefWidth="179.0" style="-fx-background-color: #4193C7; -fx-border-width: 2; -fx-cursor: hand;" text="Show/Hide" textFill="WHITE">
+            <Button fx:id="weather_btn" layoutX="875.0" layoutY="635.0" mnemonicParsing="false" onAction="#weatherButton" prefHeight="38.0" prefWidth="179.0" style="-fx-background-color: #4193C7; -fx-border-width: 2; -fx-cursor: hand;" text="Show/Hide" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -2167,9 +2167,9 @@
                   </ListView>
                </children>
             </Group>
-            <Pane fx:id="weatherPaneBase" layoutX="871.0" layoutY="334.0" prefHeight="334.0" prefWidth="186.0">
+            <Pane fx:id="weatherPaneBase" layoutX="871.0" layoutY="334.0" prefHeight="297.0" prefWidth="186.0">
                <children>
-                  <Pane fx:id="weatherPane" prefHeight="334.0" prefWidth="186.0" style="-fx-background-color: #151D3B; -fx-border-color: #112; -fx-border-width: 2;" visible="false">
+                  <Pane fx:id="weatherPane" prefHeight="298.0" prefWidth="186.0" style="-fx-background-color: #151D3B; -fx-border-color: #112; -fx-border-width: 2;" visible="false">
                      <children>
                         <Label fx:id="lblForecastE" alignment="CENTER" contentDisplay="CENTER" layoutX="3.0" layoutY="252.0" prefHeight="17.0" prefWidth="179.0" text="Minimum:" textAlignment="CENTER" textFill="WHITE" />
                         <Label fx:id="lblForecastA" alignment="CENTER" contentDisplay="CENTER" layoutY="16.0" prefHeight="35.0" prefWidth="186.0" text="Country" textAlignment="CENTER" textFill="WHITE">
