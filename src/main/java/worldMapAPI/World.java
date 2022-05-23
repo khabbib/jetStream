@@ -585,7 +585,6 @@ public class World extends Region {
         if (MOUSE_ENTERED == TYPE) {
             if (isHoverEnabled()) {
             Color color = isSelectionEnabled() && COUNTRY.equals(getSelectedCountry()) ? getSelectedColor() : getHoverColor();
-            this.setStyle("-fx-cursor: hand;");
             for (SVGPath path : PATHS) { path.setFill(color); }
             }
         } else if (MOUSE_PRESSED == TYPE) {
@@ -642,12 +641,11 @@ public class World extends Region {
             }
         } else if (MOUSE_EXITED == TYPE) {
             if (isHoverEnabled()) {
-            Color color = isSelectionEnabled() && COUNTRY.equals(getSelectedCountry()) ? getSelectedColor() : getFillColor();
-            this.setStyle("-fx-cursor: default;");
+                         Color color = isSelectionEnabled() && COUNTRY.equals(getSelectedCountry()) ? getSelectedColor() : getFillColor();
             for (SVGPath path : PATHS) {
                 path.setFill(null == COUNTRY.getColor() || COUNTRY == getSelectedCountry() ? color : COUNTRY.getColor());
             }
-        }
+            }
         }
 
         if (null != HANDLER) HANDLER.handle(EVENT);
