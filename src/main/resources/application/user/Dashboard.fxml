@@ -103,7 +103,7 @@
                               <TextArea fx:id="msg_issue_txt_sup" prefHeight="200.0" prefWidth="473.0" promptText="Message" stylesheets="@../Styles/TextAreaInvisible.css" />
                            </children>
                         </TextFlow>
-                        <Button fx:id="send_issue_btn_sup" graphicTextGap="6.0" mnemonicParsing="false" onAction="#support_event_handler" prefHeight="43.0" prefWidth="149.0" style="-fx-background-color: #ff7000;" text="Send" textFill="WHITE">
+                        <Button fx:id="send_issue_btn_sup" graphicTextGap="6.0" mnemonicParsing="false" onAction="#support_event_handler" prefHeight="43.0" prefWidth="149.0" style="-fx-background-color: #6BCB77;" text="Send" textFill="WHITE">
                            <padding>
                               <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
                            </padding>
@@ -144,7 +144,7 @@
                               <TextArea fx:id="msg_contact_txt_sup" prefHeight="200.0" prefWidth="474.0" promptText="Message" stylesheets="@../Styles/TextAreaInvisible.css" />
                            </children>
                         </TextFlow>
-                        <Button fx:id="send_contact_btn_sup" graphicTextGap="6.0" mnemonicParsing="false" onAction="#support_event_handler" prefHeight="43.0" prefWidth="149.0" style="-fx-background-color: #ff7000;" text="Send" textFill="WHITE">
+                        <Button fx:id="send_contact_btn_sup" graphicTextGap="6.0" mnemonicParsing="false" onAction="#support_event_handler" prefHeight="43.0" prefWidth="149.0" style="-fx-background-color: #6BCB77;" text="Send" textFill="WHITE">
                            <padding>
                               <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
                            </padding>
@@ -184,7 +184,7 @@
                               <TextArea fx:id="msg_fb_txt_sup" prefHeight="199.0" prefWidth="472.0" promptText="Message" style="-fx-background-color: #151D3B #151D3B;" stylesheets="@../Styles/TextAreaInvisible.css" />
                            </children>
                         </TextFlow>
-                        <Button fx:id="send_fb_btn_sup" graphicTextGap="6.0" mnemonicParsing="false" onAction="#support_event_handler" prefHeight="43.0" prefWidth="149.0" style="-fx-background-color: #ff7000;" text="Send" textFill="WHITE">
+                        <Button fx:id="send_fb_btn_sup" graphicTextGap="6.0" mnemonicParsing="false" onAction="#support_event_handler" prefHeight="43.0" prefWidth="149.0" style="-fx-background-color: #6BCB77;" text="Send" textFill="WHITE">
                            <padding>
                               <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
                            </padding>
@@ -652,6 +652,504 @@
                </cursor></Button>
          </children>
       </AnchorPane>
+      <AnchorPane fx:id="booking_seat_anchorpane" layoutX="90.0" prefHeight="700.0" prefWidth="1107.0">
+         <children>
+            <AnchorPane fx:id="success_purchase_anchorpane" layoutX="14.0" prefHeight="700.0" prefWidth="1099.0" style="-fx-background-color: #1119;">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+               <children>
+                  <AnchorPane layoutX="174.0" layoutY="125.0" prefHeight="375.0" prefWidth="779.0" style="-fx-background-color: #122; -fx-background-radius: 10;">
+                     <children>
+                        <Label layoutX="67.0" layoutY="96.0" text="Thank you for purchasing with JetStream!" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <ImageView fx:id="rotate_logo_success_purchase" fitHeight="241.0" fitWidth="328.0" layoutX="516.0" layoutY="70.0" opacity="0.1" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/checked.png" />
+                           </image>
+                        </ImageView>
+                        <Label layoutX="67.0" layoutY="141.0" text="Tickets details:" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <HBox layoutX="63.0" layoutY="243.0" spacing="10.0">
+                           <children>
+                              <Button fx:id="logout_ticket_purchase_btn" mnemonicParsing="false" onAction="#userDashboardEventHandler" prefHeight="37.0" prefWidth="139.0" style="-fx-background-color: #F43F4A;" text="Logout" textFill="WHITE">
+                                 <padding>
+                                    <Insets bottom="5.0" left="25.0" right="25.0" top="5.0" />
+                                 </padding>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="success_purchase_to_dashboard_button" mnemonicParsing="false" onAction="#userDashboardEventHandler" prefHeight="37.0" prefWidth="139.0" style="-fx-background-color: #4193C7  #4193C7;" text="Dashboard" textFill="WHITE">
+                                 <padding>
+                                    <Insets bottom="5.0" left="25.0" right="25.0" top="5.0" />
+                                 </padding>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="show_ticket_purchase_btn" mnemonicParsing="false" onAction="#userDashboardEventHandler" prefHeight="37.0" prefWidth="176.0" style="-fx-background-color: #6BCB77;" text="Show ticket" textFill="WHITE">
+                                 <padding>
+                                    <Insets bottom="5.0" left="25.0" right="25.0" top="5.0" />
+                                 </padding>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <Label layoutX="67.0" layoutY="168.0" text="RFC no:" textFill="#cdcdcd">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="history_reference_number_lbl" layoutX="132.0" layoutY="168.0" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="payment_anchorpane" layoutX="26.0" layoutY="28.0" prefHeight="646.0" prefWidth="1072.0" style="-fx-background-color: #221E4E #221E4E #221E4E #221E4E; -fx-background-radius: 10;">
+               <children>
+                  <ImageView fitHeight="37.0" fitWidth="39.0" layoutX="62.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/JetStream_Ikon.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="112.0" layoutY="60.0" text="Payment" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="99.0" layoutY="132.0" text="Card number" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <VBox layoutX="102.0" layoutY="168.0" prefHeight="355.0" prefWidth="428.0" spacing="10.0">
+                     <children>
+                        <HBox prefHeight="48.0" prefWidth="428.0" spacing="10.0">
+                           <children>
+                              <Group>
+                                 <children>
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#111122" height="47.0" layoutY="1.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="42.0" />
+                                    <TextField fx:id="card_nbr" layoutX="35.0" layoutY="1.0" prefHeight="37.0" prefWidth="392.0" promptText="2424  -  2424  -  2424  -  2424" style="-fx-background-color: #112; -fx-text-fill: #fff;">
+                                       <padding>
+                                          <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                                       </padding>
+                                    </TextField>
+                                    <ImageView fitHeight="38.0" fitWidth="25.0" layoutX="9.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../image/credit-card.png" />
+                                       </image>
+                                       <effect>
+                                          <ColorAdjust brightness="0.61" contrast="0.26" />
+                                       </effect>
+                                    </ImageView>
+                                 </children>
+                              </Group>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="60.0" prefWidth="428.0">
+                           <children>
+                              <VBox spacing="10.0">
+                                 <children>
+                                    <VBox>
+                                       <children>
+                                          <Label text="Card holder" textFill="WHITE">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label text="Provide the correct name and last name" textFill="#c6c6c6" />
+                                       </children>
+                                    </VBox>
+                                    <HBox spacing="15.0">
+                                       <children>
+                                          <TextField fx:id="card_fname" prefHeight="37.0" prefWidth="392.0" promptText="first name" style="-fx-background-color: #112; -fx-text-fill: #fff;">
+                                             <padding>
+                                                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                                             </padding>
+                                          </TextField>
+                                          <TextField fx:id="card_lname" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="392.0" promptText="last name" style="-fx-background-color: #112; -fx-text-fill: #fff;">
+                                             <padding>
+                                                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                                             </padding>
+                                          </TextField>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        <HBox spacing="15.0">
+                           <children>
+                              <VBox prefHeight="47.0" prefWidth="365.0">
+                                 <children>
+                                    <Label text="Expire date" textFill="WHITE">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Year / month" textFill="#c6c6c6" />
+                                 </children>
+                              </VBox>
+                              <HBox alignment="CENTER" prefHeight="47.0" prefWidth="364.0" spacing="15.0">
+                                 <children>
+                                    <TextField fx:id="card_year" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="47.0" prefWidth="94.0" promptText="2024" style="-fx-background-color: #112; -fx-text-fill: #fff;">
+                                       <padding>
+                                          <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                                       </padding>
+                                    </TextField>
+                                    <TextField fx:id="card_month" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="47.0" prefWidth="97.0" promptText="12" style="-fx-background-color: #112; -fx-text-fill: #fff;">
+                                       <padding>
+                                          <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                                       </padding>
+                                    </TextField>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="15.0">
+                           <children>
+                              <VBox prefHeight="47.0" prefWidth="207.0">
+                                 <children>
+                                    <Label text="CVC number" textFill="WHITE">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="3 digit number behind your card" textFill="#c6c6c6" />
+                                 </children>
+                              </VBox>
+                              <TextField fx:id="card_cvc" prefHeight="47.0" prefWidth="208.0" promptText="CVC" style="-fx-background-color: #112; -fx-text-fill: #fff;">
+                                 <padding>
+                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                                 </padding>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <HBox alignment="BOTTOM_CENTER" prefHeight="77.0" prefWidth="428.0" spacing="15.0">
+                           <children>
+                              <Button fx:id="card_prev_btn" mnemonicParsing="false" onAction="#userDashboardEventHandler" prefHeight="40.0" prefWidth="212.0" style="-fx-background-color: #4193C7;" text="Preview" textFill="WHITE">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="card_purchase_btn" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" prefHeight="40.0" prefWidth="217.0" style="-fx-background-color: #6BCB77;" text="Purchase" textFill="WHITE">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <ImageView fitHeight="231.0" fitWidth="347.0" layoutX="675.0" layoutY="138.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/payment/debit_card.png" />
+                     </image>
+                     <effect>
+                        <Reflection fraction="0.79" topOpacity="0.38" />
+                     </effect>
+                  </ImageView>
+                  <Group layoutX="1050.0" layoutY="-11.0">
+                     <children>
+                        <ImageView fitHeight="25.0" fitWidth="30.0" layoutX="-11.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/close.png" />
+                           </image>
+                           <effect>
+                              <ColorAdjust brightness="-0.05" contrast="0.04" hue="0.16" saturation="0.59" />
+                           </effect>
+                        </ImageView>
+                        <Button fx:id="booking_close_btn" layoutX="-14.0" layoutY="17.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" opacity="0.0" prefHeight="32.0" prefWidth="28.0" />
+                     </children>
+                  </Group>
+                  <Label fx:id="payment_err_msg" layoutX="105.0" layoutY="572.0" prefHeight="17.0" prefWidth="428.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="booking_passenger_anchorpane" layoutX="27.0" layoutY="27.0" prefHeight="647.0" prefWidth="1072.0" style="-fx-background-color: #221E4E #221E4E #221E4E #221E4E; -fx-background-radius: 10;">
+               <children>
+                  <Pane layoutX="576.0" layoutY="-7.0" prefHeight="654.0" prefWidth="319.0" style="-fx-background-color: #112;">
+                     <children>
+                        <VBox layoutX="21.0" layoutY="20.0">
+                           <children>
+                              <Pane prefHeight="25.0" prefWidth="278.0">
+                                 <children>
+                                    <Pane prefHeight="25.0" prefWidth="116.0" style="-fx-background-color: #112; -fx-background-radius: 0 10 0 0;">
+                                       <children>
+                                          <Label layoutX="10.0" text="Business seats" textFill="WHITE">
+                                             <font>
+                                                <Font size="16.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </Pane>
+                              <ScrollPane fx:id="business_seat_scrollpane" prefHeight="212.0" prefWidth="278.0" stylesheets="@../Styles/ScrollStyle.css">
+                                 <content>
+                                    <AnchorPane fx:id="flights_seats_business_anchorpane" prefHeight="211.0" prefWidth="277.0" style="-fx-background-color: #112;">
+                                       <padding>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </padding>
+                                    </AnchorPane>
+                                 </content>
+                              </ScrollPane>
+                              <Pane>
+                                 <children>
+                                    <Pane prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: #112; -fx-background-radius: 0 10 0 0;">
+                                       <children>
+                                          <Label layoutX="11.0" text="Economy seats" textFill="WHITE">
+                                             <font>
+                                                <Font size="16.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </Pane>
+                              <ScrollPane fx:id="eco_seat_scrollpane" prefHeight="318.0" prefWidth="278.0" stylesheets="@../Styles/ScrollStyle.css">
+                                 <content>
+                                    <AnchorPane fx:id="flight_seats_eco_anchorpane" prefHeight="314.0" prefWidth="277.0" style="-fx-background-color: #112;">
+                                       <padding>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </padding>
+                                    </AnchorPane>
+                                 </content>
+                              </ScrollPane>
+                           </children>
+                        </VBox>
+                     </children>
+                  </Pane>
+                  <Label fx:id="psr_name_seat_pnl" layoutX="83.0" layoutY="38.0" text="Passenger" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <GridPane layoutX="38.0" layoutY="175.0" prefHeight="323.0" prefWidth="480.0" vgap="10.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="267.0" minWidth="10.0" prefWidth="149.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="391.0" minWidth="10.0" prefWidth="328.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Label text="First name:" textFill="#999999">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="10.0" layoutY="28.0" text="SSN:" textFill="#999999" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="10.0" layoutY="69.0" text="Email address:" textFill="#999999" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="10.0" layoutY="93.0" text="Last name:" textFill="#999999" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="10.0" layoutY="132.0" text="Seat:" textFill="#999999" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="booking_first_name_textfield" promptText="First name" style="-fx-background-color: #112; -fx-text-fill: #eee;" GridPane.columnIndex="1">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </TextField>
+                        <TextField fx:id="booking_last_name_textfield" promptText="Last name" style="-fx-background-color: #112; -fx-text-fill: #eee;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </TextField>
+                        <TextField fx:id="booking_four_digits_textfield" layoutX="130.0" layoutY="56.0" promptText="yyyymmddxxxx" style="-fx-background-color: #112; -fx-text-fill: #eee;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </TextField>
+                        <TextField fx:id="booking_email_textfield" layoutX="130.0" layoutY="95.0" promptText="Email address" style="-fx-background-color: #112; -fx-text-fill: #eee;" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </TextField>
+                        <HBox opacity="0.7" prefHeight="37.0" prefWidth="125.0" style="-fx-background-color: #1122;" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <children>
+                              <Group>
+                                 <children>
+                                    <Label fx:id="booking_retur_seat_number_lbl" layoutX="6.0" layoutY="1.0" prefHeight="44.0" prefWidth="32.0" textFill="WHITE">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="booking_seat_number_lbl" layoutX="7.0" layoutY="2.0" prefHeight="44.0" prefWidth="32.0" textFill="WHITE">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Group>
+                           </children>
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                        </HBox>
+                        <Label layoutX="10.0" layoutY="170.0" text="Flights ID:" textFill="#999999" GridPane.rowIndex="5">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Pane style="-fx-background-color: #1122;" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                           <children>
+                              <Label fx:id="booking_flight_number_lbl" layoutX="14.0" opacity="0.7" prefHeight="38.0" prefWidth="97.0" textFill="WHITE">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Label layoutX="10.0" layoutY="173.0" text="Price:" textFill="WHITE" GridPane.rowIndex="6">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <HBox spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                           <children>
+                              <Label fx:id="booking_price_lbl" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="35.0" prefWidth="83.0" textFill="WHITE">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="price_seat_pnl1" prefHeight="43.0" prefWidth="39.0" text="SEK" textFill="WHITE">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </GridPane>
+                  <Button fx:id="seat_next_btn" layoutX="379.0" layoutY="522.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" prefHeight="37.0" prefWidth="139.0" style="-fx-background-color: #4193C7;" text="Next" textFill="WHITE">
+                     <padding>
+                        <Insets bottom="5.0" left="25.0" right="25.0" top="5.0" />
+                     </padding>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <ImageView fx:id="booking_profile_image" fitHeight="65.0" fitWidth="38.0" layoutX="38.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/user.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="booking_msg_lbl" layoutX="189.0" layoutY="570.0" prefHeight="20.0" prefWidth="329.0" textFill="#c34848">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Pane layoutX="895.0" prefHeight="271.0" prefWidth="171.0">
+                     <children>
+                        <VBox layoutX="14.0" layoutY="14.0" prefHeight="254.0" prefWidth="154.0" spacing="10.0">
+                           <children>
+                              <ImageView fitHeight="253.0" fitWidth="153.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../image/seat_guid_icons.PNG" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </VBox>
+                     </children>
+                  </Pane>
+                  <VBox layoutX="34.0" layoutY="580.0" />
+                  <Group layoutX="1049.0" layoutY="-9.0">
+                     <children>
+                        <ImageView fitHeight="25.0" fitWidth="30.0" layoutX="-11.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/close.png" />
+                           </image>
+                           <effect>
+                              <ColorAdjust brightness="-0.05" contrast="0.04" hue="0.16" saturation="0.59" />
+                           </effect>
+                        </ImageView>
+                        <Button fx:id="booking_close_second_page_btn" layoutX="-14.0" layoutY="17.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" opacity="0.0" prefHeight="32.0" prefWidth="28.0" />
+                     </children>
+                  </Group>
+                  <VBox fx:id="booking_info_vbox" alignment="CENTER_LEFT" layoutX="38.0" layoutY="84.0" prefHeight="82.0" prefWidth="480.0" style="-fx-background-color: #1122; -fx-background-radius: 10;">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" spacing="20.0">
+                           <children>
+                              <VBox>
+                                 <children>
+                                    <Label fx:id="booking_departure_lbl" text="From" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="booking_departure_extra_lbl" layoutX="10.0" layoutY="10.0" text="Date" textFill="WHITE">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <ImageView fitHeight="60.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../image/path.png" />
+                                 </image>
+                              </ImageView>
+                              <VBox>
+                                 <children>
+                                    <Label fx:id="booking_destination_lbl" text="To" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="booking_destination_extra_lbl" text="Date" textFill="WHITE">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </VBox>
+                  <Label fx:id="booking_is_retur_lbl" layoutX="278.0" layoutY="43.0" textFill="WHITE" />
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
       <AnchorPane fx:id="my_ticket_anchorpane" layoutX="106.0" layoutY="7.0" prefHeight="693.0" prefWidth="1089.0" style="-fx-background-color: #112;">
          <children>
             <AnchorPane fx:id="checkning_pnl" prefHeight="693.0" prefWidth="1089.0" style="-fx-background-color: #112;">
@@ -901,517 +1399,6 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="booking_seat_anchorpane" layoutX="90.0" prefHeight="700.0" prefWidth="1107.0">
-         <children>
-            <AnchorPane fx:id="success_purchase_anchorpane" layoutX="14.0" prefHeight="700.0" prefWidth="1099.0" style="-fx-background-color: #1119;">
-               <cursor>
-                  <Cursor fx:constant="DEFAULT" />
-               </cursor>
-               <children>
-                  <AnchorPane layoutX="174.0" layoutY="125.0" prefHeight="375.0" prefWidth="779.0" style="-fx-background-color: #122; -fx-background-radius: 10;">
-                     <children>
-                        <Label layoutX="67.0" layoutY="96.0" text="Thank you for purchasing with JetStream!" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="24.0" />
-                           </font>
-                        </Label>
-                        <ImageView fx:id="rotate_logo_success_purchase" fitHeight="241.0" fitWidth="328.0" layoutX="516.0" layoutY="70.0" opacity="0.1" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../image/checked.png" />
-                           </image>
-                        </ImageView>
-                        <Label layoutX="67.0" layoutY="141.0" text="Tickets details:" textFill="WHITE">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <HBox layoutX="63.0" layoutY="243.0" spacing="10.0">
-                           <children>
-                              <Button fx:id="logout_ticket_purchase_btn" mnemonicParsing="false" onAction="#userDashboardEventHandler" prefHeight="37.0" prefWidth="139.0" style="-fx-background-color: #eee;" text="Logout" textFill="#575757">
-                                 <padding>
-                                    <Insets bottom="5.0" left="25.0" right="25.0" top="5.0" />
-                                 </padding>
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Button>
-                              <Button fx:id="success_purchase_to_dashboard_button" mnemonicParsing="false" onAction="#userDashboardEventHandler" prefHeight="37.0" prefWidth="139.0" style="-fx-background-color: #eee;" text="Dasboard" textFill="#575757">
-                                 <padding>
-                                    <Insets bottom="5.0" left="25.0" right="25.0" top="5.0" />
-                                 </padding>
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Button>
-                              <Button fx:id="show_ticket_purchase_btn" mnemonicParsing="false" onAction="#userDashboardEventHandler" prefHeight="37.0" prefWidth="176.0" style="-fx-background-color: #eee;" text="Show  my ticket" textFill="#575757">
-                                 <padding>
-                                    <Insets bottom="5.0" left="25.0" right="25.0" top="5.0" />
-                                 </padding>
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </HBox>
-                        <Label layoutX="67.0" layoutY="168.0" text="RFC no:" textFill="#cdcdcd">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="history_reference_number_lbl" layoutX="132.0" layoutY="168.0" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="18.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </AnchorPane>
-               </children>
-            </AnchorPane>
-            <AnchorPane fx:id="payment_anchorpane" layoutX="26.0" layoutY="28.0" prefHeight="646.0" prefWidth="1072.0" style="-fx-background-color: #221E4E #221E4E #221E4E #221E4E; -fx-background-radius: 10;">
-               <children>
-                  <ImageView fitHeight="37.0" fitWidth="39.0" layoutX="62.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../image/JetStream_Ikon.png" />
-                     </image>
-                  </ImageView>
-                  <Label layoutX="112.0" layoutY="60.0" text="Payment" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="99.0" layoutY="132.0" text="Card number" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <VBox layoutX="102.0" layoutY="168.0" prefHeight="355.0" prefWidth="428.0" spacing="10.0">
-                     <children>
-                        <HBox prefHeight="48.0" prefWidth="428.0" spacing="10.0">
-                           <children>
-                              <Group>
-                                 <children>
-                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#111122" height="47.0" layoutY="1.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="42.0" />
-                                    <TextField fx:id="card_nbr" layoutX="35.0" layoutY="1.0" prefHeight="37.0" prefWidth="392.0" promptText="2424  -  2424  -  2424  -  2424" style="-fx-background-color: #112; -fx-text-fill: #fff;">
-                                       <padding>
-                                          <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                                       </padding>
-                                    </TextField>
-                                    <ImageView fitHeight="38.0" fitWidth="25.0" layoutX="9.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../image/credit-card.png" />
-                                       </image>
-                                       <effect>
-                                          <ColorAdjust brightness="0.61" contrast="0.26" />
-                                       </effect>
-                                    </ImageView>
-                                 </children>
-                              </Group>
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="60.0" prefWidth="428.0">
-                           <children>
-                              <VBox spacing="10.0">
-                                 <children>
-                                    <VBox>
-                                       <children>
-                                          <Label text="Card holder" textFill="WHITE">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="Provide the correct name and last name" textFill="#c6c6c6" />
-                                       </children>
-                                    </VBox>
-                                    <HBox spacing="15.0">
-                                       <children>
-                                          <TextField fx:id="card_fname" prefHeight="37.0" prefWidth="392.0" promptText="first name" style="-fx-background-color: #112; -fx-text-fill: #fff;">
-                                             <padding>
-                                                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                                             </padding>
-                                          </TextField>
-                                          <TextField fx:id="card_lname" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="392.0" promptText="last name" style="-fx-background-color: #112; -fx-text-fill: #fff;">
-                                             <padding>
-                                                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                                             </padding>
-                                          </TextField>
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </VBox>
-                           </children>
-                        </HBox>
-                        <HBox spacing="15.0">
-                           <children>
-                              <VBox prefHeight="47.0" prefWidth="365.0">
-                                 <children>
-                                    <Label text="Expire date" textFill="WHITE">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <Label text="Year / month" textFill="#c6c6c6" />
-                                 </children>
-                              </VBox>
-                              <HBox alignment="CENTER" prefHeight="47.0" prefWidth="364.0" spacing="15.0">
-                                 <children>
-                                    <TextField fx:id="card_year" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="47.0" prefWidth="94.0" promptText="2024" style="-fx-background-color: #112; -fx-text-fill: #fff;">
-                                       <padding>
-                                          <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                                       </padding>
-                                    </TextField>
-                                    <TextField fx:id="card_month" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="47.0" prefWidth="97.0" promptText="12" style="-fx-background-color: #112; -fx-text-fill: #fff;">
-                                       <padding>
-                                          <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                                       </padding>
-                                    </TextField>
-                                 </children>
-                              </HBox>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" spacing="15.0">
-                           <children>
-                              <VBox prefHeight="47.0" prefWidth="207.0">
-                                 <children>
-                                    <Label text="CVC number" textFill="WHITE">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <Label text="3 digit number behind your card" textFill="#c6c6c6" />
-                                 </children>
-                              </VBox>
-                              <TextField fx:id="card_cvc" prefHeight="47.0" prefWidth="208.0" promptText="CVC" style="-fx-background-color: #112; -fx-text-fill: #fff;">
-                                 <padding>
-                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                                 </padding>
-                              </TextField>
-                           </children>
-                        </HBox>
-                        <HBox alignment="BOTTOM_CENTER" prefHeight="77.0" prefWidth="428.0" spacing="15.0">
-                           <children>
-                              <Button fx:id="card_prev_btn" mnemonicParsing="false" onAction="#userDashboardEventHandler" prefHeight="40.0" prefWidth="212.0" style="-fx-background-color: #ff7205;" text="Preview" textFill="WHITE">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Button>
-                              <Button fx:id="card_purchase_btn" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" prefHeight="40.0" prefWidth="217.0" style="-fx-background-color: #ff8000;" text="Purchase" textFill="WHITE">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
-                  <ImageView fitHeight="231.0" fitWidth="347.0" layoutX="675.0" layoutY="138.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../image/payment/debit_card.png" />
-                     </image>
-                     <effect>
-                        <Reflection fraction="0.79" topOpacity="0.38" />
-                     </effect>
-                  </ImageView>
-                  <Group layoutX="1050.0" layoutY="-11.0">
-                     <children>
-                        <ImageView fitHeight="25.0" fitWidth="30.0" layoutX="-11.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../image/close.png" />
-                           </image>
-                           <effect>
-                              <ColorAdjust brightness="-0.05" contrast="0.04" hue="0.16" saturation="0.59" />
-                           </effect>
-                        </ImageView>
-                        <Button fx:id="booking_close_btn" layoutX="-14.0" layoutY="17.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" opacity="0.0" prefHeight="32.0" prefWidth="28.0" />
-                     </children>
-                  </Group>
-                  <Label fx:id="payment_err_msg" layoutX="105.0" layoutY="572.0" prefHeight="17.0" prefWidth="428.0" />
-               </children>
-            </AnchorPane>
-            <AnchorPane fx:id="booking_passenger_anchorpane" layoutX="27.0" layoutY="27.0" prefHeight="647.0" prefWidth="1072.0" style="-fx-background-color: #221E4E #221E4E #221E4E #221E4E; -fx-background-radius: 10;">
-               <children>
-                  <Pane layoutX="576.0" layoutY="-7.0" prefHeight="654.0" prefWidth="319.0" style="-fx-background-color: #112;">
-                     <children>
-                        <VBox layoutX="21.0" layoutY="20.0">
-                           <children>
-                              <Pane prefHeight="25.0" prefWidth="278.0">
-                                 <children>
-                                    <Pane prefHeight="25.0" prefWidth="116.0" style="-fx-background-color: #112; -fx-background-radius: 0 10 0 0;">
-                                       <children>
-                                          <Label layoutX="10.0" text="Business seats" textFill="WHITE">
-                                             <font>
-                                                <Font size="16.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </Pane>
-                                 </children>
-                              </Pane>
-                              <ScrollPane fx:id="business_seat_scrollpane" prefHeight="212.0" prefWidth="278.0" stylesheets="@../Styles/ScrollStyle.css">
-                                 <content>
-                                    <AnchorPane fx:id="flights_seats_business_anchorpane" prefHeight="211.0" prefWidth="277.0" style="-fx-background-color: #112;">
-                                       <padding>
-                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                       </padding>
-                                    </AnchorPane>
-                                 </content>
-                              </ScrollPane>
-                              <Pane>
-                                 <children>
-                                    <Pane prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: #112; -fx-background-radius: 0 10 0 0;">
-                                       <children>
-                                          <Label layoutX="11.0" text="Economy seats" textFill="WHITE">
-                                             <font>
-                                                <Font size="16.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </Pane>
-                                 </children>
-                              </Pane>
-                              <ScrollPane fx:id="eco_seat_scrollpane" prefHeight="318.0" prefWidth="278.0" stylesheets="@../Styles/ScrollStyle.css">
-                                 <content>
-                                    <AnchorPane fx:id="flight_seats_eco_anchorpane" prefHeight="314.0" prefWidth="277.0" style="-fx-background-color: #112;">
-                                       <padding>
-                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                       </padding>
-                                    </AnchorPane>
-                                 </content>
-                              </ScrollPane>
-                           </children>
-                        </VBox>
-                     </children>
-                  </Pane>
-                  <Label fx:id="psr_name_seat_pnl" layoutX="83.0" layoutY="38.0" text="Passenger" textFill="WHITE">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <GridPane layoutX="38.0" layoutY="175.0" prefHeight="323.0" prefWidth="480.0" vgap="10.0">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="267.0" minWidth="10.0" prefWidth="149.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="391.0" minWidth="10.0" prefWidth="328.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                        <Label text="First name:" textFill="#999999">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="10.0" layoutY="28.0" text="SSN:" textFill="#999999" GridPane.rowIndex="2">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="10.0" layoutY="69.0" text="Email address:" textFill="#999999" GridPane.rowIndex="3">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="10.0" layoutY="93.0" text="Last name:" textFill="#999999" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="10.0" layoutY="132.0" text="Seat:" textFill="#999999" GridPane.rowIndex="4">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="booking_first_name_textfield" promptText="First name" style="-fx-background-color: #112; -fx-text-fill: #eee;" GridPane.columnIndex="1">
-                           <padding>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </padding>
-                        </TextField>
-                        <TextField fx:id="booking_last_name_textfield" promptText="Last name" style="-fx-background-color: #112; -fx-text-fill: #eee;" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <padding>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </padding>
-                        </TextField>
-                        <TextField fx:id="booking_four_digits_textfield" layoutX="130.0" layoutY="56.0" promptText="yyyymmddxxxx" style="-fx-background-color: #112; -fx-text-fill: #eee;" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                           <padding>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </padding>
-                        </TextField>
-                        <TextField fx:id="booking_email_textfield" layoutX="130.0" layoutY="95.0" promptText="Email address" style="-fx-background-color: #112; -fx-text-fill: #eee;" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                           <padding>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </padding>
-                        </TextField>
-                        <HBox opacity="0.7" prefHeight="37.0" prefWidth="125.0" style="-fx-background-color: #1122;" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                           <children>
-                              <Group>
-                                 <children>
-                                    <Label fx:id="booking_retur_seat_number_lbl" layoutX="6.0" layoutY="1.0" prefHeight="44.0" prefWidth="32.0" textFill="WHITE">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="booking_seat_number_lbl" layoutX="7.0" layoutY="2.0" prefHeight="44.0" prefWidth="32.0" textFill="WHITE">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </Group>
-                           </children>
-                           <padding>
-                              <Insets left="10.0" right="10.0" />
-                           </padding>
-                        </HBox>
-                        <Label layoutX="10.0" layoutY="170.0" text="Flights ID:" textFill="#999999" GridPane.rowIndex="5">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <Pane style="-fx-background-color: #1122;" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                           <children>
-                              <Label fx:id="booking_flight_number_lbl" layoutX="14.0" opacity="0.7" prefHeight="38.0" prefWidth="97.0" textFill="WHITE">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </Pane>
-                        <Label layoutX="10.0" layoutY="173.0" text="Price:" textFill="WHITE" GridPane.rowIndex="6">
-                           <font>
-                              <Font name="System Bold" size="18.0" />
-                           </font>
-                        </Label>
-                        <HBox spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                           <children>
-                              <Label fx:id="booking_price_lbl" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="35.0" prefWidth="83.0" textFill="WHITE">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="price_seat_pnl1" prefHeight="43.0" prefWidth="39.0" text="SEK" textFill="WHITE">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                     </children>
-                  </GridPane>
-                  <Button fx:id="seat_next_btn" layoutX="379.0" layoutY="522.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" prefHeight="37.0" prefWidth="139.0" style="-fx-background-color: #4193C7;" text="Next" textFill="WHITE">
-                     <padding>
-                        <Insets bottom="5.0" left="25.0" right="25.0" top="5.0" />
-                     </padding>
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <ImageView fx:id="booking_profile_image" fitHeight="65.0" fitWidth="38.0" layoutX="38.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../image/user.png" />
-                     </image>
-                  </ImageView>
-                  <Label fx:id="booking_msg_lbl" layoutX="189.0" layoutY="570.0" prefHeight="20.0" prefWidth="329.0" textFill="#c34848">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Pane layoutX="895.0" prefHeight="271.0" prefWidth="171.0">
-                     <children>
-                        <VBox layoutX="14.0" layoutY="14.0" prefHeight="254.0" prefWidth="154.0" spacing="10.0">
-                           <children>
-                              <ImageView fitHeight="253.0" fitWidth="153.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../image/seat_guid_icons.PNG" />
-                                 </image>
-                              </ImageView>
-                           </children>
-                        </VBox>
-                     </children>
-                  </Pane>
-                  <VBox layoutX="34.0" layoutY="580.0">
-                     <children>
-                        <Label text="Remining time" textFill="#ffe500">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="card_counter_nbr" text="00:01:59" textFill="#f7bb00">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </VBox>
-                  <Group layoutX="1049.0" layoutY="-9.0">
-                     <children>
-                        <ImageView fitHeight="25.0" fitWidth="30.0" layoutX="-11.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../image/close.png" />
-                           </image>
-                           <effect>
-                              <ColorAdjust brightness="-0.05" contrast="0.04" hue="0.16" saturation="0.59" />
-                           </effect>
-                        </ImageView>
-                        <Button fx:id="booking_close_second_page_btn" layoutX="-14.0" layoutY="17.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" opacity="0.0" prefHeight="32.0" prefWidth="28.0" />
-                     </children>
-                  </Group>
-                  <VBox fx:id="booking_info_vbox" alignment="CENTER_LEFT" layoutX="38.0" layoutY="84.0" prefHeight="82.0" prefWidth="480.0" style="-fx-background-color: #1122; -fx-background-radius: 10;">
-                     <children>
-                        <HBox alignment="CENTER_LEFT" spacing="20.0">
-                           <children>
-                              <VBox>
-                                 <children>
-                                    <Label fx:id="booking_departure_lbl" text="From" textFill="WHITE">
-                                       <font>
-                                          <Font name="System Bold" size="24.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="booking_departure_extra_lbl" layoutX="10.0" layoutY="10.0" text="Date" textFill="WHITE">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </VBox>
-                              <ImageView fitHeight="60.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../image/path.png" />
-                                 </image>
-                              </ImageView>
-                              <VBox>
-                                 <children>
-                                    <Label fx:id="booking_destination_lbl" text="To" textFill="WHITE">
-                                       <font>
-                                          <Font name="System Bold" size="24.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="booking_destination_extra_lbl" text="Date" textFill="WHITE">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </VBox>
-                           </children>
-                        </HBox>
-                     </children>
-                     <padding>
-                        <Insets left="10.0" />
-                     </padding>
-                  </VBox>
-                  <Label fx:id="booking_is_retur_lbl" layoutX="278.0" layoutY="43.0" textFill="WHITE" />
-               </children>
-            </AnchorPane>
-         </children>
-      </AnchorPane>
       <AnchorPane fx:id="entertainment_anchorpane" layoutX="107.0" prefHeight="700.0" prefWidth="1099.0" style="-fx-background-color: #112;">
          <children>
             <ImageView fitHeight="241.0" fitWidth="200.0" layoutX="129.0" layoutY="98.0" pickOnBounds="true" preserveRatio="true">
@@ -1563,256 +1550,6 @@
                   <Font size="14.0" />
                </font>
             </Label>
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="profile_anchorpane" layoutX="111.0" prefHeight="700.0" prefWidth="1089.0" style="-fx-background-color: #112;">
-         <children>
-            <Label layoutX="69.0" layoutY="51.0" text="Profile" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-            </Label>
-            <VBox layoutX="69.0" layoutY="110.0" spacing="10.0">
-               <children>
-                  <Group>
-                     <children>
-                        <VBox spacing="5.0">
-                           <children>
-                              <HBox spacing="10.0">
-                                 <children>
-                                    <Label text="First name" textFill="WHITE">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="edit_pfp_fname_issue" prefHeight="17.0" prefWidth="128.0" />
-                                 </children>
-                              </HBox>
-                              <TextField fx:id="profile_first_name_lbl" prefHeight="26.0" prefWidth="277.0">
-                                 <padding>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </padding>
-                              </TextField>
-                           </children>
-                        </VBox>
-                     </children>
-                  </Group>
-                  <Group>
-                     <children>
-                        <VBox spacing="5.0">
-                           <children>
-                              <HBox spacing="10.0">
-                                 <children>
-                                    <Label graphicTextGap="0.0" text="Last name" textFill="WHITE">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="edit_pfp_lname_issue" prefHeight="17.0" prefWidth="140.0" />
-                                 </children>
-                              </HBox>
-                              <TextField fx:id="profile_last_name_lbl" prefHeight="26.0" prefWidth="274.0">
-                                 <padding>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </padding>
-                              </TextField>
-                           </children>
-                        </VBox>
-                     </children>
-                  </Group>
-                  <Group>
-                     <children>
-                        <VBox spacing="5.0">
-                           <children>
-                              <HBox spacing="10.0">
-                                 <children>
-                                    <Label text="Address" textFill="WHITE">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="edit_pfp_address_issue" prefHeight="17.0" prefWidth="139.0" />
-                                 </children>
-                              </HBox>
-                              <TextField fx:id="profile_address_lbl" prefHeight="26.0" prefWidth="275.0">
-                                 <padding>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </padding>
-                              </TextField>
-                           </children>
-                        </VBox>
-                     </children>
-                  </Group>
-                  <Group>
-                     <children>
-                        <VBox spacing="5.0">
-                           <children>
-                              <HBox spacing="10.0">
-                                 <children>
-                                    <Label text="Email" textFill="WHITE">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="edit_pfp_email_issue" prefHeight="17.0" prefWidth="146.0" />
-                                 </children>
-                              </HBox>
-                              <TextField fx:id="profile_email_lbl" prefHeight="26.0" prefWidth="276.0">
-                                 <padding>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </padding>
-                              </TextField>
-                           </children>
-                        </VBox>
-                     </children>
-                  </Group>
-                  <Group>
-                     <children>
-                        <VBox spacing="5.0">
-                           <children>
-                              <HBox spacing="10.0">
-                                 <children>
-                                    <Label text="Phone number" textFill="WHITE">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="edit_pfp_phone_issue" prefHeight="17.0" prefWidth="144.0" />
-                                 </children>
-                              </HBox>
-                              <TextField fx:id="profile_phone_lbl" prefHeight="26.0" prefWidth="276.0">
-                                 <padding>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </padding>
-                              </TextField>
-                           </children>
-                        </VBox>
-                     </children>
-                  </Group>
-               </children>
-            </VBox>
-            <HBox layoutX="69.0" layoutY="569.0" spacing="10.0">
-               <children>
-                  <Button fx:id="profile_edit_btn" graphicTextGap="6.0" mnemonicParsing="false" onAction="#editProfile" prefHeight="43.0" prefWidth="132.0" style="-fx-background-color: #ff7000;" text="Edit" textFill="WHITE">
-                     <padding>
-                        <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
-                     </padding>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Button fx:id="profile_cancel_btn" graphicTextGap="6.0" mnemonicParsing="false" onAction="#editProfileCancel" prefHeight="43.0" prefWidth="135.0" style="-fx-background-color: #ff7000;" text="Cancel" textFill="WHITE">
-                     <padding>
-                        <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
-                     </padding>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-               </children>
-            </HBox>
-            <ImageView fx:id="profile_image_preview_imageview" fitHeight="127.0" fitWidth="132.0" layoutX="437.0" layoutY="359.0" pickOnBounds="true" />
-            <Button graphicTextGap="6.0" layoutX="433.0" layoutY="569.0" mnemonicParsing="false" onAction="#changeProfileImage" prefHeight="43.0" prefWidth="149.0" style="-fx-background-color: #ff7000;" text="Change image" textFill="WHITE">
-               <padding>
-                  <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
-               </padding>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <GridPane fx:id="profile_profile_image_gridpane" hgap="10.0" layoutX="690.0" layoutY="140.0" onMouseClicked="#profileImageClickGrid" prefHeight="530.0" prefWidth="344.0" vgap="10.0">
-              <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-            </GridPane>
-            <Label fx:id="pfp_display_msg" layoutX="68.0" layoutY="642.0" prefHeight="27.0" prefWidth="279.0" textFill="WHITE">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <VBox layoutX="369.0" layoutY="109.0" spacing="10.0">
-               <children>
-                  <Group>
-                     <children>
-                        <VBox spacing="5.0">
-                           <children>
-                              <HBox spacing="10.0">
-                                 <children>
-                                    <Label text="Old password" textFill="WHITE">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="edit_pfp_old_pwd_issue" prefHeight="17.0" prefWidth="130.0" />
-                                 </children>
-                              </HBox>
-                              <PasswordField fx:id="profile_old_password_passwordfield" prefHeight="26.0" prefWidth="276.0">
-                                 <padding>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </padding>
-                              </PasswordField>
-                           </children>
-                        </VBox>
-                     </children>
-                  </Group>
-                  <Group>
-                     <children>
-                        <VBox spacing="5.0">
-                           <children>
-                              <HBox spacing="10.0">
-                                 <children>
-                                    <Label text="New password" textFill="WHITE">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="edit_pfp_new_pwd_issue" prefHeight="17.0" prefWidth="137.0" />
-                                 </children>
-                              </HBox>
-                              <TextField fx:id="profile_new_password_textfield" prefHeight="26.0" prefWidth="277.0" promptText="new password">
-                                 <padding>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </padding>
-                              </TextField>
-                           </children>
-                        </VBox>
-                     </children>
-                  </Group>
-                  <Group>
-                     <children>
-                        <VBox spacing="5.0">
-                           <children>
-                              <HBox spacing="10.0">
-                                 <children>
-                                    <Label text="Confirm password" textFill="WHITE">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="edit_pfp_new_c_pwd_issue" prefHeight="17.0" prefWidth="137.0" />
-                                 </children>
-                              </HBox>
-                              <TextField fx:id="profile_confirm_password_textfield" prefHeight="26.0" prefWidth="277.0" promptText="confirm password">
-                                 <padding>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </padding>
-                              </TextField>
-                           </children>
-                        </VBox>
-                     </children>
-                  </Group>
-                  <HBox spacing="10.0" />
-               </children>
-            </VBox>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="flight_anchorpane" layoutX="107.0" prefHeight="700.0" prefWidth="1089.0" style="-fx-background-color: #112;">
@@ -2450,7 +2187,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </ImageView>
-                              <Label layoutX="34.0" layoutY="18.0" prefHeight="17.0" prefWidth="51.0" text="Settings" textFill="WHITE" />
+                              <Label layoutX="34.0" layoutY="18.0" prefHeight="17.0" prefWidth="51.0" text="Profile" textFill="WHITE" />
                               <Button fx:id="menu_profile_btn" layoutX="2.0" layoutY="14.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" opacity="0.0" prefHeight="30.0" prefWidth="77.0" text="Button">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
@@ -2485,5 +2222,255 @@
             </VBox>
          </children>
       </Pane>
+      <AnchorPane fx:id="profile_anchorpane" layoutX="111.0" prefHeight="700.0" prefWidth="1089.0" style="-fx-background-color: #112;">
+         <children>
+            <Label layoutX="69.0" layoutY="51.0" text="Profile" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <VBox layoutX="69.0" layoutY="110.0" spacing="10.0">
+               <children>
+                  <Group>
+                     <children>
+                        <VBox spacing="5.0">
+                           <children>
+                              <HBox spacing="10.0">
+                                 <children>
+                                    <Label text="First name" textFill="WHITE">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="edit_pfp_fname_issue" prefHeight="17.0" prefWidth="128.0" />
+                                 </children>
+                              </HBox>
+                              <TextField fx:id="profile_first_name_lbl" prefHeight="26.0" prefWidth="277.0">
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </TextField>
+                           </children>
+                        </VBox>
+                     </children>
+                  </Group>
+                  <Group>
+                     <children>
+                        <VBox spacing="5.0">
+                           <children>
+                              <HBox spacing="10.0">
+                                 <children>
+                                    <Label graphicTextGap="0.0" text="Last name" textFill="WHITE">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="edit_pfp_lname_issue" prefHeight="17.0" prefWidth="140.0" />
+                                 </children>
+                              </HBox>
+                              <TextField fx:id="profile_last_name_lbl" prefHeight="26.0" prefWidth="274.0">
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </TextField>
+                           </children>
+                        </VBox>
+                     </children>
+                  </Group>
+                  <Group>
+                     <children>
+                        <VBox spacing="5.0">
+                           <children>
+                              <HBox spacing="10.0">
+                                 <children>
+                                    <Label text="Address" textFill="WHITE">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="edit_pfp_address_issue" prefHeight="17.0" prefWidth="139.0" />
+                                 </children>
+                              </HBox>
+                              <TextField fx:id="profile_address_lbl" prefHeight="26.0" prefWidth="275.0">
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </TextField>
+                           </children>
+                        </VBox>
+                     </children>
+                  </Group>
+                  <Group>
+                     <children>
+                        <VBox spacing="5.0">
+                           <children>
+                              <HBox spacing="10.0">
+                                 <children>
+                                    <Label text="Email" textFill="WHITE">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="edit_pfp_email_issue" prefHeight="17.0" prefWidth="146.0" />
+                                 </children>
+                              </HBox>
+                              <TextField fx:id="profile_email_lbl" prefHeight="26.0" prefWidth="276.0">
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </TextField>
+                           </children>
+                        </VBox>
+                     </children>
+                  </Group>
+                  <Group>
+                     <children>
+                        <VBox spacing="5.0">
+                           <children>
+                              <HBox spacing="10.0">
+                                 <children>
+                                    <Label text="Phone number" textFill="WHITE">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="edit_pfp_phone_issue" prefHeight="17.0" prefWidth="144.0" />
+                                 </children>
+                              </HBox>
+                              <TextField fx:id="profile_phone_lbl" prefHeight="26.0" prefWidth="276.0">
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </TextField>
+                           </children>
+                        </VBox>
+                     </children>
+                  </Group>
+               </children>
+            </VBox>
+            <HBox layoutX="69.0" layoutY="569.0" spacing="10.0">
+               <children>
+                  <Button fx:id="profile_edit_btn" graphicTextGap="6.0" mnemonicParsing="false" onAction="#editProfile" prefHeight="43.0" prefWidth="132.0" style="-fx-background-color: #4193C7;" text="Edit" textFill="WHITE">
+                     <padding>
+                        <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
+                     </padding>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="profile_cancel_btn" graphicTextGap="6.0" mnemonicParsing="false" onAction="#editProfileCancel" prefHeight="43.0" prefWidth="135.0" style="-fx-background-color: #F43F4A;" text="Cancel" textFill="WHITE">
+                     <padding>
+                        <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
+                     </padding>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </HBox>
+            <ImageView fx:id="profile_image_preview_imageview" fitHeight="127.0" fitWidth="132.0" layoutX="437.0" layoutY="359.0" pickOnBounds="true" />
+            <Button graphicTextGap="6.0" layoutX="433.0" layoutY="569.0" mnemonicParsing="false" onAction="#changeProfileImage" prefHeight="43.0" prefWidth="149.0" style="-fx-background-color: #4193C7;" text="Change image" textFill="WHITE">
+               <padding>
+                  <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
+               </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <GridPane fx:id="profile_profile_image_gridpane" hgap="10.0" layoutX="690.0" layoutY="140.0" onMouseClicked="#profileImageClickGrid" prefHeight="530.0" prefWidth="344.0" vgap="10.0">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+            <Label fx:id="pfp_display_msg" layoutX="68.0" layoutY="642.0" prefHeight="27.0" prefWidth="279.0" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <VBox layoutX="369.0" layoutY="109.0" spacing="10.0">
+               <children>
+                  <Group>
+                     <children>
+                        <VBox spacing="5.0">
+                           <children>
+                              <HBox spacing="10.0">
+                                 <children>
+                                    <Label text="Old password" textFill="WHITE">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="edit_pfp_old_pwd_issue" prefHeight="17.0" prefWidth="130.0" />
+                                 </children>
+                              </HBox>
+                              <PasswordField fx:id="profile_old_password_passwordfield" prefHeight="26.0" prefWidth="276.0">
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </PasswordField>
+                           </children>
+                        </VBox>
+                     </children>
+                  </Group>
+                  <Group>
+                     <children>
+                        <VBox spacing="5.0">
+                           <children>
+                              <HBox spacing="10.0">
+                                 <children>
+                                    <Label text="New password" textFill="WHITE">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="edit_pfp_new_pwd_issue" prefHeight="17.0" prefWidth="137.0" />
+                                 </children>
+                              </HBox>
+                              <TextField fx:id="profile_new_password_textfield" prefHeight="26.0" prefWidth="277.0" promptText="new password">
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </TextField>
+                           </children>
+                        </VBox>
+                     </children>
+                  </Group>
+                  <Group>
+                     <children>
+                        <VBox spacing="5.0">
+                           <children>
+                              <HBox spacing="10.0">
+                                 <children>
+                                    <Label text="Confirm password" textFill="WHITE">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="edit_pfp_new_c_pwd_issue" prefHeight="17.0" prefWidth="137.0" />
+                                 </children>
+                              </HBox>
+                              <TextField fx:id="profile_confirm_password_textfield" prefHeight="26.0" prefWidth="277.0" promptText="confirm password">
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </TextField>
+                           </children>
+                        </VBox>
+                     </children>
+                  </Group>
+                  <HBox spacing="10.0" />
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
