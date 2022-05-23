@@ -131,7 +131,6 @@ public enum GeographyCountries {
     Romania,
     Russia,
     Rwanda,
-    Sao_Tome_and_Principe,
     Saudi_Arabia,
     Senegal,
     Serbia_and_Montenegro,
