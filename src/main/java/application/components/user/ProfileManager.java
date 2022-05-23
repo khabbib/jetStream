@@ -181,7 +181,7 @@ public class ProfileManager {
             controller.profile_confirm_password_textfield.setDisable(true);
             controller.is_editing_profile = false;
             controller.profile_edit_btn.setText("Edit");
-            controller.profile_edit_btn.setStyle("-fx-background-color: #F43F4A;");
+            controller.profile_edit_btn.setStyle("-fx-background-color: #4193C7;");
             controller.profile_cancel_btn.setDisable(true);
         }
     }
