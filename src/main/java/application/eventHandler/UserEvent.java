@@ -47,6 +47,7 @@ public class UserEvent {
         }
         else if(e.getSource() == controller.booking_close_btn || e.getSource() == controller.booking_close_second_page_btn){
             controller.booking_seat_anchorpane.toBack();
+            controller.payment_anchorpane.toBack();
             restore_psgr_info(controller);
             controller.playSystemSound("Next page", "sounds/next_page.wav");
         }
