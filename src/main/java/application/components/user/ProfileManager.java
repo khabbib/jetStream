@@ -5,6 +5,7 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 
 import java.io.File;
@@ -32,6 +33,7 @@ public class ProfileManager {
             controller.profile_new_password_textfield.setDisable(false);
             controller.profile_confirm_password_textfield.setDisable(false);
             controller.profile_edit_btn.setText("Confirm");
+            controller.profile_edit_btn.setStyle("-fx-background-color: #6BCB77;");
             controller.is_editing_profile = true;
         } else {
 
@@ -180,6 +182,7 @@ public class ProfileManager {
             controller.profile_confirm_password_textfield.setDisable(true);
             controller.is_editing_profile = false;
             controller.profile_edit_btn.setText("Edit");
+            controller.profile_edit_btn.setStyle("-fx-background-color: #4193C7;");
             controller.profile_cancel_btn.setDisable(true);
         }
     }
