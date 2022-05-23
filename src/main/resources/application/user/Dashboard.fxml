@@ -56,6 +56,168 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
+                        <Button fx:id="issue_btn_sup" graphicTextGap="6.0" mnemonicParsing="false" onAction="#support_event_handler" prefHeight="43.0" prefWidth="149.0" style="-fx-background-color: #221E4E;" text="Bugs" textFill="WHITE">
+                           <padding>
+                              <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
+                           </padding>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="contact_btn_sup" graphicTextGap="6.0" mnemonicParsing="false" onAction="#support_event_handler" prefHeight="43.0" prefWidth="149.0" style="-fx-background-color: #221E4E;" text="Contact" textFill="WHITE">
+                           <padding>
+                              <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
+                           </padding>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </Group>
+            <AnchorPane fx:id="issue_panel_sup" layoutX="49.0" layoutY="132.0" prefHeight="530.0" prefWidth="876.0" style="-fx-background-color: #0E0E1B #0E0E1B #0E0E1B #0E0E1B;">
+               <children>
+                  <Label layoutX="57.0" layoutY="71.0" text="Report application issues here!" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <VBox alignment="TOP_RIGHT" layoutX="57.0" layoutY="120.0" spacing="15.0">
+                     <children>
+                        <TextField fx:id="title_issue_txt_sup" promptText="Title" style="-fx-background-color: #151D3B #151D3B; -fx-text-fill: #eee;">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </TextField>
+                        <TextField fx:id="email_issue_txt_sup" promptText="Email address" style="-fx-background-color: #151D3B #151D3B; -fx-text-fill: #eee;">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </TextField>
+                        <TextFlow fx:id="msgcontent_issue_txt_sup" prefHeight="216.0" prefWidth="493.0" style="-fx-background-color: #151D3B #151D3B; -fx-background-radius: 5;">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                           <children>
+                              <TextArea fx:id="msg_issue_txt_sup" prefHeight="200.0" prefWidth="473.0" promptText="Message" />
+                           </children>
+                        </TextFlow>
+                        <Button fx:id="send_issue_btn_sup" graphicTextGap="6.0" mnemonicParsing="false" onAction="#support_event_handler" prefHeight="43.0" prefWidth="149.0" style="-fx-background-color: #6BCB77;" text="Send" textFill="WHITE">
+                           <padding>
+                              <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
+                           </padding>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </VBox>
+                  <Label fx:id="msg_issue_txt_sup_error" layoutX="571.0" layoutY="485.0" prefHeight="17.0" prefWidth="279.0" />
+                  <Label fx:id="sup_report_display_msg" layoutX="571.0" layoutY="485.0" prefHeight="17.0" prefWidth="263.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="contact_panel_sup" layoutX="49.0" layoutY="132.0" prefHeight="530.0" prefWidth="876.0" style="-fx-background-color: #0E0E1B #0E0E1B #0E0E1B #0E0E1B;">
+               <children>
+                  <Label layoutX="57.0" layoutY="71.0" text="Contact us here, anytime!" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <VBox alignment="TOP_RIGHT" layoutX="57.0" layoutY="120.0" spacing="15.0">
+                     <children>
+                        <TextField fx:id="subject_contact_txt_sup" promptText="Title" style="-fx-background-color: #151D3B #151D3B; -fx-text-fill: #eee;">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </TextField>
+                        <TextField fx:id="email_contact_txt_sup" promptText="Email address" style="-fx-background-color: #151D3B #151D3B; -fx-text-fill: #eee;">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </TextField>
+                        <TextFlow fx:id="msgcontent_contact_txt_sup" prefHeight="216.0" prefWidth="493.0" style="-fx-background-color: #151D3B #151D3B; -fx-background-radius: 5;">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                           <children>
+                              <TextArea fx:id="msg_contact_txt_sup" prefHeight="200.0" prefWidth="474.0" promptText="Message" />
+                           </children>
+                        </TextFlow>
+                        <Button fx:id="send_contact_btn_sup" graphicTextGap="6.0" mnemonicParsing="false" onAction="#support_event_handler" prefHeight="43.0" prefWidth="149.0" style="-fx-background-color: #6BCB77;" text="Send" textFill="WHITE">
+                           <padding>
+                              <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
+                           </padding>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </VBox>
+                  <Label fx:id="sup_contact_display_msg" layoutX="564.0" layoutY="485.0" prefHeight="17.0" prefWidth="279.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="feedback_panel_sup" layoutX="49.0" layoutY="132.0" prefHeight="530.0" prefWidth="876.0" style="-fx-background-color: #0E0E1B #0E0E1B #0E0E1B #0E0E1B; -fx-background-radius: 5;">
+               <children>
+                  <Label layoutX="57.0" layoutY="71.0" text="Feel free to give us your feeback!" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <VBox alignment="TOP_RIGHT" layoutX="57.0" layoutY="120.0" spacing="15.0">
+                     <children>
+                        <TextField fx:id="subject_fb_txt_sup" promptText="Title" style="-fx-background-color: #151D3B #151D3B; -fx-text-fill: #eee;">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </TextField>
+                        <TextField fx:id="email_fb_txt_sup" promptText="Email address" style="-fx-background-color: #151D3B #151D3B; -fx-text-fill: #eee;">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </TextField>
+                        <TextFlow fx:id="msgcontent_fb_txt_sup" prefHeight="216.0" prefWidth="493.0" style="-fx-background-color: #151D3B #151D3B; -fx-background-radius: 5;">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                           <children>
+                              <TextArea fx:id="msg_fb_txt_sup" prefHeight="199.0" prefWidth="472.0" promptText="Message" style="-fx-background-color: #151D3B #151D3B; -fx-text-fill: #112;" />
+                           </children>
+                        </TextFlow>
+                        <Button fx:id="send_fb_btn_sup" graphicTextGap="6.0" mnemonicParsing="false" onAction="#support_event_handler" prefHeight="43.0" prefWidth="149.0" style="-fx-background-color: #6BCB77;" text="Send" textFill="WHITE">
+                           <padding>
+                              <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
+                           </padding>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </VBox>
+                  <Label fx:id="sup_feedback_display_msg" layoutX="561.0" layoutY="484.0" prefHeight="17.0" prefWidth="299.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="entertainment_anchorpane" layoutX="107.0" prefHeight="700.0" prefWidth="1099.0" style="-fx-background-color: #112;">
+         <children>
+            <Group layoutX="49.0" layoutY="77.0">
+               <children>
+                  <Label layoutY="8.0" text="Support" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <HBox layoutX="116.0" spacing="10.0">
+                     <children>
+                        <Button fx:id="feedback_btn_sup" graphicTextGap="6.0" mnemonicParsing="false" onAction="#support_event_handler" prefHeight="43.0" prefWidth="149.0" style="-fx-background-color: #ff7000;" text="Feedback" textFill="WHITE">
+                           <padding>
+                              <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
+                           </padding>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
                         <Button fx:id="issue_btn_sup" graphicTextGap="6.0" mnemonicParsing="false" onAction="#support_event_handler" prefHeight="43.0" prefWidth="149.0" style="-fx-background-color: #221E4E #221E4E;" text="Bugs" textFill="WHITE">
                            <padding>
                               <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
@@ -1087,6 +1249,98 @@
                               </TextField>
                            </children>
                         </HBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets bottom="30.0" left="20.0" right="20.0" top="30.0" />
+               </padding>
+            </VBox>
+            <Label layoutX="91.0" layoutY="59.0" text="Owners" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Text fill="#bfbfbf" layoutX="91.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="485.0" />
+            <Button fx:id="donate_btn_owner" graphicTextGap="6.0" layoutX="429.0" layoutY="554.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="142.0" style="-fx-background-color: #1A1A40;" text="Donate" textFill="WHITE">
+               <padding>
+                  <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
+               </padding>
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <HBox fx:id="owner1_work" alignment="CENTER_LEFT" layoutX="607.0" layoutY="222.0" prefHeight="304.0" prefWidth="309.0" spacing="10.0" style="-fx-background-color: #1A1A40; -fx-background-radius: 5;">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <children>
+                  <TextArea editable="false" opacity="0.65" prefHeight="284.0" prefWidth="297.0" text="== Obed ==&#10;&#10;Created:&#10;&#9;List of members&#10;&#9;List of flights&#10;&#9;List of tickets&#10;&#10;Developed:&#10;&#9;Admin view" />
+               </children>
+            </HBox>
+            <HBox fx:id="owner2_work" alignment="CENTER_LEFT" layoutX="607.0" layoutY="223.0" prefHeight="304.0" prefWidth="309.0" spacing="10.0" style="-fx-background-color: #1A1A40; -fx-background-radius: 5;">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <children>
+                  <TextArea editable="false" opacity="0.65" prefHeight="284.0" prefWidth="297.0" text="== Sossio ==&#10;&#10;Created:&#10;&#9;Database&#10;&#9;Password hash&#10;&#9;Admin/User Login&#10;&#9;Owners page&#10;&#10;Developed:&#10;&#9;Profile edit&#10;&#9;Explore&#10;&#9;Support&#10;&#9;Registration&#10;&#9;Login&#10;&#9;Database tables" />
+               </children>
+            </HBox>
+            <HBox fx:id="owner3_work" alignment="CENTER_LEFT" layoutX="607.0" layoutY="223.0" prefHeight="304.0" prefWidth="309.0" spacing="10.0" style="-fx-background-color: #1A1A40; -fx-background-radius: 5;">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <children>
+                  <TextArea editable="false" opacity="0.65" prefHeight="284.0" prefWidth="297.0" text="== Kasper ==&#10;&#10;Created:&#10;&#9;Profile edit&#10;&#9;Worldmap&#10;&#9;Games&#10;&#9;Bg music&#10;&#9;Weather&#10;&#9;Databse tables&#10;&#9;Track flight&#10;&#10;Developed:&#10;&#9;Worldmap" />
+               </children>
+            </HBox>
+            <HBox fx:id="owner4_work" alignment="CENTER_LEFT" layoutX="607.0" layoutY="223.0" prefHeight="304.0" prefWidth="309.0" spacing="10.0" style="-fx-background-color: #1A1A40; -fx-background-radius: 5;">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <children>
+                  <TextArea editable="false" opacity="0.65" prefHeight="284.0" prefWidth="297.0" text="== Khabib ==&#10;&#10;Created:&#10;&#9;Login&#10;&#9;Registration&#10;&#9;Explore&#10;&#9;Support&#10;&#9;History&#10;&#9;Ticket&#10;&#9;Payment&#10;&#9;Reservation&#10;&#9;Advanced search&#10;&#10;Developed:&#10;&#9;Owners page" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="607.0" layoutY="225.0" prefHeight="304.0" prefWidth="309.0" spacing="10.0" style="-fx-background-color: #1A1A40; -fx-background-radius: 5;">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </HBox>
+            <Button fx:id="owner1_btn" layoutX="90.0" layoutY="216.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" opacity="0.0" prefHeight="72.0" prefWidth="299.0" text="1">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Button fx:id="owner3_btn" layoutX="92.0" layoutY="378.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" opacity="0.0" prefHeight="72.0" prefWidth="299.0" text="3">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Button fx:id="owner2_btn" layoutX="91.0" layoutY="300.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" opacity="0.0" prefHeight="67.0" prefWidth="299.0" text="2">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Button fx:id="owner4_btn" layoutX="93.0" layoutY="458.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" opacity="0.0" prefHeight="72.0" prefWidth="299.0" text="4">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="profile_anchorpane" layoutX="111.0" prefHeight="700.0" prefWidth="1089.0" style="-fx-background-color: #112;">
+         <children>
+            <Label layoutX="69.0" layoutY="51.0" text="Profile" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <VBox layoutX="69.0" layoutY="110.0" spacing="10.0">
+               <children>
+                  <Group>
                         <HBox alignment="BOTTOM_CENTER" prefHeight="77.0" prefWidth="428.0" spacing="15.0">
                            <children>
                               <Button fx:id="card_prev_btn" mnemonicParsing="false" onAction="#userDashboardEventHandler" prefHeight="40.0" prefWidth="212.0" style="-fx-background-color: #ff7205;" text="Preview" textFill="WHITE">
@@ -1403,12 +1657,33 @@
                            </children>
                         </HBox>
                      </children>
+
+                  </Group>
+               </children>
+            </VBox>
+            <HBox layoutX="69.0" layoutY="569.0" spacing="10.0">
+               <children>
+                  <Button fx:id="profile_edit_btn" graphicTextGap="6.0" mnemonicParsing="false" onAction="#editProfile" prefHeight="43.0" prefWidth="132.0" style="-fx-background-color: #4193C7;" text="Edit" textFill="WHITE">
+                     <padding>
+                        <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
+                     </padding>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="profile_cancel_btn" graphicTextGap="6.0" mnemonicParsing="false" onAction="#editProfileCancel" prefHeight="43.0" prefWidth="135.0" style="-fx-background-color: #F43F4A;" text="Cancel" textFill="WHITE">
                      <padding>
                         <Insets left="10.0" />
                      </padding>
                   </VBox>
                   <Label fx:id="booking_is_retur_lbl" layoutX="278.0" layoutY="43.0" textFill="WHITE" />
                </children>
+            </HBox>
+            <ImageView fx:id="profile_image_preview_imageview" fitHeight="127.0" fitWidth="132.0" layoutX="437.0" layoutY="359.0" pickOnBounds="true" />
+            <Button graphicTextGap="6.0" layoutX="433.0" layoutY="569.0" mnemonicParsing="false" onAction="#changeProfileImage" prefHeight="43.0" prefWidth="149.0" style="-fx-background-color: #4193C7;" text="Change image" textFill="WHITE">
+               <padding>
+                  <Insets bottom="10.0" left="35.0" right="35.0" top="10.0" />
+               </padding>
             </AnchorPane>
          </children>
       </AnchorPane>
@@ -1762,6 +2037,20 @@
                               </PasswordField>
                            </children>
                         </VBox>
+                     </children>
+                  </Pane>
+                  <VBox layoutX="34.0" layoutY="580.0" />
+                  <Group layoutX="1049.0" layoutY="-9.0">
+                     <children>
+                        <ImageView fitHeight="25.0" fitWidth="30.0" layoutX="-11.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/close.png" />
+                           </image>
+                           <effect>
+                              <ColorAdjust brightness="-0.05" contrast="0.04" hue="0.16" saturation="0.59" />
+                           </effect>
+                        </ImageView>
+                        <Button fx:id="booking_close_second_page_btn" layoutX="-14.0" layoutY="17.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" opacity="0.0" prefHeight="32.0" prefWidth="28.0" />
                      </children>
                   </Group>
                   <Group>
@@ -2450,7 +2739,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </ImageView>
-                              <Label layoutX="34.0" layoutY="18.0" prefHeight="17.0" prefWidth="51.0" text="Settings" textFill="WHITE" />
+                              <Label layoutX="34.0" layoutY="18.0" prefHeight="17.0" prefWidth="51.0" text="Profile" textFill="WHITE" />
                               <Button fx:id="menu_profile_btn" layoutX="2.0" layoutY="14.0" mnemonicParsing="false" onAction="#userDashboardEventHandler" opacity="0.0" prefHeight="30.0" prefWidth="77.0" text="Button">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
