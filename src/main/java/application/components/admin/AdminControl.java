@@ -147,7 +147,7 @@ public class AdminControl {
 
 
                 } else {
-                    controller.delet_btn_mbr_admin.setDisable(true);
+                    controller.delet_btn_mbr_admin.setDisable(false);
                 }
 
             }
@@ -229,8 +229,9 @@ public class AdminControl {
                 if (selectedAllItems) { // check if all items are selected
                     controller.deleteTicketBtn_ticket_admin.setDisable(false);
 
-                } else {
-                    controller.deleteTicketBtn_ticket_admin.setDisable(true);
+                }
+                else {
+                    controller.deleteTicketBtn_ticket_admin.setDisable(false);
                 }
 
             }
@@ -280,7 +281,7 @@ public class AdminControl {
                     newValue.getFlightBox().setSelected(true);
                 System.out.println("selected item: " + newValue.getFlightBox() + " value: " + newValue.getFlightBox().isSelected());
             }
-            controller.delete_singelFlightBtn_admin.setDisable(true);
+            controller.delete_singelFlightBtn_admin.setDisable(false);
 
         });
 
@@ -308,7 +309,7 @@ public class AdminControl {
                     controller.delete_singelFlightBtn_admin.setDisable(false);
 
                 } else {
-                    controller.delete_singelFlightBtn_admin.setDisable(true);
+                    controller.delete_singelFlightBtn_admin.setDisable(false);
                 }
 
             }
