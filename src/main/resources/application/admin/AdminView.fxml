@@ -22,7 +22,6 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #112;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
@@ -192,28 +191,27 @@
                            <font>
                               <Font size="15.0" />
                            </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </CheckBox>
                      </children>
                   </HBox>
                </children>
             </VBox>
-            <Button fx:id="registerCommitBtn_admin" layoutX="607.0" layoutY="374.0" mnemonicParsing="false" onAction="#registerUserAdminBtnAction" prefHeight="36.0" prefWidth="260.0" style="-fx-background-color: #6BCB77;" text="Register" textFill="WHITE" />
-            <Button fx:id="returnToMemberListBtn_admin" layoutX="607.0" layoutY="451.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="260.0" style="-fx-background-color: #4193C7;" text="Return to member list" textFill="WHITE" />
+            <Button fx:id="registerCommitBtn_admin" layoutX="607.0" layoutY="374.0" mnemonicParsing="false" onAction="#registerUserAdminBtnAction" prefHeight="36.0" prefWidth="260.0" style="-fx-background-color: #6BCB77;" text="Register" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Button fx:id="returnToMemberListBtn_admin" layoutX="607.0" layoutY="451.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="260.0" style="-fx-background-color: #4193C7;" text="Return to member list" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
             <Label layoutX="81.0" layoutY="40.0" text="Registration a user" textFill="#f87000">
                <font>
                   <Font size="32.0" />
                </font>
             </Label>
-            <Text fill="WHITE" layoutX="911.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JetStream">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </Text>
-            <ImageView fx:id="logo" fitHeight="44.0" fitWidth="36.0" layoutX="988.0" layoutY="27.0" onMouseClicked="#switchToHome" preserveRatio="true">
-               <image>
-                  <Image url="@../image/jetStream.png" />
-               </image>
-            </ImageView>
             <Label fx:id="registration_error_admin" layoutX="608.0" layoutY="530.0" prefHeight="20.0" prefWidth="258.0" textFill="#e1e1e1">
                <font>
                   <Font size="14.0" />
@@ -228,7 +226,10 @@
                   <Font size="27.0" />
                </font>
             </Label>
-            <Button fx:id="refreshTicketsBtn_ticket_admin" layoutX="896.0" layoutY="623.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="97.0" style="-fx-background-color: #4193C7;" text="Refresh" textFill="WHITE" />
+            <Button fx:id="refreshTicketsBtn_ticket_admin" layoutX="896.0" layoutY="623.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="97.0" style="-fx-background-color: #4193C7;" text="Refresh" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
             <TableView fx:id="table_tickets" layoutX="24.0" layoutY="107.0" prefHeight="480.0" prefWidth="1036.0">
                <columns>
                   <TableColumn fx:id="nr_col_ticket_admin" prefWidth="75.0" text="No" />
@@ -252,7 +253,10 @@
                   <URL value="@../Styles/ScrollStyle.css" />
                </stylesheets>
             </TableView>
-            <Button fx:id="deleteTicketBtn_ticket_admin" layoutX="703.0" layoutY="623.0" mnemonicParsing="false" onAction="#removeTicket_admin" prefHeight="36.0" prefWidth="136.0" style="-fx-background-color: #F43F4A;" text="Delete selected ticket" textFill="WHITE" />
+            <Button fx:id="deleteTicketBtn_ticket_admin" layoutX="703.0" layoutY="623.0" mnemonicParsing="false" onAction="#removeTicket_admin" prefHeight="36.0" prefWidth="136.0" style="-fx-background-color: #F43F4A;" text="Delete selected ticket" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="admin_flights_anchorpane" layoutX="109.0" layoutY="-1.0" prefHeight="700.0" prefWidth="1091.0" style="-fx-background-color: #112;">
@@ -285,8 +289,16 @@
                   <URL value="@../Styles/ScrollStyle.css" />
                </stylesheets>
             </TableView>
-            <Button fx:id="refreshFlightsBtn_admin" layoutX="887.0" layoutY="620.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="97.0" style="-fx-background-color: #4193C7;" text="Refresh" textFill="WHITE" />
-            <Button fx:id="delete_singelFlightBtn_admin" layoutX="681.0" layoutY="620.0" mnemonicParsing="false" onAction="#removeFlight_admin" prefHeight="36.0" prefWidth="176.0" style="-fx-background-color: #F43F4A;" text="Delete selected singel Flight" textFill="WHITE" />
+            <Button fx:id="refreshFlightsBtn_admin" layoutX="887.0" layoutY="620.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="97.0" style="-fx-background-color: #4193C7;" text="Refresh" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="delete_singelFlightBtn_admin" layoutX="681.0" layoutY="620.0" mnemonicParsing="false" onAction="#removeFlight_admin" prefHeight="36.0" prefWidth="176.0" style="-fx-background-color: #F43F4A;" text="Delete selected singel Flight" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="admin_members_anchorpane" layoutX="113.0" layoutY="6.0" prefHeight="694.0" prefWidth="1084.0" style="-fx-background-color: #112;">
@@ -296,8 +308,14 @@
                   <Font size="23.0" />
                </font>
             </Label>
-            <Button fx:id="registerMemberBtn_admin" layoutX="20.0" layoutY="611.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="155.0" style="-fx-background-color: #6BCB77;" text="Register" textFill="WHITE" />
-            <Button fx:id="refreshMembersBtn_admin" layoutX="909.0" layoutY="611.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="74.0" style="-fx-background-color: #4193C7;" text="Refresh" textFill="WHITE" />
+            <Button fx:id="registerMemberBtn_admin" layoutX="20.0" layoutY="611.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="155.0" style="-fx-background-color: #6BCB77;" text="Register" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Button fx:id="refreshMembersBtn_admin" layoutX="909.0" layoutY="611.0" mnemonicParsing="false" onAction="#adminDashboardEventHandler" prefHeight="36.0" prefWidth="74.0" style="-fx-background-color: #4193C7;" text="Refresh" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
             <Group layoutX="259.0" layoutY="20.0" />
             <TableView fx:id="table_member_admin" layoutX="24.0" layoutY="107.0" prefHeight="480.0" prefWidth="1036.0">
                <columns>
@@ -320,7 +338,10 @@
                   <URL value="@../Styles/ScrollStyle.css" />
                </stylesheets>
             </TableView>
-            <Button fx:id="deletS_btn_mbr_admin" layoutX="712.0" layoutY="611.0" mnemonicParsing="false" onAction="#removeMember_admin" prefHeight="36.0" prefWidth="155.0" style="-fx-background-color: #F43F4A;" text="Delete selected member" textFill="WHITE" />
+            <Button fx:id="deletS_btn_mbr_admin" layoutX="712.0" layoutY="611.0" mnemonicParsing="false" onAction="#removeMember_admin" prefHeight="36.0" prefWidth="155.0" style="-fx-background-color: #F43F4A;" text="Delete selected member" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
          </children>
       </AnchorPane>
       <Pane prefHeight="702.0" prefWidth="105.0" style="-fx-background-color: #221E4E #221E4E; -fx-background-radius: 0 30 0 0;">
