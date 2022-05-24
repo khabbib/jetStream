@@ -56,6 +56,10 @@ public class BgMusic implements Runnable {
         thread.start();
     }
 
+    public void stop(){
+        playing = false;
+    }
+
     /**
      * This method returs length of the music file to next music.
      */

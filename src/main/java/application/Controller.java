@@ -311,6 +311,7 @@ public class Controller {
      */
     public void switchToLogin(ActionEvent e) {
         explore_mode = true;
+        bgMusic.stop();
         this.root = config.render(e, "user/Login", "Login");
         success_msg_lbl = (Label) root.lookup("#success_msg_lbl");
         login_anchorpane = (AnchorPane) root.lookup("#login_anchorpane");
