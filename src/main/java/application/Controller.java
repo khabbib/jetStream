@@ -51,6 +51,7 @@ public class Controller {
     @FXML public TextField login_pass, login_email, show_password_field_login;
     @FXML public Label error_message_lbl, success_msg_lbl; // ERRORS HANDLER
     @FXML private Button forgot_password_login;
+    @FXML public AnchorPane login_anchorpane, forgot_password_anchorpane;
     @FXML public CheckBox show_pasword_login;
     public static boolean explore_mode = true; // If explore mode is off, it means user is logged in.
 
@@ -312,11 +313,33 @@ public class Controller {
         explore_mode = true;
         this.root = config.render(e, "user/Login", "Login");
         success_msg_lbl = (Label) root.lookup("#success_msg_lbl");
+        login_anchorpane = (AnchorPane) root.lookup("#login_anchorpane");
+        forgot_password_anchorpane = (AnchorPane) root.lookup("#forgot_password_anchorpane");
         if(user != null) {
             playSystemSound("Logout", "sounds/logout.wav");
         } else {
             user = null;
         }
+    }
+
+    /**
+     * This method will handle forget password ....
+     * ...
+     * @param e event.
+     * @author Sossio.
+     */
+    public void switchToForgotPassword(ActionEvent e) {
+        forgot_password_login.toFront();
+    }
+
+    /**
+     * This method will ....
+     * ...
+     * @param e event.
+     * @author Sossio.
+     */
+    public void bringLoginToFront(ActionEvent e) {
+        login_anchorpane.toFront();
     }
 
 
