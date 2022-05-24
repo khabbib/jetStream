@@ -885,7 +885,7 @@ public class World extends Region {
             case "LT": s = "Lithuania"; break;
             case "LU": s = "Luxembourg"; break;
             case "LV": s = "Latvia"; break;
-            case "LY": s = "Libyan"; break;
+            case "LY": s = "Libya"; break;
             case "MA": s = "Morocco"; break;
             case "MC": s = "Monaco"; break;
             case "MD": s = "Moldova"; break;
@@ -964,7 +964,7 @@ public class World extends Region {
             case "SY": s = "Syria"; break;
             case "SZ": s = "Swaziland"; break;
             case "TC": s = "Turks_And_Caicos_Islands"; break;
-            case "TD": s = "Chard"; break;
+            case "TD": s = "Chad"; break;
             case "TF": s = "French_Southern_and_Antarctic_Lands"; break;
             case "TG": s = "Togo"; break;
             case "TH": s = "Thailand"; break;
